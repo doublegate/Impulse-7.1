@@ -1,0 +1,1051 @@
+Changes - v7.1
+~~~~~~~~~~~~~~
+1: Fixed a bug in the pause code, which wouldn't correctly erase the pause
+   prompt.
+2: The function of making converting a sauce description to a file_id.diz,
+   which was formerly handled by 'LADLE.EXE', has now been internalized to
+   speed things up by avoiding a shell to dos.
+3: Fixed up a few things in impDOS, added a command 'LADLE', to call the
+   internal version of ladle.
+4: Added an set of ansis for internal zip viewing. The files are,
+   zipview.top, zipview.mid, and zipview.bot. The MCI's Used in the files
+   are as followed:
+   zipview.top:
+      %ZN - Name of the zip file
+   zipview.mid/zipview.bot:
+      %Z1 - Current file uncompressed size
+      %Z2 - Current file compression method
+      %Z3 - Current file compressed size
+      %Z4 - Current file compression percent
+      %Z5 - Current file date last modified
+      %Z6 - Current file time last modified
+      %Z7 - Current file CRC 32 (hex mode)
+      %Z8 - Current file attributes
+      %Z9 - Current file name
+      %ZT - Total size of zip uncompressed
+      %ZC - Total size of the zip compressed
+      %ZF - Number of files in the zip
+5: Added a new menu, NUVP.MNU, this menu lets you control the new user voting
+   process. The valid command's are as follows:
+   VY - Vote yes for the current user being voted on
+   VN - Vote no for the current user being voted on
+   VV - Validate the current user being voted on
+   VD - Delete the current user being voted on
+   I also fixed alot of bugs with the nuv proccess, although it still isn't
+   perfect. If you find errors PLEASE let me know so I can attempt to solve
+   them.
+6: Fixed the swapping ovr to XMS/EMS on shell, so you can now actually run
+   things when you shell =). Thanks go out to cIty(private parts) for this
+   fix.
+7: Added 3 new mci's:
+   RB - Random Background Color
+   RF - Random Foreground Color
+   RC - Random Color
+8: Fixed a bug where if the user chose prompt #4, nothing would be displayed
+9: Fixed a bug where users would vote on new users even if they had already
+   been deleted from the system.
+10: Removed area code checking on a users phone number, as this was never
+    used.
+11: Removed the generic menus section, as they weren't very useful. Let me
+    know if anyone still wants them and I will re-add them.
+12: I added a ton of new baud rates that work with v.90, x2, and k56, so that
+    if you connected at those speeds, it won't just show 38400.
+13: Fixed the bug in the string editor, where searching for a string, when you
+    were on the last page would cause an infinite loop, and force impulse to
+    shutdown.
+14: Added two new mci codes, DF, DS. DF shows the free space on the drive
+    and DS shows the total space on the drive. These commands will by default
+    show the space in bytes, but if you append K, or M to the code, it will
+    show in kiloBytes/megaBytes. I.E. %DFK would show in kb, and |DSM would
+    show in mb.
+15: Added an set of ansis for internal lzh viewing. The files are,
+    lzhview.top, lzhview.mid, and lzhview.bot. The MCI's Used in the files
+    are as followed:
+    lzhview.top:
+       %LN - Name of the lzh file
+    lzhview.mid/lzhview.bot:
+       %L1 - Current file lzh method
+       %L2 - Current file name
+       %L3 - Current file uncompressed size
+       %L4 - Current file compressed size
+       %L5 - Current file number
+       %L6 - Current file date
+       %L7 - Current file time
+       %L8 - Total Uncompressed
+       %L9 - Total Compressed
+16: Fixed a bug where you couldn't page the sysop unless you were a sysop or
+    a co sysop =)
+17: Fixed various bugs with the bbs list, so it won't crash if the file is
+    missing or empty.
+18: Changed the character that the *.inf files use for input from | to %.
+    This was to keep in line with the format used in other text files.
+19: Fixed some more bugs in the new user process, now it won't make you fill
+    out an infoform if new user voting is not active.
+20: Fixed the bug in the ansi parser that was causing various graphical
+    glitches(i.e. showing ansi codes =)). Let me know if any problems crop
+    up.
+21: Added back in timeslices which should cut the idle cpu usage down to about
+    3-5%.
+22: The automessage reading now as 2 files, autoread.top, and autoread.bot.
+    It uses its the mci %AN to display the writers name. I also made it 
+23: The msg/file base lists now uses the top/mid/bot format, so make the
+    following ansis.
+    msgbase.top/filebase.top:
+       none
+    msgbase.mid:
+       %ME - base name
+       %MI - base number
+       %MS - has the base been newscanned? (prints Yes or No)
+       %MT - base type
+    filebase.mid:
+       %FE - base name
+       %FI - base number
+       %FS - has the base been newscanned? (prints Yes or No)
+    msgbase.bot/filebase.bot:
+       none
+
+    Also I removed the message that would say 'highest/lowest base', and made
+    it so that it wouldn't tell you that you joined a base unless you joined
+    a new base. If you want either of these things changed, just ask.
+24: Added a few new strings, currentPassword, which is used when changing your
+    password. Added wrongPassword, which is used when you entered the wrong
+    password. Added wrongPhone, which is used when you entered the wrong phone
+    number.
+25: Took out the system flag that controlled cga snow checking(as no one has a
+    cga monitor anymore), and replaced it with the ability to toggle on/off the
+    scrollback. With scrollback off, it speeds things up a bit.
+26: Rewrote the time bank. It know is controlled by a standard .mnu file, with
+    the menu commands UD to deposit, and UL to withdraw. If you pass a value
+    in the cString, that amount will be withdrawn/deposited silently. I also
+    add 2 new mci commands BT which shows how much time is in the users time
+    bank, and BM which shows the max amout of time which can be in the time
+    bank.
+27: Fixed a bug when attempting to send an e-mail to the sysop, would result
+    in the user sysop to not be found.
+28: Fixed a bug where the status bar would be cleared along with the rest of
+    the screen when it was cleared, causing you to toggle the status bar to
+    turn it back on.
+29: Fixed a bug where if you toggled ansi on, it would print off, and vice
+    versa.
+30: Changed the rumors section once again. It now uses the top/mid/bot format.
+    So be sure to add the following ansis:
+    rumors.top:
+       none
+    rumors.mid:
+       %RR - The actual rumor
+       %RI - The rumor number
+    rumors.bot:
+       none
+
+    In addition to these, i also added rumors.ran , which is the format in
+    which to display a random rumor. This file uses the same mci's as
+    rumors.mid.
+31: Yet another new ansi added, this time its for the msg base stats. Its name
+    is mbstats.ans, and it has the following MCI codes:
+       %MI - base number
+       %MT - base type
+       %MW - base password
+       %MA - base anonymous type
+       %MS - base acs
+       %MP - base post acs
+       %MC - base mci acs
+       %MF - base filename
+       %ME - base path
+
+    You will also probably want to use the base name, which is a generic mci,
+    %CM.
+32: Fixed a bug in the area listing where it would display bad download path
+    if you used the '[' on the lowest, or ']' on the highest file area.
+33: Added a string unKnownHandle, which is displayed when the user enters
+    nothing, or an unknown handle.
+34: Added a new mci OS, which reports the OS type in use.
+35: Fixed a bug with the expert mode/hitting '?' , which would sometimes not
+    allow you to truley switch to novice mode(non expert).
+36: A stupid error in the wfc which wouldn't quit the wfc if you hit 'Q'(i.e.
+    captial Q instead of lowercase q).
+37: Fixed a bug when inputting a phone number, it wasn't really saving it =)
+38: Various cleanups/speedups.
+
+Changes - v7.0
+~~~~~~~~~~~~~~
+1: Fixed the bug with the city/state question killing impulse.
+2: Fixed a bug in the modem editor where when asking if you wanted to change
+   the comports it would display some junk.
+3: Fixed a bunch of bugs when loading the board files(msg/file), also some
+   bugs in those board editors which caused impulse to crash.
+4: Fixed up a few bugs with the fullscreen message editor, which is now the
+   only editor impulse uses. Also fixed up the reply bug, where when you
+   applied it would ask who you wanted to send the message to, as well as
+   the title, but now it sends the message to all, and uses the old title.
+   I also fixed a few cosmetic bugs.
+5: Removed mci codes 'CR', which was doing the same thing is 'SP', reporting
+   the current connect rate. Also removed 'PT', which was doing the same as
+   'NP', displaying the number of posts today.
+
+Changes - v7 final beta
+~~~~~~~~~~~~~~~~~~~~~~~
+1:  Added an install program. (4-26-98).
+2:  Fixed a bug in the prompt editor where it wouldn't save the prompt if you
+    edited it. (4-26-98).
+3:  Added a new menu command 'SP', which pauses the screen, as well as
+    'SC', which clears the screen. (4-26-98).
+4:  Changed the name of the header/footer for the oneliners. The new names
+    are now 'ONELINE.TOP' and 'ONELINE.BOT'. (4-26-98).
+5:  Changed the way *.MID files are handled, which speeds them up a TON.
+    However, your *.mid files cannot be greater then 4096 bytes (this
+    should be more then enough). (4-26-98).
+6:  Impulse was reading the global menu into pulldown files, it doesn't
+    anymore. (4-27-98).
+7:  Rewrote the ansi file displaying rutine, it's SUPERFAST now. Let me know
+    if you have any problems with it.
+
+Changes - v7 rc 3
+~~~~~~~~~~~~~~~~~
+1:  Impulse will not prompt you for the system password if it is blank.
+    (4-17-98) - rc3.
+2:  Impulse will not say you added a rumor if you entered a blank rumor.
+    (4-17-98) - rc3.
+3:  Fixed a bug in the menu editor, where if you loaded a .mnu file with
+    no commands, it would kill impulse. (4-23-98) - rc3.
+4:  Forgot i broke the swap on shell stuff, i'll re-enable it if i can
+    figure out whats wrong(sorry about that i don't even remember messing
+    with it, ohh well). - rc3.
+5:  New menu command 'OB', it runs the bulletins system. (4-23-98) - rc3.
+6:  Ok, changed something around a bit, instead of using the system flags
+    to toggle stuff like oneliners/automsg/bulletins/etc, you must now do
+    it all yourself, in a .mnu file. So goto the system config -> misc
+    settings, start out menu. This file should take care of all the logon
+    stuff you want to do. So ignore the flags for the logon stuff.
+    (4-23-98). - rc3.
+7:  Impulse now shows bytes free with comma's, making it much easier to read.
+    (4-24-98). - rc3.
+8:  When trying to init your modem, and it couldn't find a modem, impulse
+    would loop until you pressed a key, now impulse tries to find a modem
+    1 times, if it doesn't find it, it continues on. I will make this number
+    of tries configurable in the future, but for now 1 will have to do, since
+    it should find your modem if its there the first time. (4-24-98). - rc3.
+9:  Added a menu file, 'GLOBAL.MNU', whose command contents are runable from
+    EVERYMENU, except pulldown menus. Let me know if there are any problems
+    with the global menu. (4-24-98). - rc3.
+10: Fixed a bug, where hitting 'F6' multiple times would cause a stack over-
+    flow, because it would load the config program each time you hit it. Now
+    it only loads it if you aren't in the config program. (4-25-98). - rc3.
+
+Changes - v7 rc 2
+~~~~~~~~~~~~~~~~~
+1:  Began working on cleaning up and optimizing the code, thats what i'm
+    going to be doing for a while. (4-12-98). - rc2
+2:  Fixed the reply bug, it seems to work, but if you have trouble let me
+    know and i'll try and fix it. I also added some newline's so that the
+    display wouldn't be screwed up. (4-13-98). - rc2
+3:  Fixed the logon procedure, so it doesn't show the last callers if you
+    choose the fast logon option. (4-13-98). - rc2
+4:  Removed the '|' and '.' commands which would show system info/reg info.
+    (4-15-98). - rc2
+5:  Moved alot of internal shit around in memory, so it should use up less
+    memory up now(hopefully anyways). (4-15-98). - rc2
+6:  When entering your phone number, it is now formated correctly. I.E.
+    it will always be in the format XXX-XXX-XXXX. (4-17-98). - rc2
+
+
+Changes - v7 rc 1
+~~~~~~~~~~~~~~~~~
+1:  I ( horrid nature ) have taken over impulse development!@#()@! Keep
+    on the lookout for improvements/changes.
+2:  Impulse is now freeware, no need to register ( unless you really want
+    to send some money in ).  You can go ahead and delete your .key file,
+    as it's now pointless. Also the mci command, %RG , has been removed,
+    it did show the registered bbs name ( Use %BN instead ).
+3:  Changed the name from nexus/2 back to impulse.
+4:  Added string, 'LocalLogin'. Changes the baudrate string when logged on
+    locally.
+5:  Added an ansi for the system info, sysstat.ans . Replaces the old
+    internal system info display.  Sysstat.ans uses the generic mci codes.
+6:  Added a crude search rutine in the string editor. Use , 'S', to search
+    , 'R', to repeat search. Also changed the look a little bit. Added a
+    Jump to string command, use, 'J'.
+7:  Changed system setup lightbar. It now remembers where you last were
+    when you entered an option. HOME/END will now take you to the top/
+    bottom of the list. Added an option to quit, note that hitting Q or
+    ESCape will work also. Code optimization.
+8:  Removed mouse support.
+9:  Added menu command, '-W', writes a string using the header ansi
+    (hdr.ans). The CString should be the string to write.
+10: Fixed bug where it would ask you for the sysop password, even if
+    there wasn't a sysop password set. Also impulse will now check for
+    the sysop password for EVERY sysop command!
+11: Waiting for caller screen changed, and still has some bugs in it.
+12: Added menu command, '-P', writes the given string from the string.dat
+    file. The CString should be the string number to print.
+13: Added string, 'hack'. Displayed when user fails to logon, and other
+    attempted system hacks.
+15: Added minidos command,'show', which displays an ansi, much like 'type',
+    but, 'show' evaluates mci codes, 'type' doesn't.
+16: Added string, 'areYouSure'. Displayed when impulse wants you to confirm
+    a change in impulse. Use the mci code '|O1' to display instance specific
+    text.
+17: Added minidos commands, 'islc' and 'isld', which compile and decompile
+    ISL scripts. The syntax is for the compiler is 'ISLC <filename.ext>',
+    which will out put 'filename.i'. The syntax for the decomplier is
+    'ISLD <filename.ext>', which will out put 'filename.iSl'.
+18: Changed the user editor, you can now delete a user from the list view,
+    by pressing either 'D' or the delete key. The look has changed a little,
+    as well as the code being optimized.
+19: Menu files are now binary! This should speed up the system a bit. There
+    is no need to worry, i have supplied a program, 'mnuconv.exe', which
+    will convert all your old menu files to the new format. Note all commands
+    and file names are the same.
+20: Fixed a bug, where if you were using the full screen editor, and chose
+    the upload message command, and insert an invalid filename, it would
+    cause a runtime error, no more.
+21: Speed up the user editor.
+22: Fixed a bug in the menu editor where if you hit 'T' to toggle the command
+    display mode 2 times or more, it wouldn't display anything, not hitting
+    'T' actually toggles between the 2 display modes. I also added a command
+    to the menu editor, 'C' which copies an existing menu file.
+23: Fixed various bugs in the apply process.
+24: Added a new mci code to newinf.ans, %OP , this is where impulse will
+    prompt you for a choice.
+25: You can now actually copy a menu in the menu editor, before it was only
+    copying the menu on top of itself. (2-13-98)
+26: Cleaned up/speed up the WFC screen. (2-13-98)
+27: There was a bug, where the generic prompt would be shown regardless of
+    the state of 'noMenuPrompt' in the menu file, fixed. (2-15-98)
+28: There was a bug in the WFC screen, where it would sometimes not re-draw
+    after you executed a command, it is now fixed (hopefully). (2-19-98)
+29: Fixed a bug in the menu parser, where it would attempt to display the
+    helpfile, even if it was set to nothing. This had caused an error to be
+    shown, 'Error displaying x:\blah\blah\.ANS'. (2-22-98).
+30: The file display config has 2 new options, 9 - NONE, and A-ALL. NONE
+    turns off all checked options, and ALL turns on all unchecked options.
+    (2-22-98).
+31: Added a pausescr to the 'ERROR DISPLAYING ANSI' option, this way, you can
+    actually see which ansis you are missing =) (2-22-98).
+32: Re-did the entire rumor section, the rumors are now stored in a binary
+    file, 'rumors.dat', instead of the old text 'rumor.dat'. Also added a new
+    menu command, 'RD', which deletes a rumor. (2-22-98).
+33: Re-did the oneliners section. The oneline.dat file is now binary, and can
+    hold up to 15 oneliners. (2-22-98). * NOTE * stupid bug where if the user
+    enters a blank oneliner, it would erase all the old oneliners, fixed.
+    (2-24-98).
+34: Nodes.dat, and nodemess.dat are no located in your DATA directory, so move
+    there there, or just deltete them, and impulse will create a new one for
+    you. (2-23-98).
+35: When hitting shit-f5 to kick a user off, it automatically displays
+    hangup.ans, no longer asking which hangup file to display. (2-24-98).
+36: Impulse no longer displays user/sl/dsl/ar specific ansis(i.e. user1.ans,
+    sl255.ans,dsl200.ans, etc). I will re-add this *IF* someone requests that
+    I do. (2-27-98).
+37: I have removed ALOT of newline/pauseScr commands that impulse would
+    internally display, this should make configuring the system to look right
+    a little easier, since you won't have to guess how many nl's will be
+    shown. * NOTE * this also means if you are upgrading, that you may have
+    to edit some of your ansi's to put in pauses/newlines accordingly.
+    (2-27-98).
+38: Added an mci code, 'VA', which prints the impulse acronym. (2-27-98).
+39: WFC is now configurable. Read wfc.txt in the main dir for more info.
+    (3-3-98).
+40: Fixed a bug in the top Menu(when you hit F1 when a user is on), where
+    if you ran the user editor or the configuration program, while logged
+    on locally, when you quit the menu, it would log you off. The menu also
+    doesn't constantly redraw itself while waiting for you to hit a key,
+    thus stopping the flashing affect. (3-7-98).
+41: When writing a message, it now asks who to send the message to, before
+    asking for the title. (Requested by toxix 3-7-98).
+42: Hitting the left arrow in the WFC no longer opens up the message reader.
+    (3-7-98).
+43: The lastcallers shown in the login process(if it was enabled) is now the
+    same as used when called by the menu command 'XC'. (3-7-98).
+44: The order in which the newuser process is carried out is now configurable,
+    read nuorder.txt in the main dir for more info. (3-9-98).
+45: Fixed a bug in the new user application process, where entering a blank
+    for both your password, and the confirm password field would be ok, which
+    causes a MAJOR problem, but its fixed now. (3-12-98).
+46: New users are now given the system default pagelen/linelength's that you
+    specifiy in the system setup, before they were all set to 80x24(although
+    i don't really know why you would change it....). (3-12-98).
+47: If there are no users in your user.lst file, then you cannot go into the
+    user editor, this is a *FEATURE* not a bug, so don't complain that the
+    user editor is broken when you have no users in your user.dat file!
+    (3-13-98).
+48: The userlist/lastcaller .mid files wouldn't display a newline after each
+    display, so they output would be all garbeled, its fixed now. (Thanks
+    to Serial Toon for pointing this out). I also added an mci to the
+    userlist, 'NU', which displays the user number(hopefully). (3-14-98).
+49: Added a command key, alt-0 which displays the amount of memory available
+    on the heap, alt-minus now works remotely. (4-11-98).
+50: Added 2 new menu commands, 'SS' which shows the stack space free, and
+    'SH', which shows the heap space free. (4-11-98).
+51: Added a command 'MEM' to minidos, which shows botht he stack and heap
+    space free. (4-11-98).
+
+Changes - v6 Pre #8
+~~~~~~~~~~~~~~~~~~~~
+1: Fixed bug in file newscans where it'd load up filep.mnu every f'n time.
+2: Fixed bug in area-changing where you could join area 0.
+3: Changed the name. :)  now its Nexus/2 instead of Impulse.
+   Rename IMP.KEY to NEX.KEY...
+4: Modified the display when you pressed '.' at any menu.
+
+Changes - v6 Pre #7
+~~~~~~~~~~~~~~~~~~~~
+1: Impulse now requires a 386+ machine.  Mag69 on IRC gave me a 32-Bit math
+   unit which speeds things up mucho mucho.  Let me know if you experience
+   any strange problems that you may think are related to this.
+2: Fixed problem with [ and ] not changing file areas correctly.
+3: Fixed bug (new bug in p6) that was showing file areas when using [ and ]
+   to move through them.
+4: Added EMAILP.MNU to impulse.  its just like a menu.  see the following for
+   the menu commands to use.  pulldowns, multi-key entry.. etc is all possible
+   *NEW* Menu Commands:
+    @I : Ignore letter
+    @P : Previous letter
+    @J : Jump to another message
+    @F : Forward letter to other user
+    @D : Delete letter
+    @A : Again
+    @R : Reply to Author
+    @S : Store and reply (save original)
+    @T : Title listing
+    @Z : Zap letter (permanently remove)
+    @X : Extract message to file
+    @Q : Quit email reading (this *MUST* be used to exit EMAILP.MNU)
+5: Added READP.MNU to impulse.  its just like a menu.  see the following for
+   the menu commands to use.  pulldowns, multi-key entry.. etc is all possible
+   *NEW* Menu Commands:
+    $A : read the current message again
+    $- : jump to the first message
+    $R : reply to the current message
+    $B : jump to next base (available during newscanning only)
+    $D : delete message
+    $H : make current message the highest-read
+    $J : jump to a different message number (prompted for number)
+    $M : move message to another base
+    $N : move to next message
+    $P : post message in current base
+    $Q : quit back to menu.  (this *MUST* be used to exit the readp.mnu)
+    $T : list titles (not functional yet, keep an eye out)
+    $V : validate message
+    $W : write a reply (same as $R almost)
+    $X : extract message to file.
+    $Z : toggle newscan of current base
+    $! : toggle message permanence
+    $* : toggle mesasge anonymous
+    $S : toggle message as being scanned (sent in netmail)
+6: Added FILEP.MNU to impulse.  its just like a menu.  see the following for
+   the menu commands to use.  pulldowns, multi-key entry.. etc is all possible
+   *NEW* Menu Commands:
+    !I : info on highlighted file.
+    !J : jump to another file.
+    !T : type highlighted file.
+    !N : next screen
+    !F : flag file
+    !R : recieve file
+    !S : send file(s)
+    !V : view file
+    !Q : quit listing.
+7: changed registration technique.  if you're registered, contact nivenh
+   *ASAP* at
+                        email: terrace@dfw.net
+                        voice: 972-222-2880
+8: Put the old Interrupt driven comm stuff back in.  Windows NT doesn't like
+   X00 at all.  However, if you DO have fossil as your driver type, then you
+   must STILL use X00 or VX00!
+9: fixed problem with new users getting random newscanning set on file areas.
+10: made alot of changes to the file listings.  You'll notice a few new
+    features, too many to list.
+11: Added an ansi for NScan.
+    %DN position to move to when NScan is done.
+    %E1 end position for Testing Zip Interior
+    %E2 end position for Removing Files
+    %E3 end position for Adding Zip Comment
+    %E4 end position for Adding Zip Ad
+    %E5 end position for Getting Description
+    %S1 start position for Testing Zip Interior
+    %S2 start position for Removing Files
+    %S3 start position for Adding Zip Comment
+    %S4 start position for Adding Zip Ad
+    %S5 start position for Getting Description
+    %P1 process indicator position Testing Zip Interior
+    %P2 process indicator position Removing Files
+    %P3 process indicator position Adding Zip Comment
+    %P4 process indicator position Adding Zip Ad
+    %P5 process indicator position Getting Description
+    %D1 done Testing Zip Interior
+    %D2 done Removing Files
+    %D3 done Adding Zip Comment
+    %D4 done Adding Zip Ad
+    %D5 done Getting Description
+12: fixed prob with imp not allowing menu hot-keys to be A, B, C, or D.
+    its fixed, so have fun. :)
+
+Changes - v6 Pre #6
+~~~~~~~~~~~~~~~~~~~~
+1: Fixed some problems with screen pausing.
+2: Added option under Miscellaneous Config to disable/enable screen pausing.
+3: Fixed problem with ansi parser and backscrolling fucking each other up.
+   (don't know if anyone other than myself ran into this one)
+4: Fixed bugs in msgread header with the mci codes not working.
+5: rewrote backscroll to where it works 100% of the time instead of just
+   60% :)
+6: fixed alot of bugs. :) (see #3 in v6p4)
+7: fixed bug in diz's where it was cutting off diz's if they had blank
+   lines.
+8: Changed some registers in the fossil routines.  Impulse now
+   *R E Q U I R E S*  Ray Gwinn's X00, or VX00 (os/2).  Look for more
+   communication improvements in the future.
+9: Changed the file listing to resemble the old Dominion 3.0 look.  (i like
+   it better :)
+10: Revised the '.' information screen.
+11: Fixed bug in message editor where it was chopping off lines.
+12: fixed bug in message editor where it was deleteing entire lines when
+    user pressed backspace to move up a line.
+13: made message base list resemble filebase list.
+14: added a new MCI.  %RG and |RG.  they display the registered sysop's name
+    oSr if its unreg'd, it displays UNREGISTERED.
+15: i removed the [impulse v6 connected at XXXXXbps], [Registered to BBSNAME]
+    from the login.  Impulse has had this since v1.0!!!  ehehe.  i'm gonna
+    miss it.  if you want it, put it in your premtx.ans file. :)
+16: added new mci's for connect speed and locked port speed.
+    %LP - Displays the speed the comport is locked at.
+    %SP - displays the speed the user is connected at.
+17: fixed bug in newuser voting to where everyone would get to vote on the
+    shmuck.
+18: fixed problem with ~~filename.ext not working properly after writing a
+    msg in the FSE.
+19: Added ability to load menus from strings.  use ##menu.mnu format to do
+    it.
+20: Added NScan (ULChecker) Ansi.  There are 5 commands, the X's in the mci
+    list correspond to each of the following:
+    1 = Testing Zip Interior
+    2 = Removing Files
+    3 = Adding Zip Comment
+    4 = Adding Zip Ad
+    5 = Getting Description
+    The MCI's are as follows:
+    %DN - This is the place where the cursor should be moved when scanning
+          is done.
+    %Ex - This is where the End results are displayed.
+    %Sx - This is where the Operation description is displayed.
+    %Px - This is where the indicator done character is displayed.
+    %Dx - This is where the indicator in-progress character is displayed.
+
+21: Added feature for sysops (like stygian) who are plagued with idiots
+    pressing enter 100 times to make impulse beep.  Well, now, if enter is
+    pressed more than 5 times in a row, the chat call will be silenced.  If
+    anyone has any objections to this, let me know.
+22: Fixed bugs in multinode creation and startup.  Rename the TEMP directory
+    to TEMP1.  Impulse will now create the directories needed instead of
+    exiting with dos error #3.
+23: Added field to nodes.dat to show the speed the user on that node is
+    connected at.  You need to *DELETE* nodes.dat.  Run imp, and it'll recreate
+    it for you.
+24: Impulse will no longer timeout on local logins, or while in a wfc option.
+25: Fixed a bug with message base newscanning not working unless a specific
+    base was specified.
+
+
+Changes - v6 Pre #5
+~~~~~~~~~~~~~~~~~~~~
+1: Added option in the config for toggle of the "this ansi is missing"
+   messages found in v6p4.  Its under the "miscellaneous options" section.
+
+Changes - v6 Pre #4
+~~~~~~~~~~~~~~~~~~~~
+1: imp now has backscroll. ALT-B to backscroll.  it works great.
+2: fixed bug in multinode chat where it would delete some of the files needed
+   for mn-chat if there were users still in chat.
+3: fixed so many bugs i can't remember which ones they were.
+4: added configurable yes/no prompts per request of Raw Toxic of FSW.
+5: fixed bug in oneliners where if a liner was longer than 70 chars a range
+6: changed the |XY and %XY commands.  Now, 00 as an x coord represents the
+   current X coord.  Ditto for the Y.
+   EX:  |XY0100 would go to column 1 and no move the Y coord.
+
+Changes - v6 Pre #3
+~~~~~~~~~~~~~~~~~~~~
+1: fixed lockups in newuser logins if they hungup.
+2: fixed lockups in messages when a dumbshit would hangup.
+3: fixed the mysterious garbage line that constantly pop'd up on the msg
+   write screen
+4: fixed bug with some strings on login wouldn't let ansi's be used.
+5: fixed another bug in the area changing.
+6: fixed bug when uploading msgs to the fse.
+7: added the conference editor to the pulldown in the wfc.
+8: added pauseing while reading msgs.  people constantly bitched.  that's
+   how you get things done i guess. :)
+9: added support for the following speeds (fossil only!): 76800,
+   64000.  As of change #9, i'm thinking of removing all non-fossil comm
+   ability.  who DOESN'T use a fossil driver anyway?  I'll leave them in
+   but let me know what you think.
+10: got a new fast-as-hell ansi parser.  Thanks to Dink. :)
+
+Changes - v6 Pre #2
+~~~~~~~~~~~~~~~~~~~~
+1: fixed problems with area changing.
+2: fixed the prob with files getting marked private and/or the recipient's
+   name being filled with garbage.
+3: since i forgot to document it before, edit files, hit p, and it'll ask
+   you if you want to make the file private or not.
+4: When locally uploading files, and the "All" option is seleceted, it no
+   longer prompts for "private file?" anymore.
+5: fixed bug where someone logging in at 12000 imp would think it was 1200.
+6: new wfc.  as with every version. :)  but this one's got a pulldown menu
+   in it for those who cream and drool over that shit. try and use your
+   arrow keys. look for a list of hotkeys in the v6 docs, tho, none have
+   changed, only the menu was added.
+7: spiffed up the ole F1 menu while a user is on.  it now jumps to the
+   board's Full-Screen user editor to allow full editing.  the users screen
+   and output are turned off. the configuration option from the F1 menu is
+   the same.
+8: added an automessage read header.  AUTOREAD.ANS
+9: added an automessage write header.  AUTOWRT.ANS
+10: changed automessage up a bit.  instead of "." to quit, use /s, or /a.
+    just like the message editor. the mci for the author is %O1.
+11: began work on a telnet daemon specifically for impulse.  it should come
+    out with the v6 release.  (this really doesn't belong here)  Just a little
+    clue of what's coming.
+
+Changes - v6 Pre
+~~~~~~~~~~~~~~~~~~~~
+1: Still debugging the new format and working small problems out.
+
+Changes - v5.9
+~~~~~~~~~~~~~~~~~~~~
+1: Nothing really but optimizations.
+2: Began work on a new Message base format that will be used in conjuction
+   with PipeLine, Impulse, and GEcho.
+
+Changes - v5.8
+~~~~~~~~~~~~~~~~~~~~
+1: Fixed msg editor shit.  that's it. :(
+
+Changes - v5.7
+~~~~~~~~~~~~~~~~~~~~
+1: Main purpose of this version was to fine-tune the new message editor.
+   many minor problems were fixed.
+2: Impulse has 2 message editors now.  both are sysop selectable.  the FSE
+   and line editor can be selected from the "Miscelleneous" option in the
+   config.
+3: help for the FSE editor commands should be place in "fsehelp.ans" to
+   be displayed witha /? in the editor.
+4: fixed problems with imp doing pausing at unwanted places.
+5: Be sure to go and edit the string on page 18 of the string config.
+6: CTRL commands for the editor are as follows.
+    ^S:back
+    ^D:forward
+    ^H:bkspace
+    ^I:toggle insert
+    ^E:upline
+    ^X:downine
+    ^U:help
+    ^R:pageup
+    ^C:pagedn
+    ^A:word left
+    ^F:word right
+    ^T:word del
+    ^Q:begining of line
+    ^W:end of line
+    ^L:full refresh
+    ^Y:delete line
+    ^N:insert line
+    ^B:break line
+    ^P:delete to eol
+    ^J:join lines
+7: Fixed a few minor bugs.  No one ever found'm cuz they were just in this
+   version. :)
+
+Changes - v5.6 (Unreleased)
+~~~~~~~~~~~~~~~~~~~~
+1: fixed bugs in userlist and lastcallers listings.
+2: fixed bug where if -m was entered without the node it would shit.
+3: fixed lockup problems in new user sequence.
+4: added quoted from mci.. |QT shows the person's name it was quoted from.
+5: tweeked the error handling a bit.  from now on, if you get a runtime error
+   tell me the address that imp says (xxxx:xxxx) so i can get it done faster.
+6: did some more surgery to lift imp's breast to near perkyness.
+7: NEW MESSAGE EDITOR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+8: fixed the lockup prob when people selected "hangup after transfer?"
+9: more optimization. :)
+10: fixed the FEW bugs in my msg editor. :)
+
+Changes - v5.5 (jumped versions. :)
+~~~~~~~~~~~~~~~~~~~~
+1: Fixed |XY Problems in strings.
+2: Changed Shell routines once again for added speed with upload checking
+   and diz extracting and such.
+3: Fixed problem with flagging files in batch.
+4: Fixed a few probs with private file tagging.
+5: Fixed prob with generic menus not coming up right.
+6: Fixed the prob with exiting with os/2.
+7: New baudrate.  128,000 Bps.
+8: Added a new Function to ISL.  INKEY.. reads a key without requiring a
+   CR or LF at the end of entry.
+9: I Rewrote the way Impulse handled pulldown menus.  No more quit to main
+   bug. :)  No modifications needed.
+10: Did some cosmetic surgery.  Imp's breasts were beginning to sag.
+
+Changes - v5.3
+~~~~~~~~~~~~~~~~~~~~
+1: Overlay's now check for EMS, if no EMS, then they check for XMS, if no XMS
+   then the huge ovr gets read from the slow slow disk. :(  XMS roq's for me
+   tho.  EMS will eat conventional and high mem like a fraggin guy named fat
+   albert.  I HIGHLY recommend avoiding use of EMS in every case.. the only
+   thing you need it for is a FEW of the old old dos games. :)
+2: Elminated the "C:\DLPATH\ not found!" error that sometimes occured when
+   changing file areas.
+3: Check out the new imp exiting msg. :)  Those are my favorite bands.
+4: Fixed garb coming from the newscanning..
+
+Changes - v5.2
+~~~~~~~~~~~~~~~~~~~~
+1: Fixed a prob with NUV.  Delete your nuv*.*..  it'll make new ones.
+2: Changed my greets in the . command. (should that be in here?!)
+3: Added files.bbs importing.  If a FILES.BBS file resides in the specified
+   download directory, it'll be used for descriptions, providing you select
+   "yes" when it asks you to. :)
+
+Changes - v5.1
+~~~~~~~~~~~~~~~~~~~~
+1: Shell swapping has been re-written.  Instead of shelling and only getting
+   400k of mem, i get 615k. :)  It goes in this order: EMS, XMS, FILE.
+   Due to slowdowns on novell systems, network checking was added and
+   accounted for when making swap-files.
+2: Fixed prob with imp-mail and the imp bases. :)
+3: Fixed prob with Imp_Ansi putting a space in front of the ansi..
+4: Added 2 new strings.  Look at the end of the string cfg for them.
+5: Fixed a little bug in the message entry.
+
+Changes - v5
+~~~~~~~~~~~~~~~~~~~~
+1: Protocol.dat was screwing up.. fixed it.
+2: uploads were funking.. fixed those too.
+3: nuv was funking.. fixed that.
+4: removed the final remains of the diz editing.
+5: cleared up some memory problems.  You need at LEAST 500k free conventional
+   to run properly.  any less will halt with errors upon some tasks.
+6: added rumor system (against my will), new mnu commands for this are as
+   follows:  RR - displays random rumor (put this in as an EVERYTIME command)
+             RL - lists rumors in database.
+             RA - adds a rumor
+7: Added a script subdirectory to the tree.
+8: &&script.ext as a string runs a script that resides in your ISL/Script
+   sub directory.  Look in the directory setup for this.
+
+Changes - v4.5 b9.9
+~~~~~~~~~~~~~~~~~~~~
+1: Imp-Mail bug with fidonet.dat fixed.
+2: Configurable descriptions removed.  They blew.
+3: A little code optimization was done here and there.
+4: I compiled imp with math-co and emulation on so those of us with a math-co
+   can actually benefit by using it. :)
+
+Changes - v4.5 b9.8
+~~~~~~~~~~~~~~~~~~~~
+I dunno, i didn't do this like i was supposed to and i forgot!
+
+Changes - v4.5 b9.6
+~~~~~~~~~~~~~~~~~~~~
+1: Added quite a few more strings.. with filler space for easier additions
+   in the future.
+2: PROMPT.ANS is now displayed instead of the "Select a prompt" screen.
+3: New userlister.. USERLIST.TOP, USERLIST.MID and USERLIST.BOT..
+   %UN username
+    RN realname
+    SX sex (m, f, lots, none)
+    SN sysop note
+    LO last on date
+4: new string.. enter oneliner prompt.. look for more as i find them..
+   you need to run strfix.exe in your .\data directory.
+5: New lastcaller junk.. LASTCALL.TOP, LASTCALL.BOT, LASTCALL.MID..
+   %CN caller number
+    UN callers name
+    NM callers user number
+6: new menu command, XC.. displays lastcaller junk specified above.
+7: old userlister is gone.. userl.top and userl.bot are dead too. :)
+8: voting question junk was removed.. who used it anyway??
+9: new better bbs list system.  uses data file instead of txt.. delete your
+   old bbslist.dat.. and it uses bbslist.top, etc..
+   %SY bbs sysop
+    BN board name
+    PH phone number
+    CM bbs comment
+    TY software type
+    SP modem speed
+10: &&<scriptfile> as a string now runs the <scriptfile> in your script
+    directory.
+11: look in your directory editor.. there's a special dir for scripts now.
+12: Phone number input now supports international formats.
+13: UART detection and utilization with I(mp)ternal Comm routines in use.
+
+Changes - v4.5 b9.4
+~~~~~~~~~~~~~~~~~~~~
+1: You'd better tell me if you like the config'able diz's, or they'll be
+   gone next version.
+2: My new asm comm junk was sending too fast (is that possible!?) :)
+
+Changes - v4.5 b9.3
+~~~~~~~~~~~~~~~~~~~~
+1: THE COMM ROUTINES HAVE BEEN COMPLETELY REWRITTEN!!!!!!!!!!
+2: I think i got the lockup in the newscans.  (No Numeric Emulation causes
+   some people's processors to shit!) SEXMANG.
+3: Fixed the exit to dos error on uploads.  Make sure your external batch
+   file string is null if you don't use it, otherwise its gonna shell and
+   try to execute it.. and if its not there.. erm.. its gonna sit. :)
+
+Changes - v4.5 b9.2
+~~~~~~~~~~~~~~~~~~~~
+1: Requested by Tyme.  Configurable file descriptions.
+   |DZ the description itself.
+   |BY who uploaded it.
+   |DL how many times downloaded.
+   |DU date it was uploaded on.
+   if no | cmds are present, the descriptions is automatically inserted with
+   no extra junk on it.  Look under Files Configuration in the setup for
+   where to edit the description lines.
+2: Deleting msgs didn't work for mr. sysop. :)  fixed.
+3: Along with the file descs, a maximum number of diz lines to be imported
+   was added.  although, the maximum is still 20.
+4: in b9.1 i used the wrong procedure to write, so it was messing up. Anyway,
+   i got it the 2nd time around.
+
+Changes - v4.5 b9.1
+~~~~~~~~~~~~~~~~~~~~
+1: Requested by Bad Sector.  when putting | or % in a cstring, it would
+   actually execute that command.. not anymore. :)
+
+Changes - v4.5 b9
+~~~~~~~~~~~~~~~~~~~~
+1: Removed the ansi from NScan.  You can make the string to an ansi if you
+   want.  But it won't report status.
+2: An external scanner can be used by turning off NScan and placing a batch
+   or exe name in the External .BAT in the files config.
+    @B = Current BPS.
+    @F = Filename being scanned.
+   this can either be an executable command line, or a batch file.
+3: blacklist wasn't being checked on new user's apply'ng.
+4: areacode's weren't being checked with areacode.lst
+5: autoval.lst wasn't working right. :) its fixed along with the prior.
+6: made the config internal.. again!  due to much bitching from people.
+7: fixed a bug in newscanning (msg/file) where it wouldn't read the cms.
+   on my system, instead of scanning the sysop news area, it would scan all
+   of the bases.  and we dont' want that. :)  (oh, i had 1 int he cms so i'm
+   not stupid. :)
+8: new option in ladle.exe.. |SD adds the date. :)
+
+Changes - v4.5 b8
+~~~~~~~~~~~~~~~~~~~~
+1: Correct increase of uploaded kb.
+2: Correct increase of total uploaded kb.
+3: Fixed the max-int in the user editor which would only allow you to edit
+   a users's uk stat to 32767.
+4: Fixed ANOTHER bug in the newscan. :)
+5: F2 now has many stats on the user.  press it a few times and see. :)
+6: I in the file list brings up the file information.  i lub it.
+
+Changes - v4.5 b7
+~~~~~~~~~~~~~~~~~~~~
+1: NUV file positioning has been fixed.
+2: File searches show entire extended descriptions.
+3: Changed the string/menu local input routines to be a little easier to
+   read.
+4: FIRSTCMD not working has been fixed. (it only funked in b6.)  I had
+   added another var with the same name.  needless to say, its gone.
+5: Check out the new User Editor from the WFC and let me know if you want
+   it to stay.  :)  I like it.. even if it's like obv's.
+
+Changes - v4.5 b6
+~~~~~~~~~~~~~~~~~~~~
+1: When doing a file search, add to batch option was added.
+2: Nice CRC stuff.  Check it out.
+3: New menu command CN. CString of "F" newscans ALL file areas.  CString
+   of "M" newscans ALL msg areas.
+4: The menu commands FN and MN now only scan msgs in the current
+   conference, or if a number is specified in the CString, only that base
+   number will be scanned.
+5: AutoJoining of the first base in the current conference was added.
+6: "T" command wasn't working in file newscanning.
+7: New NUV ansi and other junk.  Now, instead of being able to select which
+   user you want to vote on, you are moved right on through the list skipping
+   users you already voted on in the past. :(  anyway, the new ans is
+   NUVOTE.ANS
+     %NM - users name being voted on.
+     %YV - total # of yes votes he's got.
+     %NV -            no
+     %VY - total yes votes he needs to be validated.
+     %VN -       no
+
+
+Changes - v4.5 b5
+~~~~~~~~~~~~~~~~~~~~
+1: Fixed a bug in newscanning that didn't allow you to quit.
+   (this was my fault! i admit!)
+2: Spiced up timeslicing - i can get 0% cpu usage while in the wfc and in
+   the bbs with a user, i can keep it around 12%, and i run a 386/40 w/8 megs
+   Impulse Timeslices support OS/2, Win, Win95, WinNT, DV, TaskView, TopView
+   and if there is anything else out there, lemme know.. :)
+3: I accidentally left a little debug writeln in the uploads :)  needless to
+   say its been removed. :)
+4: Fixed some login shit.  IMP45P4.ZIP was funked like dat.
+   (thanks to Verbatum)
+5: NUV was showing 2 headers.  not anymore.
+6: Runtime Error reporting now give a FULL report of the problem, whether it
+   be an I/O error, or a file not found.. it'll tell you, i know most of you
+   don't have a clue as to what any specific error means. :)  Perhaps it'll
+   enable you to fix a few of your own problems.
+7: For those of you using a 486+ or a math-co i'll compile verions just for
+   you guys.  I just got one myself, but all major releases will be in
+   IMP-V45N.ZIP - numeric processor compilation.
+   IMP-V45E.ZIP - numeric emulation compilation.
+   so be on the lookout for these in the future.
+8: Users can delete msgs that THEY posted in the bases.  Be sure to pack the
+   bases everynight tho.
+9: Finished up lightbar file tagging support.  have phun.
+
+
+Changes - v4.5 b4
+~~~~~~~~~~~~~~~~~~~~
+1: Fixed an uploads bug.  Too many files open.
+2: Unwanted area code checker.  Make a txt file named AREACODE.LST in your
+   data directory, and place a single ac on each line.  when a new users
+   phone number is input, and its in areacode.lst then BADAC.ANS is displayed
+   and the user is disconnected.
+3: Users now log right in after checking for access.
+4: Msg pausing added.
+5: Fixed a bug where upload stats weren't getting increased.
+6: Quote header and footer are now auto-added instead of being selectable.
+7: Included OS/2 and Windows PIF file for you geeks who can't figure it out.
+   Also made a nifty icon too.
+
+Changes - v4.5 b3
+~~~~~~~~~~~~~~~~~~~~
+1: Changed the NUV up a bit.  It now displays the HDR file.
+2: LADLE.EXE Will now run with just about every bbs out there.  Look for
+   this as a seperately distributed file.  Although, impulse will come with
+   it due to its being used internally.  As for those of you not wanting to
+   use Ladle, just delete your sauce.tmp.
+3: Auto Joins the first area in the current conference.
+4: SPACEBAR tags in filelistings.  For you obv/v2 freaks.
+5: Arrow Key ability in filelistings.  Look for this to be added to in the
+   VERY near future.
+6: I might have fixed the QWK thing.  It happens to some, and others it
+   doesn't.  I happen to be one that it doesn't happen to, so it'll be hard to
+   fix.  I'm sure you can understand.
+7: Changed some things in the registration routines.  Should be a little bit
+   harder to crack.  Not that it can't be or anything.. but the current ones
+   won't work.  I'm not gonna get all huffy if its cracked tho. :)
+8: Improved OS/2 and WINDOWS TimeSlicing.  Should run spiffier than before.
+
+
+Changes - v4.5 b2
+~~~~~~~~~~~~~~~~~~~~
+1: Fixed probs with matrix menu.  the arrow keys were funking all to hell.
+2: Fixed nuv.
+3: the OTHER upload bug has been fixed.
+4: I think i might have fixed the quick locking probs, but all reports of
+   them were in DV, and i don't have DV so no telling.  And they work fine
+   in os/2 and dos.  (i run os/2 & dos!!)
+
+
+Changes - v4 b12
+~~~~~~~~~~~~~~~~~~~~
+1: New Menu Command 'XA'.  Adds or removes a user's AR flag.
+   For Example:  XA with a CString of +A would add A to his AR flag list or
+   -A would remove A if it was already present.
+2: Uploads bug fixed.
+3: Pulldown menu bug fixed.  It would stick into a continuous menu loop if
+   the new menu was the same one the pulldown was started from.
+4: F1 Command has been changed up a bit.
+5: Bug in ISL where it would exit with #103 fixed.
+6: Another ISL bug.  MENUCMD wasn't working correctly. :) fixed it.
+7: /xxxx commands were removed from chat.
+8: F1 sysop bar has been modified a bit.
+
+
+Changes - v4 b11
+~~~~~~~~~~~~~~~~~~~~
+1: WRITEHDR.ANS now has the following mci's.
+   |BN base name
+   |TL msg title
+   |FM msg from
+   |TO msg to
+   |DT date
+   |NL carriage return
+2: Mucho optimization. More ram whenin a shell, less stack, less heap.
+   removed alot of useless code.  Namely, the guest user junk, and
+   alot of unused var's.
+3: LADLE.EXE - similar to obv's SAUCEPAN.EXE.  Exports a diz containing
+   the files' sauce information to .\TEMP\ using the template named
+   C:\IMP\ANSI\SAUCE.TMP, or whichever dir your ansi's are in. :)
+4: The fullscreen editor has been redone to look more like an actual editor
+   rather than a cheezy renegade/telegard editor.
+
+
+Changes - v4 b10
+~~~~~~~~~~~~~~~~
+1: NEWINF.ANS now does like obv/spew and vision/spew do.
+   keys mci's
+   ------------------------------------
+     A  %OA
+     B  %OB
+     C  %OC
+     D  %OD
+     E  %OE        you'll see what they do. :)
+     F  %OF
+     G  %OG
+     H  %OH
+     I  %OI
+     J  %OJ
+2: The %O1..9 cmds were replaced with the above :)
+3: Fixed the QWK mail!! w00w00!
+4: Msgs are fixed for sure.. i checked!
+5: CONFIG.EXE now has a few new things.  An option in the "Flagged" area
+   that says: "ad deleted users to blacklist?"
+6: CONFIG.EXE also has a max amount of quote lines.  wowy zowy!
+
+Changes - v4 b9
+~~~~~~~~~~~~~~~
+1: NEWINF.ANS now uses mci's for placement and editing options.  %O1 to %O9
+   are used.  Editing takes place the point where %Ox started.
+2: I think i fixed the msg input bug.  more than 200 or so lines and it'd
+   funk all to hell and back.
+
+Changes - v4 b8
+~~~~~~~~~~~~~~~
+1: Typeing [ and ] in the msg/file areas now only lets the user move to areas
+   in the current conference.
+2: Line in the msg editor now are done with linked lists. This allows the
+   user to use an inumerable amount of lines.  However, i imposed a limit of
+   300 on typed msgs.  This will be configurable in the next version.
+3: Typeing the # of the area to jump to will now only let the user move to
+   the areas in the specified conference if their acs permits.
+4: Added the string editor back into the main program. %S is the menu command
+
+
+Changes - v4 b7
+~~~~~~~~~~~~~~~
+1: Added NEWINF.ANS - Diplayed for a user to do last minute changes to his
+   or her own account.  It uses the standard mci's.
+2: Removed the Country question.  (no one cares!) :)
+3: Removed the City/State Questions in the newuser app.
+4: Added a From questin in the newuser app.
+5: Removed the TFiles section.  This was left from telegard.  I felt it was
+   serving no real useful purpose, and i needed the space. :)
+6: Optimized a few places in the code for speed. (no biggie)
+7: Fixed a stack error in msg quoting.
+
+Changes - v4 b6
+~~~~~~~~~~~~~~~
+1: Added |XYxxxx Commands in Strings.  |XY with xxxx being 4 digits moves to
+   the (xx,xx) coordinate on the screen.  EX: |XY0315Hello! would put the
+   text "Hello!" at (3,15).
+2: Added %XYxxxx Commands in text files.  Read above for the usage.
+3: Fixed a bug in upload msg junk.
+4: Removed the capitalization crap from the bbs.  Thanks to Maestro for this
+   suggestion.  Now, input will be in lower case, unless otherwise typed.
+5: Added a blacklist.  Put BLACK.LST in your .\DATA directory in imp.  Only
+   use one name per line.
+6: Added an Autovalidate list. Put AUTOVAL.LST in your .\DATA directory.  Any
+   user who's name is found in this file will automatically recieve the normal
+   level of acs and will be logged directly into the board after they finish
+   their application (Note: Users on AUTOVAL.LST skip the NUV)

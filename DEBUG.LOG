@@ -1,0 +1,107 @@
+                                                _______
+                          __..,,,.._          .d$$$$$$$:
+                   .Öy%S$$8******8$$$Gg.   .d$³P'   :$$
+         _.,,       `$T'`     __   `'4$$L T$L`      $$:______
+.,Úy%@S$$*Ó$$L j$$$$$$$.,¿   :$$$$b.  `$$L T$L.j   :$$$$$$$Sl
+ @S$Óı'`   `$$L$$'''ııı$$:   $$$$$$$L  `$$: $$$:   $8Àı'''$$:..__
+ :$$_.,   yS$$$$'     :$$   :$$$$$$$$   $$:_$$$   :'   .,Â$$$$$$$$$$$SS@@%
+  $$$$$   :$$$$'  ,   l$:   $$$$$$$$!  ,8$$$8*½      j$$$$$$$$:``^^""ıı$$l
+: "^`$$:   $$$'  ,$   $$   :$$$$$³P'  ,L     _   :L  `$³$$$$$$   ,,..__$$:
+ ::  :$$   :$'  ,$l  :$:   ÓÓÓı'`   .d$$$,  `:   $$b.   `'Ù³$l   $$$$$$$$
+ ::   $$:   '  ,$$:  l$    __..,¿y@$$$$$$$       Ù*8$³GÚ.   `:   $$:`^^""
+  ::  :$$     ,$$$   $:   Ùı"^`  j$$$$$$$$   ._       `j$L      :$$
+  ::   $$:   ,$$$l  :$     _.,   $$$$$$$$$:  l$$$S@%yÒ,$$!      l$l     -sar
+...::  :$$   :$$$:  l$@S³$8*½'  :$$$$$$$$$l  :$$l$$$$$³P'   ,   $$:
+    _.,Ú$$:   $$º   Óı'`        l$$$$$$$$$:  l$$:$$''`    .d   :$$yÚ,
+    `$$$³$8   '``L    .,·%S     :$$$$$$$$$   $$l:$$__.,g `^^   ıĞĞ$$$
+     `$$L     _.,X$SS$$$$$l      $$$$$$$$!  j$$: $$$$$$$ÒÒ,    _  $$l
+      `$$L%S$$$$$$³$$8*l$$:  :L  `³$$$³P'  ,$$!  ÓĞĞĞııı$$$   :$$$$$$yyyÒÒÒ ¿y%
+    xx,`$$³$8*Ğı'`,¿¿¿ $$$   l$b.  ```   .d$$' ,|||::: :$$l   l$$$888888$$$ :$l
+    """ ``    ^^^`````:$$l   ÁÁıı$S%%%@S$8À`   .       l$$:             $$l l$:
+                      l$$:       $$L^^`` . ù '`        $$$$SSS@@@%%%yyÒ,$$: $$
+                      $$$$%%@@SS$$$$                   ıııııĞĞĞĞ$$$*88$$³$ :$l
+                      $$88**ĞĞıı""^^                           j$$yÂÂ,._ ` l$:
+                                                               ```'''ıĞ*8$³$$
+                                                                          `'ı
+( August 28th, 1998 ) ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+- New user voting creates a Runtime error 2 occured at 5075:310.
+
+  * SOLUTION: Delete NUV.DAT from .\DATA directory.
+
+  Noticed that when you disable NUV and DELETE the user, the error
+  still occurs because NUV.DAT wasn't deleted.
+
+- The colours in the system setup are striped into cyan for no reason.
+
+  Also, colours in the user configuration sometimes gets swapped when you
+  switch back and forth.
+
+- When you toggle expert mode on then turn it back off it won't display
+  the menus even if user uses the "?" command.
+
+- Internal ansi display driver in Impulse sucks I have seen grass move faster
+  then it. Also it puts odd trails of color in the back of the lines where
+  the ansi should end.
+
+- Screen pauses literaly DESTROYS the ansi when it pauses it, leaving trails
+  where the pause prompt was.
+
+  Also screen pauses sometimes pauses at different spots, on LOGON.ANS my
+  picture pauses after EVERY line.
+
+- The status bar gets pushed off the screen when string 2 - handle prompt
+  gets to the end of the screen.
+
+  Hmmm, seems like it works properly again.
+
+- String 29 - bulletin prompt doesnt work correctly with pipe codes.
+
+- Screen refresh in user configuration is slower then fuck.
+
+  * SOLUTION: Possibly use direct video writes for the lightbars.
+
+- New user application needs to be re-worked, its horribly done.
+
+  User is allowed to have non-standard handles.
+  User is allowed to have passwords that consist of a space or 1 character.
+  User is allowed to enter 00/00/00 for their birthdate.
+
+- Cute bug, won't let me enter " smoke " for my nickname, I have to use
+  " 2 " to login.
+
+  This bug is FUCKING WIERD, I logged in as a new user, and can login with
+  the users proper name, will look futher into this bug.
+
+  Ok, I found out how to fix it partically, delete the account then restore
+  it. It will work as normal. Still figuring out what the fuck is going on.
+
+  Its not USER.LST because, I have made a new one, and still it doesnt
+  recognize the user.
+
+  OK I FINALLY FOUND OUT WHAT HAS HAPPENED HERE!! YAY!!
+  Don't know how EXACTLY it happened but, Black Knight and Smoke were removed
+  from the NAMES.LST and it doesn't get updated.
+
+- Message base can be on ANY conference even if it doesnt exist.
+
+- Impulse chokes if some system files are missing from the .\DATA directory
+
+- Status bar disappears when you enable it, and excute another command.
+
+- Very odd bug, screen size got smaller for some odd reason, but I fixed it
+  by toggling the status bar on/off.
+
+  Found it!! Ok, this is what happens, when I toggle the status bar on/off
+  the status bar disappears, like the bug above, but then takes up 2 lines
+  so it seems that the screen height got smaller.
+
+- When you delete a user with /xxx4 protection, it will say they are deleted
+  in the user configuration, but when you edit them, it wont say they are
+  deleted.
+
+- When you try to display and ansi with the menu command -F with the ansi
+  filename as LOGON.* it will create a runtime error.
+
+- In the new user application process it doesnt save their phone numbers
+  right, it saves it as 000i000|0000 or some other wierd shit.

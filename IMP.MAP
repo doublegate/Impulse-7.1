@@ -1,0 +1,950 @@
+
+ Start  Stop   Length Name               Class
+
+ 00000H 0096DH 0096EH Impulse            CODE
+ 00970H 00994H 00025H initp              CODE
+ 009A0H 009C9H 0002AH wfcmenu            CODE
+ 009D0H 02345H 01976H BPTrap             CODE
+ 02350H 03583H 01234H myio               CODE
+ 03590H 04760H 011D1H output             CODE
+ 04770H 0974DH 04FDEH common             CODE
+ 09750H 0A57DH 00E2EH Common5            CODE
+ 0A580H 0C3B7H 01E38H exec               CODE
+ 0C3C0H 0F131H 02D72H common1            CODE
+ 0F140H 0F749H 0060AH SCRLBK             CODE
+ 0F750H 0F783H 00034H cmd                CODE
+ 0F790H 0F896H 00107H ASMSAUCE           CODE
+ 0F8A0H 12A8DH 031EEH common2            CODE
+ 12A90H 12AB4H 00025H sysop1             CODE
+ 12AC0H 12AE9H 0002AH ulcheck            CODE
+ 12AF0H 12B0FH 00020H File3              CODE
+ 12B10H 12B75H 00066H file1              CODE
+ 12B80H 12BA4H 00025H mail1              CODE
+ 12BB0H 12BD4H 00025H ansiedit           CODE
+ 12BE0H 12C22H 00043H file11             CODE
+ 12C30H 12C5EH 0002FH Nuv                CODE
+ 12C60H 12C93H 00034H sysop3             CODE
+ 12CA0H 12CC4H 00025H Script             CODE
+ 12CD0H 14022H 01353H menus2             CODE
+ 14030H 14059H 0002AH mail4              CODE
+ 14060H 1409DH 0003EH mail5              CODE
+ 140A0H 164F8H 02459H Menus              CODE
+ 16500H 16524H 00025H logon1             CODE
+ 16530H 16559H 0002AH newusers           CODE
+ 16560H 16589H 0002AH logon2             CODE
+ 16590H 165B4H 00025H impDos             CODE
+ 165C0H 165E9H 0002AH ISLU               CODE
+ 165F0H 16619H 0002AH timeBank           CODE
+ 16620H 16649H 0002AH mail7              CODE
+ 16650H 16D03H 006B4H menus3             CODE
+ 16D10H 16D3EH 0002FH misc4              CODE
+ 16D40H 16D73H 00034H misc2              CODE
+ 16D80H 16DA4H 00025H file13             CODE
+ 16DB0H 16DDEH 0002FH file10             CODE
+ 16DE0H 16E04H 00025H file5              CODE
+ 16E10H 16E3EH 0002FH sysop11            CODE
+ 16E40H 16E64H 00025H sysop2             CODE
+ 16E70H 16E94H 00025H sysop21            CODE
+ 16EA0H 16EC4H 00025H sysop2z            CODE
+ 16ED0H 16EF4H 00025H sysop2i            CODE
+ 16F00H 16F24H 00025H sysop2h            CODE
+ 16F30H 16F54H 00025H sysop2g            CODE
+ 16F60H 16F84H 00025H sysop2f            CODE
+ 16F90H 16FB4H 00025H sysop2e            CODE
+ 16FC0H 16FE4H 00025H sysop2d            CODE
+ 16FF0H 17014H 00025H sysop2c            CODE
+ 17020H 17044H 00025H sysop2b            CODE
+ 17050H 17074H 00025H sysop2j            CODE
+ 17080H 170A4H 00025H sysop2a            CODE
+ 170B0H 170D4H 00025H UConfig            CODE
+ 170E0H 17104H 00025H cuser              CODE
+ 17110H 17134H 00025H sysop2s            CODE
+ 17140H 17164H 00025H strProc2           CODE
+ 17170H 171A3H 00034H sysop9             CODE
+ 171B0H 171E8H 00039H sysop8             CODE
+ 171F0H 1721EH 0002FH CONF               CODE
+ 17220H 17262H 00043H mail6              CODE
+ 17270H 17294H 00025H msgpack            CODE
+ 172A0H 172DDH 0003EH mail9              CODE
+ 172E0H 17309H 0002AH mail3              CODE
+ 17310H 17343H 00034H mail2              CODE
+ 17350H 17388H 00039H misc5              CODE
+ 17390H 173C3H 00034H misc1              CODE
+ 173D0H 173F9H 0002AH doors              CODE
+ 17400H 17424H 00025H misc3              CODE
+ 17430H 17454H 00025H sysop7             CODE
+ 17460H 17484H 00025H sysop7m            CODE
+ 17490H 174C3H 00034H Rumors             CODE
+ 174D0H 17508H 00039H file12             CODE
+ 17510H 17543H 00034H mmodem             CODE
+ 17550H 1759CH 0004DH file6              CODE
+ 175A0H 175D3H 00034H file8              CODE
+ 175E0H 1761DH 0003EH file9              CODE
+ 17620H 17649H 0002AH file2              CODE
+ 17650H 17683H 00034H file4              CODE
+ 17690H 176B4H 00025H LZHview            CODE
+ 176C0H 176E4H 00025H zipviewu           CODE
+ 176F0H 1771EH 0002FH file14             CODE
+ 17720H 177A3H 00084H mail0              CODE
+ 177B0H 17F3CH 0078DH sys                CODE
+ 17F40H 17F82H 00043H multinod           CODE
+ 17F90H 17FC3H 00034H execbat            CODE
+ 17FD0H 18044H 00075H file0              CODE
+ 18050H 18DB5H 00D66H common3            CODE
+ 18DC0H 18F40H 00181H strProc            CODE
+ 18F50H 19579H 0062AH Common4            CODE
+ 19580H 19AE2H 00563H AnsiDrv            CODE
+ 19AF0H 1A2E9H 007FAH tmpcom             CODE
+ 1A2F0H 1A2F0H 00000H Records            CODE
+ 1A2F0H 1A969H 0067AH timejunk           CODE
+ 1A970H 1AB22H 001B3H OvrLay             CODE
+ 1AB30H 1B07DH 0054EH Dos                CODE
+ 1B080H 1B7C2H 00743H Overlay            CODE
+ 1B7D0H 1BDEEH 0061FH Crt                CODE
+ 1BDF0H 1C1F0H 00401H checkpat           CODE
+ 1C200H 20D5FH 04B60H System             CODE
+ 20D60H 2C897H 0BB38H DATA               DATA
+ 2C8A0H 3535FH 08AC0H STACK              STACK
+ 35360H 35360H 00000H HEAP               HEAP
+
+  Address         Publics by Value
+
+ 0000:0009       MenuExec
+ 0000:01EE       DoBBS
+ 0000:092D       @
+ 0097:2A3A       initBBS
+ 009A:0040       wfcmdefine
+ 009A:289C       wfcmenus
+ 009D:0136       exitbbs
+ 009D:193A       Trap
+ 0235:0000       cursoron
+ 0235:0972       infield1
+ 0235:09C8       infielde
+ 0235:09EA       cwrite
+ 0235:0ABD       cwriteat
+ 0235:0AF3       cstringlength
+ 0235:0B6B       cwritecentered
+ 0235:0BAF       box
+ 0235:0EC9       checkvidseg
+ 0235:0EF7       savescreen
+ 0235:0FC0       setwindow
+ 0235:101C       removewindow
+ 0235:1122       movewindow
+ 0359:004F       oPrintMci
+ 0359:0E7B       oPrint
+ 0359:1193       oPrintLn
+ 0477:0020       autovalidate
+ 0477:016C       loaduboard
+ 0477:023E       loadboard
+ 0477:0315       lcmds
+ 0477:043A       fbaseac
+ 0477:0480       mbaseac
+ 0477:04E2       changefileboard
+ 0477:05F4       changeboard
+ 0477:06DA       freek
+ 0477:0701       okansi
+ 0477:0729       nsl
+ 0477:07F3       cinkey
+ 0477:08A9       intime
+ 0477:0A50       stripcolor
+ 0477:0B27       sl1
+ 0477:0BC6       sysoplog
+ 0477:0C06       tch
+ 0477:0C9C       time
+ 0477:0D54       date
+ 0477:0E0D       value
+ 0477:0EAF       cstr
+ 0477:0EE0       nam
+ 0477:0F21       ageuser
+ 0477:0FDB       caps
+ 0477:10D7       leapyear
+ 0477:1139       days
+ 0477:1190       daycount
+ 0477:11D5       daynum
+ 0477:12F1       dat
+ 0477:146E       pr1
+ 0477:14C4       pr
+ 0477:15D2       getc
+ 0477:175C       setc
+ 0477:184A       cl
+ 0477:187E       sqoutsp
+ 0477:18FA       exdrv
+ 0477:194C       prompt
+ 0477:1BF2       print
+ 0477:1C33       nl
+ 0477:1C4C       prt
+ 0477:1C89       sprompt
+ 0477:2169       sprint
+ 0477:21A7       empty
+ 0477:21E7       inkey
+ 0477:2324       outkey
+ 0477:23E2       checkeventday
+ 0477:24E5       checkpreeventtime
+ 0477:2547       checkeventtime
+ 0477:25A9       checkevents
+ 0477:267B       dm
+ 0477:272F       getkey
+ 0477:2A71       ClearScreen
+ 0477:2AA0       cls
+ 0477:2B2F       swac
+ 0477:2BD0       tacch
+ 0477:2C69       acch
+ 0477:2C82       aonoff
+ 0477:2CE5       onoff
+ 0477:2D20       syn
+ 0477:2D55       strippipes
+ 0477:2DD1       pipelen
+ 0477:2E15       pynq
+ 0477:2FAB       centre
+ 0477:309F       wkey
+ 0477:3158       ctim
+ 0477:32C8       tlef
+ 0477:33FD       longtim
+ 0477:3550       dt2r
+ 0477:35BA       r2dt
+ 0477:36DA       timediff
+ 0477:37D3       getdatetime
+ 0477:383D       cstrl
+ 0477:3893       cstrr
+ 0477:3E7C       printacr
+ 0477:410B       pfl
+ 0477:4342       exist
+ 0477:4386       printfile
+ 0477:4966       aacs1
+ 0477:4E76       aacs
+ 0477:4EAE       loadurec
+ 0477:4F3A       saveurec
+ 0975:0000       expand
+ 0975:0084       checkhangup
+ 0975:00AE       mso
+ 0975:00FE       fso
+ 0975:0121       cso
+ 0975:0144       so
+ 0975:016B       timer
+ 0975:0261       shelldos
+ 0975:0426       goxy
+ 0975:04B6       writehdr
+ 0975:058C       choosaprompt
+ 0975:07DF       lenn
+ 0975:0851       mlnnomci
+ 0975:090F       mln
+ 0975:09D9       mrn
+ 0975:0A78       mn
+ 0975:0AAB       dosansi
+ 0975:0ABB       lpromptc
+ 0975:0C42       lowcase
+ 0975:0CC2       onek
+ 0975:0E19       cDelay
+ 0A58:01A4       getenv
+ 0A58:0C05       do_exec
+ 0A58:1135       @
+ 0C3C:001D       checkpw
+ 0C3C:00AF       newcomptables
+ 0C3C:03D3       cline
+ 0C3C:04DB       pausescr
+ 0C3C:05B8       wait
+ 0C3C:064B       inittrapfile
+ 0C3C:081A       chatfile
+ 0C3C:0A16       local_input1
+ 0C3C:0B31       local_inputl
+ 0C3C:0B46       chinkey
+ 0C3C:0C37       inli1
+ 0C3C:1B5F       splitscreenchat
+ 0C3C:2149       chat
+ 0C3C:24E3       sysopshell
+ 0C3C:2686       globat
+ 0C3C:2832       exiterrorlevel
+ 0C3C:2A47       readinzscan
+ 0C3C:2C77       savezscanr
+ 0C3C:2D3C       redrawforansi
+ 0F14:0000       initializescrlback
+ 0F14:0339       viewscrollback
+ 0F14:0590       addtoscroll
+ 0F75:001D       cmdShowStackFree
+ 0F75:0074       cmdShowHeapFree
+ 0F75:011B       cmdOneLiners
+ 0F75:086E       cmdGetSauce
+ 0F79:0000       ClearSAUCE
+ 0F79:002A       GetSAUCE
+ 0F79:00F7       @
+ 0F8A:0006       purgedir
+ 0F8A:052C       showudstats
+ 0F8A:07F2       sysopKeys
+ 0F8A:11AB       savesystat
+ 0F8A:122B       remove_port
+ 0F8A:1252       iport
+ 0F8A:1291       sendcom1
+ 0F8A:12A8       recom1
+ 0F8A:12E5       term_ready
+ 0F8A:1305       getwindysize
+ 0F8A:1335       inuserwindow
+ 0F8A:138F       commandline
+ 0F8A:145C       sclearwindow
+ 0F8A:15A7       schangewindow
+ 0F8A:18F5       topscr
+ 0F8A:1EEE       showscr
+ 0F8A:2F76       printf
+ 0F8A:316A       noansi
+ 12A9:21A0       exproedit
+ 12AC:0192       External_ULcheck
+ 12AC:0BF5       ulexamine
+ 12B1:0000       dodl
+ 12B1:0052       doul
+ 12B1:009D       showuserfileinfo
+ 12B1:02D0       okdl
+ 12B1:062E       dlx
+ 12B1:0A1B       dl
+ 12B1:0B6F       idl
+ 12B1:0C96       zipdiz
+ 12B1:0E95       dodescrs
+ 12B1:1380       writefv
+ 12B1:1470       newff
+ 12B1:1590       doffstuff
+ 12B1:1730       arcstuff
+ 12B1:197A       fbaselist
+ 12B1:1ADB       unlisted_download
+ 12B1:1BE6       do_unlisted_download
+ 12B1:1C32       nfvpointer
+ 12B8:0DBF       fsemsg
+ 12BB:1E3A       ansireedit
+ 12BE:0000       cansee
+ 12BE:0047       pbn
+ 12BE:06D5       pfn
+ 12BE:0886       searchb
+ 12BE:1B43       search
+ 12BE:1C0B       listfiles
+ 12BE:1D35       searchbd
+ 12BE:207B       searchd
+ 12BE:2209       gnfiles
+ 12BE:22D3       nf
+ 12BE:240F       fbasechange
+ 12C3:000C       deletecomments
+ 12C3:0107       readcomments
+ 12C3:073E       newUserVote
+ 12C6:0108       nukeuser
+ 12C6:045A       PullEdit
+ 12C6:093E       uedit1
+ 12C6:0AA7       restric_list
+ 12C6:59B1       uedit
+ 12CA:40F9       DoScript
+ 12CD:0004       dopulls
+ 12CD:07CC       readin
+ 12CD:0F93       showcmds
+ 12CD:12F5       oksecurity
+ 12CD:1331       showthismenu
+ 1403:0000       autoreply
+ 1403:0432       readmail
+ 1406:00E6       post
+ 1406:05E9       isnew
+ 1406:0625       updateptr
+ 1406:1B7E       scanmessages
+ 1406:1C55       qscan
+ 1406:1D84       gnscan
+ 1406:1E05       nscan
+ 140A:0041       readin2
+ 140A:0C19       mainmenuhandle
+ 140A:0F1B       fcmd
+ 140A:0FD2       domenuexec
+ 140A:13E9       domenucommand
+ 1650:172F       getuser
+ 1653:0840       newuser
+ 1653:0A65       newuserinit
+ 1656:0339       logon
+ 1656:0835       logoff
+ 1659:1A87       miniDos
+ 165C:020B       islC
+ 165C:04F7       islD
+ 165F:002B       timeBankDeposit
+ 165F:00A0       timeBankWithDraw
+ 1662:06D6       sendqwk
+ 1662:1A72       recieverep
+ 1665:005F       dochangemenu
+ 16D1:014D       readq
+ 16D1:0BCA       readasw
+ 16D1:1015       readasw1
+ 16D4:0020       bulletins
+ 16D4:02AD       yourinfo
+ 16D4:032F       bbsListView
+ 16D4:058D       bbsListAdd
+ 16D8:0E3D       sort
+ 16DB:01BC       move
+ 16DB:10E0       editfiles
+ 16DB:2699       validatefiles
+ 16DE:086A       uploadall
+ 16E1:0027       chuser
+ 16E1:0307       zlog
+ 16E1:075C       showlogs
+ 16E4:04EA       pullconfig
+ 16E7:01AC       getsecrange
+ 16EA:0062       pocolors
+ 16ED:016D       pofido
+ 16F0:0606       pomisc
+ 16F3:08D4       ponewauto
+ 16F6:03C9       pofilesconfig
+ 16F9:03CA       poflagfunc
+ 16FC:02FB       pogenvar
+ 16FF:0289       poslsettings
+ 1702:0AE4       pofile
+ 1705:008C       ponode
+ 1708:06E0       pomodem
+ 170B:0A85       ChangeUConfig
+ 170E:2D9B       cstuff
+ 1711:4A6F       postring
+ 1714:0000       strlookUpString
+ 1717:23EC       dlboardedit
+ 171B:04E0       dozscanfunc
+ 171B:3668       boardedit
+ 171F:0048       ConfNewscan
+ 171F:05FE       ChangeConf
+ 171F:0A26       EditConf
+ 1722:0054       movemsg
+ 1722:04C3       mailr
+ 1722:0DF6       dopurgepub
+ 1722:0F6E       purgepriv
+ 1722:122F       doshowpackbases
+ 1722:145D       packmessagebases
+ 1722:157C       chbds
+ 1727:001A       packbase
+ 172A:0048       mbaselist
+ 172A:0209       mbasechange
+ 172A:0537       readAutoMsg
+ 172A:0786       writeAutoMsg
+ 172A:0AA5       replyAutoMsg
+ 172A:0C08       mbasestats
+ 172E:0024       what00
+ 172E:01C7       readmsg
+ 1731:000B       ssmail
+ 1731:0C28       smail
+ 1731:1246       email1
+ 1731:1763       email
+ 1731:189A       imail
+ 1735:000A       blacklist
+ 1735:011C       finduser
+ 1735:04FD       dsr
+ 1735:0826       isr
+ 1735:0C58       logon1st
+ 1739:0000       HighBackground
+ 1739:0071       reqchat
+ 1739:01DF       userlist
+ 1739:03C6       lastcaller
+ 173D:0061       process_door
+ 173D:1F12       dodoorfunc
+ 1740:0063       finduserws
+ 1743:1B97       menu_edit
+ 1746:0384       memm
+ 1749:0126       RandomRumor
+ 1749:027B       AddRumor
+ 1749:0454       ListRumors
+ 1749:05A0       deleteRumor
+ 174D:0000       delubatch
+ 174D:012E       listubatchfiles
+ 174D:04AC       removeubatchfiles
+ 174D:0604       clearubatch
+ 174D:0884       batchul
+ 174D:16E8       batchinfo
+ 1751:0000       outmodemstring1
+ 1751:006F       outmodemstring000
+ 1751:00FA       outmodemstring
+ 1751:018E       dophonehangup
+ 1751:02BD       dophoneoffhook
+ 1755:0000       delbatch
+ 1755:00AA       mpkey
+ 1755:01A9       bproline1
+ 1755:0336       bproline
+ 1755:0417       okprot
+ 1755:052E       showprots
+ 1755:06A5       findprot
+ 1755:102B       batchdl
+ 1755:19C4       listbatchfiles
+ 1755:1E90       removebatchfiles
+ 1755:1FD7       clearbatch
+ 175A:000A       checkfileratio
+ 175A:0230       ymbadd
+ 175A:0728       send1
+ 175A:0BA0       receive1
+ 175E:0086       info
+ 175E:0297       dir
+ 175E:0685       dirf
+ 175E:06E9       deleteff
+ 175E:0A18       remove
+ 175E:1142       setdirs
+ 175E:139B       pointdate
+ 1762:0139       copyfile
+ 1762:0455       movefile
+ 1765:0000       substall
+ 1765:0117       lfi
+ 1765:027B       lfin
+ 1765:035B       lfii
+ 1769:089D       LZHV
+ 176C:041A       zipview
+ 176F:0010       getgifspecs
+ 176F:01AC       dogifspecs
+ 176F:03C1       addgifspecs
+ 1772:0000       blockwritestr2
+ 1772:007A       blockreadstr2
+ 1772:00D6       getmixnum
+ 1772:00EF       getmintab
+ 1772:0107       loadmintab
+ 1772:0278       ensureloaded
+ 1772:029A       loadmhead1
+ 1772:02BC       savemhead1
+ 1772:02F5       loadmhead
+ 1772:0335       savemhead
+ 1772:0361       savemix
+ 1772:03D1       newmix
+ 1772:0516       outmessagetext
+ 1772:0613       findhimsg
+ 1772:06F2       initbrd
+ 1772:08E1       closebrd
+ 1772:09DF       forwardm
+ 1772:0ADD       moremail
+ 1772:0BDC       savepinfo
+ 1772:0C36       loadpinfo
+ 1772:0C7D       delmail
+ 1772:0CD6       rmail
+ 177B:0000       sysInitVariables
+ 177B:0032       sysDestroyVariables
+ 177B:0087       sysDestroyFiles
+ 177B:0191       sysInitUserRecFile
+ 177B:0336       sysInitSmallRecFile
+ 177B:0392       sysInitMsgBoardFile
+ 177B:0545       sysInitFileBoardFile
+ 177B:0639       sysResetMciList
+ 177B:066F       sysMciSet
+ 177B:0709       FindTasker
+ 177B:0759       TimeSlice
+ 17F4:0418       makenode
+ 17F4:04A6       makenodeon
+ 17F4:0688       whoson
+ 17F4:0952       sendnodemessage
+ 17F4:0AF8       readnodemessages
+ 17F4:0D8F       multichat
+ 17F4:1B95       savenode
+ 17F4:1C29       enternodemessage
+ 17F4:1D67       entermultichat
+ 17F9:002A       execbatch
+ 17F9:03FB       pexecbatch
+ 17F9:07C3       shel
+ 17F9:08A0       shel2
+ 17FD:000A       align
+ 17FD:02E8       baddlpath
+ 17FD:03C6       bslash
+ 17FD:04FE       existdir
+ 17FD:061E       fiscan
+ 17FD:0836       ffile
+ 17FD:0956       fileinfo
+ 17FD:0E8B       fit
+ 17FD:0F1C       gfn
+ 17FD:0FD4       isgifdesc
+ 17FD:107E       isgifext
+ 17FD:1143       iswildcard
+ 17FD:11B6       nfile
+ 17FD:11D4       nrecno
+ 17FD:131A       recno
+ 17FD:1478       rte
+ 17FD:153B       stripname
+ 17FD:1610       verbfileinfo
+ 1805:0016       ninput
+ 1805:00A1       inu
+ 1805:00D4       inl
+ 1805:010B       ini
+ 1805:0155       inputwn1
+ 1805:0204       inputwn
+ 1805:022E       inputwnwc
+ 1805:0349       inputmain
+ 1805:05F9       inputwc
+ 1805:061D       input
+ 1805:065E       inputl
+ 1805:0683       inputcaps
+ 1805:06B1       mmkey
+ 18DC:0000       strAllCaps
+ 18DC:0076       strStringToWord
+ 18DC:00C3       strInsertComma
+ 18F5:0007       header
+ 18F5:004F       top
+ 18F5:0072       middle
+ 18F5:00DD       bottom
+ 18F5:0105       command
+ 18F5:0269       calconf
+ 18F5:02A7       StripAnsi
+ 18F5:03AD       domenu
+ 1958:04DD       CAnsi
+ 1958:04EC       SAnsi
+ 1958:0540       @
+ 19AF:010A       com_flush_rx
+ 19AF:0153       com_flush_tx
+ 19AF:0198       com_purge_tx
+ 19AF:01C8       com_carrier
+ 19AF:0227       com_rx
+ 19AF:02B9       com_tx_ready
+ 19AF:02F4       com_rx_empty
+ 19AF:034F       com_tx
+ 19AF:03CC       com_lower_dtr
+ 19AF:0416       com_raise_dtr
+ 19AF:0462       com_set_speed
+ 19AF:0568       com_install
+ 19AF:0737       com_deinstall
+ 19AF:07D3       @
+ 1A2F:0000       pt2dt
+ 1A2F:0079       dt2pt
+ 1A2F:00EB       pd2dt
+ 1A2F:0168       dt2pd
+ 1A2F:01D3       pdt2dt
+ 1A2F:0239       dt2pdt
+ 1A2F:02A7       getdatetime
+ 1A2F:0300       getpackdatetime
+ 1A2F:0329       getdayofweek
+ 1A2F:03A9       pdt2dat
+ 1A2F:066E       @
+ 1A97:0000       @
+ 1A97:013E       OvrInitXMS
+ 1AB3:0000       DosVersion
+ 1AB3:0005       GetDate
+ 1AB3:0027       SetDate
+ 1AB3:003B       GetTime
+ 1AB3:0060       SetTime
+ 1AB3:0077       DiskFree
+ 1AB3:0090       DiskSize
+ 1AB3:00AB       GetFAttr
+ 1AB3:00CF       SetFAttr
+ 1AB3:00ED       FindFirst
+ 1AB3:012B       FindNext
+ 1AB3:0169       UnpackTime
+ 1AB3:01AD       PackTime
+ 1AB3:01E5       GetIntVec
+ 1AB3:01FD       SetIntVec
+ 1AB3:0210       FSearch
+ 1AB3:0279       FExpand
+ 1AB3:0342       FSplit
+ 1AB3:03A6       GetEnv
+ 1AB3:0414       Exec
+ 1AB3:04A8       DosExitCode
+ 1AB3:04AD       MsDos
+ 1AB3:04B8       Intr
+ 1AB3:0515       SwapVectors
+ 1B08:0012       OvrInit
+ 1B08:01A3       OvrSetBuf
+ 1B08:01F2       OvrGetBuf
+ 1B08:01FD       OvrSetRetry
+ 1B08:020E       OvrGetRetry
+ 1B08:0215       OvrClearBuf
+ 1B08:0567       OvrInitEMS
+ 1B7D:000D       @
+ 1B7D:0177       TextMode
+ 1B7D:018C       Window
+ 1B7D:01CC       ClrScr
+ 1B7D:01E6       ClrEol
+ 1B7D:01FA       InsLine
+ 1B7D:01FF       DelLine
+ 1B7D:021F       GotoXY
+ 1B7D:024B       WhereX
+ 1B7D:0257       WhereY
+ 1B7D:0263       TextColor
+ 1B7D:027D       TextBackground
+ 1B7D:0295       LowVideo
+ 1B7D:029B       HighVideo
+ 1B7D:02A1       NormVideo
+ 1B7D:02A8       Delay
+ 1B7D:02D4       Sound
+ 1B7D:0301       NoSound
+ 1B7D:0308       KeyPressed
+ 1B7D:031A       ReadKey
+ 1B7D:033C       AssignCrt
+ 1BDF:0029       checkpath
+ 1BDF:03DB       exists
+ 20D6:0314       infield_seperators
+ 20D6:0334       vidseg
+ 20D6:0336       ismono
+ 20D6:0338       fuckedUp
+ 20D6:033A       numMcis
+ 20D6:033C       inConfig
+ 20D6:033D       allowabort
+ 20D6:033E       echo
+ 20D6:033F       hangup
+ 20D6:0340       nofile
+ 20D6:0341       onekcr
+ 20D6:0342       onekda
+ 20D6:0343       slogging
+ 20D6:0344       sysopon
+ 20D6:0345       wantout
+ 20D6:0346       wcolor
+ 20D6:0347       badfpath
+ 20D6:0348       badufpath
+ 20D6:0349       badini
+ 20D6:034A       bchanged
+ 20D6:034B       bnp
+ 20D6:034C       cfo
+ 20D6:034D       ch
+ 20D6:034E       chatcall
+ 20D6:034F       pauseme
+ 20D6:0350       contlist
+ 20D6:0351       croff
+ 20D6:0352       ctrljoff
+ 20D6:0353       cwindowon
+ 20D6:0354       doneafternext
+ 20D6:0355       doneday
+ 20D6:0356       dosansion
+ 20D6:0357       fastlogon
+ 20D6:0358       hungup
+ 20D6:0359       incom
+ 20D6:035A       inwfcmenu
+ 20D6:035B       lan
+ 20D6:035C       lastcommandgood
+ 20D6:035D       lastcommandovr
+ 20D6:035E       macok
+ 20D6:035F       mailread
+ 20D6:0360       menuactiv
+ 20D6:0361       scanfilemsg
+ 20D6:0362       localioonly
+ 20D6:0363       packbasesonly
+ 20D6:0364       newmenutoload
+ 20D6:0365       nightly
+ 20D6:0366       overlayinems
+ 20D6:0367       outcom
+ 20D6:0368       printingfile
+ 20D6:0369       quitafterdone
+ 20D6:036A       reading_a_msg
+ 20D6:036B       readingmail
+ 20D6:036C       read_with_mci
+ 20D6:036D       shutupchatcall
+ 20D6:036E       trapping
+ 20D6:036F       useron
+ 20D6:0370       wantfilename
+ 20D6:0371       wasnewuser
+ 20D6:0372       write_msg
+ 20D6:0373       telluserevent
+ 20D6:0374       exiterrors
+ 20D6:0375       exitnormal
+ 20D6:0376       cursorthere
+ 20D6:0AC0       _brd_opened
+ 20D6:0AC2       oldnummsgs
+ 20D6:0AC4       gotlastmheader
+ 20D6:0AC6       ulffopen1
+ 20D6:0AFA       com_installed
+ 20D6:0AFB       usefossil
+ 20D6:0B1C       progname
+ 20D6:0B24       acronym
+ 20D6:0B28       ver
+ 20D6:0B30       copyright
+ 20D6:0B56       verdate
+ 20D6:0B60       OvrResult
+ 20D6:0B62       OvrEmsPages
+ 20D6:0B64       OvrTrapCount
+ 20D6:0B66       OvrLoadCount
+ 20D6:0B68       OvrFileMode
+ 20D6:0B70       OvrCodeList
+ 20D6:0B72       OvrHeapSize
+ 20D6:0B74       OvrDebugPtr
+ 20D6:0B78       OvrHeapOrg
+ 20D6:0B7A       OvrHeapPtr
+ 20D6:0B7C       OvrHeapEnd
+ 20D6:0B7E       OvrLoadList
+ 20D6:0B80       OvrDosHandle
+ 20D6:0B82       OvrEmsHandle
+ 20D6:0B84       HeapOrg
+ 20D6:0B88       HeapPtr
+ 20D6:0B8C       HeapEnd
+ 20D6:0B90       FreeList
+ 20D6:0B94       FreeZero
+ 20D6:0B98       HeapError
+ 20D6:0B9C       ExitProc
+ 20D6:0BA0       ExitCode
+ 20D6:0BA2       ErrorAddr
+ 20D6:0BA6       PrefixSeg
+ 20D6:0BA8       StackLimit
+ 20D6:0BAA       InOutRes
+ 20D6:0BAC       RandSeed
+ 20D6:0BB0       SelectorInc
+ 20D6:0BB2       Seg0040
+ 20D6:0BB4       SegA000
+ 20D6:0BB6       SegB000
+ 20D6:0BB8       SegB800
+ 20D6:0BBA       Test8086
+ 20D6:0BBB       Test8087
+ 20D6:0BBC       FileMode
+ 20D6:0BC0       ExecFirst
+ 20D6:0BC2       NewMenuCmd
+ 20D6:0C5C       uf
+ 20D6:0CDC       bf
+ 20D6:0D5C       xf
+ 20D6:0DDC       ulf
+ 20D6:0E5C       ulff
+ 20D6:0EDC       sf
+ 20D6:0F5C       verbf
+ 20D6:0FDC       multinodef
+ 20D6:105C       clasicnode
+ 20D6:10FE       mixf
+ 20D6:117E       brdf
+ 20D6:11FE       sysopf
+ 20D6:12FE       sysopf1
+ 20D6:13FE       trapfile
+ 20D6:14FE       cf
+ 20D6:15FE       small
+ 20D6:1626       status
+ 20D6:162A       strings
+ 20D6:162E       modemr
+ 20D6:1702       fidor
+ 20D6:1F02       thisuser
+ 20D6:224E       zscanr
+ 20D6:2882       msg_on
+ 20D6:2884       events
+ 20D6:28B0       numevents
+ 20D6:28B2       protocol
+ 20D6:2AAC       numprotocols
+ 20D6:2AAE       memuboard
+ 20D6:2B9C       tempuboard
+ 20D6:2C8A       readuboard
+ 20D6:2C8C       maxulb
+ 20D6:2C8E       fileboard
+ 20D6:2C90       memboard
+ 20D6:2D90       readboard
+ 20D6:2D92       numboards
+ 20D6:2D94       board
+ 20D6:2D96       ccboards
+ 20D6:2F92       ccuboards
+ 20D6:3190       nuOrder
+ 20D6:31AA       spd
+ 20D6:31FC       mintabloaded
+ 20D6:31FE       mintaboffset
+ 20D6:3202       mintab
+ 20D6:3C2A       himsg
+ 20D6:3C2E       himintab
+ 20D6:3C32       buf
+ 20D6:3D32       sitedatetime
+ 20D6:3D38       cmdlist
+ 20D6:3E38       irt
+ 20D6:3F38       lastname
+ 20D6:4038       lastuname
+ 20D6:4138       ll
+ 20D6:4238       start_dir
+ 20D6:4338       tim
+ 20D6:4348       timeon
+ 20D6:4358       choptime
+ 20D6:435E       extratime
+ 20D6:4364       freetime
+ 20D6:436A       oltime
+ 20D6:4370       answerbaud
+ 20D6:4372       exteventtime
+ 20D6:4374       chatt
+ 20D6:4376       etoday
+ 20D6:4378       ftoday
+ 20D6:437A       lastprot
+ 20D6:437C       ldate
+ 20D6:437E       lil
+ 20D6:4380       mread
+ 20D6:4382       pap
+ 20D6:4384       ptoday
+ 20D6:4386       realdsl
+ 20D6:4388       realsl
+ 20D6:438A       usernum
+ 20D6:438C       bread
+ 20D6:438E       bwant
+ 20D6:4390       readpmnu
+ 20D6:4391       filemnu
+ 20D6:4392       filepmnu
+ 20D6:4393       nuvpmnu
+ 20D6:4394       chelplevel
+ 20D6:4395       curco
+ 20D6:4396       elevel
+ 20D6:4397       tshuttlelogon
+ 20D6:4398       thisnode
+ 20D6:439A       nodeinfo
+ 20D6:440C       lastcalled
+ 20D6:4431       mConf
+ 20D6:4432       fConf
+ 20D6:4434       prmp
+ 20D6:4438       areanum
+ 20D6:443C       mciList
+ 20D6:4838       tasker
+ 20D6:483A       osName
+ 20D6:4842       first_time
+ 20D6:4844       menustack
+ 20D6:48AC       menustackptr
+ 20D6:48AE       last_menu
+ 20D6:49AE       curmenu
+ 20D6:4AAE       menur
+ 20D6:4BF0       cmdr
+ 20D6:7B02       noc
+ 20D6:7B04       fqarea
+ 20D6:7B05       mqarea
+ 20D6:7B06       doit
+ 20D6:7B07       doitt
+ 20D6:7B08       newdate
+ 20D6:7B12       lrn
+ 20D6:7B14       lfn
+ 20D6:7C14       batchtime
+ 20D6:7C1A       numbatchfiles
+ 20D6:7C1C       batch
+ 20D6:825C       numubatchfiles
+ 20D6:825E       ubatch
+ 20D6:86D2       ubatchv
+ 20D6:8722       hiubatchv
+ 20D6:8724       hdrstr
+ 20D6:8762       OldTempdir
+ 20D6:8862       tempdirchanged
+ 20D6:8864       changeablemci
+ 20D6:8884       spawn_check
+ 20D6:8888       swap_prep
+ 20D6:90A2       scrlpt
+ 20D6:90A6       scrlatpt
+ 20D6:90AA       curscrlline
+ 20D6:90AC       topscrline
+ 20D6:90AE       amtscrllines
+ 20D6:90B0       bottombuffer
+ 20D6:90B2       topbuffer
+ 20D6:90B4       myscrolly
+ 20D6:90B5       okscrollback
+ 20D6:90B6       beforeview
+ 20D6:90BA       SAUCE
+ 20D6:913A       CMT
+ 20D6:9412       f2key
+ 20D6:94D6       gotcommand
+ 20D6:A3FA       brdfnopen
+ 20D6:A4FA       lastmheader
+ 20D6:A647       wasyourmsg
+ 20D6:A648       lastfrom
+ 20D6:A64A       wind
+ 20D6:B5EE       sx
+ 20D6:B5F0       sy
+ 20D6:B5F2       wascls
+ 20D6:B5F3       savtw
+ 20D6:B5F4       savcurwind
+ 20D6:B5F6       dirinfo
+ 20D6:B621       found
+ 20D6:B6F4       mpcoder
+ 20D6:B6F6       mpcode
+ 20D6:B6FC       fosport
+ 20D6:B6FE       regs
+ 20D6:B868       DosError
+ 20D6:B86E       OvrReadBuf
+ 20D6:B878       CheckBreak
+ 20D6:B879       CheckEOF
+ 20D6:B87A       DirectVideo
+ 20D6:B87B       CheckSnow
+ 20D6:B87C       LastMode
+ 20D6:B87E       TextAttr
+ 20D6:B880       WindMin
+ 20D6:B882       WindMax
+ 20D6:B8D6       Input
+ 20D6:B9D6       Output
+ 20D6:BAD6       SaveInt00
+ 20D6:BADA       SaveInt02
+ 20D6:BADE       SaveInt1B
+ 20D6:BAE2       SaveInt21
+ 20D6:BAE6       SaveInt23
+ 20D6:BAEA       SaveInt24
+ 20D6:BAEE       SaveInt34
+ 20D6:BAF2       SaveInt35
+ 20D6:BAF6       SaveInt36
+ 20D6:BAFA       SaveInt37
+ 20D6:BAFE       SaveInt38
+ 20D6:BB02       SaveInt39
+ 20D6:BB06       SaveInt3A
+ 20D6:BB0A       SaveInt3B
+ 20D6:BB0E       SaveInt3C
+ 20D6:BB12       SaveInt3D
+ 20D6:BB16       SaveInt3E
+ 20D6:BB1A       SaveInt3F
+ 20D6:BB1E       SaveInt75
+
+Program entry point at 0000:092D

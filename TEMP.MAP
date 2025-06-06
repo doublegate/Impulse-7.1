@@ -1,0 +1,65 @@
+
+ Start  Stop   Length Name               Class
+
+ 00000H 0005EH 0005FH PROGRAM            CODE
+ 00060H 00991H 00932H System             CODE
+ 009A0H 00C3DH 0029EH DATA               DATA
+ 00C40H 04C3FH 04000H STACK              STACK
+ 04C40H 04C40H 00000H HEAP               HEAP
+
+  Address         Publics by Value
+
+ 0000:0000       @
+ 009A:0002       OvrCodeList
+ 009A:0004       OvrHeapSize
+ 009A:0006       OvrDebugPtr
+ 009A:000A       OvrHeapOrg
+ 009A:000C       OvrHeapPtr
+ 009A:000E       OvrHeapEnd
+ 009A:0010       OvrLoadList
+ 009A:0012       OvrDosHandle
+ 009A:0014       OvrEmsHandle
+ 009A:0016       HeapOrg
+ 009A:001A       HeapPtr
+ 009A:001E       HeapEnd
+ 009A:0022       FreeList
+ 009A:0026       FreeZero
+ 009A:002A       HeapError
+ 009A:002E       ExitProc
+ 009A:0032       ExitCode
+ 009A:0034       ErrorAddr
+ 009A:0038       PrefixSeg
+ 009A:003A       StackLimit
+ 009A:003C       InOutRes
+ 009A:003E       RandSeed
+ 009A:0042       SelectorInc
+ 009A:0044       Seg0040
+ 009A:0046       SegA000
+ 009A:0048       SegB000
+ 009A:004A       SegB800
+ 009A:004C       Test8086
+ 009A:004D       Test8087
+ 009A:004E       FileMode
+ 009A:0052       Input
+ 009A:0152       Output
+ 009A:0252       SaveInt00
+ 009A:0256       SaveInt02
+ 009A:025A       SaveInt1B
+ 009A:025E       SaveInt21
+ 009A:0262       SaveInt23
+ 009A:0266       SaveInt24
+ 009A:026A       SaveInt34
+ 009A:026E       SaveInt35
+ 009A:0272       SaveInt36
+ 009A:0276       SaveInt37
+ 009A:027A       SaveInt38
+ 009A:027E       SaveInt39
+ 009A:0282       SaveInt3A
+ 009A:0286       SaveInt3B
+ 009A:028A       SaveInt3C
+ 009A:028E       SaveInt3D
+ 009A:0292       SaveInt3E
+ 009A:0296       SaveInt3F
+ 009A:029A       SaveInt75
+
+Program entry point at 0000:0000

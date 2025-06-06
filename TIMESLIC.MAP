@@ -1,0 +1,101 @@
+
+ Start  Stop   Length Name               Class
+
+ 00000H 0015BH 0015CH PROGRAM            CODE
+ 00160H 00160H 00000H Dos                CODE
+ 00160H 0077EH 0061FH Crt                CODE
+ 00780H 00F28H 007A9H System             CODE
+ 00F30H 011F1H 002C2H DATA               DATA
+ 01200H 051FFH 04000H STACK              STACK
+ 05200H 05200H 00000H HEAP               HEAP
+
+  Address         Publics by Value
+
+ 0000:0000       FindTasker
+ 0000:007B       CheckTasking
+ 0000:00FB       TimeSlice
+ 0000:012F       @
+ 0016:000D       @
+ 0016:0177       TextMode
+ 0016:018C       Window
+ 0016:01CC       ClrScr
+ 0016:01E6       ClrEol
+ 0016:01FA       InsLine
+ 0016:01FF       DelLine
+ 0016:021F       GotoXY
+ 0016:024B       WhereX
+ 0016:0257       WhereY
+ 0016:0263       TextColor
+ 0016:027D       TextBackground
+ 0016:0295       LowVideo
+ 0016:029B       HighVideo
+ 0016:02A1       NormVideo
+ 0016:02A8       Delay
+ 0016:02D4       Sound
+ 0016:0301       NoSound
+ 0016:0308       KeyPressed
+ 0016:031A       ReadKey
+ 0016:033C       AssignCrt
+ 00F3:0002       OvrCodeList
+ 00F3:0004       OvrHeapSize
+ 00F3:0006       OvrDebugPtr
+ 00F3:000A       OvrHeapOrg
+ 00F3:000C       OvrHeapPtr
+ 00F3:000E       OvrHeapEnd
+ 00F3:0010       OvrLoadList
+ 00F3:0012       OvrDosHandle
+ 00F3:0014       OvrEmsHandle
+ 00F3:0016       HeapOrg
+ 00F3:001A       HeapPtr
+ 00F3:001E       HeapEnd
+ 00F3:0022       FreeList
+ 00F3:0026       FreeZero
+ 00F3:002A       HeapError
+ 00F3:002E       ExitProc
+ 00F3:0032       ExitCode
+ 00F3:0034       ErrorAddr
+ 00F3:0038       PrefixSeg
+ 00F3:003A       StackLimit
+ 00F3:003C       InOutRes
+ 00F3:003E       RandSeed
+ 00F3:0042       SelectorInc
+ 00F3:0044       Seg0040
+ 00F3:0046       SegA000
+ 00F3:0048       SegB000
+ 00F3:004A       SegB800
+ 00F3:004C       Test8086
+ 00F3:004D       Test8087
+ 00F3:004E       FileMode
+ 00F3:0050       Tasker
+ 00F3:0052       MultiTaskerName
+ 00F3:0062       CheckBreak
+ 00F3:0063       CheckEOF
+ 00F3:0064       DirectVideo
+ 00F3:0065       CheckSnow
+ 00F3:0066       LastMode
+ 00F3:0068       TextAttr
+ 00F3:006A       WindMin
+ 00F3:006C       WindMax
+ 00F3:0076       Input
+ 00F3:0176       Output
+ 00F3:0276       SaveInt00
+ 00F3:027A       SaveInt02
+ 00F3:027E       SaveInt1B
+ 00F3:0282       SaveInt21
+ 00F3:0286       SaveInt23
+ 00F3:028A       SaveInt24
+ 00F3:028E       SaveInt34
+ 00F3:0292       SaveInt35
+ 00F3:0296       SaveInt36
+ 00F3:029A       SaveInt37
+ 00F3:029E       SaveInt38
+ 00F3:02A2       SaveInt39
+ 00F3:02A6       SaveInt3A
+ 00F3:02AA       SaveInt3B
+ 00F3:02AE       SaveInt3C
+ 00F3:02B2       SaveInt3D
+ 00F3:02B6       SaveInt3E
+ 00F3:02BA       SaveInt3F
+ 00F3:02BE       SaveInt75
+
+Program entry point at 0000:012F

@@ -1,0 +1,204 @@
+Main Menu
+
+
+MAIN
+
+Main:
+
+
+FLOGIN
+0
+3
+9
+0
+1
+C
+[A]uto-Msg
+[A]uto-Msg
+0
+0
+A
+s10
+-/
+auto
+
+[C]hat w/SysOp - Chat with the SysOp [send Email if not available]
+[C]hat w/SysOp
+0
+0
+C
+s10
+OC
+1
+
+[T]ransfers
+[T]ransfers
+0
+0
+T
+s10
+-^
+scanf
+
+[G]oodbye - Log off and hang up with optional comment to the SysOp
+[G]oodbye
+0
+0
+G
+s20
+HC
+|03leave?
+
+[/G]oodbye - Log off and hang up immediately
+[/G]oodbye
+0
+0
+/G
+
+HI
+
+
+[I]nfo on BBS - Show current BBS version and other BBS info
+[I]nfo on BBS
+0
+0
+I
+s10
+OI
+
+
+
+
+0
+0
+M
+
+-^
+scanm
+
+[N]ote to SysOp - Send private mail to the SysOp
+[N]ote to SysOp
+0
+0
+N
+s10
+ME
+1;Send mail to GOD?
+
+[K] Konfig
+[K] Konfig
+0
+0
+K
+s10
+-^
+personal
+
+[S]ystem Status
+[S]ystem Status
+0
+0
+S
+s10
+XS
+
+
+[Q] Voting Booth
+[Q] Voting Booth
+0
+0
+Q
+s20
+OV
+
+
+[X]pert Toggle - Toggle between novice and expert menus
+[X]pert Toggle
+0
+0
+X
+s10
+OP
+22
+
+[Y]our Info - Display your SL, mail waiting, and other account info
+[Y]our Info
+0
+0
+Y
+s10
+-F
+userstat
+
+[$]Time Bank - Deposit time for use during future calls
+[$]Time Bank
+0
+0
+$
+s20
+O$
+60;600
+
+[E] Email
+[E] Email
+0
+0
+E
+
+-^
+email
+
+[/W] who's on the other node.
+
+0
+0
+/W
+
+NW
+
+
+[/C] Node Chat
+
+0
+0
+/C
+
+NC
+
+
+
+
+0
+0
+ENTER
+
+-L
+booyaka.
+
+[V] New User Voting
+[V] NUV
+0
+0
+V
+
+-N
+
+
+
+
+1
+1
+%
+s250
+-^
+sysop
+
+|U9[|U0U|U9] |U0User List
+
+1
+1
+U
+
+XU
+
+

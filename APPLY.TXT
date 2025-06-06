@@ -1,0 +1,26 @@
+1: Address
+2: Birthday
+3: Ansi Support
+4: City/State
+5: File List Config
+6: User Note
+7: Handle
+8: Phone Number
+9: Password
+10: Real Name
+11: Screen Width/Length
+12: Sex
+13: Autosig
+14: NOTHING
+15: Mailbox Config
+16: Emulation
+17: Color On/Off
+18: Toggle - Screen Pausing
+19: Toggle - Hotkey
+20: NOTHING
+21: Config Colors
+22: Toggle - Expert Mode
+23: NOTHING
+24: Screen Pausing
+25: NOTHING
+26: Choose Prompt

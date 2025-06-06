@@ -1,0 +1,12 @@
+This is a list of what I plan to do to impulse, in no particular order:
+%% Configurable logon process
+++ All strings configurable
+++ Re-do the configuration program
+%% Fix the matrix apply bug
+%% Get rid of the multiple help levels in menus(who uses these?)
+-- More complete/configurable multi-node support
+-- JAM message bases
+++ Smaller Exe/Ovr size
+++ Speed increases
+++ Less memory requirements
+%% An install program
