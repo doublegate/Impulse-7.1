@@ -748,12 +748,24 @@ begin
    t:=0;
    m:=value(copy(dt,1,2));
    d:=value(copy(dt,4,2));
-   y:=value(copy(dt,7,2))+1900;
+   
+   { Fixed Y2K handling for 2-digit years:
+     Years 00-79 are treated as 2000-2079
+     Years 80-99 are treated as 1980-1999
+     This allows the BBS to work with dates from 1980 through 2079 }
+   y:=value(copy(dt,7,2));
+   if y < 80 then 
+      y:=y+2000 
+   else 
+      y:=y+1900;
+   
    for c:=1985 to y-1 do
       if (leapyear(c)) then inc(t,366) else inc(t,365);
    t:=t+daycount(m,y)+(d-1);
    daynum:=t;
-   if y<1985 then daynum:=0;
+   
+   { Allow dates from 1980 onwards instead of 1985 }
+   if y<1980 then daynum:=0;
 end;
 
 function dat:string;
