@@ -1,0 +1,63 @@
+This is the current list of all standard mci codes impulse uses. If using
+these codes in a string, they should begin with a '|', or in a file they
+should begin with a '%'. This is list is current as of version 7.1.
+
+00-15 - Changes the forground text color
+AD - The users address
+B0-BF - Change the background color. Note the background colors above B7
+        will only appear if you are using iceColor, otherwise they will
+        cause the text to blink
+BN - The bbs' name
+CF - Current file base
+CL - Clear the screen
+CM - Current message base
+CS - Current connect speed
+CT - Caller number
+DK - Download kilobytes
+DN - Downloads
+DT - Current date
+FL - File security level
+FP - File points
+FT - Total system uploads
+HM - Higest message read
+HS - Header string(this sometiems contains junk data, so be careful)
+LC - Last caller
+LD - Last date called
+LO - City/State
+LP - Locked port speed
+LS - Used in conjucture with header string
+MN - Message number
+NF - New files today
+NL - New line
+NM - Current menu
+NN - Current node
+NP - Total posts today
+NT - New users today
+O1 - Changeable mci, used with certain strings, may contain junk.
+PA - Pause Screen
+PN - Phone number
+PS - Total posts
+RB - Random Background Color
+RC - Random Color
+RF - Random Foreground Color
+RN - Real name
+SP - Connect SPpeed
+SN - Sysop's name
+TC - Total calls today
+TL - Time left
+TT - Time left today
+TP - Public posts today
+U0 - U9 - User defined colors
+UC - User note
+UD - Uploads
+UK - Upload kilobytes
+UL - Security level
+UN - User name
+UU - User number
+VA - Software acronym
+VD - Software version date
+VN - Software name
+VV - Software version
+XYxxyy - Goto the XX,YY position. if either y or x is 0, it uses the current
+         position, i.e. XY0015 would goto the current x, position on the 15th
+         line.

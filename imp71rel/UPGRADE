@@ -1,0 +1,5 @@
+If you are upgrading from one of the earlier 7.X releases(rc1-3), then all you
+really have to do is overwrite your imp.exe and imp.ovr files, as well as
+copy the file 'global.mnu' to your menus directory. Allthough this will work,
+unless you have actually modded your earlier release, i suggest just
+reinstalling.

@@ -1,0 +1,5 @@
+*.bat
+exclude.lst
+betatmp\*.*
+src\*.*
+ansi\*.bak

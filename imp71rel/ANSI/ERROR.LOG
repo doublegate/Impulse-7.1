@@ -1,0 +1,27 @@
+-[ ERROR 104 OCCURRED 6068:948 ]-
+ÀÄÂ´Main Menu                                                                  
+ÚÄÁÄÄú 99:56:00 ÃÄú                                                            
+ÀÄÄ: %                                                                         
+                                                                               
+ÚÄÄÄ Ä ú                                                                       
+ÀÄÂ´Sysop Menu                                                                 
+ÚÄÁÄÄú 99:56:00 ÃÄú                                                            
+ÀÄÄ: d                                                                         
+                                                                               
+Type "EXIT" to return to Impulse.                                              
+                                                                               
+                                                                               
+ImpDOS(R) Version 7.0b2                                                        
+   Copyrighted by Tumyeto Software                                             
+                                                                               
+c:\imp\ansi>iplc dkfjds.dfd                                                    
+Impulse Programming Language Compiler.  (c)1997 by Brandon Sneed (Nivenh)      
+Revision 0.02.  Compiled on 12/16/97                                           
+ERROR                                                                          
+Unable to open C:\IMP\ANSI\DKFJDS.DFD                                          
+Syntax is DIPL.EXE <filename.ext>                                              
+ex:  DIPL.EXE TEST.IPL                                                         
+²                                                                              
+                                                                               
+ (Sysop) LOCAL Lvl:255 Flvl:255 Calls:4 Laston:12/21/97 Note:Sysop             
+-[ END OF ERROR 104 ]-

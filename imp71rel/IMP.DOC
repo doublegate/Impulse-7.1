@@ -1,0 +1,2402 @@
+                                                _______
+                          __..,,,.._          .d$$$$$$$:
+                   .Öy%S$$8******8$$$Gg.   .d$³P'   :$$
+         _.,,       `$T'`     __   `'4$$L T$L`      $$:______
+.,Úy%@S$$*Ó$$L j$$$$$$$.,¿   :$$$$b.  `$$L T$L.j   :$$$$$$$Sl
+ @S$Óý'`   `$$L$$'''ýýý$$:   $$$$$$$L  `$$: $$$:   $8Àý'''$$:..__
+ :$$_.,   yS$$$$'     :$$   :$$$$$$$$   $$:_$$$   :'   .,Â$$$$$$$$$$$SS@@%
+  $$$$$   :$$$$'  ,   l$:   $$$$$$$$!  ,8$$$8*½      j$$$$$$$$:``^^""ýý$$l
+: "^`$$:   $$$'  ,$   $$   :$$$$$³P'  ,L     _   :L  `$³$$$$$$   ,,..__$$:
+ ::  :$$   :$'  ,$l  :$:   ÓÓÓý'`   .d$$$,  `:   $$b.   `'Ù³$l   $$$$$$$$
+ ::   $$:   '  ,$$:  l$    __..,¿y@$$$$$$$       Ù*8$³GÚ.   `:   $$:`^^""
+  ::  :$$     ,$$$   $:   Ùý"^`  j$$$$$$$$   ._       `j$L      :$$
+  ::   $$:   ,$$$l  :$     _.,   $$$$$$$$$:  l$$$S@%yÒ,$$!      l$l     -sar
+...::  :$$   :$$$:  l$@S³$8*½'  :$$$$$$$$$l  :$$l$$$$$³P'   ,   $$:
+    _.,Ú$$:   $$º   Óý'`        l$$$$$$$$$:  l$$:$$''`    .d   :$$yÚ,
+    `$$$³$8   '``L    .,·%S     :$$$$$$$$$   $$l:$$__.,g `^^   ýÐÐ$$$
+     `$$L     _.,X$SS$$$$$l      $$$$$$$$!  j$$: $$$$$$$ÒÒ,    _  $$l
+      `$$L%S$$$$$$³$$8*l$$:  :L  `³$$$³P'  ,$$!  ÓÐÐÐýýý$$$   :$$$$$$yyyÒÒÒ ¿y%
+    xx,`$$³$8*Ðý'`,¿¿¿ $$$   l$b.  ```   .d$$' ,|||::: :$$l   l$$$888888$$$ :$l
+    """ ``    ^^^`````:$$l   ÁÁýý$S%%%@S$8À`   .       l$$:             $$l l$:
+                      l$$:       $$L^^`` . ù '`        $$$$SSS@@@%%%yyÒ,$$: $$
+                      $$$$%%@@SS$$$$                   ýýýýýÐÐÐÐ$$$*88$$³$ :$l
+                      $$88**ÐÐýý""^^                           j$$yÂÂ,._ ` l$:
+                                                               ```'''ýÐ*8$³$$
+                                                                          `'ý
+Impulse v7 Documentation
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- Notes! -
+This document hasn't been updated for some time, so some items in here may
+not still hold true. If you have a question regarding this, please let me
+know through e-mail.
+
+- Introduction -
+
+Documentation will be short and sweet.  Most things in the BBS Are pretty self
+explanatory and won't really be discussed too much.  You can Email me with any
+problems or questions regarding Impulse Bugs, Questions at the following places.
+
+WWW: http://student.ucr.edu/~foosep01/impulse
+EMAIL: foosep01@student.ucr.edu
+BBS: hopefully up soon
+IRC: I usually hang on EFNet as horrid, or whore-id
+
+
+- Requirements -
+
+The requirements are the same for just about every other bbs.  Here's some
+things that are a MUST for anything.
+
+         o  At least 500k of conventional memory.
+         o  A Modem.  2400-115200 bps's are supported.
+         o  I recommend at least having 3 megs of HD space free.
+            (you cant run off of a floppy drive bub!)
+
+The above is REQUIRED!  There's no way around it, and i'd hope you weren't
+trying to setup a bbs without any of them. :)
+
+The following are Recommended by the author.
+
+         o  16550/16550A/166550A1 UART Chip (It makes a BIG Difference)
+         o  A modem at least capable of reaching 9600bps.
+         o  20 Megs of HD space.  You need room for growth.
+         o  EMS/XMS Memory in excess of 2 megs.  The more room you have
+            for IMP.OVR in EMS/XMS the faster things will go.
+         o  Some sort of Cache.  Whether it be software or hardware, cache
+            is ALWAYS beneficial.
+
+
+- Installation -
+
+To get impulse installed (untill i get around to coding an install program),
+you must do the following. Unzip the distrobution zip file to the directory
+you wish to run impulse from (i.e. c:\imp), with the -D (directories) option.
+Then chagned to the dir you chose, then run imp -D -S. This will make your
+the current directory the root directory for the rest of your bbs files,
+and then load the configuration program.
+
+First thing you'll want to do afterwards is get that damn modem
+configured.  Yes, i realize this is the most complicated part in the
+whole bbs. (or is it?).
+
+This is quite simple.  You've got your init string, port and various
+other little options which i will leave up to you to decide which /
+what to use.  One thing before i end this section.  I'm sure you can
+imagine that COM-0 is making all output to the modem null.  In other
+words your modem isn't getting crap.  This is good for sysop nodes and
+the such.  Have fun with the possibilities.
+
+
+
+- Making this junk answer the phone -
+
+Hey, you having probs getting the bbs to answer the phone?!?  Well, my
+first suggestion would to be to use a mailer, but some people are
+pretty lazy.  BUT, rest assured that it will answer the phone so don't
+come to me complaining and saying something like "nivenh: your shit
+won't answer the phone!"  well, #1 you probably are shooting off your
+mouth before actually taking time to think about the problem.  First of
+all, you need your modem in normal response mode which means it returns
+things like OK and CONNECT 14400 and such.  None of this result code
+junk like 0 and 2.  On my system, i use Intermail .. but to all of you
+who won't use IM or FrontDoor, you can play with your init strings.
+You must have the S0 register OFF.  If S0 is equal to anything above
+Zero, the modem will try and answer when the bbs tries, so you'll just
+be hanging people up and that isn't fun. :)
+
+Zoom 14.4 Init. - ATS95=3S0=0S7=60%E0W2M1L3|
+
+
+- Modem Specifications -
+
+These are really needed.  As you can guess, i don't have every brand
+of modem in the world at my disposal.  If you would be kind enough to
+give me a copy of you're modem settings for whichever brand modem
+you've got you will recieve the tremendous about of credit you deserve.
+I've got a Hayes 14.4 and a Zoom 14.4 myself and those are pretty
+limited when it comes to the compatibility of other brands.  If
+possible, email you're settings to me.  They will be included in future
+versions and i'm sure others will like to check and compare theirs with
+yours.
+
+- Renegade You say? -
+
+Let me get this clear once and for all.  Impulse is not a souped up
+RG.  In fact, its got nothing to do with Renegade BBS whatsoever.  Talk
+to Cott Lang if you think i'm lying, but don't come to me and accuse me
+of ripping off Renegade because i'm a bit more ethical than that when
+it comes to code.  Renegade and Impulse are BOTH copyrighted programs.
+And if there was any similarity between the two of them other than
+being based on Telegard, then i surely wouldn't have been allowed a
+copyright number.
+
+
+- Command Line Parameters -
+
+Command line parameters are important whether your running a system in
+DV, OS/2 or under a frontend mailer.  I won't get into super detail on
+these.  Its pretty clear by looking.
+
+IMP.EXE [-?, -B, -K, -M, -S, -N, -P, -Q, -X, -D]
+
+    -?       : Shows this junk.
+    -B<baud> : Loads impulse at the speed defined in <baud> on the com port
+               of the current node.
+               ie.  IMP.EXE -B19200
+                    IMP.EXE -B11520 (for 115200bps)
+    -S       : Loads imp config, then exits.
+    -L       : Local mode.  No output to the modem at all.
+    -M<node#>: Loads BBS node specified in <node#>
+               ie.  IMP.EXE -B19200 -M1  (this would load node #1 at 19200)
+    -Q       : Exit to DOS/OS after next/current user logs off.
+               ie.  IMP.EXE -B14400 -M1 -Q (this would load node#1 at 14400
+                                             and exit the bbs after logoff)
+    -P       : Packs EMAIL and MESSAGE bases and exits.  Useful as a nightly
+               event.
+    -X<time> : Exits at specified time to run an external event.
+               NOTE: Specified time MUST be in military format.  ie 24:00 and
+                     such.
+               ie.  IMP.EXE -X00:01  (exit for event at 12:01 midnight)
+    -D       : Make the current directory the base for the bbs files.
+
+Note: Any combination of the above can be used.
+
+
+- Menu Commands/Setup -
+
+Ahh, my favorite part.  Yeah right.. this is gonna take forever.  A few
+little notes.  FIRSTCMD as a key executes that command everytime the menu
+is first loaded.  ENTER as a key is the same as the user pressing ENTER.
+This is useful for people who like rg's way to do pulldowns. (don't
+ask me why, but people do.)  EVERYTIME is now supported due to constant
+nagging by ex-renegade users, but i like it myself. :)
+
+
+CMD Keys ---- C-String / Remarks
+
+-[ Rumor Commands ]-
+
+RA - Adds to the list
+RD - Delete a rumor. If you have a command for this, make sure you set
+     the acs level so that only the people you want to can delete the rumors.
+RL - shows the list.
+RR - Displays a random rumor from the .\DATA\RUMOR.DAT file
+
+-[ eXtra Commands ]-
+XC - Last callers
+XS - Displays BBS Status
+XU - Gives a listing of Users
+XH - Forces user to have HotKey input.
+XL - Forces user to use Full Line input.
+XA - Toggle's a users's ar flag via CString.  An example would be
+       CMD: XA
+       CSTRING: -A
+     This would remove the A flag if the user had it.  Replacing the
+     minus sign with a + would do the opposite.  (Add it moron!)
+
+-[ Impulse Special Runtime Commands (ISL/IDF) ]-
+
+IS - ISL (Impulse Script Language).  Will run script file specified in the
+     Cstring field.  (See section named "ISL for dummies")
+ID - IDF (Impulse Development File).  Runs a program specified in the CString
+     field and creates IMPULSE.IDF file.  (See section named "IDF for dummies")
+
+-[ Conference Management ]-
+
+CN - Newscan All Conferences.  A CString value of "M" would newscan all
+     msg bases, and "F" would newscan all file areas.
+CF - Change File Conference. Lets user choose conf is CString is null or
+     equals 'N'.  'A' as a CString joins All Conferences.
+CM - Change Message Conference. Lets user choose conf is CString is null or
+     equals 'N'.  'A' as a CString joins All Conferences.
+CE - If ACS permits, Edit Conferences
+
+-[ Miscellaneous Commands ]-
+
+-V - View BBS List
+-A - Add to BBS List
+-N - Enter New User Voting
+-T - Toggles forced usage of the prompt contained in the .MNU file.
+-C - Displays message in the CString field on sysop's command line.
+-F - Displays CString ansi/rip/avt file in the .\ANSI\ directory.  No
+     extension is needed.
+-L - Writes CString field to the users screen.
+-Q - Takes an Infoform.  The CString contains the name of the .INF file
+     which should be residing in the .\ANSI\ directory.  Do not include the
+     .INF extension.
+-R - Reads .ASW file, or Answer file from the file specified in the CString
+     field.  ie. NEWUSER.INF will have a NEWUSER.ASW which will contain the
+     users answers to the questions. Enter the name of the .INF file on the
+     CString, without the .INF or .ASW extensions.
+-S - Writes string in the CString field to the sysoplog for the current day.
+-^ - Jumps to .MNU file specified in the CString field.
+-/ - Jumps to previous menu or .MNU file in the CString field.
+-\ - Jumps BACK to the menu before.
+
+-[ Node Management Commands ]-
+
+NC - Enters Multinode Chat Forum.
+NS - Sends msg to selected node.
+NW - Display's which users are online and on which node.
+
+-[ Batch File UL/DL Commands ]-
+
+B? - Display's current batch information.
+BD - Batch Download
+BL - Lists files flagged for DL.  If CString = U then files flagged for Upload
+     will be displayed.
+BR - Removed files flagged for DL.  If CString = U then files flagged for
+     Upload will be selected to remove.
+BU - Batch Upload.
+
+-[ Door Commands ]-
+
+DC - Open a DOOR program using WWIV's CHAIN.TXT drop file.  Batch file is to
+     be specified in the CString field.
+DG - Open a DOOR program using DOOR.SYS Format.  Batch file is to
+     be specified in the CString field.
+DD - Open a DOOR program using DORINFO1.DEF.  Batch file is to
+     be specified in the CString field.
+DS - Opens a DOOR using Spitfire type SFDOORS.DAT.  Batch file is to
+     be specified in the CString field.
+DW - Opens a DOOR using the Wildcat format CALLINFO.BBS.  Batch file is to
+     be specified in the CString field.
+D- - Opens a DOOR without making a drop file or using any other BBS format.
+     Simply runs the batch file specified in the CString field.
+
+-[ File Area Commands ]-
+
+FA - Change File area.  CString can be used to jump directly to the area.
+FD - Download a single file.
+FF - Searches for file matching the given desc. or mask (*.*, *.ZIP)
+FK - User File list configuration.
+FL - List files in current area.
+FN - Newscan Current area, or area specified in the CString.
+FP - Change newscan pointer dates.
+FR - Removes files from filelist.
+FU - Upload
+FV - View a ZIP/ARJ/LZH File's interior.
+FY - Displays user's file information
+FZ - Sets directory's for newscanning.
+
+-[ Hangup Commands ]-
+
+HC - Displays a Y/N Question in the CString and if true logs the user off.
+HI - Hangup Immediately.
+HM - Print file in the CString then hangup.
+
+-[ Message Area Commands ]-
+
+ME - Sends Email to user name or # in the CString field.  Prompts for name
+     if CString is blank.
+MQ - Make a QWK packet using the users scan area's and send.
+MR - Recieves a REP packet and imports msgs.
+MJ - Purge private mail to user specified in the CString field.
+MK - Purge's all private mail.
+ML - Email another user.
+MN - Newscan current area, or area defined in the CString field.
+MP - Post a msg in the current area.
+MS - Read/Scan Msgs in the current area.
+
+-[ Other Miscellaneous Commands ]-
+
+O1 - Matrix Login (prompts for username, password)
+O2 - Matrix Check (checks for users acces and displays the system password)
+O3 - Matrix Apply (logs in a new user and creates his account)
+OA - Autovalidation command.  Use at your own risk.  If users name is found
+     in the file specified in CString he will be autovalidated.
+OB - Runs the bulletins system.
+OC - Request chat.  Displays CString as the "why do you wanna chat?" msg.
+     if none is given, "why do you wanna chat?" will be used.
+OI - Displays LOGON.* and SYSTEM.* for system information.
+OM - Edits a users macro's/optional autosig.
+OO - Shows the sysop's chat status.  Available/Unavailable.
+OP - Changes users Settings.  The number in CString determines the option to
+     change.  Available numbers are:
+      1: Change users address.
+      2: Get user's birthdate.
+      3: Toggle ansi emulation.
+      4: Get user's city/state info.
+      6: Change User's Note.
+      7: Get user's handle.
+      8: Get user's phone number.
+      9: Get user's password.
+     10: Get user's real name.
+     11: Get user's screen preferences. (80x25, 80x50 etc..)
+     12: Male/Female/Lots/None - Get user's sex.
+     13: Edit user's autosignature.
+     14: Get user's zipcode.
+     15: Toggle mail forwarding.
+     16: Turn On ANSI emulation.
+     17: Turn COLOR off.  B/W.
+     18: Toggle Screen Pauses
+     19: Toggle HOT-KEY input at menu's.
+     21: Change Users colors
+     22: Toggle Xpert mode.
+     25: RIP Emulation Toggle.
+     26: Change Prompts.
+OS - Allows user to view the bulletin specified in CString.
+OL - Oneliner's.
+OY - Display's Users information (USERSTAT.*)
+O$ - Allows user to deposit/withdraw time from the timebank.
+
+-[ Stuff ]-
+SP - Pause the screen
+SC - Clear the screen
+SH - Show free HEAP size
+SS - Show free STACK size
+
+-[ AutoMessage/Commandline Commands ]-
+
+UA - Email a reply to author of automessage.
+UR - Read Auto/Logoff message.
+UW - Write a NEW auto/logoff message.
+
+-[ Sysop Related Commands ]-
+
+%S - System Config
+%B - Edit Message Area's.
+%C - Change to another user.
+%D - Enter MiniDos environment.
+%F - Edit File Area's.
+%L - View Sysop logs.
+%P - Protocol Editor.
+%U - User Editor.
+%Z - View Status Logs for the total # of days bbs has been running.
+%2 - Sort files.  Sysop will be prompted to do all bases.
+%3 - Read ALL private mail.
+%4 - Download an unlisted file from the HD.
+$5 - Move Files from base-2-base.
+%6 - Locally Upload all files.
+%7 - AutoValidate all new files.
+%8 - Adds GIF specs to GIF files in specified area's.
+%9 - Pack Message Bases/Email
+%# - Menu Editor.
+
+Woah, i'm glad that's done. :)
+
+
+
+- Impulse MCI/Pipe/Percent Codes -
+This is the current list of all standard mci codes impulse uses. If using
+these codes in a string, they should begin with a '|', or in a file they
+should begin with a '%'. This is list is current as of version 7.0.
+
+00-15 - Changes the forground text color
+AD - The users address
+B0-BF - Change the background color. Note the background colors above B7
+        will only appear if you are using iceColor, otherwise they will
+        cause the text to blink
+BN - The bbs' name
+CF - Current file base
+CL - Clear the screen
+CM - Current message base
+CS - Current connect speed
+CT - Caller number
+DK - Download kilobytes
+DN - Downloads
+DT - Current date
+FL - File security level
+FP - File points
+FT - Total system uploads
+HM - Higest message read
+HS - Header string(this sometiems contains junk data, so be careful)
+LC - Last caller
+LD - Last date called
+LO - City/State
+LP - Locked port speed
+LS - Used in conjucture with header string
+MN - Message number
+NF - New files today
+NL - New line
+NM - Current menu
+NN - Current node
+NP - Total posts today
+NT - New users today
+O1 - Changeable mci, used with certain strings, may contain junk.
+PA - Pause Screen
+PN - Phone number
+PS - Total posts
+RN - Real name
+SP - Connect SPpeed
+SN - Sysop's name
+TC - Total calls today
+TL - Time left
+TT - Time left today
+TP - Public posts today
+U0 - U9 - User defined colors
+UC - User note
+UD - Uploads
+UK - Upload kilobytes
+UL - Security level
+UN - User name
+UU - User number
+VA - Software acronym
+VD - Software version date
+VN - Software name
+VV - Software version
+XYxxyy - Goto the XX,YY position. if either y or x is 0, it uses the current
+         position, i.e. XY0015 would goto the current x, position on the 15th
+         line.
+
+- ANSI/Textfile Listings -
+
+This is a rather lengthy list.  Many of the default ansi's are displayed using
+the menu editor and menu commands.  All MENU ansi's are displayed according
+to the names in their respective .MNU file.  All of the following ansi's
+use the standard MCI codes listed above unless otherwise listed.  Also,
+replacing the .ANS, .RIP or .AVT extension with a number (starting with 1)
+will show any number (1..9) randomly, Not in order 1..9.
+
+
+Data Directory Text's.
+----------------------
+BLACK.LST holds names that are blacklisted on the system. See Config for
+          autoblacklist deleted users options.
+AUTOVAL.LST if a person who's name is in this file, they will be autovalidated
+
+NOTE: One name per line.
+
+
+Ansi Directory Text's.
+----------------------
+HDR.ANS the same as obv's hdr.ans  displays msgs.  %HS is the string.
+        %LS shows the character following it 1 for every characher in %HS.
+TIMEDOUT.ANS displayed when user sits too long
+HANGUP0-9.ANS 0-9 being what the sysop chose to show at hangup
+NOTLEFT.ANS no time left
+REQFILE.ANS file request
+DLHOURS.ANS dl request not within config's dl times
+UPLOAD.ANS displayed before an upload
+FBASEALL.ANS displays all file areas in order listed in fbase setup.
+FBASE(conf#).ANS displayed instead of file base lists.  conf# being 1..20.
+MINIDOS.ANS minidos help file
+PROTSUL.ANS list of protocols for a single upload
+PROTSDL.ANS                                download
+PROTBUL.ANS                         batch upload
+PROTDUL.ANS                                download
+FILEHDR.ANS displayed at the top of the file listings
+BATCHUL.ANS displayed before a batch upload
+PREMTX.ANS shown before user is thrown into the matrix
+WELCOME.ANS think about this one :)
+WELCOME1..9.ANS think about these too :)
+2MANYCAL.ANS user has made too many calls to the board today
+LOGON.ANS think :)
+LOGON1..9.ANS :)
+MSGSTATS.ANS users msg stats
+FILESTAT.ANS users file stats
+SL#.ANS displaed to users with sl matching #
+DSL#.ANS                        dsl
+ARLEVEL(A..Z).ANS displayed to users with matching [A..Z] level
+USER#.ANS displayed to user #
+LINEHEAD.ANS/FSEHEAD.ANS (depends oh which editor you have chosen)
+           ansi codes are:
+            %BN base name
+            %TL msg title
+            %FM msg from
+            %TO msg to
+            %DT date
+            %NL carriage return
+
+HEADER.ANS header seen while reading msgs.
+           ansi codes are:
+            %ST : msg status
+            %RT : reply to msg #.
+            %OU : total # of msgs in the current base.
+            %TL : msg title
+            %MN : current msg number
+            %FM : msg from
+            %TO : msg to
+            %DT : msg date
+            %NL : carriage return
+NUVALERT.ANS tell's the new user he's about to enter the nuv
+NUVOTE.ANS
+            %NM - users name being voted on.
+            %YV - total # of yes votes he's got.
+            %NV -            no
+            %VY - total yes votes he needs to be validated.
+            %VN -       no
+
+PRHELP.ANS msg editor help
+COLOR.ANS msg color help
+MBASEALL.ANS displays all msg bases in order listed in mbase setup.
+MBASE(conf#).ANS displayed instead of msg base lists.  conf# being 1..20.
+LOGOFF.ANS done at logoff
+SYSTEM.ANS shown at newuser login as the system's stats
+NOSYSOP.ANS sysop's out.. quit paging him!
+GOAWAY.ANS damnit!! he's gone!! quite paging moron!
+USERSTAT.ANS users main stats
+SYSOPIN.ANS sysop is in da house
+SYSOPOUT.ANS sysop is outta da house
+NEWUSER.ANS shown to newusers before new user info is taken
+NEWUINFO.ANS shown just before new user enters email.
+NONEWUSER.ANS says the board is not accepting any new users
+ONELTOP.ANS oneliner header
+ONELBOT.ANS bottom for oneliners
+USERLTOP.ANS userlist header
+USERLBOT.ANS bottom for userlists
+BBSLTOP.ANS bbslist header
+BBSLBOT.ANS bottom for bbslists
+BLACKLST.ANS shown to a user who calls you up and is on the black list
+NEWINF.ANS shown instead of:
+        ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+        A Handle/Alias         ButtMunch
+        B Real Name            Joey Budafooko
+        C VOICE Phone Number   214-328-7448
+        D Sex                  Lots
+        E Birthdate            08/25/64
+        F From                 Somewhere, WV
+        G Street               123 Mywifewasshotbymymistress Ln.
+        H Zip Code             75149
+        I ANSI                 ANZI
+        J Screen Size          80x25
+        K Your Password        SHOTGUN
+        L User Note            I'm an old dude with a hot chick.
+        ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+NEWINF.ANS now does like obv/spew and vision/spew do.
+   keys mci's
+   ------------------------------------
+     A  %OA Address
+     B  %OB From
+     C  %OC Users name
+     D  %OD password
+     E  %OE Screen Size
+     F  %OF Autosig
+     G  %OG input mode
+     H  %OH birthdate
+     I  %OI user note
+     J  %OJ phone number
+     K  %OK real name
+     L  %OL sex? y/n/lots/none
+     M  %OM use pause?
+     N  %ON expertmode?
+end.
+
+- String Editing and Information -
+
+Any string can have a Textfile/ANSI Displayed in its place.  To do so,
+simply add ~~FILENAME.EXT as the string, and filename.ext will be
+displayed in place of the string.  filename.exe should also reside in
+the .\ANSI\ directory with the rest of the bbs textfiles.
+
+NEW: &&FILENAME.EXT will run a script file (residing in the .\SCRIPT
+directory) from the string.
+
+NEW: ##FILENAME.EXT will load a menu file (residing in the .\MENU
+directory) from the string.
+
+
+- Function/F-Key/Alt/Ctrl Key Listings -
+
+Global Keys.
+
+ALT-- / (ALT-Minus) Shows current stack space left in the current heap.
+ALT-= / (ALT-Equal) Toggle's exit of bbs after user logs out.
+CTRL-SysRQ / (CTRL-PrintScreen) Exits BBS with a specified Errorlevel.
+ALT-J / Shell to dos.
+
+WFC Keys.
+
+F1 / WFC Menu Command key help.
+
+Online Keys.
+
+ALT-F / Show SYSFUNC.ANS for Online key help.
+ALT-G / Toggle's TRAP file.  Allows sysop to capture chat, and user activity.
+ALT-L / Clears screen.
+ALT-T / Moves the F2 status Bar to the top/bottom of screen.
+ALT-V / Autovalidate user online.
+F1 / Options bar.  Change user info, Hangup, Send file via Zmodem.
+F2 / Toggle user info window at bottom/top of screen on/off.
+F3 / Turns user keyboard ON/OFF
+F4 / Toggle's user's sysop page flag.
+F5 / Hangup on user.
+F7 / Decrease user's time by 5 minutes.
+F8 / Increase user's time by 5 minutes.
+F9 / Toggle Temporary sysop access.
+F10 / Oneline chat.  F10 exits.
+SHIFT-F3 / Turn Screen/Keyboard both off/on.
+SHIFT-F5 / Hangup and display HANGUPxx.*
+SHIFT-F7 / Subtract a specified amount from user's time.
+SHIFT-F8 / Add a specified amount to user's time.
+ALT-F3 / Turn user's screen on/off.
+ALT-F4 / Shell to dos.
+ALT-F5 / Hangup with line-noise.
+ALT-F9 / Pages user with ^G
+ALT-F10 / SplitScreen Chat. ALT-F10 exits.
+CTRL-F4 / SysopShell with user.
+CTRL-F5 / Display's line noise.
+
+
+- IDF For Dummies -
+
+IDF Stands for "Impulse Development File".  Its primary purpose is to aide
+Utility and ADD-ON programmers extra help and ease.  When the menu cmd ID is
+executed, IMPULSE.IDF is created.  Below is a sample of what IMPULSE.IDF might
+look like.
+
+  COMDRIVER:    FOSSIL                (Driver in use.  FOSSIL or INTERNAL)
+  COMPORT:      2                     (Comport BBS is operating on)
+  COMIRQ:       3                     (IRQ Comport is using)
+  COMBUFFER:    4096                  (Buffer size for comport in use)
+  BPSRATE:      28800                 (Current BPS user is logged in at)
+  VERSION:      v5                    (Impulse Version #)
+  BBSNAME:      Termite Terrace       (BBS Name)
+  SYSOPNAME:    Sysop                 (Sysop Name)
+  HANDLE:       Nivenh                (Online Users Handle)
+  REALNAME:     Joey Budafooko        (Users Real Name)
+  PASSWORD:     MARSHACLARK           (Users Password)
+  SLEVEL:       255                   (Users Security Level)
+  DLEVEL:       255                   (Users Download Security Level)
+  FILEPOINTS:   240                   (Current amount of FilePoints possesed)
+  PROMPT#:      1                     (Users selected prompt #)
+  EMULATION:    ANSI                  (Emulation in use.  Either ANSI or RIP)
+  UPLOADS:      32                    (Number of uploads user has made)
+  DOWNLOADS:    14                    (Number of Download user has made)
+  UPLOADED-K:   3200                  (Size in KB of users uploads)
+  DOWNLOADED-K: 3200                  (Size in KB of users downloads)
+  CURRENT-TIME: 00:00                 (Current Time in system clock)
+  TIME-LEFT:    00:32                 (Amount of time user has left)
+
+This file can be read from an external program and used to pass parameters
+without parsing the command line and providing more information that other-
+wise available for an external program without reading data files which can
+be a hassle.  Look for IMP40DEV.ZIP which is the official Impulse Development
+kit for version 4.0.  This ZIP has been updated since v3.5.
+
+
+- ISL For Dummies -
+
+ISL short for Impulse Script Language (original eh?).  Lets get a few things
+down before i start to make things easier for the both of us.  A script
+*MUST* reside in the script directory you have in your configuration.
+Simply enter the path along with the script filename in the CString, OR
+you could just enter the script filename in there to use the impulse
+directory.  Anyway, here's a few things you'll be seeing throughout the
+rest of this section.
+
+--- System Variables
+
+            CR
+
+Details     The CR variable contains the CR character. (ASCII
+            Character #13)
+
+
+            ESC
+
+Details     The ESC variable contains the ESC character (ASCII
+            Character #27)
+
+
+            LF
+
+Details     The LF variable contains the LF character (ASCII
+            Character #10)
+
+
+            NULL
+
+Details     The NULL variable contains the NUL character (ASCII
+            Character #0)
+
+
+            REV
+
+Details     The REV variable contains the ISL revision number.
+
+
+            SPACE
+
+Details     The SPACE variable contains the SPACE character (ASCII
+            Character #32)
+
+
+            VER
+
+Details     The VER variable contains the DOS Macros language version
+            number.
+
+
+--- Condition variables
+
+            These variable are set on some occasion by the interpreter,
+            when it meets some special commands. They often are the result
+            of an operation.
+
+
+            COMPARE
+
+Details     The COMPARE variable is created by the COMPARE and INSTR
+            commands, and is used by the IF command. With COMPARE, it can
+            have the values of "=" (equal), "<" (smaller) or ">" (greater).
+            With INSTR you can find "=" (found) or "<" (not found). This
+            variable is internally checked by the IF command.
+
+See also    COMPARE, INSTR, IF.
+
+
+            DOSERR
+
+Details     The DOSERR variable contains the number of the last DOS error
+            that occured. Refer to the appendix for DOS errors list.
+
+
+            EL
+
+Details     The EL variable contains the return code ("errorlevel") of the
+            last DEXEC call.
+
+See also    DEXEC.
+
+
+            FEOF
+
+Details     The FEOF variable contains the label to go when end of file
+            is reached, as set by the FROPEN command.
+
+See also    FREAD, FROPEN.
+
+
+
+            INSTR
+
+Details     The INSTR variable contains the position of the substring found
+            in the last call of the INSTR command.
+
+See also    INSTR.
+
+
+            IOERR
+
+Details     The IOERR command contains the last I/O error that occured.
+            Refer to the appendix for the list of I/O errors.
+
+
+            SCAN
+
+Details     The SCAN variable contains the scan code -if any- obtained from
+            the last READKEY call. Scan codes are listed in appendix.
+
+See also    READKEY
+
+
+--- User-defined variables
+
+            These variables are there for you to define, using the SET
+            command. The influence the way some commands work.
+
+
+            AMP
+
+Details     The AMP variable is set to nothing or anything. If it is set to
+            something, then user will be able to use the ampersand
+            character (&) when entering input with ASK, POPASK or READKEY.
+            Also if it is set to something, ampersands won't be removed
+            using the FREAD command.
+
+See also    ASK, FREAD, POPASK, READKEY.
+
+
+            MASK
+
+Details     The MASK variable is used with ASK and POPASK. When MASK is
+            different from a blank string, all input entered by user will
+            echo its contents. For example, for password-entering, SETting
+            MASK to "*" would be very interesting.
+
+See also    ASK, POPASK
+
+--- General Commands
+
+            This is the list of the commands supported by the ISL
+            language. They are listed in alphabetical order, and this
+            reference text explains everything about these commands.
+
+
+            ARG
+
+Syntax      ARG <variable> <number> <text>
+
+Details     The ARG command will put the (<number>+1)th argument in the
+            <text> string in the specified <variable>. Notice that you must
+            use the CMD command to get the first argument.
+
+Example     ask fullname 7 1 30 What's your full name?
+            cmd firstname &fullname&
+            arg lastname 1 &fullname&
+            write So your first name is &firstname&
+            write and your last name is &lastname&.
+
+See also    ARGLINE, CMD
+
+
+            ARGLINE
+
+Syntax      ARGLINE <variable> <number> <text>
+
+Details     The ARGLINE command will put the (<number>+1)th argument, and
+            all the rest of the <text> string in the specified <variable>.
+
+Example     set fulldata John Wells 780 Pine St. HomeTown USA
+            argline address 2 &fulldata&
+            write Address is &address&.
+
+See also    ARG, CMD
+
+
+            ASK
+
+Syntax      ASK <variable> <foreground> <background> <length> [<question>]
+
+Details     The ASK command puts an user input in the specified <variable>.
+            You must set the <foreground> and <background> colors, and the
+            <lenght> of the input field. Also you can specify a <question>
+            that will be written before the input field.
+
+            Notice that if the <variable> is not empty, its contents will
+            become the default string.
+
+Example     ask name 7 1 30 Write your name:
+            write Hello &name&!
+
+See also    READKEY
+
+
+            BACK
+
+Syntax      BACK <background>
+
+Details     The BACK command sets the <background> color. The valid color
+            numbers are listed in the appendix.
+
+Example     back 1
+            cls
+            write Now I'm writing on a blue background!
+
+See also    FORE, GETBACK, GETFORE
+
+
+            BREAK
+
+Syntax      BREAK {ON|OFF}
+
+Details     The BREAK command will enable or disable the Ctrl-Break
+            checking.
+
+
+            CD
+
+Syntax      CD <directory>
+
+Details     The CD command changes the current <directory>. Errors are
+            reported via the IOERR variable.
+
+Example     cd c:\temp
+            compare &ioerr& 0
+            if = skip1
+            md c:\temp
+            cd c:\temp
+            :skip1
+
+See also    GETDIR, MD, RD
+
+
+            CENTER
+
+Syntax      CENTER <text>
+
+Details     The CENTER command centers a <text> on the screen, according to
+            the current window coordinates, and then moves the cursor to
+            the next line.
+
+See also    SCENTER, SWRITE, WRITE
+
+
+            CHAIN
+
+Syntax      CHAIN <filename>
+
+Details     The CHAIN command allows to chain to an other .ISL program. The
+            execution begins at the specified <label>, or if none
+            specified, at the beginning of the file.
+
+            A good practice when calling another program is to set the
+            CHFILE variable to the current program's filename (Obtained
+            with the PARAM command) and the CHLABEL variable to a label to
+            goto when execution is finished. Please always use these
+            standards when creating "sub-programs" to be called from a main
+            program!
+
+Example     param chfile 1
+            set chlabel ret1
+            chain prog2
+            :ret1
+
+See also    GOSUB, GOTO
+
+
+            CHR
+
+Syntax      CHR <variable> <number>
+
+Details     The CHR command puts the ASCII code of the specified <number>
+            in the <variable>.
+
+Example     ask num 7 1 3 Write an ASCII code (0-255):
+            chr char &num&
+            write The associated ASCII character is "&char&".
+
+
+            CJUST
+
+Syntax      CJUST <variable> <length>
+
+Details     The CJUST command center-justifies the string contained in the
+            <variable>, for a specific <length>. It fills the unoccupied
+            spaces with space characters. (ASCII #32)
+
+See also    LJUST, RJUST
+
+
+            CLEOL
+
+Syntax      CLEOL
+
+Details     The CLEOL command clears the current line from the current
+            cursor position to the end of the line, using the current
+            background color and according to the current window
+            coordinates.
+
+See also    CLS
+
+
+            CLS
+
+Syntax      CLS
+
+Details     The CLS command clears the entire window (Or the screen if no
+            window defined) using the current background color.
+
+See also    CLEOL
+
+
+            CLSTACK
+
+Syntax      CLSTACK
+
+Details     The CLSTACK command clears the current stack used by GOSUB,
+            POP, PUSH and RETURN, as many POP command would do.
+
+See also    GOSUB, POP, PUSH, RETURN
+
+
+            CLTRAP
+
+Syntax      CLTRAP
+
+Details     The CLTRAP command clears all key trap definitions.
+
+See also    TRAP, TRAPESC
+
+
+            CMD
+
+Syntax      CMD <variable> <text>
+
+Details     The CMD command will put the first argument in the <text>
+            string in the specified <variable>. Notice that you must
+            use the ARG command to get the other arguments.
+
+Example     ask fullname 7 1 30 What's your full name?
+            cmd firstname &fullname&
+            arg lastname 1 &fullname&
+            write So your first name is &firstname&
+            write and your last name is &lastname&.
+
+See also    ARG, ARGLINE
+
+
+            COLORS
+
+Syntax      COLORS <border> <text> <high> <bar>
+
+Details     The COLORS command sets the <border>, <text>, <high> and <bar>
+            colors used in the POPxxx and HELP commands. Notice that each
+            argument is separated in 2, the foreground and the background!
+            The colors are listed in the appendix.
+
+Example     colors 9 1 7 1 14 1 0 7
+            popask tmp 0 7 30 What's your name?
+
+See also    HELP, POPASK, POPMENU, POPMSG, POPSUB, POPWIN
+
+
+            COMPARE
+
+Syntax      COMPARE <string1> <string2>
+
+Details     The COMPARE command is used with IF to branch execution
+            depending on a comparison of two strings. This command sets the
+            COMPARE variable to "=", "<" or ">", depending if <string1> is
+            respectively equal to, smaller than or greater than <string2>.
+            Then the IF command checks this variable also.
+
+Example     ask num 7 1 3 Write a number:
+            compare &num& 10
+            if < skip1
+            if = skip2
+            write &num& is greater than 10.
+            end
+            :skip1
+            write &num& is smaller than 10.
+            end
+            :skip2
+            write &num& is equal to 10.
+
+See also    IF, IFEXIST, IFNUM, INSTR
+
+
+            COPYVAR
+
+Syntax      COPYVAR <source variable> <target variable>
+
+Details     The COPYVAR commands acts a little like the SET command, but it
+            only accepts variable names as parameters (Even the <source>.)
+            Its main purpose is when working with indexes. In the example
+            shown, you will see how to display the variable "tmp1" to
+            "tmp10" easily, using COPYVAR.
+
+Example     set count 0
+            :loop
+            inc count
+            copyvar tmp&count& toshow
+            write &toshow&
+            compare &count& 10
+            if <= loop
+
+See also    SET
+
+
+            CTRLSTR
+
+Syntax      CTRLSTR <variable>
+
+Details     The CTRLSTR command changes the specified <variable> contents
+            the following way: when it encounters control characters (ASCII
+            characters 0 to 31), it replaces them by a string of the
+            "[#<ASCII code>]" format. Notice that the same procedure is
+            internally used when you use the SHOWVAR command.
+
+
+            CUT
+
+Syntax      CUT <variable> <index> <length> <source>
+
+Details     The CUT command puts a "cut" of a certain <length>, beginning
+            with the <index>th character from the <source> string, and put
+            it into the <variable>. It can be used along with INSTR to
+            detect if a string exists in another string, and then take
+            them.
+
+Example     ask tmp 0 7 20 Write text:
+            cut tmp2 1 2 &tmp&
+            write The first two characters of &tmp&
+            write are &tmp2&
+
+
+            DEC
+
+Syntax      DEC <variable> [<count>]
+
+Details     The DEC command decrements the numeric <variable> by 1, or by
+            the <count>, if specified.
+
+Example     write Beginning countdown...
+            set count 11
+            :loop
+            dec count
+            swrite &count&...
+            compare &count& 0
+            if > loop
+            write Lift Off!
+
+See also    DIV, INC, MULT
+
+
+            DELAY
+
+Syntax      DELAY <milliseconds>
+
+Details     The DELAY command will wait the specified number of
+            <milliseconds> before continuing. To get a one-second pause,
+            use DELAY 1000.
+
+
+            DELLINE
+
+Syntax      DELLINE
+
+Details     The DELLINE command deletes the current screen row, so that all
+            rows under that one scroll up, according to the current window
+            coordinates.
+
+See also    INSLINE
+
+
+            DEXEC
+
+Syntax      DEXEC <full path> [<parameters>]
+
+Details     The DEXEC command will directly load a program and execute it,
+            without using COMMAND.COM. However, to do this, you need to
+            specify the <full path> (Directory, file, extension.) One or
+            more <parameters> can be specified. Error codes (Errorlevels)
+            are returned via the EL variable, and DOS errors are returned
+            in DOSERR.
+
+            DEXEC cannot be used with DOS commands (DIR, COPY, etc.) and
+            batch files.
+
+Example     dexec C:\ZDIR\PROG.EXE
+            write DOS error &doserr& and Error code &el&.
+
+See also    EXEC
+
+
+            DIV
+
+Syntax      DIV <variable> <factor>
+
+Details     The DIV command divides the <variable> contents by a specified
+            <factor>. If the <factor> is 0, then a "Division by zero" error
+            will occur. The result of the division is put in the
+            <variable>.
+
+See also    DEC, INC, MULT
+
+
+            END
+
+Syntax      END
+
+Details     The END command terminates the program.
+
+See also    ERROR
+
+
+            ERROR
+
+Syntax      ERROR <text>
+
+Details     The ERROR command terminates the program and the interpreter
+            generates an error, writing "<text> on line <l>", where <l> is
+            the number of the line where you called this command.
+
+See also    END
+
+
+            EXEC
+
+Syntax      EXEC <dos command>
+
+Details     The EXEC command loads the command interpreter (COMMAND.COM in
+            most cases) with the "/C" switch and tells it to execute the
+            <dos command>. Error codes cannot be trapped using EXEC: use
+            DEXEC instead. DOS errors are reported via the DOSERR variable.
+
+Example     exec DIR /P
+
+See also    DEXEC
+
+
+            EXPAND
+
+Syntax      EXPAND <variable>
+
+Details     The EXPAND command expands the <variable> to a full pathname.
+            For example, do "expand fn" in the directory C:\ZDIR\TEMP,
+            with the variable "fn" containing "..\abc.txt", and that
+            variable will now be equal to "C:\ZDIR\ABC.TXT". This command
+            puts the string in upper case.
+
+See also    SPLIT
+
+
+            FORE
+
+Syntax      FORE <foreground>
+
+Details     The FORE command sets the <foreground> color. The valid color
+            numbers are listed in the appendix.
+
+Example     fore 14
+            write Now I'm writing in yellow!
+
+See also    BACK, GETBACK, GETFORE
+
+            FREAD
+
+Syntax      FREAD <variable>
+
+Details     The FREAD command reads a line in the current input file.
+            Notice that the input file must have been opened. If end of
+            file is encountered, control is automatically given to the
+            label defined with FROPEN. Errors are reported via the IOERR
+            variable.
+
+Example     fropen test.doc l1
+            :l2
+            fread tmp
+            goto l2
+            :l1
+            write End of file encountered!
+
+See also    FRCLOSE, FROPEN, FWAPPEND, FWOPEN, FWRITE, FWCLOSE
+
+
+            FROPEN
+
+Syntax      FROPEN <filename> <label>
+
+Details     The FROPEN command assigns the input file to the specified
+            <filename>, and opens it for reading. The <label> will be
+            called when end of file is reached. Errors are reported via the
+            IOERR variable.
+
+See also    FRCLOSE, FREAD, FWAPPEND, FWCLOSE, FWOPEN, FWCLOSE, FWRITE
+
+
+            FWAPPEND
+
+Syntax      FWAPPEND <filename>
+
+Details     The FWAPPEND command assigns the output file to the specified
+            <filename>, and opens it for writing. The file pointer is
+            placed at the end of the file, so you can append data to the
+            file.
+
+            If the file doesn't exists, FWAPPEND creates it. Errors are
+            reported via the IOERR variable.
+
+See also    FRCLOSE, FREAD, FROPEN, FWCLOSE, FWOPEN, FWCLOSE, FWRITE
+
+Syntax      FRCLOSE
+
+Details     The FWCLOSE command closes the current output file. Errors are
+            reported via the IOERR variable.
+
+See also    FRCLOSE, FREAD, FROPEN, FWAPPEND, FWOPEN, FWRITE
+
+            FWCLOSE
+
+Syntax      FWCLOSE
+
+Details     The FWCLOSE command closes the current output file. Errors are
+            reported via the IOERR variable.
+
+See also    FRCLOSE, FREAD, FROPEN, FWAPPEND, FWOPEN, FWCLOSE, FWRITE
+
+
+            FWOPEN
+
+Syntax      FWOPEN <filename>
+
+Details     The FWOPEN command assigns the output file to the specified
+            <filename>, and opens it for writing. Everything in the file is
+            deleted if the file exists.
+
+            If the file doesn't exists, FROPEN creates it. Errors are
+            reported via the IOERR variable.
+
+See also    FRCLOSE, FREAD, FROPEN, FWAPPEND, FWCLOSE, FWRITE
+
+
+            FWRITE
+
+Syntax      FWRITE <text>
+
+Details     The FWRITE command writes the <text> into the output file.
+            Errors are reported via the IOERR variable.
+
+See also    FRCLOSE, FREAD, FROPEN, FWAPPEND, FWCLOSE, FWOPEN
+
+
+            GETBACK
+
+Syntax      GETBACK <variable>
+
+Details     The GETBACK command puts the current background color number in
+            the <variable>.
+
+See also    BACK, FORE, GETFORE
+
+
+            GETDFREE
+
+Syntax      GETDFREE <variable>
+
+Details     The GETDFREE command puts the number of bytes free on the
+            current drive in the <variable>.
+
+See also    GETDSIZE
+
+
+            GETDIR
+
+Syntax      GETDIR <variable>
+
+Details     The GETDIR command puts the current directory name in the
+            <variable>.
+
+See also    CD, MD, RD.
+
+
+            GETDSIZE
+
+Syntax      GETDSIZE <variable>
+
+Details     The GETDSIZE command puts the number of bytes total on the
+            current drive in the <variable>.
+
+See also    GETDFREE
+
+
+            GETENV
+
+Syntax      GETENV <variable> <environmental variable>
+
+Details     The GETENV command puts the specified <environmental variable>
+            in the <variable>.
+
+Example     getenv tmp COMSPEC
+            write Executing COMMAND.COM...
+            dexec &tmp&
+
+
+            GETFORE
+
+Syntax      GETFORE <variable>
+
+Details     The GETFORE command puts the current foreground color number in
+            the <variable>.
+
+See also    BACK, FORE, GETBACK
+
+            GETTIME
+
+Syntax      GETTIME <variable> <format>
+
+Details     The GETTIME command puts the current date/time string in the
+            <variable>, using the selected <format>. The symbols used when
+            defining a format are:
+
+            H Hours                 Y Year
+            M Minutes               O Month (Not "M"!)
+            S Seconds               D Day
+            X Hundredths of second  W Day of week (0:Sun, 6:Sat)
+
+            Any other character are kept as they were entered.
+
+Example     gettime date y/o/d
+            gettime time h:m:s.x
+
+See also    SETDATE, SETTIME
+
+
+            GETVER
+
+Syntax      GETVER <variable>
+
+Details     The GETVER command puts the current DOS version in the
+            <variable>.
+
+
+            GETX
+
+Syntax      GETX <variable>
+
+Details     The GETX command puts the current cursor column number in the
+            <variable>.
+
+See also    GETY, LOCATE
+
+
+            GETY
+
+Syntax      GETY <variable>
+
+Details     The GETY command puts the current cursor row number in the
+            <variable>.
+
+See also    GETX, LOCATE
+
+
+            GOSUB
+
+Syntax      GOSUB <label>
+
+Details     The GOSUB command pushes the current line number in the stack,
+            and then transfers control to the <label>. To return from a
+            GOSUB, just use the RETURN command. Look at the example below
+            for better understanding.
+
+            GOSUB is ideal for creating subprograms and procedures.
+
+Example     write In main program, Calling label1
+            gosub label1
+            write Returned to main program
+            end
+            :label1
+            write In label1, Calling label2
+            gosub label2
+            write In label1, Returning to main program
+            return
+            :label2
+            write In label2, Returning to label1
+            return
+
+Test run    In main program, Calling label1
+            In label1, Calling label2
+            In label2, Returning to label1
+            In label1, Returning to main program
+            Returned to main program
+
+See also    GOTO, POP, PUSH
+
+
+            GOTO
+
+Syntax      GOTO <label>
+
+Details     The GOTO command transfers control to the <label>.
+
+Example     write Going to label1...
+            goto label1
+            end
+            :label1
+            write In label1!
+
+See also    CHAIN, GOSUB
+
+
+            HELP
+
+Syntax      HELP <topic>
+
+Details     The HELP command activates the online help system. To use it,
+            you must have set the HELPFILE variable to the help file full
+            pathname. Help files have this format:
+
+                {<topic>}
+                    <text...
+                    ...text>
+                {<other topic>}
+                    <text...
+                    ...text>
+
+            In the help <text>, words between curly braces ({}) will be
+            highlighted, and if the user points on them and presses Enter,
+            the help system will call this as another topic.
+
+            The help window colors are defined with the COLORS command.
+
+Example     set helpfile PROG.HLP
+            trap 59 namehelp
+            write Press F1 for help!
+            push
+            ask name 0 7 30 Write your name:
+            pop
+            write Hello, &name&!
+            end
+            :namehelp
+            pop
+            help entername
+            return
+
+
+            HIBACK
+
+Syntax      HIBACK {ON|OFF}
+
+Details     The HIBACK command enables or disables te high background
+            option. If set to ON, background colors higher than 7 will be
+            supported, otherwise they'll produce blinking color.
+
+
+            IF
+
+Syntax      IF <symbol> <label if true> [<label if false>]
+
+Details     The IF command will only work when preceded by a COMPARE or
+            INSTR command. IF first checks if the <symbol> works with the
+            comparison (if the contents of the COMPARE variable are found
+            in the <symbol> argument), and if it workd, if goes to the
+            <label if true>. Otherwise, it goes to the <label if false>, or
+            to the next line if not specified.
+
+            The <symbols> you can use are the following:
+
+            =   Str1 is equal to Str2           Str1 is in Str2
+            <   Str1 is smaller than Str2       Str1 isn't in Str2
+            >   Str1 is greater than Str2
+            <=  Str1 is smaller than or equal to Str2
+            >=  Str1 is greater than or equal to Str2
+            <>  Str1 is different from Str2     Str1 isn't in Str2
+
+Example     write Type "C" to continue or "Q" to quit
+            :loop
+            readkey key
+            upcase key
+            compare &key& C
+            if = cont
+            compare &key& Q
+            if = quit loop
+            :cont
+            write Continuing...
+            end
+            :quit
+            write Thanks for using this program!
+
+See also    COMPARE, INSTR, IFEXIST, IFNUM
+
+
+            IFEXIST
+
+Syntax      IFEXIST <filename> <label if true> [<label if false>]
+
+Details     The IFEXIST command first checks if the <filename> exists in
+            the current directory or the DOS path. If it does, it then
+            branches to the <label if true>, and if it does not, it goes to
+            the <label if false>, or the next line if none specified.
+
+Example     ifexist TEST.DOC yes
+            write TEST.DOC doesn't exists!
+            end
+            :yes
+            write TEST.DOC found!
+
+See also    IF
+
+
+            IFNUM
+
+Syntax      IFNUM <value> <label if true> [<label if false>]
+
+Details     The IFNUM command checks if the <value> given is a real number.
+            Then, if it is, it branches to the <label if true>; otherwise
+            it branches to the <label if false>, or the next line if none
+            specified.
+
+See also    IF
+
+
+            INC
+
+Syntax      INC <variable> [<count>]
+
+Details     The INC command increments the <variable> by 1, or by the
+            <count>, if specified.
+
+Example     write Counting from 1 to 10...
+            set count 0
+            :loop
+            inc count
+            swrite &count&,
+            compare &count& 10
+            if < loop
+            write Finished!
+
+See also    DEC, DIV, MULT
+
+
+            INSLINE
+
+Syntax      INSLINE
+
+Details     The INSLINE command inserts a line at the current screen row,
+            so that all rows under that one scroll down, according to the
+            current window coordinates.
+
+See also    DELLINE
+
+
+            INSTR
+
+Syntax      INSTR <substring> <string>
+
+Details     The INSTR command checks if the <substring> is found in the
+            <string>. Then it sets the COMPARE variable to one of these two
+            values:
+
+            =   <substring> is found in <string>
+            <   <substring> isn't found in <string>
+
+            INSTR also sets the INSTR variable, which contains the posision
+            in <string> where the <substring> was found. (The posision 1
+            corresponds to the first character.) If <substring> wasn't
+            found, then the INSTR variable is set to 0.
+
+            Use the IF command to branch execution depending on the
+            found/not found statre of the COMPARE variable.
+
+Example     :loop
+            write Type 1, 2, 3, 4 or 5.
+            readkey number
+            instr &number& 12345
+            if < loop
+            write You typed &number&!
+
+See also    IF
+
+
+            LEN
+
+Syntax      LEN <variable> <string>
+
+Details     The LEN command puts the dynamic length, in characters, of the
+            <string> in the <variable>.
+
+
+            LJUST
+
+Syntax      LJUST <variable> <length>
+
+Details     The LJUST command left-justifies the string contained in the
+            <variable>, for a specific <length>. It fills the unoccupied
+            spaces with space characters. (ASCII #32)
+
+See also    CJUST, RJUST
+
+
+            LOCATE
+
+Syntax      LOCATE <column> <row>
+
+Details     The LOCATE command sets the cursor position to (<column>,
+            <row>). The <column> values habitually ranges from 1 to 80, and
+            those for the <row> ranges from 1 to 25, but this may change
+            depending of your video mode.
+
+See also    GETX, GETY
+
+
+            LTRIM
+Syntax      LTRIM <variable>
+
+Details     The LTRIM command trims the leading spaces of the <variable>.
+
+
+            MD
+
+Syntax      MD <directory>
+
+Details     The CD command creates the specified <directory>. Errors are
+            reported via the IOERR variable.
+
+See also    CD, RD
+
+
+            MULT
+
+Syntax      MULT <variable> <factor>
+
+Details     The MULT command multiplies the <variable> contents by a
+            specified <factor>. The result of the multiplication is put
+            in the <variable>.
+
+See also    DEC, DIV, INC
+
+
+            PARAM
+
+Syntax      PARAM <variable> <number>
+
+Details     The PARAM command puts the <number>th program parameter entered
+            by the user in the <variable>. The number of program parameters
+            are found in the PARAMNUM variable.
+
+
+            PAUSE
+
+Syntax      PAUSE
+
+Details     The PAUSE command halts the program and waits for a keypress
+            from the user to continue to the next line.
+
+Example     write Press any key to continue
+            pause
+
+See also    READKEY
+
+
+            POP
+
+Syntax      POP
+
+Details     The POP command pops the upper line number from the stack, as
+            the RETURN command does, but without returning. It is mostly
+            used when in a TRAP gosub call.
+
+Example     write Main program, calling Sub...
+            gosub sub
+            write Returned to Main program
+            end
+            :sub
+            trapesc quit
+            :loop
+            write Write your command. Esc: Return to main program.
+            ask cmd 0 7 70
+            exec &cmd&
+            goto loop
+            :quit
+            trapesc
+            pop
+            return
+
+See also    CLSTACK, GOSUB, PUSH, RETURN
+
+
+            PUSH
+
+Syntax      PUSH [<label>]
+
+Details     The PUSH command pushes a program line in the stack, either the
+            current line, or the line containing the <label>, if specified.
+            PUSH can be used to "create" a GOSUB case, in a menu for
+            example.
+
+Example     push
+            popsub 3 DOS Operations
+                item 1 copy C Copy file
+                item 2 rename R Rename file
+                item 3 del D Delete file
+                item 4 quit Q Quit
+            stop
+            :copy
+            popask source 0 7 30 Source?
+            popask target 0 7 30 Target?
+            exec copy &source& &target&
+            return
+            :rename
+            popask old 0 7 30 Old name?
+            popask new 0 7 30 New name?
+            exec ren &old& &new&
+            return
+            :del
+            popask name 0 7 30 Filename?
+            exec del &name&
+            return
+            :quit
+            pop
+
+See also    GOSUB, POP, RETURN
+
+
+            RANDOM
+
+Syntax      RANDOM <variable> <value>
+
+Details     The RANDOM command will put a random number between 0 and
+            (<value>-1) in the <variable>. Always use RANDOMIZE before to
+            set the ransom seed generator on the system clock!
+
+Example     randomize
+            random number 40
+            set tries 1
+            set msg< Too small!
+            set msg> Too big!
+            write I chose a number between 0 to 39...
+            write Try to guess it!
+            :loop
+            ask guess 0 7 2 Make a guess:
+            ifnum &guess& gm1
+            write Not a valid number!
+            goto loop
+            :gm1
+            compare &guess& &number&
+            if = gm2
+            copyvar msg&compare& msg
+            write &msg&
+            inc tries
+            goto loop
+            :gm2
+            write You got it in &tries& tries!
+
+See also    RANDOMIZE
+
+
+            RANDOMIZE
+
+Syntax      RANDOMIZE
+
+Details     The RANDOMIZE command initializes the random number generator
+            on the system timer. You should always call this command once
+            in a program that uses RANDOM, or the same values will always
+            be returned.
+
+See also    RANDOM
+
+
+            RD
+
+Syntax      RD <directory>
+
+Details     The RD command removes the specified <directory>. Errors are
+            reported via the IOERR variable.
+
+See also    MD, RD
+
+
+            READKEY
+
+Syntax      READKEY <variable>
+
+Details     The READKEY command reads a key from the keyboard and puts it
+            into the <variable>. If this key is the NUL character (ASCII
+            character #0) then READKEY reads the next key in the buffer;
+            this is a scan code. Scan codes are put in the SCAN variable;
+            they're used to detect Alt-keys, FKeys, Arrows, etc. They are
+            listed in the appendix.
+
+Example     readkey key
+            compare &key& &null&
+            if = null
+            write You pressed &key&.
+            end
+            :null
+            write You pressed a scan code: &scan&.
+
+See also    PAUSE
+
+
+            REMOVE
+
+Syntax      REMOVE <variable> <character>
+
+Details     The REMOVE command removes all specified <character> found in
+            the <variable>.
+
+            RETURN
+
+Syntax      RETURN
+
+Details     The RETURN command returns from a previous GOSUB or PUSH call,
+            and also pops one line number from the stack.
+
+Example     Look at the GOSUB command for an example on the use of
+            GOSUB/RETURN.
+
+See also    GOSUB, POP, PUSH
+
+
+            RJUST
+
+Syntax      RJUST <variable> <length>
+
+Details     The RJUST command right-justifies the string contained in the
+            <variable>, for a specific <length>. It fills the unoccupied
+            spaces with space characters. (ASCII #32)
+
+See also    CJUST, LJUST
+
+
+            SCENTER
+
+Syntax      SCENTER <text>
+
+Details     The SCENTER command centers a <text> on the screen according to
+            the current window coordinates. Cursor is not moved to the
+            next line.
+
+See also    CENTER, SWRITE, WRITE
+
+
+            SET
+
+Syntax      SET <variable> [<value>]
+
+Details     The SET command puts the specified <value> in the <variable>.
+            If the <value> is not specified, the variable is removed from
+            memory.
+
+Example     set text1 Hello
+            set text2 you!
+            set text &text1& &text2&
+            write &text&
+
+See also    COPYVAR
+
+            SETDATE
+
+Syntax      SETDATE <year> <month> <day>
+
+Details     The SETDATE command sets the current system date with the datas
+            specified.
+
+See also    GETTIME, SETTIME
+
+
+            SETTIME
+
+Syntax      SETTIME <hours> <minutes> <seconds> <100th of seconds>
+
+Details     The SETTIME command sets the current system time with the datas
+            specified.
+
+See also    GETTIME, SETDATE
+
+
+            SHOWSTACK
+
+Syntax      SHOWSTACK
+
+Details     The SHOWSTACK command displays the contents of the line number
+            stack.
+
+See also    GOSUB, POP, PUSH, RETURN
+
+
+            SHOWTRAP
+
+Syntax      SHOWTRAP
+
+Details     The SHOWTRAP command displays all key trap definitions.
+
+See also    TRAP, TRAPESC
+
+
+            SHOWVAR
+
+Syntax      SHOWVAR
+
+Details     The SHOWVAR command displays all variables in memory.
+
+See also    SET
+
+
+            SOUND
+
+Syntax      SOUND <hertz> <milliseconds>
+
+Details     The SOUND command emits a sound of a number of <hertz> for s
+            specified number of <milliseconds> in the internal speaker.
+
+
+            SPLIT
+
+Syntax      SPLIT <variable>
+
+Details     The SPLIT command separates a <variable>, containing a
+            filename, into its three components: path, name and extension.
+            The path is put in the SPLDIR variable, the name is put in
+            SPLNAME and the extension in SPLEXT. It is a good idea to
+            EXPAND the filename before using SPLIT.
+
+            Notice that if you did "split var" then
+            "&spldir&&splname&&splext&" is equal to "&var&".
+
+See also    EXPAND
+
+
+            STRING
+
+Syntax      STRING <variable> <number> <character>
+
+Details     The STRING command creates a string containing a certain
+            <number> of a specific <character>, and puts it in the
+            <variable>.
+
+Example     string stars 5 *
+            write &stars&
+
+Test run    *****
+
+
+            LWRITE
+
+Syntax      LWRITE <text>
+
+Details     The LWRITE command writes a <text> to the sysop screen. Cursor is
+            not moved to the next line or shown on user's side.
+
+Example     lwrite user is downloading.
+
+See also    WRITE
+
+            LWRITELN
+
+Syntax      LWRITELN <text>
+
+Details     Same as LWRITE except puts a carriage return on the end.
+
+
+            TRACE
+
+Syntax      TRACE {ON|OFF}
+
+Details     The TRACE command enables or disables the debug trace.
+
+
+            TRAP
+
+Syntax      TRAP <scan code> [<label>]
+
+Details     The TRAP command sets keys that will be trapped in ASK, POPxxx
+            and READKEY calls. Up to 10 <scan codes> can be defined, and
+            the <label> is the one to GOSUB if this key is hit. If the
+            <label> is not specified, then the scan code is removed from
+            memory and won't be trapped anymore.
+
+            This command only works with scan codes. To use the Esc key,
+            use the TRAPESC command. To clear all scan codes, use CLTRAP.
+
+            Scan codes are listed in appendix.
+
+Example     trap 49 altn
+            write Type Alt-N to write "New".
+            ask name 0 7 30 Logon>
+            end
+            :altn
+            set name New
+            return
+
+See also    CLTRAP, TRAPESC
+
+
+            TRAPESC
+
+Syntax      TRAPESC [<label>]
+
+Details     The TRAPESC command initiates or disactivates the Esc key
+            trapping. It works like the TRAP command.
+
+See also    CLTRAP, TRAP
+
+
+            UPCASE
+
+Syntax      UPCASE <variable>
+
+Details     The UPCASE command puts the contents of the <variable> in upper
+            case.
+
+
+            WRITE
+
+Syntax      WRITE <text>
+
+Details     The WRITE command writes <text> on the screen, and moves the
+            cursor on the next line.
+
+Example     write Hello, world!
+
+See also    LWRITE
+
+            WRITELN
+
+Syntax      WRITELN <text>
+
+Details     Same as WRITE except puts a carriage return on the end.
+
+            LOADMENU
+
+Syntax      LOADMENU <menu.mnu>
+
+Details     Loads <menu.mnu> and runs menu till 'Q' is entered, then returns
+            to the current script.
+
+            MENUCMD
+
+Syntax      MENUCMD <Cmd> <CString>
+
+Details     Runs a menu command from the script without using a menu.  CMD
+            is the specified CMD, and optional CString just like in a menu.
+
+--- Appendixes
+
+            Colors
+
+            0   Black
+            1   Blue
+            2   Green
+            3   Cyan
+            4   Red
+            5   Magenta
+            6   Brown
+            7   Light grey
+            8   Grey
+            9   Light blue
+            10  Light green
+            11  Light cyan
+            12  Light red
+            13  Light magenta
+            14  Yellow
+            15  White
+
+
+            I/O Errors
+
+            2   File not found
+            3   Path not found
+            4   Too many open files
+            5   File access denied
+            15  Invalid drive number
+            16  Cannot remove current directory
+            100 Disk read error
+            101 Disk write error
+            103 File not open
+
+
+            DOS Errors
+
+            2   File not found
+            3   Path not found
+            5   Access denied
+            6   Invalid handle
+            8   Not enough memory
+            10  Invalid environment
+            11  Invalid format
+
+
+            ISL Errors
+
+            Unknown command: <command>
+                The command you used isn't recognized by the ISL
+                language.
+            Variable name missing
+                You did not specified a variable name on a call of a
+                command that need one
+            Trap key missing
+                You did not specified a trap key scan code on a TRAP call.
+            Label missing
+                You did not specified a label on a call of a command that
+                need one.
+            Out of variable space
+            Out of key trap space
+            Out of stack space
+                There's no more room for new variables, trap scan codes or
+                stack pushes.
+            Label not found: <label>
+                The label you specified wasn't found in the program.
+            Unable to pop from stack
+                The stack is empty. Maybe you called RETURN without GOSUB.
+            Bad chain filename
+                The filename you gave to the CHAIN command doesn't exists.
+            Division by zero
+                You tried to divide by zero.
+
+            <...>
+                Other errors can occur, if the programmer put some ERROR
+                commands in his/her program.
+
+
+            Scan codes
+
+            3       Null character
+            15      Shift-Tab
+            16-25   Alt-Q/W/E/R/T/Y/U/I/O/P
+            30-38   Alt-A/S/D/F/G/H/J/K/L
+            44-50   Alt-Z/X/C/V/B/N/M
+            71      Home
+            72      Up
+            73      PgUp
+            75      Left
+            77      Right
+            79      End
+            80      Down
+            81      PgDn
+            82      Ins
+            83      Del
+            84-93   Shift-F1 to Shift-F10
+            94-103  Ctrl-F1 to Ctrl-F10
+            104-113 Alt-F1 to Alt-F10
+            114     Ctrl-PrintScreen
+            115     Ctrl-Left
+            116     Ctrl-Right
+            117     Ctrl-End
+            118     Ctrl-PgDn
+            119     Ctrl-Home
+            120-131 Alt-1/2/3/4/5/6/7/8/9/0/-/=
+            132     Ctrl-PgUp
+            133     F11
+            134     F12
+            135     Shift-F11
+            136     Shift-F12
+            137     Ctrl-F11
+            138     Ctrl-F12
+            139     Alt-F11
+            140     Alt-F12
+
+Well, that's it.  Longer than shitola.  Anyway.. You can thank Eerie for this
+documentation he wrote most of it.  Give a good "Thanks 33!" next time you
+see him.
+
+
+- Infoform System -
+
+Due to the limited abilities and lack of knowledge on how to use animation by
+some people, the impulse Infoform system has been re-written.  Now, the
+standard * is still being used, but |XX can be used in its place.  Too use |XX
+just enter it as you would in any other infoform system, and XX is represeting
+the number of spaces to use for input.
+
+EXAMPLE:
+
+    Enter your current Age: |03
+
+The above would allow the user 3 spaces to enter his age.  Even if he only
+uses 2 (unless he's over 99 yrs old) everything works out great.  For new users
+the infoform filename used in the NUV is NEWUSER.INF.  Same as renegade,
+although it may be changed for that very reason in the future.
+
+
+- Multitasking under OS/2 -
+
+Nowaday's it seems everyone needs multitasking.  Why you ask?  I reply with
+"Wake up and smell the brew idiot!".  I realize and acutally make use of the
+power of multitasking.  Half of the time i'm coding in the background while
+someone is leeching my board (Termite Terrace).  So, just to keep up with
+oblivion/spew here's *MY* settings and recommendations for runing under OS/2.
+
+Here's the basic settings you'll need for OS/2.  Keep in mind, some of these
+you can modify to your hearts content, this is just what *I* think works best
+so feel free to experiment and modify them.  One thing that you ABSOLUTELY
+need is Ray Gwinn's SIO Drivers.  They can ben found in SIOXXXX.ZIP  .. XXXX
+representing the version number.  Currently i'm using 1.15 reg'd so find it
+if possible on any spiffolah board.
+
+Settings for the DOS Session that runs D'Bridge and Impulse under OS/2:
+
+DOS_AUTOEXEC=C:\AUTOEXEC.BAT   (See #1 below)
+DOS_BACKGROUND_EXECUTION=ON
+DOS_BREAK=ON
+DOS_DEVICE=C:\OS2\MDOS\VX00.SYS  (Loads the FOSSIL only in this session.)
+DOS_FCBS=16
+DOS_FCBS_KEEP=8
+DOS_FILES=30
+DOS_HIGH=ON
+DOS_LASTDRIVE=Z
+DOS_RMSIZE=640
+DOS_SHELL=C:\OS2\MDOS\COMMAND.COM C:\OS2\MDOS
+DOS_STARTUP_DRIVE=
+DOS_UMB=OFF
+DOS_VERSION=  (LEAVE THIS ALONE)
+DPMI_DOS_API=AUTO
+DPMI_MEMORY_LIMIT=4
+DPMI_NETWORK_BUFF_SIZE=8
+EMS_FRAME_LOCATION=AUTO
+EMS_HIGH_OS_MAP_REGION=32
+EMS_LOW_OS_MAP_REGION=384
+EMS_MEMORY_LIMIT=2048
+HW_NOSOUND=OFF
+HW_ROM_TO_RAM=OFF
+HW_TIMER=OFF
+IDLE_SECONDS=0
+IDLE_SENSITIVITY=75
+INT_DURING_IO=OFF
+KBD_ALTHOME_BYPASS=OFF
+KBD_BUFFER_EXTEND=ON
+KBD_CTRL_BYPASS=NONE
+KBD_RATE_LOCK=OFF
+MEM_EXCLUDE_REGIONS=
+MEM_INCLUDE_REGIONS=
+MOUSE_EXCLUSIVE_ACCESS=OFF
+PRINT_SEPARATE_OUTPUT=ON
+PRINT_TIMEOUT=15
+SIO_Allow_Access_COM1=ON
+SIO_Allow_Access_COM2=ON
+SIO_Allow_Access_COM3=ON
+SIO_Allow_Access_COM4=OFF
+SIO_Virtualize_16550A=ON
+SIO_Virtualize_COM_Ports=ON
+SIO_Virtual_RTS_is_HS=ON
+VIDEO_8514A_XGA_IOTRAP=ON
+VIDEO_FASTPASTE=OFF
+VIDEO_MODE_RESTRICTION=NONE
+VIDEO_ONDEMAND_MEMORY=ON
+VIDEO_RETRACE_EMULATION=ON
+VIDEO_ROM_EMULATION=ON
+VIDEO_SWITCH_NOTIFICATION=OFF
+VIDEO_WINDOW_REFRESH=1
+XMS_HANDLES=32
+XMS_MEMORY_LIMIT=2048
+XMS_MINIMUM_HMA=0
+
+Topical lines from my CONFIG.SYS:
+
+IFS=C:\OS2\HPFS.IFS  /CACHE:1024 /CRECL:4 /AUTOCHECK:CDEFGHILKMJN
+  I use only HPFS partitions.  With all the usage the BBS has, messages
+  and such, I have never seen more than 2% fragmentation.  Also, it has
+  saved me lots of space (FAT cluster sizes are too big on large
+  partitions), and has proven to be very fast.
+
+SET AUTOSTART=PROGRAMS,TASKLIST,FOLDERS,CONNECTIONS
+  This is stock, but is worth mentioning because it is what restarts
+  your sessions if the system reboots for any reason.  HPFS partitions
+  will automatically have Diskfix run on them if it was not a planned
+  shutdown.
+
+PRIORITY_DISK_IO=YES
+  This gives the session in the foreground priority on disk accesses.
+  You may want to set this to off if you find any comm errors while the
+  BBS is in the background.  I can have a 14.4 caller, have my own 14.4
+  session doing a transfer, and run Describe, or whatever in the
+  foreground.  Both comm sessions still get a 1600+ CPS rate.
+
+MAXWAIT=3
+  This is how long a program must wait (maximum) before being given
+  priority for running (getting a timeslice).  See MAXWAIT in the
+  Command Reference.
+
+DEVICE=C:\OS2\SIO.SYS (COM3:38400)
+  This loads the SIO comm driver.  The COM3:38400 locks that port at 38400.
+
+REM SET DELDIR=C:\DELETE,512;D:\DELETE,512;E:\DELETE,512;....thru N
+  I found that the Delete protection was a bit slow when running a BBS.
+  If I did not protect the BBS partitions, why bother?  So, I shut it
+  down.  Of course, taking the line (and any REM'd line) out will speed
+  the booting process.
+
+#1- AUTOEXEC.BAT
+
+@ECHO OFF
+ECHO.
+PROMPT $i$p$g
+PATH C:\OS2;C:\OS2\MDOS;C:\;
+LOADHIGH APPEND C:\OS2;C:\OS2\SYSTEM
+SET TEMP=C:\OS2\MDOS\TEMP
+
+  I put most all the setting for anything associated with the BBS into
+  the standard AUTOEXEC.BAT.  I can run any utility from another DOS
+  session, and I know that any environment variables are set correctly.
+  However, in my BAT file that runs D'B and the BBS, I do have to set
+  things like the DSZ port and DSZ log.  I do not want them the same for
+  all sessions.  I use a different BAT in the AUTOEXEC setting for other
+  comm programs so I can control what they use and do.  Pretty nice!
+
+#2- I do not load any drivers high, so don't need the UMBs active.
+
+#3- I had a utility that did not have enough EMS pages free.  Setting
+    this to 32 gave it the room it needed.
+
+NOTE:  Much credit for this section goes out to Gary Hammer.  His Textfiles
+       on running a bbs under os/2 helped me TREMENDOUSLY in setting up my
+       own.  Thanks Gary.. (if by some chance in hell you see this).
+
+
+- Ending Statements -
+
+These docs are very limited.  I encourage you to play with all the options as
+i don't have the time or patients to go through them ALL for you.  I do have
+to program you know. :)  If you have questions regarding impulse or problems
+refer to the section called "Introduction" for email addresses and such.  I
+realize that this may not help much, but hey.. you've gotta do some things on
+your own.  Thank you VERY much for your time spent with Impulse BBS and any
+thing you may do to help in the future.
+
+                                                Nivenh (Brandon),
+                                                Horrid (Phillip)
+                                                foosep01@student.ucr.edu
+

@@ -1,0 +1,145 @@
+I added an install program, so there is no longer a need to run impulse -D,
+that is unless you are moving your impulse setup to another directory.
+
+this is a test release, its sloppy, its dirty, and it doesn't work right.
+
+I also need some art done, ansis, asciis or whatever.
+
+I would like people to send me bug reports with as much info as possible.
+
+Don't bug me or i'll be a bitch and not release anymore test versions of
+impulse.
+
+I will try and release a new test copy every weekend, but if that doesn't
+happen, don't mail me saying, 'where is the new copy of impulse blah blah'.
+
+Send me donations. If you are at all interested, send me e-mail to
+foosep01@student.ucr.edu
+
+If someone feels like designing a page, design it, then mail me about it,
+don't tell me you will design it before you do, because chances are you won't
+design it, and i'll be left with my pants down.
+
+Ok, since alot of people seemed to want this, i have added in a configurable
+waiting for callers screen.  To make your own configurable WFC screen, you
+will need to follow a few instructions.
+
+1) Get yourself the ansi you want to use, load it up in an editor, and save
+it as an 80(columns)x25(rows) BINARY file.
+2) Next you need to make a text file which is laid out in the following way:
+   XX
+   YY
+   NN
+   HH
+   Where XX is the x-coordinate, YY is the y-coordinate, NN is the normal
+   attribute, and HH is the highlighted attribute.
+3) Next type 'makewfc <binary_file> <text_file>' this will output 'wfc.bin'.
+4) Copy 'wfc.bin' to your data directory, and walla, you have a new wfc
+   screen.
+
+To make your own configurable new user apply process do the following:
+1) edit a textfile, and place upto 22 of the following codes, each on a
+   seperate line.
+2) save the file, then at the dos prompt, run "makenuo order.txt" (where
+   order is the name of the text file you just made).
+3) This will ouput a file called "nuorder.dat", move this file into your
+   DATA directory.
+4) Load impulse and it should work.
+
+1: Address
+2: Birthday
+3: Ansi Support
+4: City/State
+5: File List Config
+6: User Note
+7: Handle
+8: Phone Number
+9: Password
+10: Real Name
+11: Screen Width/Length
+12: Sex
+13: Autosig
+14: NOTHING
+15: Mailbox Config
+16: Toggle Ansi
+17: Color On/Off
+18: Toggle - Screen Pausing
+19: Toggle - Hotkey
+20: NOTHING
+21: Config Colors
+22: Toggle - Expert Mode
+23: NOTHING
+24: Screen Pausing
+25: NOTHING
+26: Choose Prompt
+
+This is the current list of all standard mci codes impulse uses. If using
+these codes in a string, they should begin with a '|', or in a file they
+should begin with a '%'. This is list is current as of version 7.0.
+
+00-15 - Changes the forground text color
+AD - The users address
+B0-BF - Change the background color. Note the background colors above B7
+        will only appear if you are using iceColor, otherwise they will
+        cause the text to blink
+BN - The bbs' name
+CF - Current file base
+CL - Clear the screen
+CM - Current message base
+CS - Current connect speed
+CT - Caller number
+DK - Download kilobytes
+DN - Downloads
+DT - Current date
+FL - File security level
+FP - File points
+FT - Total system uploads
+HM - Higest message read
+HS - Header string(this sometiems contains junk data, so be careful)
+LC - Last caller
+LD - Last date called
+LO - City/State
+LP - Locked port speed
+LS - Used in conjucture with header string
+MN - Message number
+NF - New files today
+NL - New line
+NM - Current menu
+NN - Current node
+NP - Total posts today
+NT - New users today
+O1 - Changeable mci, used with certain strings, may contain junk.
+PA - Pause Screen
+PN - Phone number
+PS - Total posts
+RN - Real name
+SP - Connect SPpeed
+SN - Sysop's name
+TC - Total calls today
+TL - Time left
+TT - Time left today
+TP - Public posts today
+U0 - U9 - User defined colors
+UC - User note
+UD - Uploads
+UK - Upload kilobytes
+UL - Security level
+UN - User name
+UU - User number
+VA - Software acronym
+VD - Software version date
+VN - Software name
+VV - Software version
+XYxxyy - Goto the XX,YY position. if either y or x is 0, it uses the current
+         position, i.e. XY0015 would goto the current x, position on the 15th
+         line.
+
+
+Important note, this file comes as is, if it fucks up, oh well, its not my
+fault.
+
+More important, impulse was made possible by my main man, brandon sneed
+(nivenh), so give him props when you see him.
+
+Most importantly have fun.
+

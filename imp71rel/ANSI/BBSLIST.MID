@@ -1,0 +1,8 @@
+---- this is bbslist.mid
+name: %BN
+speed: %SP
+number: %PH
+sysop: %SY
+software: %TY
+comment: %CM
+
