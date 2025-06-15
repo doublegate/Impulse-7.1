@@ -6,7 +6,6 @@ stages:
 variables:
   DOCKER_DRIVER: overlay2
 
-# Only run on main branch commits
 build_impulse:
   stage: build
   image: ubuntu:20.04
@@ -15,20 +14,13 @@ build_impulse:
   before_script:
     - echo "Building Impulse BBS - Pipeline $CI_PIPELINE_ID"
     - echo "Commit $CI_COMMIT_SHORT_SHA by $CI_COMMIT_AUTHOR"
-    
-    # Install dependencies
     - apt-get update
-    - DEBIAN_FRONTEND=noninteractive apt-get install -y dosbox xvfb
-    
-    # Create build directories
+    - DEBIAN_FRONTEND=noninteractive apt-get install -y dosbox xvfb curl
     - mkdir -p /tmp/impulse_dosbox
     - mkdir -p build
     
   script:
-    # Copy Borland Pascal to DOSBox environment
     - cp -r BP /tmp/impulse_dosbox/bp
-    
-    # Create DOSBox configuration
     - |
       cat > dosbox.conf << EOF
       [sdl]
@@ -70,8 +62,6 @@ build_impulse:
       call c:\\build.bat
       exit
       EOF
-    
-    # Create DOS build script
     - |
       cat > /tmp/impulse_dosbox/build.bat << 'EOF'
       @echo off
@@ -115,37 +105,58 @@ build_impulse:
       :end
       echo Build process finished
       EOF
-    
-    # Run DOSBox compilation
-    - echo "🚀 Starting headless DOSBox compilation..."
     - xvfb-run -a dosbox -conf dosbox.conf -noconsole
-    
-    # Check results and copy to build directory
     - |
       if [ -f "output/IMP.EXE" ] && [ -f "output/IMP.OVR" ]; then
-        echo "✅ Compilation successful!"
-        mkdir -p build/build-$CI_PIPELINE_ID
-        cp output/IMP.EXE build/build-$CI_PIPELINE_ID/
-        cp output/IMP.OVR build/build-$CI_PIPELINE_ID/
+        echo "Compilation successful!"
         
-        # Create build info
-        cat > build/build-$CI_PIPELINE_ID/build-info.txt << EOF
+        BUILD_DIR="build/build-$CI_PIPELINE_ID"
+        mkdir -p "$BUILD_DIR"
+        
+        cp output/IMP.EXE "$BUILD_DIR/"
+        cp output/IMP.OVR "$BUILD_DIR/"
+        
+        cat > "$BUILD_DIR/build-info.txt" << EOF
       Impulse BBS 7.1 Build Information
       ================================
       Build Date: $(date)
       Pipeline ID: $CI_PIPELINE_ID
+      Job ID: $CI_JOB_ID
       Commit SHA: $CI_COMMIT_SHA
       Commit Message: $CI_COMMIT_MESSAGE
+      Commit Author: $CI_COMMIT_AUTHOR
       
       Files:
       EOF
-        ls -la build/build-$CI_PIPELINE_ID/*.EXE build/build-$CI_PIPELINE_ID/*.OVR >> build/build-$CI_PIPELINE_ID/build-info.txt
+        ls -la "$BUILD_DIR"/*.EXE "$BUILD_DIR"/*.OVR >> "$BUILD_DIR/build-info.txt"
         
-        echo "🎉 Build complete!"
-        ls -la build/build-$CI_PIPELINE_ID/
+        echo "Build complete!"
+        ls -la "$BUILD_DIR/"
+        
+        echo ""
+        echo "BUILD ARTIFACTS READY:"
+        echo "Browse: $CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/browse/build/build-$CI_PIPELINE_ID/"
+        echo "Download: $CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/download"
+        echo "IMP.EXE: $CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/raw/build/build-$CI_PIPELINE_ID/IMP.EXE"
+        echo "IMP.OVR: $CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/raw/build/build-$CI_PIPELINE_ID/IMP.OVR"
+        
+        if [ -f "latest-build.html" ]; then
+          sed -i "s/PIPELINE_ID_PLACEHOLDER/$CI_PIPELINE_ID/g" latest-build.html
+          sed -i "s/JOB_ID_PLACEHOLDER/$CI_JOB_ID/g" latest-build.html
+          sed -i "s/BUILD_DATE_PLACEHOLDER/$(date)/g" latest-build.html
+          sed -i "s/COMMIT_SHA_PLACEHOLDER/$CI_COMMIT_SHORT_SHA/g" latest-build.html
+          cp latest-build.html build/
+          echo "Latest build page: $CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/raw/build/latest-build.html"
+        fi
+        
+        if [ -n "$SLACK_WEBHOOK_URL" ]; then
+          curl -X POST -H 'Content-type: application/json' \
+          --data '{"text":"🎉 Impulse BBS Build #'$CI_PIPELINE_ID' Complete!\nDownload: '$CI_PROJECT_URL'/-/jobs/'$CI_JOB_ID'/artifacts/download\nBrowse: '$CI_PROJECT_URL'/-/jobs/'$CI_JOB_ID'/artifacts/browse/build/build-'$CI_PIPELINE_ID'/"}' \
+          "$SLACK_WEBHOOK_URL"
+        fi
+        
       else
-        echo "❌ Compilation failed"
-        echo "Output directory contents:"
+        echo "Compilation failed"
         ls -la output/ || echo "No output directory"
         exit 1
       fi
@@ -154,8 +165,8 @@ build_impulse:
     name: "impulse-bbs-build-$CI_PIPELINE_ID"
     paths:
       - build/build-$CI_PIPELINE_ID/
+      - build/latest-build.html
     expire_in: 1 year
     public: true
-    
-  when: always
+    when: always
 
