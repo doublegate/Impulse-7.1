@@ -190,13 +190,11 @@ build_impulse:
 # Create GitLab Release with build artifacts
 create_release:
   stage: release
-  image: alpine:latest
+  image: registry.gitlab.com/gitlab-org/release-cli:latest
   dependencies:
     - build_impulse
   only:
     - main
-  before_script:
-    - apk add --no-cache curl jq
   script:
     - echo "Creating release for build $CI_PIPELINE_ID"
     - BUILD_DIR="build/build-$CI_PIPELINE_ID"
@@ -206,48 +204,35 @@ create_release:
         exit 1
       fi
     - echo "Build artifacts verified - proceeding with release"
-  release:
-    name: "Impulse BBS Build $CI_PIPELINE_ID"
-    tag_name: "build-$CI_PIPELINE_ID"
-    description: |
-      ## Impulse BBS 7.1 - Build $CI_PIPELINE_ID
-      
-      **Automated build from commit [`$CI_COMMIT_SHORT_SHA`]($CI_PROJECT_URL/-/commit/$CI_COMMIT_SHA)**
-      
-      ### Build Information
-      - **Date:** $CI_JOB_STARTED_AT
-      - **Pipeline:** [$CI_PIPELINE_ID]($CI_PROJECT_URL/-/pipelines/$CI_PIPELINE_ID)
-      - **Commit:** $CI_COMMIT_MESSAGE
-      - **Author:** $CI_COMMIT_AUTHOR
-      
-      ### Download Files
-      - **[📁 Browse All Files]($CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/browse/build/build-$CI_PIPELINE_ID/)**
-      - **[📦 Download ZIP]($CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/download)**
-      - **[💾 IMP.EXE]($CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/raw/build/build-$CI_PIPELINE_ID/IMP.EXE)** (Main executable)
-      - **[💾 IMP.OVR]($CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/raw/build/build-$CI_PIPELINE_ID/IMP.OVR)** (Overlay file)
-      
-      ### Installation
-      1. Download both `IMP.EXE` and `IMP.OVR`
-      2. Place them in the same directory
-      3. Run `IMP.EXE` to start your Impulse BBS
-      
-      ---
-      *This release was automatically created by GitLab CI/CD*
-    assets:
-      links:
-        - name: "IMP.EXE (Main Executable)"
-          url: "$CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/raw/build/build-$CI_PIPELINE_ID/IMP.EXE"
-          filepath: "/IMP.EXE"
-          link_type: "package"
-        - name: "IMP.OVR (Overlay File)" 
-          url: "$CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/raw/build/build-$CI_PIPELINE_ID/IMP.OVR"
-          filepath: "/IMP.OVR"
-          link_type: "package"
-        - name: "Build Information"
-          url: "$CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/raw/build/build-$CI_PIPELINE_ID/build-info.txt"
-          filepath: "/build-info.txt"
-          link_type: "other"
-        - name: "Browse All Files"
-          url: "$CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/browse/build/build-$CI_PIPELINE_ID/"
-          link_type: "other"
+    - RELEASE_DESCRIPTION="Impulse BBS 7.1 - Build $CI_PIPELINE_ID
+
+      Automated build from commit $CI_COMMIT_SHORT_SHA
+
+      Build Information:
+      - Date: $CI_JOB_STARTED_AT  
+      - Pipeline: $CI_PIPELINE_ID
+      - Commit: $CI_COMMIT_MESSAGE
+      - Author: $CI_COMMIT_AUTHOR
+
+      Download Files:
+      - Browse All Files: $CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/browse/build/build-$CI_PIPELINE_ID/
+      - Download ZIP: $CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/download
+      - IMP.EXE: $CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/raw/build/build-$CI_PIPELINE_ID/IMP.EXE
+      - IMP.OVR: $CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/raw/build/build-$CI_PIPELINE_ID/IMP.OVR
+
+      Installation:
+      1. Download both IMP.EXE and IMP.OVR
+      2. Place them in the same directory  
+      3. Run IMP.EXE to start your Impulse BBS
+
+      This release was automatically created by GitLab CI/CD"
+    - |
+      release-cli create \
+        --name "Impulse BBS Build $CI_PIPELINE_ID" \
+        --tag-name "build-$CI_PIPELINE_ID" \
+        --description "$RELEASE_DESCRIPTION" \
+        --assets-link "{\"name\":\"IMP.EXE (Main Executable)\",\"url\":\"$CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/raw/build/build-$CI_PIPELINE_ID/IMP.EXE\",\"filepath\":\"/IMP.EXE\",\"link_type\":\"package\"}" \
+        --assets-link "{\"name\":\"IMP.OVR (Overlay File)\",\"url\":\"$CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/raw/build/build-$CI_PIPELINE_ID/IMP.OVR\",\"filepath\":\"/IMP.OVR\",\"link_type\":\"package\"}" \
+        --assets-link "{\"name\":\"Build Information\",\"url\":\"$CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/raw/build/build-$CI_PIPELINE_ID/build-info.txt\",\"filepath\":\"/build-info.txt\",\"link_type\":\"other\"}" \
+        --assets-link "{\"name\":\"Browse All Files\",\"url\":\"$CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/browse/build/build-$CI_PIPELINE_ID/\",\"link_type\":\"other\"}"
 
