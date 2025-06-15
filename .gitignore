@@ -6,7 +6,5 @@
 /.tmp/
 
 # Compilation artifacts in output directory
-/output/*.exe
-/output/*.ovr
-/output/*.tpu
+/output/
 

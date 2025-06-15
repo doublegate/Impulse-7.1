@@ -16,7 +16,7 @@ BP_DIR="$REPO_DIR/BP"
 # DOSBox configuration and batch files (temporary)
 TEMP_DIR="$REPO_DIR/.tmp"
 DOSBOX_CONF="$TEMP_DIR/dosbox_build_temp.conf"
-BUILD_BATCH="$TEMP_DIR/build_impulse_temp.bat"
+BUILD_BATCH="$TEMP_DIR/build.bat"
 
 echo "=== Impulse 7.1 Build Script ==="
 echo "Repository: $REPO_DIR"
@@ -76,7 +76,7 @@ d:
 
 # Set up environment and run build
 set PATH=c:\\bp\\bin;%PATH%
-call c:\\build_impulse.bat
+call c:\\build.bat
 
 # Exit DOSBox automatically
 exit
@@ -94,17 +94,17 @@ echo Current drive and directory:
 cd
 
 REM Check if Borland Pascal is available
-if not exist c:\bp\bin\bpc.exe (
-    echo.
-    echo ERROR: Borland Pascal not found at c:\bp\bin\bpc.exe
-    echo Checking what's in c:\bp\:
-    if exist c:\bp dir c:\bp
-    if exist c:\bp\bin dir c:\bp\bin
-    echo.
-    pause
-    exit 1
-)
+if exist c:\bp\bin\bpc.exe goto bpfound
+echo.
+echo ERROR: Borland Pascal not found at c:\bp\bin\bpc.exe
+echo Checking what's in c:\bp\:
+if exist c:\bp dir c:\bp
+if exist c:\bp\bin dir c:\bp\bin
+echo.
+pause
+goto end
 
+:bpfound
 echo Found Borland Pascal compiler at c:\bp\bin\bpc.exe
 
 REM Change to source directory (mounted as D:)
@@ -113,74 +113,82 @@ echo Changed to source directory:
 cd
 
 REM Check if imp.pas exists
-if not exist imp.pas (
-    echo.
-    echo ERROR: imp.pas not found in source directory
-    echo Contents of source directory:
-    dir
-    echo.
-    pause
-    exit 1
-)
+if exist imp.pas goto impfound
+echo.
+echo ERROR: imp.pas not found in source directory
+echo Contents of source directory:
+dir
+echo.
+pause
+goto end
 
+:impfound
 echo Found imp.pas in source directory
 
 REM Add Borland Pascal to PATH
 set PATH=c:\bp\bin;%PATH%
 
-REM Step 1: Build with -$G+ -B flags
+:step1
+REM Step 1: Build with -$G+ -B flags and output to E:\
 echo.
 echo Step 1: Building with -$G+ -B flags...
-bpc -$G+ -B imp.pas
-if errorlevel 1 (
-    echo.
-    echo ERROR: Build step failed
-    pause
-    exit 1
-)
+bpc -$G+ -B -Uf:\ -Ee:\ imp.pas
+if errorlevel 1 goto buildfail
 echo Build step completed successfully
+goto step2
 
-REM Step 2: Compile normally  
+:buildfail
+echo.
+echo ERROR: Build step failed
+pause
+goto end
+
+:step2
+REM Step 2: Compile normally with output to E:\
 echo.
 echo Step 2: Final compilation...
-bpc imp.pas
-if errorlevel 1 (
-    echo.
-    echo ERROR: Final compilation failed
-    pause
-    exit 1
-)
+bpc -Uf:\ -Ee:\ imp.pas
+if errorlevel 1 goto compfail
 echo Compilation completed successfully
+goto checkfiles
 
-REM Copy output files to the output directory (mounted as E:)
+:compfail
 echo.
-echo Copying output files...
-if exist imp.exe (
-    copy imp.exe e:\
-    echo Copied imp.exe to output directory
-) else (
-    echo WARNING: imp.exe not found!
-)
+echo ERROR: Final compilation failed
+pause
+goto end
 
-if exist imp.ovr (
-    copy imp.ovr e:\  
-    echo Copied imp.ovr to output directory
-) else (
-    echo WARNING: imp.ovr not found!
-)
+:checkfiles
+REM Check if output files were created in E:\
+echo.
+echo Checking for output files in E:\...
+e:
+if exist imp.exe goto foundexe
+echo WARNING: imp.exe not found in E:\
+goto checkovr
 
-REM Copy any TPU files that were created
-echo Checking for TPU files...
-for %%f in (*.tpu) do (
-    if exist %%f (
-        copy %%f e:\
-        echo Copied %%f to output directory
-    )
-)
+:foundexe
+echo Found imp.exe in output directory
+
+:checkovr
+if exist imp.ovr goto foundovr
+echo WARNING: imp.ovr not found in E:\
+goto checktpu
+
+:foundovr
+echo Found imp.ovr in output directory
+
+:checktpu
+REM Check for any TPU files in E:\
+echo Checking for TPU files in E:\...
+for %%f in (*.tpu) do echo Found TPU file: %%f
 
 echo.
 echo === Compilation Complete ===
-echo Check the output directory for your files
+echo Files are located in the output directory (E:\)
+goto end
+
+:end
 echo.
 EOF
 
@@ -196,7 +204,8 @@ cp -r "$BP_DIR" "$TEMP_BUILD_DIR/bp"
 echo "✅ Borland Pascal copied to: $TEMP_BUILD_DIR/bp"
 
 # Copy build batch file to DOSBox C: drive
-cp "$BUILD_BATCH" "$TEMP_BUILD_DIR/"
+cp "$BUILD_BATCH" "$TEMP_BUILD_DIR/build.bat"
+echo "✅ Build batch file copied to DOSBox C: drive"
 
 echo "🚀 Starting DOSBox compilation..."
 echo "💡 Using Borland Pascal from your repo's BP directory"
@@ -210,23 +219,17 @@ dosbox -conf "$DOSBOX_CONF"
 # Wait a moment for file operations to complete
 sleep 2
 
-# Check if compilation was successful
+# Check if compilation was successful (DOS creates uppercase filenames)
 echo ""
 echo "🔍 Checking compilation results..."
 
-if [ -f "$OUTPUT_DIR/imp.exe" ] && [ -f "$OUTPUT_DIR/imp.ovr" ]; then
+if [ -f "$OUTPUT_DIR/IMP.EXE" ] && [ -f "$OUTPUT_DIR/IMP.OVR" ]; then
     echo "✅ Compilation successful!"
     
     # Copy files to build directory
     echo "📋 Copying files to build directory..."
-    cp "$OUTPUT_DIR/imp.exe" "$BUILD_DIR/"
-    cp "$OUTPUT_DIR/imp.ovr" "$BUILD_DIR/"
-    
-    # Copy any TPU files that were created
-    if ls "$OUTPUT_DIR"/*.tpu 1> /dev/null 2>&1; then
-        cp "$OUTPUT_DIR"/*.tpu "$BUILD_DIR/"
-        echo "✅ Also copied TPU files"
-    fi
+    cp "$OUTPUT_DIR/IMP.EXE" "$BUILD_DIR/IMP.EXE"
+    cp "$OUTPUT_DIR/IMP.OVR" "$BUILD_DIR/IMP.OVR"
     
     echo ""
     echo "🎉 Build complete! Files available in build/ directory:"
@@ -235,7 +238,7 @@ if [ -f "$OUTPUT_DIR/imp.exe" ] && [ -f "$OUTPUT_DIR/imp.ovr" ]; then
     # Show file sizes
     echo ""
     echo "📊 File sizes:"
-    du -h "$BUILD_DIR"/*
+    du -h "$BUILD_DIR"/IMP.*
     
 else
     echo "❌ Compilation failed or output files not found"
@@ -247,7 +250,7 @@ else
     echo "   - Check that imp.pas exists in the source directory: $SOURCE_DIR"
     echo "   - Borland Pascal was copied from: $BP_DIR"
     echo "   - DOSBox C: drive location: $TEMP_BUILD_DIR"
-    echo "   - Run DOSBox manually with: dosbox -conf dosbox_build.conf"
+    echo "   - Run DOSBox manually with: dosbox -conf $DOSBOX_CONF"
     exit 1
 fi
 
