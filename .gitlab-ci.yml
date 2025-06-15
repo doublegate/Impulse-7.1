@@ -198,41 +198,25 @@ create_release:
   script:
     - echo "Creating release for build $CI_PIPELINE_ID"
     - BUILD_DIR="build/build-$CI_PIPELINE_ID"
-    - |
-      if [ ! -f "$BUILD_DIR/IMP.EXE" ] || [ ! -f "$BUILD_DIR/IMP.OVR" ]; then
-        echo "Build artifacts not found - skipping release"
-        exit 1
-      fi
+    - test -f "$BUILD_DIR/IMP.EXE" || exit 1
+    - test -f "$BUILD_DIR/IMP.OVR" || exit 1
     - echo "Build artifacts verified - proceeding with release"
-    - RELEASE_DESCRIPTION="Impulse BBS 7.1 - Build $CI_PIPELINE_ID
-
-      Automated build from commit $CI_COMMIT_SHORT_SHA
-
-      Build Information:
-      - Date: $CI_JOB_STARTED_AT  
-      - Pipeline: $CI_PIPELINE_ID
-      - Commit: $CI_COMMIT_MESSAGE
-      - Author: $CI_COMMIT_AUTHOR
-
-      Download Files:
-      - Browse All Files: $CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/browse/build/build-$CI_PIPELINE_ID/
-      - Download ZIP: $CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/download
-      - IMP.EXE: $CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/raw/build/build-$CI_PIPELINE_ID/IMP.EXE
-      - IMP.OVR: $CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/raw/build/build-$CI_PIPELINE_ID/IMP.OVR
-
-      Installation:
-      1. Download both IMP.EXE and IMP.OVR
-      2. Place them in the same directory  
-      3. Run IMP.EXE to start your Impulse BBS
-
-      This release was automatically created by GitLab CI/CD"
-    - |
-      release-cli create \
-        --name "Impulse BBS Build $CI_PIPELINE_ID" \
-        --tag-name "build-$CI_PIPELINE_ID" \
-        --description "$RELEASE_DESCRIPTION" \
-        --assets-link "{\"name\":\"IMP.EXE (Main Executable)\",\"url\":\"$CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/raw/build/build-$CI_PIPELINE_ID/IMP.EXE\",\"filepath\":\"/IMP.EXE\",\"link_type\":\"package\"}" \
-        --assets-link "{\"name\":\"IMP.OVR (Overlay File)\",\"url\":\"$CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/raw/build/build-$CI_PIPELINE_ID/IMP.OVR\",\"filepath\":\"/IMP.OVR\",\"link_type\":\"package\"}" \
-        --assets-link "{\"name\":\"Build Information\",\"url\":\"$CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/raw/build/build-$CI_PIPELINE_ID/build-info.txt\",\"filepath\":\"/build-info.txt\",\"link_type\":\"other\"}" \
-        --assets-link "{\"name\":\"Browse All Files\",\"url\":\"$CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/browse/build/build-$CI_PIPELINE_ID/\",\"link_type\":\"other\"}"
+    - echo "Impulse BBS 7.1 - Build $CI_PIPELINE_ID" > release_title.txt
+    - echo "Automated build from commit $CI_COMMIT_SHORT_SHA" > release_desc.txt
+    - echo "Build Date: $CI_JOB_STARTED_AT" >> release_desc.txt
+    - echo "Pipeline: $CI_PIPELINE_ID" >> release_desc.txt
+    - echo "Commit: $CI_COMMIT_MESSAGE" >> release_desc.txt
+    - echo "Author: $CI_COMMIT_AUTHOR" >> release_desc.txt
+    - echo "" >> release_desc.txt
+    - echo "Download Files:" >> release_desc.txt
+    - echo "- IMP.EXE: $CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/raw/build/build-$CI_PIPELINE_ID/IMP.EXE" >> release_desc.txt
+    - echo "- IMP.OVR: $CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/raw/build/build-$CI_PIPELINE_ID/IMP.OVR" >> release_desc.txt
+    - echo "- Browse All: $CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/browse/build/build-$CI_PIPELINE_ID/" >> release_desc.txt
+    - echo "- Download ZIP: $CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/download" >> release_desc.txt
+    - echo "" >> release_desc.txt
+    - echo "Installation: Download both files, place in same directory, run IMP.EXE" >> release_desc.txt
+    - RELEASE_NAME=$(cat release_title.txt)
+    - RELEASE_DESC=$(cat release_desc.txt)
+    - echo "Creating release with name: $RELEASE_NAME"
+    - release-cli create --name "$RELEASE_NAME" --tag-name "build-$CI_PIPELINE_ID" --description "$RELEASE_DESC"
 
