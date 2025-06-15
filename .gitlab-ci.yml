@@ -66,52 +66,36 @@ build_impulse:
       cat > /tmp/impulse_dosbox/build.bat << 'EOF'
       @echo off
       echo === Impulse BBS Compilation ===
-      echo.
       echo [LOG] Checking Borland Pascal installation...
       
       if exist c:\bp\bin\bpc.exe goto bpfound
-      echo [ERROR] Borland Pascal not found at c:\bp\bin\bpc.exe
-      echo [LOG] Checking what's available in c:\bp\:
-      if exist c:\bp dir c:\bp
-      if exist c:\bp\bin dir c:\bp\bin
+      echo [ERROR] Borland Pascal not found
       goto end
       
       :bpfound
-      echo [SUCCESS] Found Borland Pascal compiler at c:\bp\bin\bpc.exe
-      echo.
-      echo [LOG] Switching to source directory (D:)...
+      echo [SUCCESS] Found Borland Pascal compiler
+      echo [LOG] Switching to source directory...
       d:
-      echo [LOG] Current directory:
-      cd
-      echo [LOG] Contents of source directory:
+      echo [LOG] Current directory contents:
       dir *.pas
-      echo.
       
       if exist imp.pas goto impfound
-      echo [ERROR] imp.pas not found in source directory
-      echo [LOG] Full directory listing:
-      dir
+      echo [ERROR] imp.pas not found
       goto end
       
       :impfound
       echo [SUCCESS] Found imp.pas in source directory
-      echo.
-      echo [LOG] Setting up environment...
-      set PATH=c:\bp\bin;%PATH%
-      echo [LOG] Borland Pascal version:
-      bpc | find "Borland"
-      echo.
+      echo [LOG] Setting PATH and starting compilation...
       
       echo [LOG] === STEP 1: BUILD PHASE ===
       echo [CMD] bpc -$G+ -B -Uf:\ -Ee:\ imp.pas
       bpc -$G+ -B -Uf:\ -Ee:\ imp.pas
       if errorlevel 1 goto buildfail
-      echo [SUCCESS] Build phase completed successfully
-      echo.
+      echo [SUCCESS] Build phase completed
       goto step2
       
       :buildfail
-      echo [ERROR] Build phase failed with error level %ERRORLEVEL%
+      echo [ERROR] Build phase failed
       goto end
       
       :step2
@@ -119,41 +103,25 @@ build_impulse:
       echo [CMD] bpc -Uf:\ -Ee:\ imp.pas
       bpc -Uf:\ -Ee:\ imp.pas
       if errorlevel 1 goto compfail
-      echo [SUCCESS] Final compilation completed successfully
-      echo.
+      echo [SUCCESS] Final compilation completed
       goto checkfiles
       
       :compfail
-      echo [ERROR] Final compilation failed with error level %ERRORLEVEL%
+      echo [ERROR] Final compilation failed
       goto end
       
       :checkfiles
       echo [LOG] === VERIFYING OUTPUT FILES ===
-      echo [LOG] Switching to output directory (E:)...
       e:
-      echo [LOG] Contents of output directory:
-      dir *.exe *.ovr 2>nul
-      if exist IMP.EXE echo [SUCCESS] IMP.EXE created (size: 
-      if exist IMP.EXE dir IMP.EXE | find "IMP.EXE"
-      if exist IMP.OVR echo [SUCCESS] IMP.OVR created (size:
-      if exist IMP.OVR dir IMP.OVR | find "IMP.OVR"
-      echo.
+      if exist IMP.EXE echo [SUCCESS] IMP.EXE created
+      if exist IMP.OVR echo [SUCCESS] IMP.OVR created
+      dir *.exe *.ovr
       
       :end
       echo [LOG] === BUILD PROCESS COMPLETE ===
-      echo.
       EOF
-    - echo "🔨 Starting DOSBox compilation with enhanced logging..."
-    - echo "📋 DOSBox will execute: /tmp/impulse_dosbox/build.bat"
-    - echo "📂 Source files mounted at D: ($(pwd)/source)"
-    - echo "📂 Output files will be at E: ($(pwd)/output)"
-    - echo "📂 Include files mounted at F: ($(pwd)/include)"
-    - echo "🔧 Borland Pascal mounted at C:\\BP\\"
-    - echo ""
-    - echo "▶️  Starting DOSBox execution..."
+    - echo "Starting DOSBox compilation with enhanced logging..."
     - xvfb-run -a dosbox -conf dosbox.conf -noconsole
-    - echo "⏹️  DOSBox execution completed"
-    - echo ""
     - |
       if [ -f "output/IMP.EXE" ] && [ -f "output/IMP.OVR" ]; then
         echo "Compilation successful!"
