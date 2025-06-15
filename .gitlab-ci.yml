@@ -18,23 +18,17 @@ build_impulse:
     - echo "🚀 Building Impulse BBS - Pipeline $CI_PIPELINE_ID"
     - echo "📝 Commit $CI_COMMIT_SHORT_SHA by $CI_COMMIT_AUTHOR"
     - echo "💬 Message: $CI_COMMIT_MESSAGE"
-    
-    # Install dependencies
+    - echo "📦 Installing dependencies..."
     - apt-get update
     - DEBIAN_FRONTEND=noninteractive apt-get install -y dosbox xvfb curl
-    
-    # Create build directories
+    - echo "📁 Creating build directories..."
     - mkdir -p /tmp/impulse_dosbox
     - mkdir -p build
     
   script:
-    # Copy Borland Pascal to DOSBox environment
     - echo "📦 Setting up Borland Pascal environment..."
     - cp -r BP /tmp/impulse_dosbox/bp
-    
-    # Create DOSBox configuration for headless operation
-    - |
-      echo "⚙️ Creating DOSBox configuration..."
+    - echo "⚙️ Creating DOSBox configuration..."
       cat > dosbox.conf << EOF
       [sdl]
       windowresolution=800x600
@@ -248,26 +242,5 @@ build_impulse:
       - build/latest-build.html
     expire_in: 1 year
     public: true
-    reports:
-      # This makes the artifacts show up prominently in GitLab UI
-      junit: build/build-$CI_PIPELINE_ID/build-info.txt
-    
-  # Always save artifacts, even if build fails (for debugging)
-  when: always
-
-# Optional: Deploy to GitLab Pages for easy "latest build" access
-# Uncomment this section if you want a permanent latest build page
-pages:
-  stage: deploy
-  dependencies:
-    - build_impulse
-  script:
-    - mkdir public
-    - cp build/latest-build.html public/index.html 2>/dev/null || echo "<h1>No builds yet</h1>" > public/index.html
-    - cp -r build/build-* public/ 2>/dev/null || echo "No build directories to copy"
-  artifacts:
-    paths:
-      - public
-  only:
-    - main
+    when: always
 
