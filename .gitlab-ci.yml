@@ -1,0 +1,50 @@
+# GitLab CI/CD Pipeline for Impulse BBS Automated Builds
+
+stages:
+  - build
+
+variables:
+  DOCKER_DRIVER: overlay2
+  DOCKER_TLS_CERTDIR: ""
+
+# Only run on main branch commits
+build_impulse:
+  stage: build
+  image: docker:20.10.16
+  services:
+    - docker:20.10.16-dind
+  only:
+    - main
+  before_script:
+    - echo "Building Impulse BBS - Pipeline $CI_PIPELINE_ID"
+    - echo "Commit $CI_COMMIT_SHORT_SHA by $CI_COMMIT_AUTHOR"
+  script:
+    # Build the Docker image with current source
+    - docker build -t impulse-build:$CI_PIPELINE_ID .
+    
+    # Run the compilation in the container
+    - docker run --name impulse-build-$CI_PIPELINE_ID impulse-build:$CI_PIPELINE_ID
+    
+    # Extract the built files from the container
+    - mkdir -p artifacts/build-$CI_PIPELINE_ID
+    - docker cp impulse-build-$CI_PIPELINE_ID:/impulse-build/build/. artifacts/build-$CI_PIPELINE_ID/
+    
+    # Clean up the container
+    - docker rm impulse-build-$CI_PIPELINE_ID
+    
+    # Show what we built
+    - echo "=== Build $CI_PIPELINE_ID Complete ==="
+    - ls -la artifacts/build-$CI_PIPELINE_ID/
+    - echo "=== Files will be available at ==="
+    - echo "$CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/download"
+    
+  artifacts:
+    name: "impulse-bbs-build-$CI_PIPELINE_ID"
+    paths:
+      - artifacts/build-$CI_PIPELINE_ID/
+    expire_in: 1 year
+    public: true
+    
+  # Allow downloading artifacts without login
+  when: always
+
