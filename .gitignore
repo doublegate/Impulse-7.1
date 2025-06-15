@@ -1,0 +1,12 @@
+
+# Build output directory
+/build/
+
+# Temporary files directory
+/.tmp/
+
+# Compilation artifacts in output directory
+/output/*.exe
+/output/*.ovr
+/output/*.tpu
+
