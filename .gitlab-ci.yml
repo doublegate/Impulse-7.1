@@ -196,27 +196,28 @@ create_release:
   only:
     - main
   script:
-    - echo "Creating release for build $CI_PIPELINE_ID"
-    - BUILD_DIR="build/build-$CI_PIPELINE_ID"
-    - test -f "$BUILD_DIR/IMP.EXE" || exit 1
-    - test -f "$BUILD_DIR/IMP.OVR" || exit 1
-    - echo "Build artifacts verified - proceeding with release"
-    - echo "Impulse BBS 7.1 - Build $CI_PIPELINE_ID" > release_title.txt
-    - echo "Automated build from commit $CI_COMMIT_SHORT_SHA" > release_desc.txt
-    - echo "Build Date: $CI_JOB_STARTED_AT" >> release_desc.txt
-    - echo "Pipeline: $CI_PIPELINE_ID" >> release_desc.txt
-    - echo "Commit: $CI_COMMIT_MESSAGE" >> release_desc.txt
-    - echo "Author: $CI_COMMIT_AUTHOR" >> release_desc.txt
-    - echo "" >> release_desc.txt
-    - echo "Download Files:" >> release_desc.txt
-    - echo "- IMP.EXE: $CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/raw/build/build-$CI_PIPELINE_ID/IMP.EXE" >> release_desc.txt
-    - echo "- IMP.OVR: $CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/raw/build/build-$CI_PIPELINE_ID/IMP.OVR" >> release_desc.txt
-    - echo "- Browse All: $CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/browse/build/build-$CI_PIPELINE_ID/" >> release_desc.txt
-    - echo "- Download ZIP: $CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/download" >> release_desc.txt
-    - echo "" >> release_desc.txt
-    - echo "Installation: Download both files, place in same directory, run IMP.EXE" >> release_desc.txt
-    - RELEASE_NAME=$(cat release_title.txt)
+    - echo "Creating release for build $CI_PIPELINE_ID" && BUILD_DIR="build/build-$CI_PIPELINE_ID"
+    - test -f "$BUILD_DIR/IMP.EXE" && test -f "$BUILD_DIR/IMP.OVR" && echo "Build artifacts verified"
+    - |
+      cat > release_desc.txt << EOF
+      Impulse BBS 7.1 - Build $CI_PIPELINE_ID
+      
+      Automated build from commit $CI_COMMIT_SHORT_SHA
+      
+      Build Information:
+      - Date: $CI_JOB_STARTED_AT
+      - Pipeline: $CI_PIPELINE_ID  
+      - Commit: $CI_COMMIT_MESSAGE
+      - Author: $CI_COMMIT_AUTHOR
+      
+      Download Files:
+      - IMP.EXE: $CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/raw/build/build-$CI_PIPELINE_ID/IMP.EXE
+      - IMP.OVR: $CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/raw/build/build-$CI_PIPELINE_ID/IMP.OVR
+      - Browse All: $CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/browse/build/build-$CI_PIPELINE_ID/
+      - Download ZIP: $CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/download
+      
+      Installation: Download both files, place in same directory, run IMP.EXE
+      EOF
     - RELEASE_DESC=$(cat release_desc.txt)
-    - echo "Creating release with name: $RELEASE_NAME"
-    - release-cli create --name "$RELEASE_NAME" --tag-name "build-$CI_PIPELINE_ID" --description "$RELEASE_DESC"
+    - release-cli create --name "Impulse BBS Build $CI_PIPELINE_ID" --tag-name "build-$CI_PIPELINE_ID" --description "$RELEASE_DESC"
 
