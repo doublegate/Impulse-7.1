@@ -1,10 +1,15 @@
 
-# Build output directory
-/build/
+# Ignore all contents in these directories
+# build output dir:
+build/*
+# temp files
+.tmp/*
+# compliation artifacts in output directory:
+output/*
 
-# Temporary files directory
-/.tmp/
+# But do not ignore .gitkeep files
+!build/.gitkeep
+!.tmp/.gitkeep
+!output/.gitkeep
 
-# Compilation artifacts in output directory
-/output/
 
