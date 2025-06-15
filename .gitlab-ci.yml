@@ -25,7 +25,6 @@ build_impulse:
   script:
     - echo "📦 Setting up Borland Pascal environment..."
     - cp -r BP /tmp/impulse_dosbox/bp
-    
     - echo "⚙️ Creating DOSBox configuration..."
     - echo "[sdl]" > dosbox.conf
     - echo "windowresolution=800x600" >> dosbox.conf
@@ -65,7 +64,6 @@ build_impulse:
     - echo "set PATH=c:\\bp\\bin;%PATH%" >> dosbox.conf
     - echo "call c:\\build.bat" >> dosbox.conf
     - echo "exit" >> dosbox.conf
-    
     - echo "📝 Creating DOS build script..."
     - echo "@echo off" > /tmp/impulse_dosbox/build.bat
     - echo "echo === Impulse BBS Compilation ===" >> /tmp/impulse_dosbox/build.bat
@@ -107,68 +105,45 @@ build_impulse:
     - echo "" >> /tmp/impulse_dosbox/build.bat
     - echo ":end" >> /tmp/impulse_dosbox/build.bat
     - echo "echo Build process finished" >> /tmp/impulse_dosbox/build.bat
-    
     - echo "🔨 Starting headless DOSBox compilation..."
     - xvfb-run -a dosbox -conf dosbox.conf -noconsole
-    
     - echo "🔍 Checking compilation results..."
-    - |
-      if [ -f "output/IMP.EXE" ] && [ -f "output/IMP.OVR" ]; then
-        echo "✅ Compilation successful!"
-        
-        BUILD_DIR="build/build-$CI_PIPELINE_ID"
-        mkdir -p "$BUILD_DIR"
-        
-        cp output/IMP.EXE "$BUILD_DIR/"
-        cp output/IMP.OVR "$BUILD_DIR/"
-        
-        # Create build info file
-        echo "Impulse BBS 7.1 Build Information" > "$BUILD_DIR/build-info.txt"
-        echo "================================" >> "$BUILD_DIR/build-info.txt"
-        echo "Build Date: $(date)" >> "$BUILD_DIR/build-info.txt"
-        echo "Pipeline ID: $CI_PIPELINE_ID" >> "$BUILD_DIR/build-info.txt"
-        echo "Job ID: $CI_JOB_ID" >> "$BUILD_DIR/build-info.txt"
-        echo "Commit SHA: $CI_COMMIT_SHA" >> "$BUILD_DIR/build-info.txt"
-        echo "Commit Author: $CI_COMMIT_AUTHOR" >> "$BUILD_DIR/build-info.txt"
-        echo "" >> "$BUILD_DIR/build-info.txt"
-        echo "Files:" >> "$BUILD_DIR/build-info.txt"
-        ls -la "$BUILD_DIR"/*.EXE "$BUILD_DIR"/*.OVR >> "$BUILD_DIR/build-info.txt"
-        
-        echo "🎉 Build complete!"
-        ls -la "$BUILD_DIR/"
-        
-        echo ""
-        echo "📁 BUILD ARTIFACTS READY:"
-        echo "Browse files: $CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/browse/build/build-$CI_PIPELINE_ID/"
-        echo "Download ZIP: $CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/download"
-        echo "Direct IMP.EXE: $CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/raw/build/build-$CI_PIPELINE_ID/IMP.EXE"
-        echo "Direct IMP.OVR: $CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/raw/build/build-$CI_PIPELINE_ID/IMP.OVR"
-        
-        # Update latest build page if it exists
-        if [ -f "latest-build.html" ]; then
-          echo "📄 Creating latest build page..."
-          sed -i "s/PIPELINE_ID_PLACEHOLDER/$CI_PIPELINE_ID/g" latest-build.html
-          sed -i "s/JOB_ID_PLACEHOLDER/$CI_JOB_ID/g" latest-build.html
-          sed -i "s/BUILD_DATE_PLACEHOLDER/$(date)/g" latest-build.html
-          sed -i "s/COMMIT_SHA_PLACEHOLDER/$CI_COMMIT_SHORT_SHA/g" latest-build.html
-          cp latest-build.html build/
-          echo "📄 Latest build page: $CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/raw/build/latest-build.html"
-        fi
-        
-        # Send Slack notification if configured
-        if [ -n "$SLACK_WEBHOOK_URL" ]; then
-          echo "📱 Sending Slack notification..."
-          curl -X POST -H 'Content-type: application/json' \
-          --data '{"text":"🎉 Impulse BBS Build #'$CI_PIPELINE_ID' Complete!","attachments":[{"color":"good","fields":[{"title":"📂 Browse Files","value":"<'$CI_PROJECT_URL'/-/jobs/'$CI_JOB_ID'/artifacts/browse/build/build-'$CI_PIPELINE_ID'/|View Online>","short":true},{"title":"📦 Download","value":"<'$CI_PROJECT_URL'/-/jobs/'$CI_JOB_ID'/artifacts/download|Download ZIP>","short":true},{"title":"💾 Direct Files","value":"<'$CI_PROJECT_URL'/-/jobs/'$CI_JOB_ID'/artifacts/raw/build/build-'$CI_PIPELINE_ID'/IMP.EXE|IMP.EXE> | <'$CI_PROJECT_URL'/-/jobs/'$CI_JOB_ID'/artifacts/raw/build/build-'$CI_PIPELINE_ID'/IMP.OVR|IMP.OVR>","short":false}],"footer":"Commit: '$CI_COMMIT_SHORT_SHA' by '$CI_COMMIT_AUTHOR'"}]}' \
-          "$SLACK_WEBHOOK_URL" || echo "Slack notification failed (not critical)"
-        fi
-        
-      else
-        echo "❌ Compilation failed or output files not found"
-        echo "Output directory contents:"
-        ls -la output/ || echo "No output directory found"
-        exit 1
-      fi
+    - ls -la output/ || echo "No output directory"
+    - test -f "output/IMP.EXE" && echo "✅ Found IMP.EXE" || echo "❌ IMP.EXE not found"
+    - test -f "output/IMP.OVR" && echo "✅ Found IMP.OVR" || echo "❌ IMP.OVR not found"
+    - BUILD_DIR="build/build-$CI_PIPELINE_ID"
+    - mkdir -p "$BUILD_DIR"
+    - test -f "output/IMP.EXE" && cp "output/IMP.EXE" "$BUILD_DIR/" || echo "Cannot copy IMP.EXE"
+    - test -f "output/IMP.OVR" && cp "output/IMP.OVR" "$BUILD_DIR/" || echo "Cannot copy IMP.OVR"
+    - echo "Impulse BBS 7.1 Build Information" > "$BUILD_DIR/build-info.txt"
+    - echo "================================" >> "$BUILD_DIR/build-info.txt"
+    - echo "Build Date: $(date)" >> "$BUILD_DIR/build-info.txt"
+    - echo "Pipeline ID: $CI_PIPELINE_ID" >> "$BUILD_DIR/build-info.txt"
+    - echo "Job ID: $CI_JOB_ID" >> "$BUILD_DIR/build-info.txt"
+    - echo "Commit SHA: $CI_COMMIT_SHA" >> "$BUILD_DIR/build-info.txt"
+    - echo "Commit Author: $CI_COMMIT_AUTHOR" >> "$BUILD_DIR/build-info.txt"
+    - echo "" >> "$BUILD_DIR/build-info.txt"
+    - echo "Files:" >> "$BUILD_DIR/build-info.txt"
+    - ls -la "$BUILD_DIR"/ >> "$BUILD_DIR/build-info.txt" 2>/dev/null || echo "No files" >> "$BUILD_DIR/build-info.txt"
+    - echo "🎉 Build attempt complete!"
+    - ls -la "$BUILD_DIR/"
+    - echo ""
+    - echo "📁 BUILD ARTIFACTS:"
+    - echo "Browse files: $CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/browse/build/build-$CI_PIPELINE_ID/"
+    - echo "Download ZIP: $CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/download"
+    - echo "Direct IMP.EXE: $CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/raw/build/build-$CI_PIPELINE_ID/IMP.EXE"
+    - echo "Direct IMP.OVR: $CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/raw/build/build-$CI_PIPELINE_ID/IMP.OVR"
+    - test -f "latest-build.html" && echo "📄 Updating latest build page..." || echo "No latest-build.html found"
+    - test -f "latest-build.html" && sed -i "s/PIPELINE_ID_PLACEHOLDER/$CI_PIPELINE_ID/g" latest-build.html || echo "Skip updating latest page"
+    - test -f "latest-build.html" && sed -i "s/JOB_ID_PLACEHOLDER/$CI_JOB_ID/g" latest-build.html || echo "Skip updating latest page"
+    - test -f "latest-build.html" && sed -i "s/BUILD_DATE_PLACEHOLDER/$(date)/g" latest-build.html || echo "Skip updating latest page"
+    - test -f "latest-build.html" && sed -i "s/COMMIT_SHA_PLACEHOLDER/$CI_COMMIT_SHORT_SHA/g" latest-build.html || echo "Skip updating latest page"
+    - test -f "latest-build.html" && cp latest-build.html build/ || echo "Skip copying latest page"
+    - test -f "latest-build.html" && echo "📄 Latest build page: $CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/raw/build/latest-build.html" || echo "No latest page created"
+    - test -n "$SLACK_WEBHOOK_URL" && echo "📱 Sending Slack notification..." || echo "No Slack webhook configured"
+    - test -n "$SLACK_WEBHOOK_URL" && curl -X POST -H 'Content-type: application/json' --data '{"text":"🎉 Impulse BBS Build #'$CI_PIPELINE_ID' Complete! Download: '$CI_PROJECT_URL'/-/jobs/'$CI_JOB_ID'/artifacts/download"}' "$SLACK_WEBHOOK_URL" || echo "Slack notification skipped"
+    - test -f "output/IMP.EXE" && test -f "output/IMP.OVR" && echo "✅ BUILD SUCCESS" || echo "❌ BUILD FAILED"
+    - test -f "output/IMP.EXE" && test -f "output/IMP.OVR" || exit 1
 
   artifacts:
     name: "impulse-bbs-build-$CI_PIPELINE_ID"
