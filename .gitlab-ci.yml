@@ -1,6 +1,4 @@
 # GitLab CI/CD Pipeline for Impulse BBS Automated Builds
-# Builds on every commit to main branch
-# Creates public artifacts with build numbers (build-1, build-2, etc.)
 
 stages:
   - build
@@ -8,7 +6,6 @@ stages:
 variables:
   DOCKER_DRIVER: overlay2
 
-# Main build job - only runs on main branch
 build_impulse:
   stage: build
   image: ubuntu:20.04
@@ -17,162 +14,129 @@ build_impulse:
   before_script:
     - echo "🚀 Building Impulse BBS - Pipeline $CI_PIPELINE_ID"
     - echo "📝 Commit $CI_COMMIT_SHORT_SHA by $CI_COMMIT_AUTHOR"
-    - echo "💬 Message: $CI_COMMIT_MESSAGE"
+    - echo "💬 Message $CI_COMMIT_MESSAGE"
     - echo "📦 Installing dependencies..."
     - apt-get update
     - DEBIAN_FRONTEND=noninteractive apt-get install -y dosbox xvfb curl
     - echo "📁 Creating build directories..."
     - mkdir -p /tmp/impulse_dosbox
     - mkdir -p build
-    
+
   script:
     - echo "📦 Setting up Borland Pascal environment..."
     - cp -r BP /tmp/impulse_dosbox/bp
+    
     - echo "⚙️ Creating DOSBox configuration..."
-      cat > dosbox.conf << EOF
-      [sdl]
-      windowresolution=800x600
-      output=surface
-      autolock=false
-      
-      [dosbox]
-      machine=svga_s3
-      memsize=16
-      
-      [cpu]
-      core=auto
-      cputype=auto
-      cycles=10000
-      
-      [mixer]
-      nosound=true
-      
-      [midi]
-      mpu401=none
-      
-      [sblaster]
-      sbtype=none
-      
-      [gus]
-      gus=false
-      
-      [speaker]
-      pcspeaker=false
-      
-      [autoexec]
-      mount c: /tmp/impulse_dosbox
-      mount d: $PWD/source
-      mount e: $PWD/output
-      mount f: $PWD/include
-      d:
-      set PATH=c:\\bp\\bin;%PATH%
-      call c:\\build.bat
-      exit
-      EOF
+    - echo "[sdl]" > dosbox.conf
+    - echo "windowresolution=800x600" >> dosbox.conf
+    - echo "output=surface" >> dosbox.conf
+    - echo "autolock=false" >> dosbox.conf
+    - echo "" >> dosbox.conf
+    - echo "[dosbox]" >> dosbox.conf
+    - echo "machine=svga_s3" >> dosbox.conf
+    - echo "memsize=16" >> dosbox.conf
+    - echo "" >> dosbox.conf
+    - echo "[cpu]" >> dosbox.conf
+    - echo "core=auto" >> dosbox.conf
+    - echo "cputype=auto" >> dosbox.conf
+    - echo "cycles=10000" >> dosbox.conf
+    - echo "" >> dosbox.conf
+    - echo "[mixer]" >> dosbox.conf
+    - echo "nosound=true" >> dosbox.conf
+    - echo "" >> dosbox.conf
+    - echo "[midi]" >> dosbox.conf
+    - echo "mpu401=none" >> dosbox.conf
+    - echo "" >> dosbox.conf
+    - echo "[sblaster]" >> dosbox.conf
+    - echo "sbtype=none" >> dosbox.conf
+    - echo "" >> dosbox.conf
+    - echo "[gus]" >> dosbox.conf
+    - echo "gus=false" >> dosbox.conf
+    - echo "" >> dosbox.conf
+    - echo "[speaker]" >> dosbox.conf
+    - echo "pcspeaker=false" >> dosbox.conf
+    - echo "" >> dosbox.conf
+    - echo "[autoexec]" >> dosbox.conf
+    - echo "mount c: /tmp/impulse_dosbox" >> dosbox.conf
+    - echo "mount d: $PWD/source" >> dosbox.conf
+    - echo "mount e: $PWD/output" >> dosbox.conf
+    - echo "mount f: $PWD/include" >> dosbox.conf
+    - echo "d:" >> dosbox.conf
+    - echo "set PATH=c:\\bp\\bin;%PATH%" >> dosbox.conf
+    - echo "call c:\\build.bat" >> dosbox.conf
+    - echo "exit" >> dosbox.conf
     
-    # Create DOS build script with proper error handling
-    - |
-      echo "📝 Creating DOS build script..."
-      cat > /tmp/impulse_dosbox/build.bat << 'EOF'
-      @echo off
-      echo === Impulse BBS Compilation ===
-      
-      REM Check if Borland Pascal is available
-      if exist c:\bp\bin\bpc.exe goto bpfound
-      echo ERROR: Borland Pascal not found at c:\bp\bin\bpc.exe
-      echo Looking for BP installation...
-      if exist c:\bp dir c:\bp
-      goto end
-      
-      :bpfound
-      echo ✓ Found Borland Pascal compiler
-      
-      REM Change to source directory and check for imp.pas
-      d:
-      if exist imp.pas goto impfound
-      echo ERROR: imp.pas not found in source directory
-      echo Source directory contents:
-      dir
-      goto end
-      
-      :impfound
-      echo ✓ Found imp.pas in source directory
-      
-      REM Step 1: Build with -$G+ -B flags
-      echo.
-      echo Step 1: Building with -$G+ -B flags...
-      bpc -$G+ -B -Uf:\ -Ee:\ imp.pas
-      if errorlevel 1 goto buildfail
-      echo ✓ Build step completed successfully
-      goto step2
-      
-      :buildfail
-      echo ERROR: Build step failed
-      goto end
-      
-      :step2
-      REM Step 2: Final compilation
-      echo.
-      echo Step 2: Final compilation...
-      bpc -Uf:\ -Ee:\ imp.pas
-      if errorlevel 1 goto compfail
-      echo ✓ Compilation completed successfully
-      goto checkfiles
-      
-      :compfail
-      echo ERROR: Final compilation failed
-      goto end
-      
-      :checkfiles
-      REM Verify output files were created
-      e:
-      if exist IMP.EXE echo ✓ IMP.EXE created successfully
-      if exist IMP.OVR echo ✓ IMP.OVR created successfully
-      goto end
-      
-      :end
-      echo === Build process finished ===
-      EOF
+    - echo "📝 Creating DOS build script..."
+    - echo "@echo off" > /tmp/impulse_dosbox/build.bat
+    - echo "echo === Impulse BBS Compilation ===" >> /tmp/impulse_dosbox/build.bat
+    - echo "" >> /tmp/impulse_dosbox/build.bat
+    - echo "if exist c:\\bp\\bin\\bpc.exe goto bpfound" >> /tmp/impulse_dosbox/build.bat
+    - echo "echo ERROR: Borland Pascal not found" >> /tmp/impulse_dosbox/build.bat
+    - echo "goto end" >> /tmp/impulse_dosbox/build.bat
+    - echo "" >> /tmp/impulse_dosbox/build.bat
+    - echo ":bpfound" >> /tmp/impulse_dosbox/build.bat
+    - echo "echo Found Borland Pascal compiler" >> /tmp/impulse_dosbox/build.bat
+    - echo "" >> /tmp/impulse_dosbox/build.bat
+    - echo "d:" >> /tmp/impulse_dosbox/build.bat
+    - echo "if exist imp.pas goto impfound" >> /tmp/impulse_dosbox/build.bat
+    - echo "echo ERROR: imp.pas not found" >> /tmp/impulse_dosbox/build.bat
+    - echo "goto end" >> /tmp/impulse_dosbox/build.bat
+    - echo "" >> /tmp/impulse_dosbox/build.bat
+    - echo ":impfound" >> /tmp/impulse_dosbox/build.bat
+    - echo "echo Found imp.pas in source directory" >> /tmp/impulse_dosbox/build.bat
+    - echo "" >> /tmp/impulse_dosbox/build.bat
+    - echo "echo Step 1: Building with flags..." >> /tmp/impulse_dosbox/build.bat
+    - echo "bpc -\$G+ -B -Uf:\\ -Ee:\\ imp.pas" >> /tmp/impulse_dosbox/build.bat
+    - echo "if errorlevel 1 goto buildfail" >> /tmp/impulse_dosbox/build.bat
+    - echo "echo Build step completed" >> /tmp/impulse_dosbox/build.bat
+    - echo "goto step2" >> /tmp/impulse_dosbox/build.bat
+    - echo "" >> /tmp/impulse_dosbox/build.bat
+    - echo ":buildfail" >> /tmp/impulse_dosbox/build.bat
+    - echo "echo ERROR: Build step failed" >> /tmp/impulse_dosbox/build.bat
+    - echo "goto end" >> /tmp/impulse_dosbox/build.bat
+    - echo "" >> /tmp/impulse_dosbox/build.bat
+    - echo ":step2" >> /tmp/impulse_dosbox/build.bat
+    - echo "echo Step 2: Final compilation..." >> /tmp/impulse_dosbox/build.bat
+    - echo "bpc -Uf:\\ -Ee:\\ imp.pas" >> /tmp/impulse_dosbox/build.bat
+    - echo "if errorlevel 1 goto compfail" >> /tmp/impulse_dosbox/build.bat
+    - echo "echo Compilation completed" >> /tmp/impulse_dosbox/build.bat
+    - echo "goto end" >> /tmp/impulse_dosbox/build.bat
+    - echo "" >> /tmp/impulse_dosbox/build.bat
+    - echo ":compfail" >> /tmp/impulse_dosbox/build.bat
+    - echo "echo ERROR: Final compilation failed" >> /tmp/impulse_dosbox/build.bat
+    - echo "" >> /tmp/impulse_dosbox/build.bat
+    - echo ":end" >> /tmp/impulse_dosbox/build.bat
+    - echo "echo Build process finished" >> /tmp/impulse_dosbox/build.bat
     
-    # Run DOSBox compilation in headless mode
     - echo "🔨 Starting headless DOSBox compilation..."
     - xvfb-run -a dosbox -conf dosbox.conf -noconsole
     
-    # Check compilation results and create build artifacts
+    - echo "🔍 Checking compilation results..."
     - |
-      echo "🔍 Checking compilation results..."
       if [ -f "output/IMP.EXE" ] && [ -f "output/IMP.OVR" ]; then
         echo "✅ Compilation successful!"
         
-        # Create build directory with pipeline ID
         BUILD_DIR="build/build-$CI_PIPELINE_ID"
         mkdir -p "$BUILD_DIR"
         
-        # Copy compiled files
         cp output/IMP.EXE "$BUILD_DIR/"
         cp output/IMP.OVR "$BUILD_DIR/"
         
-        # Create build information file
-        cat > "$BUILD_DIR/build-info.txt" << EOF
-      Impulse BBS 7.1 Build Information
-      ================================
-      Build Date: $(date)
-      Pipeline ID: $CI_PIPELINE_ID
-      Job ID: $CI_JOB_ID
-      Commit SHA: $CI_COMMIT_SHA
-      Commit Short SHA: $CI_COMMIT_SHORT_SHA
-      Commit Message: $CI_COMMIT_MESSAGE
-      Commit Author: $CI_COMMIT_AUTHOR
-      Branch: $CI_COMMIT_REF_NAME
-      
-      Files:
-      EOF
+        # Create build info file
+        echo "Impulse BBS 7.1 Build Information" > "$BUILD_DIR/build-info.txt"
+        echo "================================" >> "$BUILD_DIR/build-info.txt"
+        echo "Build Date: $(date)" >> "$BUILD_DIR/build-info.txt"
+        echo "Pipeline ID: $CI_PIPELINE_ID" >> "$BUILD_DIR/build-info.txt"
+        echo "Job ID: $CI_JOB_ID" >> "$BUILD_DIR/build-info.txt"
+        echo "Commit SHA: $CI_COMMIT_SHA" >> "$BUILD_DIR/build-info.txt"
+        echo "Commit Author: $CI_COMMIT_AUTHOR" >> "$BUILD_DIR/build-info.txt"
+        echo "" >> "$BUILD_DIR/build-info.txt"
+        echo "Files:" >> "$BUILD_DIR/build-info.txt"
         ls -la "$BUILD_DIR"/*.EXE "$BUILD_DIR"/*.OVR >> "$BUILD_DIR/build-info.txt"
         
         echo "🎉 Build complete!"
         ls -la "$BUILD_DIR/"
         
-        # Output direct download links for easy access
         echo ""
         echo "📁 BUILD ARTIFACTS READY:"
         echo "Browse files: $CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/browse/build/build-$CI_PIPELINE_ID/"
@@ -180,7 +144,7 @@ build_impulse:
         echo "Direct IMP.EXE: $CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/raw/build/build-$CI_PIPELINE_ID/IMP.EXE"
         echo "Direct IMP.OVR: $CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/raw/build/build-$CI_PIPELINE_ID/IMP.OVR"
         
-        # Create/update latest build page if it exists
+        # Update latest build page if it exists
         if [ -f "latest-build.html" ]; then
           echo "📄 Creating latest build page..."
           sed -i "s/PIPELINE_ID_PLACEHOLDER/$CI_PIPELINE_ID/g" latest-build.html
@@ -191,50 +155,21 @@ build_impulse:
           echo "📄 Latest build page: $CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/raw/build/latest-build.html"
         fi
         
-        # Optional: Send enhanced Slack notification if webhook is configured
+        # Send Slack notification if configured
         if [ -n "$SLACK_WEBHOOK_URL" ]; then
           echo "📱 Sending Slack notification..."
           curl -X POST -H 'Content-type: application/json' \
-          --data "{
-            \"text\": \"🎉 Impulse BBS Build #$CI_PIPELINE_ID Complete!\",
-            \"attachments\": [
-              {
-                \"color\": \"good\",
-                \"fields\": [
-                  {
-                    \"title\": \"📂 Browse Files\",
-                    \"value\": \"<$CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/browse/build/build-$CI_PIPELINE_ID/|View Online>\",
-                    \"short\": true
-                  },
-                  {
-                    \"title\": \"📦 Download\",
-                    \"value\": \"<$CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/download|Download ZIP>\",
-                    \"short\": true
-                  },
-                  {
-                    \"title\": \"💾 Direct Files\",
-                    \"value\": \"<$CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/raw/build/build-$CI_PIPELINE_ID/IMP.EXE|IMP.EXE> | <$CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/raw/build/build-$CI_PIPELINE_ID/IMP.OVR|IMP.OVR>\",
-                    \"short\": false
-                  }
-                ],
-                \"footer\": \"Commit: $CI_COMMIT_SHORT_SHA by $CI_COMMIT_AUTHOR\"
-              }
-            ]
-          }" "$SLACK_WEBHOOK_URL" || echo "Slack notification failed (not critical)"
+          --data '{"text":"🎉 Impulse BBS Build #'$CI_PIPELINE_ID' Complete!","attachments":[{"color":"good","fields":[{"title":"📂 Browse Files","value":"<'$CI_PROJECT_URL'/-/jobs/'$CI_JOB_ID'/artifacts/browse/build/build-'$CI_PIPELINE_ID'/|View Online>","short":true},{"title":"📦 Download","value":"<'$CI_PROJECT_URL'/-/jobs/'$CI_JOB_ID'/artifacts/download|Download ZIP>","short":true},{"title":"💾 Direct Files","value":"<'$CI_PROJECT_URL'/-/jobs/'$CI_JOB_ID'/artifacts/raw/build/build-'$CI_PIPELINE_ID'/IMP.EXE|IMP.EXE> | <'$CI_PROJECT_URL'/-/jobs/'$CI_JOB_ID'/artifacts/raw/build/build-'$CI_PIPELINE_ID'/IMP.OVR|IMP.OVR>","short":false}],"footer":"Commit: '$CI_COMMIT_SHORT_SHA' by '$CI_COMMIT_AUTHOR'"}]}' \
+          "$SLACK_WEBHOOK_URL" || echo "Slack notification failed (not critical)"
         fi
         
       else
         echo "❌ Compilation failed or output files not found"
-        echo ""
-        echo "🔍 Output directory contents:"
+        echo "Output directory contents:"
         ls -la output/ || echo "No output directory found"
-        echo ""
-        echo "🔍 DOSBox temp directory contents:"
-        ls -la /tmp/impulse_dosbox/ || echo "No DOSBox temp directory found"
         exit 1
       fi
-    
-  # Configure artifacts for public download
+
   artifacts:
     name: "impulse-bbs-build-$CI_PIPELINE_ID"
     paths:
