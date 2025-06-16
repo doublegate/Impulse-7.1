@@ -14,6 +14,7 @@
 # automated build
 
 - `build.sh` = this runs on linux (dosbox req'd) and will build+compile
+- `.gitlab-ci.yml` = this runs on gitlab (docker + dosbox) to build+compile
 
 # compiling by hand:
 step 1 is build:
