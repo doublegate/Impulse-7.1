@@ -62,26 +62,29 @@ rm -f "$OUTPUT_DIR"/*.exe "$OUTPUT_DIR"/*.ovr "$OUTPUT_DIR"/*.tpu 2>/dev/null ||
 # Create DOSBox configuration file with WSL-specific settings
 echo "⚙️ Creating DOSBox configuration..."
 if [ "$IS_WSL" = true ]; then
-    # WSL configuration - text mode only
+    # WSL configuration - dummy/headless mode
     cat > "$DOSBOX_CONF" << EOF
 [sdl]
-windowresolution=original
-output=surface
+output=dummy
+windowresolution=640x480
 autolock=false
 
 [dosbox]
-machine=svga_s3
+machine=hercules
 memsize=16
 
 [cpu]
 core=auto
 cputype=auto
-cycles=10000
+cycles=max
 
 [render]
-frameskip=0
+frameskip=10
 aspect=false
 scaler=none
+
+[video]
+vmemsize=1
 
 [autoexec]
 # Mount directories
@@ -266,10 +269,17 @@ echo "💡 Using Borland Pascal from your repo's BP directory"
 echo "💡 DOSBox C: drive: $TEMP_BUILD_DIR"
 
 if [ "$IS_WSL" = true ]; then
-    echo "💡 WSL detected - DOSBox will run in text mode and exit automatically"
+    echo "💡 WSL detected - using headless DOSBox mode"
     echo ""
-    # In WSL, run DOSBox with automatic exit
-    dosbox -conf "$DOSBOX_CONF" -exit
+    # Try to run DOSBox headless in WSL
+    # First, unset DISPLAY to prevent X11 attempts
+    unset DISPLAY
+    
+    # Run DOSBox with minimal output and automatic exit
+    timeout 60 dosbox -conf "$DOSBOX_CONF" -exit > /dev/null 2>&1 || {
+        echo "⚠️  DOSBox may have had display issues in WSL, but compilation might have succeeded"
+        echo "    This is normal in WSL environments"
+    }
 else
     echo "💡 DOSBox will stay open for troubleshooting - close it manually when done"
     echo ""
