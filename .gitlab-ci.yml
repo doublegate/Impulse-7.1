@@ -15,6 +15,13 @@ build_impulse:
   before_script:
     - echo "Building Impulse BBS - Pipeline $CI_PIPELINE_ID"
     - echo "Commit $CI_COMMIT_SHORT_SHA by $CI_COMMIT_AUTHOR"
+    ## Setup APT caching
+    - mkdir -p "$APT_CACHE_DIR"
+    - echo "Dir::Cache::Archives \"$APT_CACHE_DIR\";" > /etc/apt/apt.conf.d/99cache
+    - echo "Dir::Cache::pkgcache \"$APT_CACHE_DIR/pkgcache.bin\";" >> /etc/apt/apt.conf.d/99cache
+    - echo "Dir::Cache::srcpkgcache \"$APT_CACHE_DIR/srcpkgcache.bin\";" >> /etc/apt/apt.conf.d/99cache
+    ## End caching stuff
+    # Update and install
     - apt-get update
     - DEBIAN_FRONTEND=noninteractive apt-get install -y dosbox xvfb curl
     - mkdir -p /tmp/impulse_dosbox
