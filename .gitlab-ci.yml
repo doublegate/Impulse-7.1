@@ -6,6 +6,8 @@ stages:
 
 variables:
   DOCKER_DRIVER: overlay2
+  APT_CACHE_DIR: "$CI_PROJECT_DIR/apt-cache"
+  DEBIAN_FRONTEND: noninteractive
 
 build_impulse:
   stage: build
