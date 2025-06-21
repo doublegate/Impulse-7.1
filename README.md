@@ -52,12 +52,7 @@ not tested yet:  docker build -t impulse-bbs . && docker run --rm -v $(pwd)/buil
    ./build.sh
    ```
 
-3. **Clean build artifacts:**
-   ```bash
-   ./clean.sh
-   ```
-
-4.  Copy IMP.EXE and IMP.OVR from build dir, combine them into the full imp71rel release.  run IMP -D in dos on new install to initialize files/dirs
+3.  Copy IMP.EXE and IMP.OVR from build dir, combine them into the full imp71rel release.  run IMP -D in dos on new install to initialize files/dirs
 
 ### Manual Compilation
 
@@ -77,7 +72,7 @@ To build in a DOS environment, you can use the Borland Pascal IDE (\BP\BIN\BP) o
 
 ## CI/CD Pipeline
 
-The repository includes GitLab CI/CD automation:
+For fun, we setup GitLab CI/CD automation:
 
 - **`.gitlab-ci.yml`** - Configures the GitLab CI/CD pipeline
 - Uses Docker with DOSBox to provide a consistent build environment
@@ -94,6 +89,8 @@ To run a complete BBS:
 1. Copy the compiled files to the `imp71rel/` directory
 2. The `imp71rel/` folder contains the complete original Impulse 7.1 (y2k bugs and all)
 3. Configure the BBS according to the docs in `imp71rel/` (note IMP.EXE -D when run for first time)
+
+docs:  check IMP.DOC and README
 
 ## Development Notes
 
@@ -121,6 +118,11 @@ This is primarily a preservation project, but improvements are welcome:
 ## License
 
 This software is considered **abandonware** and is essentially **public domain**. 
+
+Credit goes to:
+  * Brandon Sneed (Nivenh): Original developer through Version 6
+  * Phillip Foose (Horrid): Further bugfixes and Version 7
+
 
 ---
 
