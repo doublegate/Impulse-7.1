@@ -59,7 +59,7 @@ not tested yet:  docker build -t impulse-bbs . && docker run --rm -v $(pwd)/buil
 
 ### Manual Compilation
 
-For those who want to understand the build process or compile manually:
+To build in a DOS environment, you can use the Borland Pascal IDE (\BP\BIN\BP) or run from DOS commandline with \BP\BIN\BPC.  see BPC help on the -U and -E flags, i used them but to keep stuff in seprate dirs but they're not required
 
 1. **Build step** (creates TPU units):
    ```
