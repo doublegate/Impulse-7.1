@@ -38,7 +38,7 @@ begin
    end;
    if (status^.phonepw) then begin
       sprompt(strings^.phonenum);
-      commandline('User: '+thisUser.name+' Phone: "'+thisuser.ph+'"');
+      commandline('Username: '+thisUser.name+' Phone: "'+thisuser.ph+'"');
       input(phone,4);
       echo := true;
       if phone <> copy(thisuser.ph,9,4) then begin
