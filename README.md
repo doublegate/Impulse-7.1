@@ -6,6 +6,8 @@ A DOS-based Bulletin Board System (BBS) software from the 1990s, written in Pasc
 
 Impulse 7.1 is a classic BBS software that powered dial-up bulletin board systems during the height of the BBS era. It provided features like message boards, file areas, multi-node support, user management, and door game support. This project preserves the source code and provides modern build tools for enthusiasts interested in retrocomputing and BBS history.
 
+More details:  https://web.archive.org/web/20011204010133/http://www.demonic.net/impulse/
+
 ## Project Status
 
 We haven't done any extensive work on the code yet, just fixed a y2k issue and organized the code so we can build it.
