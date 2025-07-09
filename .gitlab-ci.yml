@@ -217,9 +217,9 @@ create_release:
   only:
     - main
   script:
-    - echo "Creating release for build $CI_PIPELINE_ID" && BUILD_DIR="build/build-$CI_PIPELINE_ID"
+    - echo "Creating release for build $CI_PIPELINE_ID"
+    - BUILD_DIR="build/build-$CI_PIPELINE_ID"
     - test -f "$BUILD_DIR/IMP.EXE" && test -f "$BUILD_DIR/IMP.OVR" && echo "Build artifacts verified"
-    # Read the build job ID from artifacts
     - BUILD_JOB_ID=$(cat "$BUILD_DIR/build-job-id.txt")
     - echo "Using build job ID: $BUILD_JOB_ID"
     - |
