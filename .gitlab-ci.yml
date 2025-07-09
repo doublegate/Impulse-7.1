@@ -199,10 +199,11 @@ build_impulse:
     access: all  # 🔑 KEY CHANGE: Makes artifacts publicly downloadable (replaces deprecated 'public: true')
     name: "impulse-bbs-build-$CI_PIPELINE_ID"
     paths:
-      - build/build-$CI_PIPELINE_ID/
-      - build/latest-build.html
+      - build/
+    exclude:
+      - build/temp/*
     expire_in: 1 year
-    when: always
+    when: always  # Collect artifacts even if job fails (for debugging)
 
 # Create GitLab Release with build artifacts
 create_release:
