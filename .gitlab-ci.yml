@@ -204,24 +204,6 @@ build_impulse:
     expire_in: 1 year
     when: always
 
-# Optional: Publish artifacts to GitLab Pages (always public)
-pages:
-  stage: release
-  dependencies:
-    - build_impulse
-  script:
-    - mkdir public
-    - cp -r build/build-$CI_PIPELINE_ID/* public/
-    - echo "Artifacts published to GitLab Pages"
-    - echo "Direct download links:"
-    - echo "IMP.EXE: $CI_PAGES_URL/IMP.EXE"
-    - echo "IMP.OVR: $CI_PAGES_URL/IMP.OVR"
-  artifacts:
-    paths:
-      - public
-  only:
-    - main
-
 # Create GitLab Release with build artifacts
 create_release:
   stage: release
