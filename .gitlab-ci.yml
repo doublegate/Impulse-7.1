@@ -221,40 +221,27 @@ create_release:
     - BUILD_DIR="build/build-$CI_PIPELINE_ID"
     - test -f "$BUILD_DIR/IMP.EXE" && test -f "$BUILD_DIR/IMP.OVR" && echo "Build artifacts verified"
     - BUILD_JOB_ID=$(cat "$BUILD_DIR/build-job-id.txt")
-    - echo "Using build job ID: $BUILD_JOB_ID"
-    - |
-      cat > release_desc.txt << EOF
-      Impulse BBS 7.1 - Build $CI_PIPELINE_ID
-      
-      Automated build from commit $CI_COMMIT_SHORT_SHA
-      
-      Build Information:
-      - Date: $CI_JOB_STARTED_AT
-      - Pipeline: $CI_PIPELINE_ID  
-      - Commit: $CI_COMMIT_MESSAGE
-      - Author: $CI_COMMIT_AUTHOR
-      
-      ## 🌐 Public Download Links (No Login Required):
-      
-      **Direct Downloads:**
-      - 📦 [Full Build Archive](${CI_PROJECT_URL}/-/jobs/${BUILD_JOB_ID}/artifacts/download)
-      - 🖥️ [IMP.EXE Only](${CI_PROJECT_URL}/-/jobs/${BUILD_JOB_ID}/artifacts/raw/build/build-${CI_PIPELINE_ID}/IMP.EXE) 
-      - 📄 [IMP.OVR Only](${CI_PROJECT_URL}/-/jobs/${BUILD_JOB_ID}/artifacts/raw/build/build-${CI_PIPELINE_ID}/IMP.OVR)
-      - 📁 [Browse All Files](${CI_PROJECT_URL}/-/jobs/${BUILD_JOB_ID}/artifacts/browse)
-      
-      **Legacy UI Links:**
-      - Browse All: $CI_PROJECT_URL/-/jobs/$BUILD_JOB_ID/artifacts/browse/build/build-$CI_PIPELINE_ID/
-      - Download ZIP: $CI_PROJECT_URL/-/jobs/$BUILD_JOB_ID/artifacts/download
-      
-      **Installation:** Download both IMP.EXE and IMP.OVR files, place in same directory, run IMP.EXE
-      EOF
+    - echo "Using build job ID=$BUILD_JOB_ID"
+    - echo "Impulse BBS 7.1 - Build $CI_PIPELINE_ID" > release_desc.txt
+    - echo "" >> release_desc.txt
+    - echo "Automated build from commit $CI_COMMIT_SHORT_SHA" >> release_desc.txt
+    - echo "" >> release_desc.txt
+    - echo "Build Information:" >> release_desc.txt
+    - echo "- Date=$CI_JOB_STARTED_AT" >> release_desc.txt
+    - echo "- Pipeline=$CI_PIPELINE_ID" >> release_desc.txt
+    - echo "- Commit=$CI_COMMIT_MESSAGE" >> release_desc.txt
+    - echo "- Author=$CI_COMMIT_AUTHOR" >> release_desc.txt
+    - echo "" >> release_desc.txt
+    - echo "## Public Download Links (No Login Required):" >> release_desc.txt
+    - echo "" >> release_desc.txt
+    - echo "**Direct Downloads:**" >> release_desc.txt
+    - echo "- [Full Build Archive]($CI_PROJECT_URL/-/jobs/$BUILD_JOB_ID/artifacts/download)" >> release_desc.txt
+    - echo "- [IMP.EXE Only]($CI_PROJECT_URL/-/jobs/$BUILD_JOB_ID/artifacts/raw/build/build-$CI_PIPELINE_ID/IMP.EXE)" >> release_desc.txt
+    - echo "- [IMP.OVR Only]($CI_PROJECT_URL/-/jobs/$BUILD_JOB_ID/artifacts/raw/build/build-$CI_PIPELINE_ID/IMP.OVR)" >> release_desc.txt
+    - echo "- [Browse All Files]($CI_PROJECT_URL/-/jobs/$BUILD_JOB_ID/artifacts/browse)" >> release_desc.txt
+    - echo "" >> release_desc.txt
+    - echo "**Installation:** Download both IMP.EXE and IMP.OVR files, place in same directory, run IMP.EXE" >> release_desc.txt
     - RELEASE_DESC=$(cat release_desc.txt)
-    - |
-      release-cli create \
-        --name "Impulse BBS Build $CI_PIPELINE_ID" \
-        --tag-name "build-$CI_PIPELINE_ID" \
-        --description "$RELEASE_DESC" \
-        --assets-link "{\"name\":\"Download Full Build\",\"url\":\"${CI_PROJECT_URL}/-/jobs/${BUILD_JOB_ID}/artifacts/download\",\"link_type\":\"package\"}" \
-        --assets-link "{\"name\":\"IMP.EXE (Direct Download)\",\"url\":\"${CI_PROJECT_URL}/-/jobs/${BUILD_JOB_ID}/artifacts/raw/build/build-${CI_PIPELINE_ID}/IMP.EXE\",\"link_type\":\"other\"}" \
-        --assets-link "{\"name\":\"IMP.OVR (Direct Download)\",\"url\":\"${CI_PROJECT_URL}/-/jobs/${BUILD_JOB_ID}/artifacts/raw/build/build-${CI_PIPELINE_ID}/IMP.OVR\",\"link_type\":\"other\"}"
+    - release-cli create --name "Impulse BBS Build $CI_PIPELINE_ID" --tag-name "build-$CI_PIPELINE_ID" --description "$RELEASE_DESC"
+
 
