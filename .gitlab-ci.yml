@@ -166,6 +166,14 @@ build_impulse:
         echo "IMP.EXE: $CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/raw/build/build-$CI_PIPELINE_ID/IMP.EXE"
         echo "IMP.OVR: $CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/raw/build/build-$CI_PIPELINE_ID/IMP.OVR"
         
+        # Add public API URLs for easier access
+        echo ""
+        echo "PUBLIC API DOWNLOAD LINKS:"
+        echo "Full Archive: $CI_PROJECT_URL/api/v4/projects/$CI_PROJECT_ID/jobs/artifacts/main/download?job=build_impulse"
+        echo "Browse Files: $CI_PROJECT_URL/-/jobs/artifacts/main/browse?job=build_impulse" 
+        echo "Direct IMP.EXE: $CI_PROJECT_URL/api/v4/projects/$CI_PROJECT_ID/jobs/artifacts/main/raw/build/build-$CI_PIPELINE_ID/IMP.EXE?job=build_impulse"
+        echo "Direct IMP.OVR: $CI_PROJECT_URL/api/v4/projects/$CI_PROJECT_ID/jobs/artifacts/main/raw/build/build-$CI_PIPELINE_ID/IMP.OVR?job=build_impulse"
+        
         if [ -f "latest-build.html" ]; then
           sed -i "s/PIPELINE_ID_PLACEHOLDER/$CI_PIPELINE_ID/g" latest-build.html
           sed -i "s/JOB_ID_PLACEHOLDER/$CI_JOB_ID/g" latest-build.html
@@ -177,7 +185,7 @@ build_impulse:
         
         if [ -n "$SLACK_WEBHOOK_URL" ]; then
           curl -X POST -H 'Content-type: application/json' \
-          --data '{"text":"🎉 Impulse BBS Build #'$CI_PIPELINE_ID' Complete!\n📦 Release: '$CI_PROJECT_URL'/-/releases/build-'$CI_PIPELINE_ID'\n📁 Browse: '$CI_PROJECT_URL'/-/jobs/'$CI_JOB_ID'/artifacts/browse/build/build-'$CI_PIPELINE_ID'/\n⬇️ Download: '$CI_PROJECT_URL'/-/jobs/'$CI_JOB_ID'/artifacts/download"}' \
+          --data '{"text":"🎉 Impulse BBS Build #'$CI_PIPELINE_ID' Complete!\n📦 Release: '$CI_PROJECT_URL'/-/releases/build-'$CI_PIPELINE_ID'\n📁 Browse: '$CI_PROJECT_URL'/-/jobs/'$CI_JOB_ID'/artifacts/browse/build/build-'$CI_PIPELINE_ID'/\n⬇️ Download: '$CI_PROJECT_URL'/-/jobs/'$CI_JOB_ID'/artifacts/download\n🌐 Public API: '$CI_PROJECT_URL'/api/v4/projects/'$CI_PROJECT_ID'/jobs/artifacts/main/download?job=build_impulse"}' \
           "$SLACK_WEBHOOK_URL"
         fi
         
@@ -188,12 +196,12 @@ build_impulse:
       fi
     
   artifacts:
+    access: all  # 🔑 KEY CHANGE: Makes artifacts publicly downloadable (replaces deprecated 'public: true')
     name: "impulse-bbs-build-$CI_PIPELINE_ID"
     paths:
       - build/build-$CI_PIPELINE_ID/
       - build/latest-build.html
     expire_in: 1 year
-    public: true
     when: always
 
 # Create GitLab Release with build artifacts
@@ -219,14 +227,27 @@ create_release:
       - Commit: $CI_COMMIT_MESSAGE
       - Author: $CI_COMMIT_AUTHOR
       
-      Download Files:
-      - IMP.EXE: $CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/raw/build/build-$CI_PIPELINE_ID/IMP.EXE
-      - IMP.OVR: $CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/raw/build/build-$CI_PIPELINE_ID/IMP.OVR
+      ## 🌐 Public Download Links (No Login Required):
+      
+      **API Downloads (Direct Links):**
+      - 📦 [Full Build Archive](${CI_PROJECT_URL}/api/v4/projects/${CI_PROJECT_ID}/jobs/artifacts/main/download?job=build_impulse)
+      - 🖥️ [IMP.EXE Only](${CI_PROJECT_URL}/api/v4/projects/${CI_PROJECT_ID}/jobs/artifacts/main/raw/build/build-${CI_PIPELINE_ID}/IMP.EXE?job=build_impulse) 
+      - 📄 [IMP.OVR Only](${CI_PROJECT_URL}/api/v4/projects/${CI_PROJECT_ID}/jobs/artifacts/main/raw/build/build-${CI_PIPELINE_ID}/IMP.OVR?job=build_impulse)
+      - 📁 [Browse All Files](${CI_PROJECT_URL}/-/jobs/artifacts/main/browse?job=build_impulse)
+      
+      **Legacy UI Links:**
       - Browse All: $CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/browse/build/build-$CI_PIPELINE_ID/
       - Download ZIP: $CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/download
       
-      Installation: Download both files, place in same directory, run IMP.EXE
+      **Installation:** Download both IMP.EXE and IMP.OVR files, place in same directory, run IMP.EXE
       EOF
     - RELEASE_DESC=$(cat release_desc.txt)
-    - release-cli create --name "Impulse BBS Build $CI_PIPELINE_ID" --tag-name "build-$CI_PIPELINE_ID" --description "$RELEASE_DESC"
+    - |
+      release-cli create \
+        --name "Impulse BBS Build $CI_PIPELINE_ID" \
+        --tag-name "build-$CI_PIPELINE_ID" \
+        --description "$RELEASE_DESC" \
+        --assets-link "{\"name\":\"Download Full Build (Public API)\",\"url\":\"${CI_PROJECT_URL}/api/v4/projects/${CI_PROJECT_ID}/jobs/artifacts/main/download?job=build_impulse\",\"link_type\":\"package\"}" \
+        --assets-link "{\"name\":\"IMP.EXE (Direct Download)\",\"url\":\"${CI_PROJECT_URL}/api/v4/projects/${CI_PROJECT_ID}/jobs/artifacts/main/raw/build/build-${CI_PIPELINE_ID}/IMP.EXE?job=build_impulse\",\"link_type\":\"other\"}" \
+        --assets-link "{\"name\":\"IMP.OVR (Direct Download)\",\"url\":\"${CI_PROJECT_URL}/api/v4/projects/${CI_PROJECT_ID}/jobs/artifacts/main/raw/build/build-${CI_PIPELINE_ID}/IMP.OVR?job=build_impulse\",\"link_type\":\"other\"}"
 
