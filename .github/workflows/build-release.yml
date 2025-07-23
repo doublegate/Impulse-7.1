@@ -16,20 +16,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Cache and install APT packages
+      - name: Install and cache APT packages
         uses: Eeems-Org/apt-cache-action@v1.4
         with:
           packages: dosbox xvfb curl
 
       - name: Prepare directories
         run: |
-          mkdir -p /tmp/impulse_dosbox
-          mkdir -p build
-          mkdir -p output
-          mkdir -p include
+          mkdir -p /tmp/impulse_dosbox build output include
 
       - name: Copy Borland Pascal files
         run: cp -r BP /tmp/impulse_dosbox/bp
@@ -107,34 +104,45 @@ jobs:
       - name: Run DOSBox build
         run: xvfb-run -a dosbox -conf dosbox.conf -noconsole
 
-      - name: Debug list output contents
-        run: |
-          echo "Workspace contents:"
-          ls -R $GITHUB_WORKSPACE
-          echo "Output directory contents:"
-          ls -la output
+      - name: Verify output directory
+        run: ls -la output
 
-      - name: Collect build outputs
-        run: |
-          BUILD_DIR="build/build-${{ github.run_id }}"
-          mkdir -p "$BUILD_DIR"
-          cp output/IMP.EXE "$BUILD_DIR/"
-          cp output/IMP.OVR "$BUILD_DIR/"
-
-      - uses: actions/upload-artifact@v4
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
         with:
           name: impulse-bbs-build-${{ github.run_id }}
           path: build/build-${{ github.run_id }}/
-          if-no-files-found: error
 
   release:
     name: Create GitHub Release
     needs: build
     runs-on: ubuntu-latest
-
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
     steps:
       - name: Download build artifacts
-        uses: actions/download-art
+        uses: actions/download-artifact@v4
+        with:
+          name: impulse-bbs-build-${{ github.run_id }}
+          path: build/
+
+      - name: Create Release & Upload Assets
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: build-${{ github.run_id }}
+          name: Impulse BBS Build ${{ github.run_id }}
+          files: |
+            build/build-${{ github.run_id }}/IMP.EXE
+            build/build-${{ github.run_id }}/IMP.OVR
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Slack Notification (if configured)
+        if: ${{ env.SLACK_WEBHOOK_URL != '' }}
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          fields: repo,commit,author,workflow,job,took
+        env:
+          SLACK_WEBHOOK_URL: ${{ env.SLACK_WEBHOOK_URL }}
