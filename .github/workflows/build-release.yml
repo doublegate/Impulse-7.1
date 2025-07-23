@@ -39,31 +39,31 @@ jobs:
           windowresolution=800x600
           output=surface
           autolock=false
-          
+
           [dosbox]
           machine=svga_s3
           memsize=16
-          
+
           [cpu]
           core=auto
           cputype=auto
           cycles=10000
-          
+
           [mixer]
           nosound=true
-          
+
           [midi]
           mpu401=none
-          
+
           [sblaster]
           sbtype=none
-          
+
           [gus]
           gus=false
-          
+
           [speaker]
           pcspeaker=false
-          
+
           [autoexec]
           mount c: /tmp/impulse_dosbox
           mount d: $PWD/source
@@ -116,6 +116,7 @@ jobs:
             echo "Build failed: missing output files"
             exit 1
           fi
+
       - uses: actions/upload-artifact@v4
         with:
           name: impulse-bbs-build-${{ github.run_id }}
@@ -125,6 +126,10 @@ jobs:
     name: Create GitHub Release
     needs: build
     runs-on: ubuntu-20.04
+
+    # Map the secret into env so it can be used in 'if' expressions
+    env:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
     steps:
       - name: Download build artifacts
@@ -145,10 +150,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Slack Notification (if configured)
-        if: ${{ secrets.SLACK_WEBHOOK_URL }}
+        if: ${{ env.SLACK_WEBHOOK_URL != '' }}
         uses: 8398a7/action-slack@v3
         with:
           status: ${{ job.status }}
           fields: repo,commit,author,workflow,job,took
         env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_WEBHOOK_URL: ${{ env.SLACK_WEBHOOK_URL }}
