@@ -29,6 +29,7 @@ jobs:
           mkdir -p /tmp/impulse_dosbox
           mkdir -p build
           mkdir -p output
+          mkdir -p include
 
       - name: Copy Borland Pascal files
         run: cp -r BP /tmp/impulse_dosbox/bp
@@ -67,9 +68,9 @@ jobs:
 
           [autoexec]
           mount c: /tmp/impulse_dosbox
-          mount d: $PWD/source
-          mount e: $PWD/output
-          mount f: $PWD/include
+          mount d: $GITHUB_WORKSPACE/source
+          mount e: $GITHUB_WORKSPACE/output
+          mount f: $GITHUB_WORKSPACE/include
           d:
           set PATH=c:\\bp\\bin;%PATH%
           call c:\\build.bat
@@ -108,8 +109,10 @@ jobs:
 
       - name: Debug list output contents
         run: |
-          echo "Checking output directory..."
-          ls -la output || echo "⚠️ output directory missing or empty"
+          echo "Workspace contents:"
+          ls -R $GITHUB_WORKSPACE
+          echo "Output directory contents:"
+          ls -la output
 
       - name: Collect build outputs
         run: |
@@ -134,27 +137,4 @@ jobs:
 
     steps:
       - name: Download build artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: impulse-bbs-build-${{ github.run_id }}
-          path: build/
-
-      - name: Create Release & Upload Assets
-        uses: softprops/action-gh-release@v2
-        with:
-          tag_name: build-${{ github.run_id }}
-          name: Impulse BBS Build ${{ github.run_id }}
-          files: |
-            build/build-${{ github.run_id }}/IMP.EXE
-            build/build-${{ github.run_id }}/IMP.OVR
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Slack Notification (if configured)
-        if: ${{ env.SLACK_WEBHOOK_URL }}
-        uses: 8398a7/action-slack@v3
-        with:
-          status: ${{ job.status }}
-          fields: repo,commit,author,workflow,job,took
-        env:
-          SLACK_WEBHOOK_URL: ${{ env.SLACK_WEBHOOK_URL }}
+        uses: actions/download-art
