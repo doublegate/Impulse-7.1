@@ -106,7 +106,7 @@ jobs:
       - name: Run DOSBox build
         run: xvfb-run -a dosbox -conf dosbox.conf -noconsole
 
-      - name: Debug: list output contents
+      - name: Debug list output contents
         run: |
           echo "Checking output directory..."
           ls -la output || echo "⚠️ output directory missing or empty"
