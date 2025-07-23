@@ -13,7 +13,7 @@ env:
 jobs:
   build:
     name: Build Impulse BBS
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
@@ -125,7 +125,7 @@ jobs:
   release:
     name: Create GitHub Release
     needs: build
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
 
     # Map the secret into env so it can be used in 'if' expressions
     env:
