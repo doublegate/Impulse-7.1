@@ -83,35 +83,59 @@ jobs:
             echo [ERROR] Borland Pascal not found
             goto end
           )
-          echo [SUCCESS] Found Borland Pascal
+          echo [SUCCESS] Found Borland Pascal compiler
           d:
           if not exist imp.pas (
             echo [ERROR] imp.pas not found
             goto end
           )
-          echo [LOG] Building imp.pas
+          echo [LOG] Current directory contents:
+          dir *.pas
+
+          echo [LOG] === STEP 1: BUILD PHASE ===
           bpc -$G+ -B -Uf:\ -Ee:\ imp.pas || goto buildfail
-          echo [SUCCESS] Build phase
+          echo [SUCCESS] Build phase completed
+
+          :buildfail
+          echo [ERROR] Build phase failed
+          goto end
+
+          echo [LOG] === STEP 2: FINAL COMPILATION ===
           bpc -Uf:\ -Ee:\ imp.pas || goto compfail
-          echo [SUCCESS] Final compilation
+          echo [SUCCESS] Final compilation completed
+
+          :compfail
+          echo [ERROR] Final compilation failed
+          goto end
+
           :checkfiles
           e:
           if exist IMP.EXE echo [SUCCESS] IMP.EXE created
           if exist IMP.OVR echo [SUCCESS] IMP.OVR created
+          dir *.exe *.ovr
+
           :end
+          echo [LOG] === BUILD PROCESS COMPLETE ===
           EOF
 
       - name: Run DOSBox build
         run: xvfb-run -a dosbox -conf dosbox.conf -noconsole
 
-      - name: Verify output directory
-        run: ls -la output
+      - name: Debug list workspace after build
+        run: |
+          echo "Workspace contents:"
+          ls -R $GITHUB_WORKSPACE
+          echo "Output directory contents:"
+          ls -la output
 
-      - name: Upload build artifacts
+      - name: Upload build outputs
         uses: actions/upload-artifact@v4
         with:
           name: impulse-bbs-build-${{ github.run_id }}
-          path: build/build-${{ github.run_id }}/
+          path: |
+            output/*.EXE
+            output/*.OVR
+          if-no-files-found: error
 
   release:
     name: Create GitHub Release
@@ -125,7 +149,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: impulse-bbs-build-${{ github.run_id }}
-          path: build/
+          path: output/
 
       - name: Create Release & Upload Assets
         uses: softprops/action-gh-release@v2
@@ -133,8 +157,8 @@ jobs:
           tag_name: build-${{ github.run_id }}
           name: Impulse BBS Build ${{ github.run_id }}
           files: |
-            build/build-${{ github.run_id }}/IMP.EXE
-            build/build-${{ github.run_id }}/IMP.OVR
+            output/IMP.EXE
+            output/IMP.OVR
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
