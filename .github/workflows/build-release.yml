@@ -24,10 +24,11 @@ jobs:
         with:
           packages: dosbox xvfb curl
 
-      - name: Prepare build directories
+      - name: Prepare directories
         run: |
           mkdir -p /tmp/impulse_dosbox
           mkdir -p build
+          mkdir -p output
 
       - name: Copy Borland Pascal files
         run: cp -r BP /tmp/impulse_dosbox/bp
@@ -97,37 +98,37 @@ jobs:
           echo [SUCCESS] Final compilation
           :checkfiles
           e:
-          if exist IMP.EXE echo [SUCCESS] IMP.EXE
-          if exist IMP.OVR echo [SUCCESS] IMP.OVR
+          if exist IMP.EXE echo [SUCCESS] IMP.EXE created
+          if exist IMP.OVR echo [SUCCESS] IMP.OVR created
           :end
           EOF
 
       - name: Run DOSBox build
         run: xvfb-run -a dosbox -conf dosbox.conf -noconsole
 
-      - name: Collect and upload artifacts
+      - name: Debug: list output contents
+        run: |
+          echo "Checking output directory..."
+          ls -la output || echo "⚠️ output directory missing or empty"
+
+      - name: Collect build outputs
         run: |
           BUILD_DIR="build/build-${{ github.run_id }}"
-          if [ -f "output/IMP.EXE" ] && [ -f "output/IMP.OVR" ]; then
-            mkdir -p "$BUILD_DIR"
-            cp output/IMP.EXE "$BUILD_DIR/"
-            cp output/IMP.OVR "$BUILD_DIR/"
-          else
-            echo "Build failed: missing output files"
-            exit 1
-          fi
+          mkdir -p "$BUILD_DIR"
+          cp output/IMP.EXE "$BUILD_DIR/"
+          cp output/IMP.OVR "$BUILD_DIR/"
 
       - uses: actions/upload-artifact@v4
         with:
           name: impulse-bbs-build-${{ github.run_id }}
-          path: build/
+          path: build/build-${{ github.run_id }}/
+          if-no-files-found: error
 
   release:
     name: Create GitHub Release
     needs: build
     runs-on: ubuntu-latest
 
-    # Map the secret into env so it can be used in 'if' expressions
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
