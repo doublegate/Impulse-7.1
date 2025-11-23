@@ -24,6 +24,6 @@ pub trait BbsCore: Send + Sync {
 mod tests {
     #[tokio::test]
     async fn test_placeholder() {
-        assert!(true);
+        // Placeholder test - will be replaced with actual tests in later sprints
     }
 }
