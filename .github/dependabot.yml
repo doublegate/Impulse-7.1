@@ -1,0 +1,34 @@
+version: 2
+updates:
+  # Enable version updates for Cargo dependencies
+  - package-ecosystem: "cargo"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 10
+    groups:
+      # Group minor and patch updates together
+      minor-and-patch:
+        applies-to: version-updates
+        update-types:
+          - "minor"
+          - "patch"
+      # Group all tokio ecosystem updates
+      tokio:
+        patterns:
+          - "tokio*"
+      # Group all serde ecosystem updates
+      serde:
+        patterns:
+          - "serde*"
+      # Group all sqlx ecosystem updates
+      sqlx:
+        patterns:
+          - "sqlx*"
+
+  # Enable version updates for GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
