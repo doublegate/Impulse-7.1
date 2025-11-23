@@ -1,10 +1,55 @@
 # CLAUDE.local.md - Current Session State
 
 **Session Date:** 2025-11-23
+**Time:** Project rename completed at ~21:45 UTC
+**Branch:** main
+**Last Commit:** TBD (project rename)
+**Working Tree:** Modified (rename in progress)
+
+---
+
+## Current Session: Project Rename (21:40-21:45 UTC)
+
+### ✅ PROJECT RENAMED: Impulse-7.1 → Impulse-Next_BBS
+
+**Status:** Successfully renamed project across all files and GitHub repository
+
+**GitHub Repository Updates:**
+1. ✅ **Repository renamed** from "Impulse-7.1" to "Impulse-Next_BBS"
+2. ✅ **Description updated** to "Next-generation BBS software - Modernizing the classic Impulse 7.1 BBS from Borland Pascal to Rust for cross-platform operation"
+3. ✅ **Topics updated** with: rust, bbs, bulletin-board-system, retro-computing, telnet, ssh, modernization, pascal-to-rust, async-rust, cross-platform, terminal-emulation, ansi-art, door-games
+4. ✅ **Local git remote updated** to https://github.com/doublegate/Impulse-Next_BBS.git
+
+**Files Updated:**
+- ✅ Cargo.toml (workspace repository URL)
+- ✅ README.md (title, badges, URLs, clone instructions, file paths, project structure)
+- ✅ CHANGELOG.md (added rename entry under [Unreleased])
+- ✅ CONTRIBUTING.md (title, description)
+- ✅ CLAUDE.md (title, description, workspace layout, temp directory)
+- ✅ CLAUDE.local.md (this file)
+- ✅ All documentation files in docs/ (via batch sed)
+- ✅ All sprint TODO files in to-dos/ (via batch sed)
+- ✅ All crate source files (via batch sed)
+- ✅ CI/CD configuration (via batch sed)
+
+**Preservation Rules Applied:**
+- Historical references to "Impulse 7.1" preserved when referring to original Pascal source
+- Example: "modernizing the classic Impulse 7.1 BBS from Borland Pascal"
+
+**Next Steps:**
+1. Verify build system still works (cargo build/test)
+2. Commit all changes with comprehensive message
+3. Push to GitHub
+
+---
+
+## Previous Session: Edition 2024 Migration (16:49-16:51 UTC)
+
+**Session Date:** 2025-11-23
 **Time:** CI/CD remediation at 16:19 UTC, Edition 2024 migration completed at ~17:00 UTC, commits at 16:49-16:50 UTC
 **Branch:** main
 **Last Commit:** d320e22 (project memory files)
-**Working Tree:** Clean (all changes committed)
+**Status:** All tasks completed
 
 ---
 
@@ -96,13 +141,13 @@
 - **Manual Fixes:** None required
 
 **Files Modified:**
-1. `/home/parobek/Code/Impulse-7.1/Cargo.toml` - edition + MSRV updated
-2. `/home/parobek/Code/Impulse-7.1/Cargo.lock` - Updated for edition2024
-3. `/home/parobek/Code/Impulse-7.1/README.md` - Badge updated
-4. `/home/parobek/Code/Impulse-7.1/CHANGELOG.md` - Migration documented
+1. `/home/parobek/Code/Impulse-Next_BBS/Cargo.toml` - edition + MSRV updated
+2. `/home/parobek/Code/Impulse-Next_BBS/Cargo.lock` - Updated for edition2024
+3. `/home/parobek/Code/Impulse-Next_BBS/README.md` - Badge updated
+4. `/home/parobek/Code/Impulse-Next_BBS/CHANGELOG.md` - Migration documented
 
 **Documentation Created:**
-- `/home/parobek/Code/Impulse-7.1/docs/EDITION2024-MIGRATION-ANALYSIS.md` (10,000+ lines)
+- `/home/parobek/Code/Impulse-Next_BBS/docs/EDITION2024-MIGRATION-ANALYSIS.md` (10,000+ lines)
   - Complete analysis of edition2024 status
   - Breaking changes assessment
   - Risk analysis (LOW)
@@ -150,7 +195,7 @@ This session continued from a previous conversation that ran out of context. The
    - Added network retry configuration
 
 **Production Verification:**
-- **CI Run:** https://github.com/doublegate/Impulse-7.1/actions/runs/19613941328
+- **CI Run:** https://github.com/doublegate/Impulse-Next_BBS/actions/runs/19613941328
 - **Status:** ✅ 100% SUCCESS (8/8 jobs passed)
 - **Duration:** 3m 22s (202 seconds)
 - **Previous Duration:** 14m 10s (850 seconds)
@@ -165,7 +210,7 @@ This session continued from a previous conversation that ran out of context. The
 **PR #3: Optimize CI/CD Pipeline**
 - **Branch:** ci/optimizations
 - **Status:** SUPERSEDED by direct main branch fix (commit 5258d38)
-- **URL:** https://github.com/doublegate/Impulse-7.1/pull/3
+- **URL:** https://github.com/doublegate/Impulse-Next_BBS/pull/3
 - **Outcome:** Feature branch approach abandoned in favor of direct main fix
 - **Reason:** Root cause (Cargo.lock) required immediate fix on main branch
 - **Decision:** Can close PR #3 as optimizations already applied to main
@@ -249,7 +294,7 @@ The sub-agent identified that `Cargo.lock` was incorrectly in `.gitignore`, caus
 - ✅ Workflow time: 850s → 202s (-76%)
 - ✅ All jobs passing: 8/8
 - ✅ Dependabot PRs unblocked: 7 PRs ready for auto-rebase
-- 📊 Run: https://github.com/doublegate/Impulse-7.1/actions/runs/19613941328
+- 📊 Run: https://github.com/doublegate/Impulse-Next_BBS/actions/runs/19613941328
 
 **Commit Details:**
 - **SHA:** 5258d38
@@ -502,7 +547,7 @@ The optimized CI configuration (PR #3) includes:
 
 **Repository:**
 - Location: `/home/parobek/Code/Impulse-7.1`
-- Remote: https://github.com/doublegate/Impulse-7.1
+- Remote: https://github.com/doublegate/Impulse-Next_BBS
 - Main branch: main
 - Protected: No (push allowed)
 

@@ -21,7 +21,7 @@ The comprehensive GitHub Actions CI/CD analysis reveals that **all workflows are
 
 ## Current CI Configuration
 
-**Location:** `/home/parobek/Code/Impulse-7.1/.github/workflows/ci.yml`
+**Location:** `/home/parobek/Code/Impulse-Next_BBS/.github/workflows/ci.yml`
 
 ### Jobs
 

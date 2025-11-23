@@ -1,6 +1,8 @@
-# Contributing to Impulse 7.1 BBS
+# Contributing to Impulse-Next_BBS
 
-Thank you for your interest in contributing to the Impulse 7.1 BBS modernization project! This document provides guidelines and information for contributors.
+Thank you for your interest in contributing to the Impulse-Next_BBS project! This document provides guidelines and information for contributors.
+
+> **Note**: This project modernizes the classic Impulse 7.1 BBS from Borland Pascal to Rust.
 
 ## Table of Contents
 
@@ -40,7 +42,7 @@ This project follows standard open-source etiquette:
 
 3. Add the upstream repository:
    ```bash
-   git remote add upstream https://github.com/doublegate/Impulse-7.1.git
+   git remote add upstream https://github.com/doublegate/Impulse-Next_BBS.git
    ```
 
 4. Build the workspace:

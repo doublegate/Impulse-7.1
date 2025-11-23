@@ -23,7 +23,7 @@ Edition 2024 has been stable since Rust 1.85.0 (released February 20, 2025) and 
 
 ### Project Configuration
 
-**Workspace Configuration** (`/home/parobek/Code/Impulse-7.1/Cargo.toml`):
+**Workspace Configuration** (`/home/parobek/Code/Impulse-Next_BBS/Cargo.toml`):
 ```toml
 [workspace.package]
 version = "0.1.0"
@@ -174,7 +174,7 @@ grep -r "edition2024" . --exclude-dir=target --exclude-dir=.git
 
 1. **Update Workspace Configuration**
 
-   **File:** `/home/parobek/Code/Impulse-7.1/Cargo.toml`
+   **File:** `/home/parobek/Code/Impulse-Next_BBS/Cargo.toml`
 
    ```toml
    [workspace.package]

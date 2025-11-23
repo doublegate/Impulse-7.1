@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Changed
+- **Project renamed from "Impulse-7.1" to "Impulse-Next_BBS"**
+  - Repository URL: https://github.com/doublegate/Impulse-Next_BBS
+  - Updated repository name, description, and topics on GitHub
+  - Updated all documentation to reflect new project name
+  - Historical references to "Impulse 7.1" preserved where referring to original Pascal source
 - Migrated to Rust edition 2024 (MSRV 1.85+)
 - Updated minimum supported Rust version from 1.80 to 1.85
 - All crates now use edition 2024 features and improvements
@@ -244,10 +249,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Links
 
-- **Repository**: [https://github.com/doublegate/Impulse-7.1](https://github.com/doublegate/Impulse-7.1)
-- **Issues**: [GitHub Issues](https://github.com/doublegate/Impulse-7.1/issues)
-- **Documentation**: [Project Documentation](https://github.com/doublegate/Impulse-7.1/tree/main/docs)
-- **Contributing**: [CONTRIBUTING.md](https://github.com/doublegate/Impulse-7.1/blob/main/CONTRIBUTING.md)
+- **Repository**: [https://github.com/doublegate/Impulse-Next_BBS](https://github.com/doublegate/Impulse-Next_BBS)
+- **Issues**: [GitHub Issues](https://github.com/doublegate/Impulse-Next_BBS/issues)
+- **Documentation**: [Project Documentation](https://github.com/doublegate/Impulse-Next_BBS/tree/main/docs)
+- **Contributing**: [CONTRIBUTING.md](https://github.com/doublegate/Impulse-Next_BBS/blob/main/CONTRIBUTING.md)
 
 ---
 

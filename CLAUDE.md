@@ -1,6 +1,6 @@
-# CLAUDE.md - Impulse 7.1 BBS Project Memory
+# CLAUDE.md - Impulse-Next_BBS Project Memory
 
-Project-specific guidance for Impulse 7.1 BBS modernization (Borland Pascal 7.0 → Rust 2024).
+Project-specific guidance for Impulse-Next_BBS modernization (classic Impulse 7.1 BBS: Borland Pascal 7.0 → Rust 2024).
 
 **Version:** 0.1.0 | **Updated:** 2025-11-23
 
@@ -8,9 +8,9 @@ Project-specific guidance for Impulse 7.1 BBS modernization (Borland Pascal 7.0 
 
 ## Project Overview
 
-**Repository:** https://github.com/doublegate/Impulse-7.1
-**Type:** Rust 2021 workspace (16 crates: 13 libraries + 3 binaries)
-**Goal:** Modernize classic Impulse 7.1 BBS from Pascal to Rust for cross-platform operation
+**Repository:** https://github.com/doublegate/Impulse-Next_BBS
+**Type:** Rust 2024 edition workspace (16 crates: 13 libraries + 3 binaries)
+**Goal:** Next-generation BBS software - modernizing the classic Impulse 7.1 BBS from Borland Pascal to Rust for cross-platform operation
 **License:** MIT OR Apache-2.0
 
 ---
@@ -40,7 +40,7 @@ Project-specific guidance for Impulse 7.1 BBS modernization (Borland Pascal 7.0 
 
 ### Workspace Layout
 ```
-Impulse-7.1/
+Impulse-Next_BBS/
 ├── crates/              # 16 crates
 │   ├── impulse-core/    # Core BBS functionality
 │   ├── impulse-types/   # Type definitions (User, FileEntry, Message, BbsConfig)
@@ -390,7 +390,7 @@ cargo doc --workspace --no-deps 2>&1 | grep warning
 ## Notes
 
 ### Temp Files
-Use `/tmp/impulse-71/` for temporary files (NOT `/tmp/` directly)
+Use `/tmp/impulse-next-bbs/` for temporary files (NOT `/tmp/` directly)
 
 ### Cross-Platform Testing
 All code must work on Linux, Windows 11, and macOS

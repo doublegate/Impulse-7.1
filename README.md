@@ -1,7 +1,7 @@
-# Impulse 7.1 BBS - Rust Modernization
+# Impulse-Next_BBS - Modern BBS Software
 
-[![CI](https://github.com/doublegate/Impulse-7.1/workflows/CI/badge.svg)](https://github.com/doublegate/Impulse-7.1/actions)
-[![License](https://img.shields.io/badge/license-MIT%20OR%20Apache--2.0-blue.svg)](https://github.com/doublegate/Impulse-7.1#license)
+[![CI](https://github.com/doublegate/Impulse-Next_BBS/workflows/CI/badge.svg)](https://github.com/doublegate/Impulse-Next_BBS/actions)
+[![License](https://img.shields.io/badge/license-MIT%20OR%20Apache--2.0-blue.svg)](https://github.com/doublegate/Impulse-Next_BBS#license)
 [![Rust Version](https://img.shields.io/badge/rust-1.85%2B%20(edition%202024)-orange.svg)](https://www.rust-lang.org)
 
 A complete modernization of the classic Impulse 7.1 Bulletin Board System from Borland Pascal 7.0 to modern Rust, preserving BBS history while leveraging contemporary software engineering practices.
@@ -60,7 +60,7 @@ This project aims to:
 - **Sprint 1 Complete** (Project Setup): Full workspace infrastructure with 16 crates, CI/CD pipeline
 - **Sprint 2 Complete** (Core Types): User, FileEntry, Message, BbsConfig types with validation and serialization
 - **Quality Metrics**: 82 tests passing, 0 clippy warnings, comprehensive documentation
-- **Latest Commit**: [3c2a398](https://github.com/doublegate/Impulse-7.1/commit/3c2a398) - Sprint 1-2 complete
+- **Latest Commit**: [3c2a398](https://github.com/doublegate/Impulse-Next_BBS/commit/3c2a398) - Sprint 1-2 complete
 
 ### Next Steps
 
@@ -176,7 +176,7 @@ This project aims to:
 - `impulse-cli` - CLI tools
 - `impulse-server` - Main server binary
 
-See [/home/parobek/Code/Impulse-7.1/docs/02-architecture.md](/home/parobek/Code/Impulse-7.1/docs/02-architecture.md) for complete architecture documentation.
+See [/home/parobek/Code/Impulse-Next_BBS/docs/02-architecture.md](/home/parobek/Code/Impulse-Next_BBS/docs/02-architecture.md) for complete architecture documentation.
 
 ## Quick Start
 
@@ -190,8 +190,8 @@ See [/home/parobek/Code/Impulse-7.1/docs/02-architecture.md](/home/parobek/Code/
 
 ```bash
 # Clone the repository
-git clone https://github.com/doublegate/Impulse-7.1.git
-cd Impulse-7.1
+git clone https://github.com/doublegate/Impulse-Next_BBS.git
+cd Impulse-Next_BBS
 
 # Build all crates
 cargo build --workspace
@@ -264,7 +264,7 @@ Runs on: Linux, Windows, macOS
 
 ### Contributing
 
-We welcome contributions! Please see [/home/parobek/Code/Impulse-7.1/CONTRIBUTING.md](/home/parobek/Code/Impulse-7.1/CONTRIBUTING.md) for:
+We welcome contributions! Please see [/home/parobek/Code/Impulse-Next_BBS/CONTRIBUTING.md](/home/parobek/Code/Impulse-Next_BBS/CONTRIBUTING.md) for:
 
 - Code of conduct
 - Development workflow
@@ -276,7 +276,7 @@ We welcome contributions! Please see [/home/parobek/Code/Impulse-7.1/CONTRIBUTIN
 ## Project Structure
 
 ```
-Impulse-7.1/
+Impulse-Next_BBS/
 ├── Cargo.toml              # Workspace root
 ├── crates/                 # All crates
 │   ├── impulse-core/       # Core BBS logic
@@ -360,15 +360,15 @@ Impulse-7.1/
 
 Comprehensive documentation covering all aspects:
 
-1. [00-project-overview.md](/home/parobek/Code/Impulse-7.1/docs/00-project-overview.md) - Vision, objectives, stakeholders (272 lines)
-2. [01-phase-sprint-plan.md](/home/parobek/Code/Impulse-7.1/docs/01-phase-sprint-plan.md) - 32-sprint roadmap (1,270 lines)
-3. [02-architecture.md](/home/parobek/Code/Impulse-7.1/docs/02-architecture.md) - System design (1,219 lines)
-4. [03-technical-details.md](/home/parobek/Code/Impulse-7.1/docs/03-technical-details.md) - Pascal→Rust conversion (1,768 lines)
-5. [04-development-guide.md](/home/parobek/Code/Impulse-7.1/docs/04-development-guide.md) - Developer onboarding (965 lines)
-6. [05-testing-strategy.md](/home/parobek/Code/Impulse-7.1/docs/05-testing-strategy.md) - Testing methodology (948 lines)
-7. [06-deployment-guide.md](/home/parobek/Code/Impulse-7.1/docs/06-deployment-guide.md) - Docker, K8s (1,084 lines)
-8. [07-migration-guide.md](/home/parobek/Code/Impulse-7.1/docs/07-migration-guide.md) - Legacy data migration (956 lines)
-9. [08-security-architecture.md](/home/parobek/Code/Impulse-7.1/docs/08-security-architecture.md) - Security design (1,150 lines)
+1. [00-project-overview.md](/home/parobek/Code/Impulse-Next_BBS/docs/00-project-overview.md) - Vision, objectives, stakeholders (272 lines)
+2. [01-phase-sprint-plan.md](/home/parobek/Code/Impulse-Next_BBS/docs/01-phase-sprint-plan.md) - 32-sprint roadmap (1,270 lines)
+3. [02-architecture.md](/home/parobek/Code/Impulse-Next_BBS/docs/02-architecture.md) - System design (1,219 lines)
+4. [03-technical-details.md](/home/parobek/Code/Impulse-Next_BBS/docs/03-technical-details.md) - Pascal→Rust conversion (1,768 lines)
+5. [04-development-guide.md](/home/parobek/Code/Impulse-Next_BBS/docs/04-development-guide.md) - Developer onboarding (965 lines)
+6. [05-testing-strategy.md](/home/parobek/Code/Impulse-Next_BBS/docs/05-testing-strategy.md) - Testing methodology (948 lines)
+7. [06-deployment-guide.md](/home/parobek/Code/Impulse-Next_BBS/docs/06-deployment-guide.md) - Docker, K8s (1,084 lines)
+8. [07-migration-guide.md](/home/parobek/Code/Impulse-Next_BBS/docs/07-migration-guide.md) - Legacy data migration (956 lines)
+9. [08-security-architecture.md](/home/parobek/Code/Impulse-Next_BBS/docs/08-security-architecture.md) - Security design (1,150 lines)
 
 **Total**: 9,632 lines of comprehensive documentation
 
@@ -385,8 +385,8 @@ Detailed sprint plans for all 32 sprints:
 
 ### Reference Documentation (ref-docs/)
 
-- [impulse-history.md](/home/parobek/Code/Impulse-7.1/ref-docs/impulse-history.md) - BBS history and cultural context
-- [rust-conversion-technical.md](/home/parobek/Code/Impulse-7.1/ref-docs/rust-conversion-technical.md) - Conversion strategies
+- [impulse-history.md](/home/parobek/Code/Impulse-Next_BBS/ref-docs/impulse-history.md) - BBS history and cultural context
+- [rust-conversion-technical.md](/home/parobek/Code/Impulse-Next_BBS/ref-docs/rust-conversion-technical.md) - Conversion strategies
 
 ### API Documentation
 
@@ -475,7 +475,7 @@ cargo test --workspace --doc
 
 ### Testing Strategy
 
-See [/home/parobek/Code/Impulse-7.1/docs/05-testing-strategy.md](/home/parobek/Code/Impulse-7.1/docs/05-testing-strategy.md) for:
+See [/home/parobek/Code/Impulse-Next_BBS/docs/05-testing-strategy.md](/home/parobek/Code/Impulse-Next_BBS/docs/05-testing-strategy.md) for:
 
 - Unit testing approach
 - Integration testing
@@ -493,7 +493,7 @@ We welcome contributions from the community! Whether you're interested in:
 - Writing tests
 - Optimizing performance
 
-Please read our [CONTRIBUTING.md](/home/parobek/Code/Impulse-7.1/CONTRIBUTING.md) for:
+Please read our [CONTRIBUTING.md](/home/parobek/Code/Impulse-Next_BBS/CONTRIBUTING.md) for:
 
 - Development workflow
 - Coding standards
@@ -515,8 +515,8 @@ Please read our [CONTRIBUTING.md](/home/parobek/Code/Impulse-7.1/CONTRIBUTING.md
 
 This project is dual-licensed under:
 
-- **MIT License** ([LICENSE-MIT](/home/parobek/Code/Impulse-7.1/LICENSE-MIT))
-- **Apache License 2.0** ([LICENSE-APACHE](/home/parobek/Code/Impulse-7.1/LICENSE-APACHE))
+- **MIT License** ([LICENSE-MIT](/home/parobek/Code/Impulse-Next_BBS/LICENSE-MIT))
+- **Apache License 2.0** ([LICENSE-APACHE](/home/parobek/Code/Impulse-Next_BBS/LICENSE-APACHE))
 
 You may choose either license for your use.
 
@@ -557,13 +557,13 @@ Built with excellent open-source technologies:
 
 ## Contact & Links
 
-- **Repository**: [https://github.com/doublegate/Impulse-7.1](https://github.com/doublegate/Impulse-7.1)
-- **Issues**: [GitHub Issues](https://github.com/doublegate/Impulse-7.1/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/doublegate/Impulse-7.1/discussions)
-- **Documentation**: [/home/parobek/Code/Impulse-7.1/docs](/home/parobek/Code/Impulse-7.1/docs)
+- **Repository**: [https://github.com/doublegate/Impulse-Next_BBS](https://github.com/doublegate/Impulse-Next_BBS)
+- **Issues**: [GitHub Issues](https://github.com/doublegate/Impulse-Next_BBS/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/doublegate/Impulse-Next_BBS/discussions)
+- **Documentation**: [/home/parobek/Code/Impulse-Next_BBS/docs](/home/parobek/Code/Impulse-Next_BBS/docs)
 
 ---
 
 **"We're figuring it out!"** - Preserving BBS history, one commit at a time.
 
-*For detailed sprint plans, architecture decisions, and technical specifications, see the comprehensive documentation in the [/home/parobek/Code/Impulse-7.1/docs](/home/parobek/Code/Impulse-7.1/docs) directory.*
+*For detailed sprint plans, architecture decisions, and technical specifications, see the comprehensive documentation in the [/home/parobek/Code/Impulse-Next_BBS/docs](/home/parobek/Code/Impulse-Next_BBS/docs) directory.*
