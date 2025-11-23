@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- Migrated to Rust edition 2024 (MSRV 1.85+)
+- Updated minimum supported Rust version from 1.80 to 1.85
+- All crates now use edition 2024 features and improvements
+- Verified: All 82 tests passing, 0 clippy warnings, all platforms compatible
+
 ### Planned - Sprint 3 (Pascal Analysis)
 - Deep analysis of original Pascal source code
 - Module dependency graph generation
