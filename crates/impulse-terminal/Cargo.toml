@@ -1,0 +1,14 @@
+[package]
+name = "impulse-terminal"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+impulse-types = { path = "../impulse-types" }
+crossterm = { workspace = true }
+async-trait = { workspace = true }
+thiserror = { workspace = true }

@@ -1,0 +1,20 @@
+[package]
+name = "impulse-server"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+impulse-core = { path = "../impulse-core" }
+impulse-types = { path = "../impulse-types" }
+impulse-config = { path = "../impulse-config" }
+impulse-session = { path = "../impulse-session" }
+impulse-telnet = { path = "../impulse-telnet" }
+impulse-ssh = { path = "../impulse-ssh" }
+tokio = { workspace = true }
+anyhow = { workspace = true }
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }

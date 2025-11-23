@@ -1,17 +1,86 @@
-# Impulse 7.1 BBS Software
+# Impulse 7.1 BBS - Rust Modernization
 
-A DOS-based Bulletin Board System (BBS) software from the 1990s, written in Pascal. This repository contains the complete source code and development environment for building and modifying Impulse 7.1.
+Modern BBS server implementation converting Impulse 7.1 from Borland Pascal to Rust.
 
 ## What is Impulse 7.1?
 
-Impulse 7.1 is a classic BBS software that powered dial-up bulletin board systems during the height of the BBS era. It provided features like message boards, file areas, multi-node support, user management, and door game support. This project preserves the source code and provides modern build tools for enthusiasts interested in retrocomputing and BBS history.
+Impulse 7.1 is a classic BBS software that powered dial-up bulletin board systems during the height of the BBS era. It provided features like message boards, file areas, multi-node support, user management, and door game support.
 
-More details:  <https://web.archive.org/web/20011204010133/http://www.demonic.net/impulse/>
+More details: <https://web.archive.org/web/20011204010133/http://www.demonic.net/impulse/>
 
 ## Project Status
 
-* **Pascal Source:** Stable. Builds with the provided `build.sh` script.
-* **Rust Port:** An experimental port to Rust was attempted in Nov 2025. The work has been archived in the `gemini_vOLD` branch. It contains a significant amount of converted code but currently fails to compile due to syntax issues in a few core files. Developers interested in the Rust version should check that branch.
+* **Rust Modernization (Active):** Phase 1, Sprint 1-2 complete. Full workspace infrastructure established with 16 crates.
+* **Pascal Source (Legacy):** Stable. Builds with the provided `build.sh` script. Preserved for reference.
+
+---
+
+## Rust Workspace
+
+### Quick Start
+
+```bash
+# Build all crates
+cargo build --all
+
+# Run tests
+cargo test --all
+
+# Run the BBS server
+cargo run --bin impulse-server
+
+# Build with optimizations
+cargo build --all --release
+```
+
+### Development
+
+```bash
+# Format code
+cargo fmt --all
+
+# Run linter
+cargo clippy --all -- -D warnings
+
+# Generate documentation
+cargo doc --workspace --no-deps --open
+```
+
+See `docs/04-development-guide.md` for detailed development instructions.
+
+### Architecture
+
+The project is organized as a Cargo workspace with 16 crates:
+
+**Core Crates:**
+- `impulse-core` - Core BBS logic and state management
+- `impulse-types` - Shared data types and constants
+- `impulse-config` - Configuration management
+
+**Protocol Crates:**
+- `impulse-protocol` - Protocol trait definitions
+- `impulse-telnet` - Telnet protocol implementation
+- `impulse-ssh` - SSH protocol implementation
+
+**Feature Crates:**
+- `impulse-session` - Session management
+- `impulse-terminal` - Terminal I/O (crossterm integration)
+- `impulse-auth` - Authentication (Argon2id)
+- `impulse-message` - Message bases (JAM/Hudson)
+- `impulse-file` - File areas and transfers
+- `impulse-user` - User management
+- `impulse-door` - Door game support
+
+**Application Crates:**
+- `impulse-web` - Web admin panel (Axum)
+- `impulse-cli` - CLI tools
+- `impulse-server` - Main server binary
+
+See `docs/02-architecture.md` for complete architecture documentation.
+
+---
+
+## Legacy Pascal Build
 
 ## Repository Structure
 

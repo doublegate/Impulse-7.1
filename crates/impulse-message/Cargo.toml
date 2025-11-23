@@ -1,0 +1,15 @@
+[package]
+name = "impulse-message"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+impulse-types = { path = "../impulse-types" }
+tokio = { workspace = true }
+async-trait = { workspace = true }
+binrw = { workspace = true }
+thiserror = { workspace = true }
