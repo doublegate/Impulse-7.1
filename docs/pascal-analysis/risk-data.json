@@ -1,0 +1,694 @@
+{
+  "risk_scores": {
+    "ANSIDRV": 7,
+    "ANSIEDIT": 15,
+    "ASMSAUCE": 7,
+    "BPTRAP": 21,
+    "CMD": 12,
+    "COMMON": 27,
+    "COMMON1": 15,
+    "COMMON2": 16,
+    "COMMON3": 3,
+    "COMMON4": 3,
+    "COMMON5": 27,
+    "CONF": 9,
+    "CUSER": 4,
+    "DOORS": 14,
+    "EXAMPLE": 0,
+    "EXEC": 31,
+    "EXECBAT": 10,
+    "EXECOLD": 31,
+    "FILE0": 6,
+    "FILE1": 14,
+    "FILE10": 5,
+    "FILE11": 5,
+    "FILE12": 13,
+    "FILE13": 3,
+    "FILE14": 0,
+    "FILE2": 10,
+    "FILE3": 0,
+    "FILE4": 7,
+    "FILE5": 16,
+    "FILE6": 9,
+    "FILE8": 15,
+    "FILE9": 4,
+    "IMP": 22,
+    "IMPDOS": 20,
+    "INITP": 18,
+    "INPUT": 0,
+    "INSTALL": 25,
+    "ISLC": 0,
+    "ISLD": 0,
+    "ISLU": 0,
+    "LADLE": 7,
+    "LOGON1": 16,
+    "LOGON2": 7,
+    "LZHVIEW": 3,
+    "MAIL0": 3,
+    "MAIL1": 8,
+    "MAIL2": 4,
+    "MAIL3": 4,
+    "MAIL4": 4,
+    "MAIL5": 5,
+    "MAIL6": 4,
+    "MAIL7": 22,
+    "MAIL9": 4,
+    "MAKECLEA": 5,
+    "MAKENUO": 0,
+    "MAKEWFC": 0,
+    "MENUS": 13,
+    "MENUS2": 11,
+    "MENUS3": 3,
+    "MISC1": 5,
+    "MISC2": 13,
+    "MISC3": 3,
+    "MISC4": 1,
+    "MISC5": 6,
+    "MMODEM": 3,
+    "MNUCONV": 3,
+    "MSGPACK": 5,
+    "MULTINOD": 8,
+    "MYIO": 7,
+    "NETFOSSL": 10,
+    "NEWUSERS": 6,
+    "NUV": 9,
+    "OUTPUT": 3,
+    "OVRLAY": 0,
+    "RECORDS": 28,
+    "RUMORS": 5,
+    "SCRIPT": 24,
+    "SCRLBK": 0,
+    "STRPROC": 0,
+    "STRPROC2": 7,
+    "SYS": 10,
+    "SYSOP1": 4,
+    "SYSOP11": 9,
+    "SYSOP2": 5,
+    "SYSOP21": 3,
+    "SYSOP2A": 8,
+    "SYSOP2B": 4,
+    "SYSOP2C": 3,
+    "SYSOP2D": 10,
+    "SYSOP2E": 0,
+    "SYSOP2F": 0,
+    "SYSOP2G": 3,
+    "SYSOP2H": 3,
+    "SYSOP2I": 8,
+    "SYSOP2J": 8,
+    "SYSOP2S": 17,
+    "SYSOP2Z": 0,
+    "SYSOP3": 14,
+    "SYSOP6": 12,
+    "SYSOP7": 4,
+    "SYSOP7M": 3,
+    "SYSOP8": 8,
+    "SYSOP9": 8,
+    "TEMP": 0,
+    "TIMEBANK": 0,
+    "TIMEJUNK": 0,
+    "TIMESLIC": 7,
+    "TIMETASK": 12,
+    "TMPCOM": 18,
+    "TMPOLD": 18,
+    "UCONFIG": 3,
+    "ULCHECK": 4,
+    "WFCMENU": 19,
+    "ZIPVIEWU": 10
+  },
+  "risk_reasons": {
+    "ANSIDRV": [
+      "Inline assembly"
+    ],
+    "ANSIEDIT": [
+      "Inline assembly",
+      "Heavy pointer usage (66 occurrences)",
+      "Possible variant records",
+      "Medium-sized module (869 lines)",
+      "Medium dependency count (11 dependencies)"
+    ],
+    "ASMSAUCE": [
+      "Inline assembly"
+    ],
+    "BPTRAP": [
+      "Low-level DOS interrupts",
+      "Inline assembly",
+      "Possible variant records",
+      "Medium dependency count (11 dependencies)"
+    ],
+    "CMD": [
+      "Inline assembly",
+      "Binary file I/O"
+    ],
+    "COMMON": [
+      "Inline assembly",
+      "Process execution (DOS Exec)",
+      "Binary file I/O",
+      "Heavy pointer usage (107 occurrences)",
+      "Possible variant records",
+      "Large module (1960 lines)"
+    ],
+    "COMMON1": [
+      "Binary file I/O",
+      "DOS file system calls",
+      "Heavy pointer usage (85 occurrences)",
+      "Possible variant records",
+      "Medium-sized module (882 lines)"
+    ],
+    "COMMON2": [
+      "Binary file I/O",
+      "DOS file system calls",
+      "Heavy pointer usage (62 occurrences)",
+      "Possible variant records",
+      "Medium-sized module (956 lines)",
+      "Medium dependency count (11 dependencies)"
+    ],
+    "COMMON3": [
+      "Possible variant records"
+    ],
+    "COMMON4": [
+      "Possible variant records"
+    ],
+    "COMMON5": [
+      "Low-level DOS interrupts",
+      "Inline assembly",
+      "Process execution (DOS Exec)",
+      "Possible variant records"
+    ],
+    "CONF": [
+      "Binary file I/O",
+      "Possible variant records",
+      "Medium dependency count (11 dependencies)"
+    ],
+    "CUSER": [
+      "Possible variant records",
+      "Medium-sized module (793 lines)"
+    ],
+    "DOORS": [
+      "Process execution (DOS Exec)",
+      "DOS file system calls",
+      "Possible variant records",
+      "Medium dependency count (11 dependencies)"
+    ],
+    "EXAMPLE": [],
+    "EXEC": [
+      "Low-level DOS interrupts",
+      "Inline assembly",
+      "Process execution (DOS Exec)",
+      "Heavy pointer usage (52 occurrences)",
+      "Possible variant records",
+      "Medium-sized module (974 lines)"
+    ],
+    "EXECBAT": [
+      "Process execution (DOS Exec)",
+      "DOS file system calls"
+    ],
+    "EXECOLD": [
+      "Low-level DOS interrupts",
+      "Inline assembly",
+      "Process execution (DOS Exec)",
+      "Heavy pointer usage (52 occurrences)",
+      "Possible variant records",
+      "Medium-sized module (974 lines)"
+    ],
+    "FILE0": [
+      "DOS file system calls",
+      "Possible variant records"
+    ],
+    "FILE1": [
+      "Process execution (DOS Exec)",
+      "Binary file I/O",
+      "Medium-sized module (530 lines)",
+      "Medium dependency count (17 dependencies)"
+    ],
+    "FILE10": [
+      "Possible variant records",
+      "Medium-sized module (560 lines)",
+      "Medium dependency count (15 dependencies)"
+    ],
+    "FILE11": [
+      "Possible variant records",
+      "Medium-sized module (700 lines)",
+      "Medium dependency count (13 dependencies)"
+    ],
+    "FILE12": [
+      "Process execution (DOS Exec)",
+      "Binary file I/O",
+      "Medium dependency count (18 dependencies)"
+    ],
+    "FILE13": [
+      "Possible variant records"
+    ],
+    "FILE14": [],
+    "FILE2": [
+      "Process execution (DOS Exec)",
+      "DOS file system calls"
+    ],
+    "FILE3": [],
+    "FILE4": [
+      "Process execution (DOS Exec)"
+    ],
+    "FILE5": [
+      "Process execution (DOS Exec)",
+      "Binary file I/O",
+      "Possible variant records",
+      "Medium dependency count (17 dependencies)"
+    ],
+    "FILE6": [
+      "Process execution (DOS Exec)",
+      "Medium-sized module (531 lines)",
+      "Medium dependency count (15 dependencies)"
+    ],
+    "FILE8": [
+      "Process execution (DOS Exec)",
+      "Binary file I/O",
+      "Possible variant records"
+    ],
+    "FILE9": [
+      "Possible variant records",
+      "Medium dependency count (13 dependencies)"
+    ],
+    "IMP": [
+      "Process execution (DOS Exec)",
+      "Overlay system usage",
+      "Binary file I/O",
+      "DOS file system calls",
+      "High dependency count (69 dependencies)"
+    ],
+    "IMPDOS": [
+      "Process execution (DOS Exec)",
+      "Binary file I/O",
+      "DOS file system calls",
+      "Possible variant records",
+      "High dependency count (21 dependencies)"
+    ],
+    "INITP": [
+      "Process execution (DOS Exec)",
+      "DOS file system calls",
+      "Heavy pointer usage (57 occurrences)",
+      "Possible variant records",
+      "Medium-sized module (583 lines)",
+      "Medium dependency count (16 dependencies)"
+    ],
+    "INPUT": [],
+    "INSTALL": [
+      "Low-level DOS interrupts",
+      "Process execution (DOS Exec)",
+      "Binary file I/O",
+      "DOS file system calls"
+    ],
+    "ISLC": [],
+    "ISLD": [],
+    "ISLU": [],
+    "LADLE": [
+      "Inline assembly"
+    ],
+    "LOGON1": [
+      "Process execution (DOS Exec)",
+      "Heavy pointer usage (91 occurrences)",
+      "Possible variant records",
+      "Medium-sized module (606 lines)",
+      "High dependency count (26 dependencies)"
+    ],
+    "LOGON2": [
+      "Binary file I/O",
+      "High dependency count (23 dependencies)"
+    ],
+    "LZHVIEW": [
+      "Possible variant records"
+    ],
+    "MAIL0": [
+      "Possible variant records"
+    ],
+    "MAIL1": [
+      "Heavy pointer usage (139 occurrences)",
+      "Possible variant records",
+      "Large module (1275 lines)"
+    ],
+    "MAIL2": [
+      "Possible variant records",
+      "Medium dependency count (12 dependencies)"
+    ],
+    "MAIL3": [
+      "Possible variant records",
+      "Medium dependency count (13 dependencies)"
+    ],
+    "MAIL4": [
+      "Possible variant records",
+      "Medium dependency count (16 dependencies)"
+    ],
+    "MAIL5": [
+      "Possible variant records",
+      "Medium-sized module (632 lines)",
+      "Medium dependency count (15 dependencies)"
+    ],
+    "MAIL6": [
+      "Possible variant records",
+      "Medium dependency count (12 dependencies)"
+    ],
+    "MAIL7": [
+      "ABSOLUTE variables (memory-mapped)",
+      "Process execution (DOS Exec)",
+      "Possible variant records",
+      "Medium-sized module (517 lines)",
+      "Medium dependency count (15 dependencies)"
+    ],
+    "MAIL9": [
+      "Possible variant records",
+      "Medium dependency count (13 dependencies)"
+    ],
+    "MAKECLEA": [
+      "Binary file I/O"
+    ],
+    "MAKENUO": [],
+    "MAKEWFC": [],
+    "MENUS": [
+      "Process execution (DOS Exec)",
+      "Possible variant records",
+      "Medium-sized module (678 lines)",
+      "High dependency count (62 dependencies)"
+    ],
+    "MENUS2": [
+      "Process execution (DOS Exec)",
+      "Possible variant records",
+      "Medium-sized module (534 lines)"
+    ],
+    "MENUS3": [
+      "Possible variant records"
+    ],
+    "MISC1": [
+      "Binary file I/O"
+    ],
+    "MISC2": [
+      "Inline assembly",
+      "Binary file I/O",
+      "Medium dependency count (12 dependencies)"
+    ],
+    "MISC3": [
+      "Possible variant records"
+    ],
+    "MISC4": [
+      "Medium dependency count (11 dependencies)"
+    ],
+    "MISC5": [
+      "Binary file I/O",
+      "Medium dependency count (11 dependencies)"
+    ],
+    "MMODEM": [
+      "Possible variant records"
+    ],
+    "MNUCONV": [
+      "Possible variant records"
+    ],
+    "MSGPACK": [
+      "Binary file I/O"
+    ],
+    "MULTINOD": [
+      "Binary file I/O",
+      "Possible variant records"
+    ],
+    "MYIO": [
+      "Inline assembly"
+    ],
+    "NETFOSSL": [
+      "Inline assembly",
+      "Possible variant records"
+    ],
+    "NEWUSERS": [
+      "Binary file I/O",
+      "Medium dependency count (19 dependencies)"
+    ],
+    "NUV": [
+      "Binary file I/O",
+      "Possible variant records",
+      "Medium dependency count (11 dependencies)"
+    ],
+    "OUTPUT": [
+      "Possible variant records"
+    ],
+    "OVRLAY": [],
+    "RECORDS": [
+      "Low-level DOS interrupts",
+      "Inline assembly",
+      "Process execution (DOS Exec)",
+      "Possible variant records",
+      "Medium-sized module (830 lines)"
+    ],
+    "RUMORS": [
+      "Binary file I/O"
+    ],
+    "SCRIPT": [
+      "Low-level DOS interrupts",
+      "Process execution (DOS Exec)",
+      "DOS file system calls",
+      "Possible variant records",
+      "Medium-sized module (951 lines)"
+    ],
+    "SCRLBK": [],
+    "STRPROC": [],
+    "STRPROC2": [
+      "Inline assembly"
+    ],
+    "SYS": [
+      "Inline assembly",
+      "DOS file system calls"
+    ],
+    "SYSOP1": [
+      "Possible variant records",
+      "Medium dependency count (11 dependencies)"
+    ],
+    "SYSOP11": [
+      "Binary file I/O",
+      "Possible variant records",
+      "Medium dependency count (11 dependencies)"
+    ],
+    "SYSOP2": [
+      "Possible variant records",
+      "High dependency count (21 dependencies)"
+    ],
+    "SYSOP21": [
+      "Possible variant records"
+    ],
+    "SYSOP2A": [
+      "Binary file I/O",
+      "Possible variant records"
+    ],
+    "SYSOP2B": [
+      "Possible variant records",
+      "Medium dependency count (11 dependencies)"
+    ],
+    "SYSOP2C": [
+      "Possible variant records"
+    ],
+    "SYSOP2D": [
+      "Low-level DOS interrupts"
+    ],
+    "SYSOP2E": [],
+    "SYSOP2F": [],
+    "SYSOP2G": [
+      "Possible variant records"
+    ],
+    "SYSOP2H": [
+      "Possible variant records"
+    ],
+    "SYSOP2I": [
+      "Binary file I/O",
+      "Possible variant records"
+    ],
+    "SYSOP2J": [
+      "Binary file I/O",
+      "Possible variant records"
+    ],
+    "SYSOP2S": [
+      "Inline assembly",
+      "Binary file I/O",
+      "Possible variant records",
+      "Medium-sized module (528 lines)",
+      "Medium dependency count (11 dependencies)"
+    ],
+    "SYSOP2Z": [],
+    "SYSOP3": [
+      "Binary file I/O",
+      "Heavy pointer usage (59 occurrences)",
+      "Possible variant records",
+      "Large module (1282 lines)",
+      "Medium dependency count (11 dependencies)"
+    ],
+    "SYSOP6": [
+      "Process execution (DOS Exec)",
+      "Binary file I/O"
+    ],
+    "SYSOP7": [
+      "Possible variant records",
+      "Medium dependency count (13 dependencies)"
+    ],
+    "SYSOP7M": [
+      "Possible variant records"
+    ],
+    "SYSOP8": [
+      "DOS file system calls",
+      "Possible variant records",
+      "Medium-sized module (752 lines)",
+      "Medium dependency count (12 dependencies)"
+    ],
+    "SYSOP9": [
+      "DOS file system calls",
+      "Possible variant records",
+      "Medium-sized module (546 lines)",
+      "Medium dependency count (13 dependencies)"
+    ],
+    "TEMP": [],
+    "TIMEBANK": [],
+    "TIMEJUNK": [],
+    "TIMESLIC": [
+      "Inline assembly"
+    ],
+    "TIMETASK": [
+      "Inline assembly",
+      "Overlay system usage"
+    ],
+    "TMPCOM": [
+      "Interrupt handlers (platform-specific)",
+      "Inline assembly",
+      "Medium-sized module (754 lines)"
+    ],
+    "TMPOLD": [
+      "Interrupt handlers (platform-specific)",
+      "Inline assembly",
+      "Medium-sized module (754 lines)"
+    ],
+    "UCONFIG": [
+      "Possible variant records"
+    ],
+    "ULCHECK": [
+      "Possible variant records",
+      "Medium dependency count (12 dependencies)"
+    ],
+    "WFCMENU": [
+      "Process execution (DOS Exec)",
+      "DOS file system calls",
+      "Heavy pointer usage (55 occurrences)",
+      "Possible variant records",
+      "Medium-sized module (885 lines)",
+      "High dependency count (33 dependencies)"
+    ],
+    "ZIPVIEWU": [
+      "ABSOLUTE variables (memory-mapped)"
+    ]
+  },
+  "risk_levels": {
+    "ANSIDRV": "MEDIUM",
+    "ANSIEDIT": "HIGH",
+    "ASMSAUCE": "MEDIUM",
+    "BPTRAP": "CRITICAL",
+    "CMD": "HIGH",
+    "COMMON": "CRITICAL",
+    "COMMON1": "HIGH",
+    "COMMON2": "HIGH",
+    "COMMON3": "LOW",
+    "COMMON4": "LOW",
+    "COMMON5": "CRITICAL",
+    "CONF": "MEDIUM",
+    "CUSER": "LOW",
+    "DOORS": "HIGH",
+    "EXAMPLE": "LOW",
+    "EXEC": "CRITICAL",
+    "EXECBAT": "HIGH",
+    "EXECOLD": "CRITICAL",
+    "FILE0": "MEDIUM",
+    "FILE1": "HIGH",
+    "FILE10": "MEDIUM",
+    "FILE11": "MEDIUM",
+    "FILE12": "HIGH",
+    "FILE13": "LOW",
+    "FILE14": "LOW",
+    "FILE2": "HIGH",
+    "FILE3": "LOW",
+    "FILE4": "MEDIUM",
+    "FILE5": "HIGH",
+    "FILE6": "MEDIUM",
+    "FILE8": "HIGH",
+    "FILE9": "LOW",
+    "IMP": "CRITICAL",
+    "IMPDOS": "CRITICAL",
+    "INITP": "HIGH",
+    "INPUT": "LOW",
+    "INSTALL": "CRITICAL",
+    "ISLC": "LOW",
+    "ISLD": "LOW",
+    "ISLU": "LOW",
+    "LADLE": "MEDIUM",
+    "LOGON1": "HIGH",
+    "LOGON2": "MEDIUM",
+    "LZHVIEW": "LOW",
+    "MAIL0": "LOW",
+    "MAIL1": "MEDIUM",
+    "MAIL2": "LOW",
+    "MAIL3": "LOW",
+    "MAIL4": "LOW",
+    "MAIL5": "MEDIUM",
+    "MAIL6": "LOW",
+    "MAIL7": "CRITICAL",
+    "MAIL9": "LOW",
+    "MAKECLEA": "MEDIUM",
+    "MAKENUO": "LOW",
+    "MAKEWFC": "LOW",
+    "MENUS": "HIGH",
+    "MENUS2": "HIGH",
+    "MENUS3": "LOW",
+    "MISC1": "MEDIUM",
+    "MISC2": "HIGH",
+    "MISC3": "LOW",
+    "MISC4": "LOW",
+    "MISC5": "MEDIUM",
+    "MMODEM": "LOW",
+    "MNUCONV": "LOW",
+    "MSGPACK": "MEDIUM",
+    "MULTINOD": "MEDIUM",
+    "MYIO": "MEDIUM",
+    "NETFOSSL": "HIGH",
+    "NEWUSERS": "MEDIUM",
+    "NUV": "MEDIUM",
+    "OUTPUT": "LOW",
+    "OVRLAY": "LOW",
+    "RECORDS": "CRITICAL",
+    "RUMORS": "MEDIUM",
+    "SCRIPT": "CRITICAL",
+    "SCRLBK": "LOW",
+    "STRPROC": "LOW",
+    "STRPROC2": "MEDIUM",
+    "SYS": "HIGH",
+    "SYSOP1": "LOW",
+    "SYSOP11": "MEDIUM",
+    "SYSOP2": "MEDIUM",
+    "SYSOP21": "LOW",
+    "SYSOP2A": "MEDIUM",
+    "SYSOP2B": "LOW",
+    "SYSOP2C": "LOW",
+    "SYSOP2D": "HIGH",
+    "SYSOP2E": "LOW",
+    "SYSOP2F": "LOW",
+    "SYSOP2G": "LOW",
+    "SYSOP2H": "LOW",
+    "SYSOP2I": "MEDIUM",
+    "SYSOP2J": "MEDIUM",
+    "SYSOP2S": "HIGH",
+    "SYSOP2Z": "LOW",
+    "SYSOP3": "HIGH",
+    "SYSOP6": "HIGH",
+    "SYSOP7": "LOW",
+    "SYSOP7M": "LOW",
+    "SYSOP8": "MEDIUM",
+    "SYSOP9": "MEDIUM",
+    "TEMP": "LOW",
+    "TIMEBANK": "LOW",
+    "TIMEJUNK": "LOW",
+    "TIMESLIC": "MEDIUM",
+    "TIMETASK": "HIGH",
+    "TMPCOM": "HIGH",
+    "TMPOLD": "HIGH",
+    "UCONFIG": "LOW",
+    "ULCHECK": "LOW",
+    "WFCMENU": "HIGH",
+    "ZIPVIEWU": "HIGH"
+  }
+}
