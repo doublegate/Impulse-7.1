@@ -1,60 +1,160 @@
 # Impulse 7.1 BBS - Rust Modernization
 
-Modern BBS server implementation converting Impulse 7.1 from Borland Pascal to Rust.
+[![CI](https://github.com/doublegate/Impulse-7.1/workflows/CI/badge.svg)](https://github.com/doublegate/Impulse-7.1/actions)
+[![License](https://img.shields.io/badge/license-MIT%20OR%20Apache--2.0-blue.svg)](https://github.com/doublegate/Impulse-7.1#license)
+[![Rust Version](https://img.shields.io/badge/rust-1.80%2B-orange.svg)](https://www.rust-lang.org)
 
-## What is Impulse 7.1?
+A complete modernization of the classic Impulse 7.1 Bulletin Board System from Borland Pascal 7.0 to modern Rust, preserving BBS history while leveraging contemporary software engineering practices.
 
-Impulse 7.1 is a classic BBS software that powered dial-up bulletin board systems during the height of the BBS era. It provided features like message boards, file areas, multi-node support, user management, and door game support.
+## Table of Contents
 
-More details: <https://web.archive.org/web/20011204010133/http://www.demonic.net/impulse/>
+- [Overview](#overview)
+- [Project Status](#project-status)
+- [Features](#features)
+- [Architecture](#architecture)
+- [Quick Start](#quick-start)
+- [Development](#development)
+- [Project Structure](#project-structure)
+- [Technology Stack](#technology-stack)
+- [Documentation](#documentation)
+- [Roadmap](#roadmap)
+- [Testing](#testing)
+- [Contributing](#contributing)
+- [License](#license)
+- [Acknowledgments](#acknowledgments)
+
+## Overview
+
+### What is Impulse 7.1?
+
+Impulse 7.1 is a classic BBS (Bulletin Board System) software that powered dial-up bulletin board systems during the height of the BBS era in the 1990s. It provided features like:
+
+- Multi-node message boards with threading
+- File areas with descriptions and download tracking
+- Door game support (external programs)
+- User management with security levels
+- Multi-protocol file transfers (Zmodem, Xmodem, Ymodem)
+- ANSI art and terminal emulation
+
+More historical context: [Impulse BBS on Archive.org](https://web.archive.org/web/20011204010133/http://www.demonic.net/impulse/)
+
+### Why This Modernization?
+
+This project aims to:
+
+1. **Preserve BBS History**: Keep classic BBS software accessible and functional on modern systems
+2. **Memory Safety**: Eliminate undefined behavior through Rust's ownership system
+3. **Cross-Platform**: Run on Linux, Windows 11, macOS, and BSD variants
+4. **Modern Protocols**: Add SSH, WebSocket, and REST API alongside traditional telnet
+5. **Performance**: Replace DOS overlays with efficient async I/O
+6. **Maintainability**: Convert ~96 Pascal units to well-tested, documented Rust modules
 
 ## Project Status
 
-* **Rust Modernization (Active):** Phase 1, Sprint 1-2 complete. Full workspace infrastructure established with 16 crates.
-* **Pascal Source (Legacy):** Stable. Builds with the provided `build.sh` script. Preserved for reference.
+**Current Version**: 0.1.0 (Sprint 1-2 Complete)
+**Development Phase**: Phase 1 - Foundation
+**Completion**: Sprint 1-2 (100%) - Ready for Sprint 3
 
----
+### Recent Milestones
 
-## Rust Workspace
+- **Sprint 1 Complete** (Project Setup): Full workspace infrastructure with 16 crates, CI/CD pipeline
+- **Sprint 2 Complete** (Core Types): User, FileEntry, Message, BbsConfig types with validation and serialization
+- **Quality Metrics**: 82 tests passing, 0 clippy warnings, comprehensive documentation
+- **Latest Commit**: [3c2a398](https://github.com/doublegate/Impulse-7.1/commit/3c2a398) - Sprint 1-2 complete
 
-### Quick Start
+### Next Steps
 
-```bash
-# Build all crates
-cargo build --all
+- **Sprint 3**: Pascal source analysis and module mapping
+- **Phase 1 Goal**: Complete foundation (8 sprints, months 1-6)
+- **Timeline**: 24 months total, 32 sprints across 4 phases
 
-# Run tests
-cargo test --all
+## Features
 
-# Run the BBS server
-cargo run --bin impulse-server
+### Current Implementation (v0.1.0)
 
-# Build with optimizations
-cargo build --all --release
+- Core data types (User, FileEntry, Message, BbsConfig)
+- Unified error handling (15 error variants)
+- JSON and binary serialization support
+- Comprehensive validation framework
+- CI/CD pipeline (test, lint, build, coverage)
+- Cross-platform workspace structure
+
+### Planned Features
+
+**Phase 1 (Months 1-6) - Foundation**
+- ANSI terminal rendering
+- Telnet server with IAC negotiation
+- User authentication (Argon2id)
+- Basic session management
+
+**Phase 2 (Months 7-12) - Core Features**
+- Message base (JAM/Hudson formats)
+- File areas and browsing
+- File upload handling
+- Menu system and navigation
+
+**Phase 3 (Months 13-18) - Feature Completion**
+- File transfer protocols (Zmodem, Xmodem, Ymodem)
+- Theme system
+- Door game interface (DOSBox integration)
+- QWK offline reader support
+
+**Phase 4 (Months 19-24) - Polish & Launch**
+- Performance optimization
+- Web-based administration
+- Legacy data migration tools
+- Production deployment support
+
+### Modern Enhancements
+
+- **Multi-Protocol Support**: Telnet, SSH, WebSocket, REST API
+- **Async Architecture**: Tokio-based concurrent session handling
+- **Modern Storage**: SQLite/PostgreSQL with legacy format support
+- **Security**: Argon2id password hashing, rate limiting, input validation
+- **Cloud-Ready**: Docker, Kubernetes, containerized deployment
+- **Monitoring**: Prometheus metrics, structured logging
+
+## Architecture
+
+### High-Level Design
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                     Impulse BBS System                          │
+│                                                                 │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐        │
+│  │   Telnet/    │  │     SSH      │  │  HTTP/REST   │        │
+│  │  Serial Port │  │   Server     │  │     API      │        │
+│  └──────┬───────┘  └──────┬───────┘  └──────┬───────┘        │
+│         │                  │                  │                 │
+│         └──────────────────┴──────────────────┘                │
+│                            │                                    │
+│                 ┌──────────▼──────────┐                        │
+│                 │  Session Manager    │                        │
+│                 │   (Async/Tokio)     │                        │
+│                 └──────────┬──────────┘                        │
+│                            │                                    │
+│         ┌──────────────────┼──────────────────┐               │
+│         │                  │                  │                │
+│  ┌──────▼───────┐  ┌──────▼──────┐  ┌───────▼────────┐       │
+│  │ Terminal I/O │  │   Message    │  │  File Transfer │       │
+│  │  Subsystem   │  │   Subsystem  │  │   Subsystem    │       │
+│  └──────┬───────┘  └──────┬───────┘  └───────┬────────┘       │
+│         │                  │                  │                 │
+│         └──────────────────┴──────────────────┘                │
+│                            │                                    │
+│                 ┌──────────▼──────────┐                        │
+│                 │   Storage Layer     │                        │
+│                 │  (SQLite/Postgres)  │                        │
+│                 └─────────────────────┘                        │
+└─────────────────────────────────────────────────────────────────┘
 ```
 
-### Development
-
-```bash
-# Format code
-cargo fmt --all
-
-# Run linter
-cargo clippy --all -- -D warnings
-
-# Generate documentation
-cargo doc --workspace --no-deps --open
-```
-
-See `docs/04-development-guide.md` for detailed development instructions.
-
-### Architecture
-
-The project is organized as a Cargo workspace with 16 crates:
+### 16-Crate Workspace Structure
 
 **Core Crates:**
 - `impulse-core` - Core BBS logic and state management
-- `impulse-types` - Shared data types and constants
+- `impulse-types` - Shared data types and error handling
 - `impulse-config` - Configuration management
 
 **Protocol Crates:**
@@ -63,8 +163,8 @@ The project is organized as a Cargo workspace with 16 crates:
 - `impulse-ssh` - SSH protocol implementation
 
 **Feature Crates:**
-- `impulse-session` - Session management
-- `impulse-terminal` - Terminal I/O (crossterm integration)
+- `impulse-session` - Session management and event loops
+- `impulse-terminal` - Terminal I/O and ANSI rendering
 - `impulse-auth` - Authentication (Argon2id)
 - `impulse-message` - Message bases (JAM/Hudson)
 - `impulse-file` - File areas and transfers
@@ -76,130 +176,394 @@ The project is organized as a Cargo workspace with 16 crates:
 - `impulse-cli` - CLI tools
 - `impulse-server` - Main server binary
 
-See `docs/02-architecture.md` for complete architecture documentation.
+See [/home/parobek/Code/Impulse-7.1/docs/02-architecture.md](/home/parobek/Code/Impulse-7.1/docs/02-architecture.md) for complete architecture documentation.
 
----
+## Quick Start
 
-## Legacy Pascal Build
+### Prerequisites
 
-## Repository Structure
+- **Rust**: 1.80 or later ([Install Rust](https://www.rust-lang.org/tools/install))
+- **Git**: 2.30 or later
+- **Platform**: Linux, Windows 11, or macOS
+
+### Build Instructions
+
+```bash
+# Clone the repository
+git clone https://github.com/doublegate/Impulse-7.1.git
+cd Impulse-7.1
+
+# Build all crates
+cargo build --workspace
+
+# Run tests
+cargo test --workspace
+
+# Build optimized release
+cargo build --workspace --release
+```
+
+### Running the BBS Server
+
+```bash
+# Run the main server (when implemented)
+cargo run --bin impulse-server
+
+# Or run the release build
+./target/release/impulse-server
+```
+
+### Generate Documentation
+
+```bash
+# Generate and open API documentation
+cargo doc --workspace --no-deps --open
+```
+
+## Development
+
+### Development Workflow
+
+```bash
+# Format code
+cargo fmt --all
+
+# Run linter
+cargo clippy --all-targets --all-features -- -D warnings
+
+# Run tests with output
+cargo test --workspace -- --nocapture
+
+# Run tests for specific crate
+cargo test -p impulse-types
+
+# Check compilation without building
+cargo check --workspace
+```
+
+### Code Quality Standards
+
+All code must:
+
+1. **Compile without warnings**: `cargo clippy` passes with 0 warnings
+2. **Be properly formatted**: `cargo fmt --all` applied
+3. **Include tests**: Unit tests for all public APIs
+4. **Have documentation**: Rustdoc comments on all public items
+5. **Pass CI**: GitHub Actions workflow completes successfully
+
+### CI/CD Pipeline
+
+The project uses GitHub Actions with 4 jobs:
+
+- **Lint**: `cargo clippy --all-targets --all-features -- -D warnings`
+- **Test**: `cargo test --workspace --all-features --verbose`
+- **Build**: `cargo build --workspace --release`
+- **Coverage**: Tarpaulin + Codecov integration
+
+Runs on: Linux, Windows, macOS
+
+### Contributing
+
+We welcome contributions! Please see [/home/parobek/Code/Impulse-7.1/CONTRIBUTING.md](/home/parobek/Code/Impulse-7.1/CONTRIBUTING.md) for:
+
+- Code of conduct
+- Development workflow
+- Coding standards
+- Testing requirements
+- Pull request process
+- Commit message guidelines
+
+## Project Structure
 
 ```
-├── source/          # Pascal source files
-├── output/          # Compiled TPU/EXE files destination
-├── include/         # Dependencies (only checkpat.tpu)
-├── imp71rel/        # Complete official Impulse 7.1 release files
-├── BP/              # Borland Pascal 7.0 compiler and tools
-├── build/           # Build artifacts
-├── newins/          # [WIP] New installer (haven't really started this)
-├── build.sh         # Automated Linux build script (requires DOSBox)
-├── .gitlab-ci.yml   # GitLab CI/CD pipeline
-└── clean.sh         # Cleanup script
+Impulse-7.1/
+├── Cargo.toml              # Workspace root
+├── crates/                 # All crates
+│   ├── impulse-core/       # Core BBS logic
+│   ├── impulse-types/      # Shared types and errors
+│   ├── impulse-config/     # Configuration
+│   ├── impulse-protocol/   # Protocol traits
+│   ├── impulse-telnet/     # Telnet server
+│   ├── impulse-ssh/        # SSH server
+│   ├── impulse-session/    # Session management
+│   ├── impulse-terminal/   # Terminal I/O
+│   ├── impulse-auth/       # Authentication
+│   ├── impulse-message/    # Message bases
+│   ├── impulse-file/       # File areas
+│   ├── impulse-user/       # User management
+│   ├── impulse-door/       # Door games
+│   ├── impulse-web/        # Web admin panel
+│   ├── impulse-cli/        # CLI tools
+│   └── impulse-server/     # Main server binary
+├── docs/                   # Comprehensive documentation
+│   ├── 00-project-overview.md
+│   ├── 01-phase-sprint-plan.md
+│   ├── 02-architecture.md
+│   ├── 03-technical-details.md
+│   ├── 04-development-guide.md
+│   ├── 05-testing-strategy.md
+│   ├── 06-deployment-guide.md
+│   ├── 07-migration-guide.md
+│   └── 08-security-architecture.md
+├── to-dos/                 # Sprint TODO files (32 sprints)
+│   ├── phase-1-foundation/
+│   ├── phase-2-core-features/
+│   ├── phase-3-feature-completion/
+│   └── phase-4-polish-launch/
+├── ref-docs/               # Reference documentation
+│   ├── impulse-history.md
+│   └── rust-conversion-technical.md
+├── .github/workflows/      # CI/CD configuration
+│   └── ci.yml
+├── CONTRIBUTING.md         # Contribution guidelines
+├── CHANGELOG.md            # Version history
+├── README.md               # This file
+└── LICENSE-*               # Dual licensing
 ```
 
-## Docker
+## Technology Stack
 
-not tested yet:  docker build -t impulse-bbs . && docker run --rm -v $(pwd)/build:/impulse-build/build impulse-bbs
+### Core Technologies
 
-## Building from Source
+- **Language**: Rust 2021 edition
+- **Minimum Version**: Rust 1.80+
+- **Async Runtime**: Tokio 1.47
 
-### Requirements
+### Key Dependencies
 
-* **Linux**: DOSBox (for running DOS-based Borland Pascal compiler)
-* **CI/CD**: Docker + DOSBox (handled automatically by GitLab CI)
+**Production:**
+- `tokio` 1.47 - Async runtime (full features)
+- `tokio-util` 0.7 - Async utilities
+- `crossterm` 0.28 - Terminal I/O
+- `serde` 1.0 - Serialization framework
+- `serde_json` 1.0 - JSON support
+- `toml` 0.8 - Configuration files
+- `binrw` 0.14 - Binary parsing
+- `thiserror` 2.0 - Error handling
+- `anyhow` 1.0 - Error context
+- `tracing` 0.1 - Structured logging
+- `argon2` 0.5 - Password hashing
+- `sqlx` 0.8 - Database access
+- `axum` 0.7 - Web framework
 
-### Quick Start
+**Development:**
+- `proptest` 1.5 - Property-based testing
 
-1. **Clone the repository:**
+**Build Optimization:**
+- LTO enabled in release builds
+- Single codegen unit for maximum optimization
+- Debug symbols stripped in release
 
-   ```bash
-   git clone <repository-url>
-   cd impulse-7.1
-   ```
+## Documentation
 
-2. **Automated build (Linux + dosbox):**
+### Core Documentation (docs/)
 
-   ```bash
-   ./build.sh
-   ```
+Comprehensive documentation covering all aspects:
 
-3. Copy IMP.EXE and IMP.OVR from build dir, combine them into the full imp71rel release.  run IMP -D in dos on new install to initialize files/dirs
+1. [00-project-overview.md](/home/parobek/Code/Impulse-7.1/docs/00-project-overview.md) - Vision, objectives, stakeholders (272 lines)
+2. [01-phase-sprint-plan.md](/home/parobek/Code/Impulse-7.1/docs/01-phase-sprint-plan.md) - 32-sprint roadmap (1,270 lines)
+3. [02-architecture.md](/home/parobek/Code/Impulse-7.1/docs/02-architecture.md) - System design (1,219 lines)
+4. [03-technical-details.md](/home/parobek/Code/Impulse-7.1/docs/03-technical-details.md) - Pascal→Rust conversion (1,768 lines)
+5. [04-development-guide.md](/home/parobek/Code/Impulse-7.1/docs/04-development-guide.md) - Developer onboarding (965 lines)
+6. [05-testing-strategy.md](/home/parobek/Code/Impulse-7.1/docs/05-testing-strategy.md) - Testing methodology (948 lines)
+7. [06-deployment-guide.md](/home/parobek/Code/Impulse-7.1/docs/06-deployment-guide.md) - Docker, K8s (1,084 lines)
+8. [07-migration-guide.md](/home/parobek/Code/Impulse-7.1/docs/07-migration-guide.md) - Legacy data migration (956 lines)
+9. [08-security-architecture.md](/home/parobek/Code/Impulse-7.1/docs/08-security-architecture.md) - Security design (1,150 lines)
 
-### Manual Compilation
+**Total**: 9,632 lines of comprehensive documentation
 
-To build in a DOS environment, you can use the Borland Pascal IDE (\BP\BIN\BP) or run from DOS commandline with \BP\BIN\BPC.  see BPC help on the -U and -E flags, i used them but to keep stuff in seprate dirs but they're not required
+### Sprint TODO Files (to-dos/)
 
-1. **Build step** (creates TPU units):
+Detailed sprint plans for all 32 sprints:
 
-   ```
-   bpc -$G+ -B -Uf:\ -Ee:\ imp.pas
-   ```
+- **Phase 1** (Sprints 1-8): Foundation
+- **Phase 2** (Sprints 9-16): Core Features
+- **Phase 3** (Sprints 17-24): Feature Completion
+- **Phase 4** (Sprints 25-32): Polish & Launch
 
-   This generates TPU (Turbo Pascal Unit) files.
+**Total**: 19,214 lines across 30 files with 93 Rust code examples
 
-2. **Compile step** (creates executables):
+### Reference Documentation (ref-docs/)
 
-   ```
-   bpc -Uf:\ -Ee:\ imp.pas
-   ```
+- [impulse-history.md](/home/parobek/Code/Impulse-7.1/ref-docs/impulse-history.md) - BBS history and cultural context
+- [rust-conversion-technical.md](/home/parobek/Code/Impulse-7.1/ref-docs/rust-conversion-technical.md) - Conversion strategies
 
-   This creates `IMP.EXE` and `IMP.OVR`.
+### API Documentation
 
-## CI/CD Pipeline
+Generate API documentation:
 
-For fun, we setup GitLab CI/CD automation:
+```bash
+cargo doc --workspace --no-deps --open
+```
 
-* **`.gitlab-ci.yml`** - Configures the GitLab CI/CD pipeline
-* Uses Docker with DOSBox to provide a consistent build environment
-* Automatically builds on commits and provides build artifacts
+## Roadmap
 
-## Using the Compiled Software
+### 4 Phases, 24 Months, 32 Sprints
 
-After building, you'll find the compiled files in the `output/` directory:
+**Phase 1: Foundation (Months 1-6, Sprints 1-8)**
+- ✅ Sprint 1: Project setup (COMPLETE)
+- ✅ Sprint 2: Core type system (COMPLETE)
+- Sprint 3: Pascal analysis
+- Sprint 4-8: File parsing, ANSI engine, telnet, user system, security, testing
 
-* `IMP.EXE` - Main executable
-* `IMP.OVR` - Overlay file
+**Phase 2: Core Features (Months 7-12, Sprints 9-16)**
+- User authentication and sessions
+- Menu system and navigation
+- Message base (read/write)
+- File areas (browse/upload)
+- User profiles and statistics
 
-To run a complete BBS:
+**Phase 3: Feature Completion (Months 13-18, Sprints 17-24)**
+- Zmodem and file transfer protocols
+- Theme system
+- Door game interface
+- Advanced message features
+- Administration interface
 
-1. Copy the compiled files to the `imp71rel/` directory
-2. The `imp71rel/` folder contains the complete original Impulse 7.1 (y2k bugs and all)
-3. Configure the BBS according to the docs in `imp71rel/` (note IMP.EXE -D when run for first time)
+**Phase 4: Polish & Launch (Months 19-24, Sprints 25-32)**
+- Performance optimization
+- Comprehensive documentation
+- Legacy migration tools
+- Web-based administration
+- Beta testing and bug fixes
+- Public 1.0 release
 
-docs:  check IMP.DOC and README
+### Key Milestones
 
-## Development Notes
+| Milestone | Target | Status |
+|-----------|--------|--------|
+| Phase 1 Complete | Month 6 | In Progress |
+| Phase 2 Complete | Month 12 | Pending |
+| Phase 3 Complete | Month 18 | Pending |
+| Phase 4 Complete | Month 24 | Pending |
+| Production Launch | Month 24 | Pending |
 
-* **Source Origin**: Started from `http://software.bbsdocumentary.com/IBM/DOS/IMPULSE/`
-* **Compiler**: Uses Borland Pascal 7.0 (included in `BP/` directory)
-* **Architecture**: Large codebase with 96+ Pascal units
-* **Build System**: Modern shell scripts wrapping classic DOS tools via DOSBox
+## Testing
 
-## Recent Changes
+### Current Test Suite
 
-* Organized source code into Git repository structure
-* Added automated build system for Linux
-* Created CI/CD pipeline for consistent builds
-* Fixed Y2K handling in date functions (see recent commits)
+**Total Tests**: 82 (100% passing)
+
+- **Unit Tests**: 56 tests (validation logic)
+- **Integration Tests**: 11 tests (serialization)
+- **Doc Tests**: 15 tests (documentation examples)
+
+### Test Coverage by Component
+
+- User type: 10 tests
+- FileEntry type: 10 tests
+- Message type: 11 tests
+- BbsConfig type: 13 tests
+- Error handling: 3 tests
+- Serialization: 11 tests (JSON + bincode)
+
+### Running Tests
+
+```bash
+# Run all tests
+cargo test --workspace
+
+# Run with output
+cargo test --workspace -- --nocapture
+
+# Run specific crate tests
+cargo test -p impulse-types
+
+# Run doc tests only
+cargo test --workspace --doc
+```
+
+### Testing Strategy
+
+See [/home/parobek/Code/Impulse-7.1/docs/05-testing-strategy.md](/home/parobek/Code/Impulse-7.1/docs/05-testing-strategy.md) for:
+
+- Unit testing approach
+- Integration testing
+- Property-based testing
+- Performance benchmarking
+- Coverage targets (80%+ goal)
 
 ## Contributing
 
-This is primarily a preservation project, but improvements are welcome:
+We welcome contributions from the community! Whether you're interested in:
 
-* Bug fixes to the original code
-* Build system improvements
-* Documentation enhancements
-* Modern development tooling
+- Fixing bugs
+- Adding features
+- Improving documentation
+- Writing tests
+- Optimizing performance
+
+Please read our [CONTRIBUTING.md](/home/parobek/Code/Impulse-7.1/CONTRIBUTING.md) for:
+
+- Development workflow
+- Coding standards
+- Pull request process
+- Commit message guidelines
+
+### Getting Started
+
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/your-feature-name`
+3. Make your changes
+4. Add tests for new functionality
+5. Ensure all tests pass: `cargo test --workspace`
+6. Run linter: `cargo clippy --all-targets --all-features -- -D warnings`
+7. Format code: `cargo fmt --all`
+8. Submit a pull request
 
 ## License
 
-This software is considered **abandonware** and is essentially **public domain**.
+This project is dual-licensed under:
 
-Credit goes to:
+- **MIT License** ([LICENSE-MIT](/home/parobek/Code/Impulse-7.1/LICENSE-MIT))
+- **Apache License 2.0** ([LICENSE-APACHE](/home/parobek/Code/Impulse-7.1/LICENSE-APACHE))
 
-* Brandon Sneed (Nivenh): Original developer through Version 6
-* Phillip Foose (Horrid): Further bugfixes and Version 7
+You may choose either license for your use.
+
+## Acknowledgments
+
+### Original Impulse Developers
+
+Credit to the original developers who created Impulse BBS:
+
+- **Brandon Sneed (Nivenh)**: Original developer through Version 6
+- **Phillip Foose (Horrid)**: Further bugfixes and Version 7
+
+### Community
+
+Thanks to:
+
+- The retro-computing and BBS preservation communities
+- The Rust programming language community
+- Contributors to this modernization project
+- Digital preservationists keeping BBS history alive
+
+### Technologies
+
+Built with excellent open-source technologies:
+
+- [Rust Programming Language](https://www.rust-lang.org)
+- [Tokio](https://tokio.rs) - Async runtime
+- [Serde](https://serde.rs) - Serialization framework
+- [crossterm](https://github.com/crossterm-rs/crossterm) - Terminal manipulation
+- [SQLx](https://github.com/launchbadge/sqlx) - SQL toolkit
+- And many other amazing crates
+
+### Historical Resources
+
+- [BBS Documentary](http://www.bbsdocumentary.com)
+- [Impulse Archive](https://web.archive.org/web/20011204010133/http://www.demonic.net/impulse/)
+- [textfiles.com](http://textfiles.com) - BBS history preservation
+
+## Contact & Links
+
+- **Repository**: [https://github.com/doublegate/Impulse-7.1](https://github.com/doublegate/Impulse-7.1)
+- **Issues**: [GitHub Issues](https://github.com/doublegate/Impulse-7.1/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/doublegate/Impulse-7.1/discussions)
+- **Documentation**: [/home/parobek/Code/Impulse-7.1/docs](/home/parobek/Code/Impulse-7.1/docs)
 
 ---
 
-*"We're figuring it out!"*
+**"We're figuring it out!"** - Preserving BBS history, one commit at a time.
+
+*For detailed sprint plans, architecture decisions, and technical specifications, see the comprehensive documentation in the [/home/parobek/Code/Impulse-7.1/docs](/home/parobek/Code/Impulse-7.1/docs) directory.*
