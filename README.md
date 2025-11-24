@@ -1,4 +1,4 @@
-# Impulse-Next_BBS - Modern BBS Software
+# Impulse-Next - Modern BBS Software
 
 [![CI](https://github.com/doublegate/Impulse-Next_BBS/workflows/CI/badge.svg)](https://github.com/doublegate/Impulse-Next_BBS/actions)
 [![License](https://img.shields.io/badge/license-MIT%20OR%20Apache--2.0-blue.svg)](https://github.com/doublegate/Impulse-Next_BBS#license)
