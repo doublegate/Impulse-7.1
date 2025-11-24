@@ -203,13 +203,11 @@ impl ArFlags {
 ///
 /// Represents which file areas should be scanned for new files.
 /// Stored as a 128-bit bitset (16 bytes) for 97 possible file areas (0-96).
-#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, Serialize, Deserialize)]
-#[derive(Default)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, Serialize, Deserialize, Default)]
 pub struct DownloadScanFlags {
     /// Bitset for file areas 0-96 (stored as 16 bytes in Pascal)
     bits: [u8; 16],
 }
-
 
 impl DownloadScanFlags {
     /// Create from Pascal byte array (16 bytes)

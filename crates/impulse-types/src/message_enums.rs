@@ -26,8 +26,7 @@ use serde::{Deserialize, Serialize};
 /// assert!(forced.is_anonymous());
 /// ```
 #[repr(u8)]
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
-#[derive(Default)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize, Default)]
 pub enum AnonymousType {
     /// No anonymous posting allowed
     #[default]
@@ -45,7 +44,6 @@ pub enum AnonymousType {
     /// User can enter any name
     AnyName = 4,
 }
-
 
 impl AnonymousType {
     /// Create from Pascal byte value
@@ -114,8 +112,7 @@ impl AnonymousType {
 /// assert!(!closed.is_open());
 /// ```
 #[repr(u8)]
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
-#[derive(Default)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize, Default)]
 pub enum MessageIndexStatus {
     /// Message is open/active
     #[default]
@@ -130,7 +127,6 @@ pub enum MessageIndexStatus {
     /// Message is dead/deleted
     Dead = 3,
 }
-
 
 impl MessageIndexStatus {
     /// Create from Pascal byte value

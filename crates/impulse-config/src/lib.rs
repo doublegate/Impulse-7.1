@@ -53,10 +53,57 @@
 //! - Port numbers are valid
 //! - Paths exist (if specified)
 //! - Security levels are within valid ranges
+//!
+//! # Hot-Reload (Optional Feature)
+//!
+//! Enable the `hot-reload` feature for automatic configuration reloading:
+//!
+//! ```toml
+//! [dependencies]
+//! impulse-config = { path = "../impulse-config", features = ["hot-reload"] }
+//! ```
+//!
+//! With hot-reload enabled, you can watch configuration files for changes:
+//!
+//! ```no_run
+//! # #[cfg(feature = "hot-reload")]
+//! # {
+//! use impulse_config::{Config, watcher::ConfigWatcher, reload::ReloadNotifier};
+//!
+//! #[tokio::main]
+//! async fn main() -> Result<(), Box<dyn std::error::Error>> {
+//!     let (watcher, mut change_rx) = ConfigWatcher::new("config.toml")?;
+//!     let notifier = ReloadNotifier::new();
+//!     let mut config = Config::load("config.toml")?;
+//!
+//!     // Spawn watcher task
+//!     tokio::spawn(async move {
+//!         watcher.watch().await;
+//!     });
+//!
+//!     // Handle configuration changes
+//!     while let Some(_) = change_rx.recv().await {
+//!         if let Some(new_config) = notifier.reload_and_notify("config.toml", &config) {
+//!             config = new_config;
+//!         }
+//!     }
+//!
+//!     Ok(())
+//! }
+//! # }
+//! ```
 
 pub mod error;
 pub mod loader;
 pub mod validator;
+
+// Hot-reload modules (optional)
+#[cfg(feature = "hot-reload")]
+pub mod hooks;
+#[cfg(feature = "hot-reload")]
+pub mod reload;
+#[cfg(feature = "hot-reload")]
+pub mod watcher;
 
 // Re-export commonly used types
 pub use error::{ConfigError, Result};

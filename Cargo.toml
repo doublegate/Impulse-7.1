@@ -17,6 +17,7 @@ members = [
     "crates/impulse-web",
     "crates/impulse-cli",
     "crates/impulse-server",
+    "crates/impconfig",
 ]
 
 [workspace.package]

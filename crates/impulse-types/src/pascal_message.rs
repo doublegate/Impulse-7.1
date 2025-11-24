@@ -34,13 +34,11 @@ use crate::pascal_user::PascalString;
 /// - [4]: Minute (0-59)
 /// - [5]: Second (0-59)
 #[binrw]
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
-#[derive(Default)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize, Default)]
 pub struct CPackDateTime {
     /// Packed date/time bytes
     pub bytes: [u8; 6],
 }
-
 
 impl CPackDateTime {
     /// Create a new packed date/time from components

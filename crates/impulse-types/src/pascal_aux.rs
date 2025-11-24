@@ -28,13 +28,11 @@ pub const MAX_UBOARDS: usize = 254;
 ///
 /// Format: [year-1900, month, day, hour, minute, second]
 #[binrw]
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
-#[derive(Default)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize, Default)]
 pub struct PackedDateTime {
     /// Date/time bytes: [year-1900, month, day, hour, minute, second]
     pub data: [u8; 6],
 }
-
 
 impl PackedDateTime {
     /// Create new packed date/time
@@ -107,8 +105,7 @@ impl PackedDateTime {
 ///
 /// Used in NAMES.LST for quick alphabetical user lookups.
 #[binrw]
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
-#[derive(Default)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Default)]
 pub struct SmalRec {
     /// User name (36 chars max)
     pub name: PascalString<36>,
@@ -121,7 +118,6 @@ pub struct SmalRec {
     /// User number (index into USER.LST)
     pub number: i16,
 }
-
 
 impl SmalRec {
     /// Check if this is a valid (non-deleted) user entry
@@ -266,8 +262,7 @@ impl ZScanRec {
 ///
 /// Daily system usage statistics stored in ZLOG.DAT.
 #[binrw]
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[derive(Default)]
+#[derive(Debug, Clone, Serialize, Deserialize, Default)]
 pub struct ZLogRec {
     /// Date string (MM/DD/YY format, 8 chars)
     pub date: PascalString<8>,
@@ -308,7 +303,6 @@ pub struct ZLogRec {
     /// Kilobytes downloaded
     pub dk: i32,
 }
-
 
 impl ZLogRec {
     /// Get the log date string

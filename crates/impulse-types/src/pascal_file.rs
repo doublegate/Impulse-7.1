@@ -125,8 +125,7 @@ impl FileStatus {
 ///
 /// Represents a file area/base configuration in UPLOADS.DAT.
 #[binrw]
-#[derive(Debug, Clone)]
-#[derive(Default)]
+#[derive(Debug, Clone, Default)]
 pub struct UlRec {
     /// Area description (display name)
     pub name: PascalString<40>,
@@ -178,7 +177,6 @@ pub struct UlRec {
     /// Reserved bytes
     pub res: [u8; 5],
 }
-
 
 impl UlRec {
     /// Check if area has password protection
