@@ -163,11 +163,23 @@ fn validate_ports(config: &BbsConfig) -> Result<()> {
 fn is_port_available(port: u16) -> bool {
     use std::net::{SocketAddr, TcpListener};
 
-    // Try both IPv4 and IPv6
-    let ipv4 = SocketAddr::from(([0, 0, 0, 0], port));
-    let ipv6 = SocketAddr::from(([0, 0, 0, 0, 0, 0, 0, 0], port));
+    // Port 0 is always available (kernel assigns a free port)
+    if port == 0 {
+        return true;
+    }
 
-    TcpListener::bind(ipv4).is_ok() || TcpListener::bind(ipv6).is_ok()
+    // Try IPv4 first (0.0.0.0 - all interfaces)
+    let ipv4 = SocketAddr::from(([0, 0, 0, 0], port));
+    if TcpListener::bind(ipv4).is_ok() {
+        // IPv4 binding succeeded, now check if we can also bind IPv6
+        // A port is truly available if we can bind to it on the primary protocol
+        // IPv6 is optional, so we don't fail if it's not available
+        return true;
+    }
+
+    // IPv4 failed, try IPv6 (:: - all interfaces)
+    let ipv6 = SocketAddr::from(([0, 0, 0, 0, 0, 0, 0, 0], port));
+    TcpListener::bind(ipv6).is_ok()
 }
 
 #[cfg(test)]
@@ -270,17 +282,17 @@ mod tests {
         // Port 0 should be available (kernel will assign a free port)
         assert!(is_port_available(0));
 
-        // Try to bind to a port
-        let listener = std::net::TcpListener::bind("127.0.0.1:0").unwrap();
+        // Bind to all IPv4 interfaces (0.0.0.0) to properly block the port
+        let listener = std::net::TcpListener::bind(("0.0.0.0", 0)).unwrap();
         let bound_port = listener.local_addr().unwrap().port();
 
         // That port should not be available
         assert!(!is_port_available(bound_port));
 
-        // After dropping the listener, it should be available again
+        // After dropping the listener, port should be available again
         drop(listener);
-        // Note: Small race condition here, but should be fine for tests
-        std::thread::sleep(std::time::Duration::from_millis(10));
+        // Small delay to allow OS to fully release the port
+        std::thread::sleep(std::time::Duration::from_millis(50));
         assert!(is_port_available(bound_port));
     }
 

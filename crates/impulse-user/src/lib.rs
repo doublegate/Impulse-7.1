@@ -359,11 +359,7 @@ impl FileUserManager {
                 }
                 Err(e) => {
                     // Check if EOF (normal termination)
-                    if reader
-                        .stream_position()
-                        .map(|p| p == pos)
-                        .unwrap_or(true)
-                    {
+                    if reader.stream_position().map(|p| p == pos).unwrap_or(true) {
                         break; // EOF reached
                     } else {
                         return Err(Error::UserManagement(format!(
