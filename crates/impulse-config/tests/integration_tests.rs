@@ -171,6 +171,7 @@ fn test_validation_with_filesystem_checks() {
     fs::create_dir_all(&doors_dir).unwrap();
 
     // Create a config file with the created paths
+    // Convert paths to forward slashes for TOML compatibility on Windows
     let toml_content = format!(
         r#"
         name = "Test BBS"
@@ -191,13 +192,13 @@ fn test_validation_with_filesystem_checks() {
         temp_dir = "{}"
         doors_dir = "{}"
         "#,
-        data_dir.display(),
-        users_dir.display(),
-        messages_dir.display(),
-        files_dir.display(),
-        logs_dir.display(),
-        temp_subdir.display(),
-        doors_dir.display()
+        data_dir.display().to_string().replace('\\', "/"),
+        users_dir.display().to_string().replace('\\', "/"),
+        messages_dir.display().to_string().replace('\\', "/"),
+        files_dir.display().to_string().replace('\\', "/"),
+        logs_dir.display().to_string().replace('\\', "/"),
+        temp_subdir.display().to_string().replace('\\', "/"),
+        doors_dir.display().to_string().replace('\\', "/")
     );
     fs::write(&config_path, toml_content).unwrap();
 
@@ -216,6 +217,8 @@ fn test_deployment_validation_allows_missing_dirs() {
     let config_path = temp_path.join("config.toml");
 
     // Create a config file with non-existent subdirectories
+    // Convert paths to forward slashes for TOML compatibility on Windows
+    let temp_path_str = temp_path.display().to_string().replace('\\', "/");
     let toml_content = format!(
         r#"
         name = "Test BBS"
@@ -236,13 +239,13 @@ fn test_deployment_validation_allows_missing_dirs() {
         temp_dir = "{}/temp"
         doors_dir = "{}/doors"
         "#,
-        temp_path.display(),
-        temp_path.display(),
-        temp_path.display(),
-        temp_path.display(),
-        temp_path.display(),
-        temp_path.display(),
-        temp_path.display()
+        temp_path_str,
+        temp_path_str,
+        temp_path_str,
+        temp_path_str,
+        temp_path_str,
+        temp_path_str,
+        temp_path_str
     );
     fs::write(&config_path, toml_content).unwrap();
 
