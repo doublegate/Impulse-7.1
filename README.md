@@ -51,23 +51,24 @@ This project aims to:
 
 ## Project Status
 
-**Current Version**: 0.1.0 (Sprint 1-5 Complete)
+**Current Version**: 0.1.0 (Sprint 1-6 Complete)
 **Development Phase**: Phase 1 - Foundation
-**Completion**: Sprint 5/32 (15.6%) - Phase 1: 5/8 sprints (62.5%)
+**Completion**: Sprint 6/32 (18.75%) - Phase 1: 6/8 sprints (75%)
 
 ### Recent Milestones
 
 - **Sprint 1 Complete** (Project Setup): Full workspace infrastructure with 16 crates, CI/CD pipeline
 - **Sprint 2 Complete** (Core Types): User, FileEntry, Message, BbsConfig types with validation and serialization (82 tests)
 - **Sprint 3 Complete** (Pascal Analysis): 114 Pascal files analyzed (39,079 LOC), dependency graph (1,070 edges), risk assessment, 4-phase conversion roadmap
-- **Sprint 4 Complete** (Configuration System): impulse-config crate with hierarchical loading (TOML + ENV), 3 validation modes, 29 tests
+- **Sprint 4 Complete** (Configuration System): impulse-config crate with hierarchical loading (TOML + ENV), 3 validation modes, 37 tests
 - **Sprint 5 Complete** (RECORDS.PAS Conversion): 11 Pascal compatibility modules, PascalString<N> type, 195 tests, binary format support
-- **Quality Metrics**: 224 tests passing (100%), build succeeds, binary compatibility verified
-- **Latest Commit**: 41be061 - Sprint 5 Core Types Implementation (9,331 lines added)
+- **Sprint 6 Complete** (User System): impulse-user crate (26 tests), impulse-auth enhancements (16 tests), Argon2id password hashing, session management
+- **Quality Metrics**: 454 tests passing (100%), 0 clippy warnings, build succeeds, 14,101 lines of code
+- **Latest Commit**: 545fafa - Sprint 6 User System Implementation
 
 ### Next Steps
 
-- **Sprint 6**: User System Implementation (full userrec conversion, authentication foundation)
+- **Sprint 7**: Logging Infrastructure (structured logging, audit trails, log rotation)
 - **Phase 1 Goal**: Complete foundation (8 sprints, months 1-6)
 - **Timeline**: 24 months total, 32 sprints across 4 phases
 
@@ -79,8 +80,9 @@ This project aims to:
 - ✅ **Sprint 1-2**: Core data types (User, FileEntry, Message, BbsConfig)
 - ✅ **Sprint 1-2**: Unified error handling (15 error variants)
 - ✅ **Sprint 1-2**: JSON and binary serialization support (82 tests)
-- ✅ **Sprint 4**: Configuration system with hierarchical loading (TOML + ENV, 29 tests)
+- ✅ **Sprint 4**: Configuration system with hierarchical loading (TOML + ENV, 37 tests)
 - ✅ **Sprint 5**: Pascal compatibility layer (RECORDS.PAS conversion, 195 tests)
+- ✅ **Sprint 6**: User management system (impulse-user, 26 tests) and authentication (impulse-auth, 16 tests)
 
 **Pascal Type System (Sprint 5):**
 - PascalString<N> - Fixed-length string type with binary compatibility
@@ -88,7 +90,15 @@ This project aims to:
 - 5 bitflags modules (UserFlags, BoardFlags, MenuFlags, MessageFlags, ProtocolFlags)
 - Binary record types for SYSTAT.DAT, USER.LST, BOARDS.DAT, UPLOADS.DAT formats
 - PackedDateTime support for Pascal 6-byte date/time format
-- 224 tests total (100% passing)
+
+**User System (Sprint 6):**
+- UserManager trait with async CRUD API
+- InMemoryUserManager and FileUserManager implementations
+- PasswordHasher using Argon2id (19 MiB memory, 2 iterations)
+- SessionManager with SHA-256 tokens and TTL expiry
+- User::from_pascal() / to_pascal() conversion methods
+- Binary compatibility with Pascal USER.LST format
+- 454 tests total (100% passing)
 
 **Development Infrastructure:**
 - CI/CD pipeline (test, lint, build, coverage on 3 platforms)
@@ -342,8 +352,8 @@ Impulse-Next_BBS/
 
 ### Core Technologies
 
-- **Language**: Rust 2021 edition
-- **Minimum Version**: Rust 1.80+
+- **Language**: Rust 2024 edition
+- **Minimum Version**: Rust 1.85+
 - **Async Runtime**: Tokio 1.47
 
 ### Key Dependencies
@@ -351,20 +361,25 @@ Impulse-Next_BBS/
 **Production:**
 - `tokio` 1.47 - Async runtime (full features)
 - `tokio-util` 0.7 - Async utilities
-- `crossterm` 0.28 - Terminal I/O
+- `crossterm` 0.29 - Terminal I/O
 - `serde` 1.0 - Serialization framework
 - `serde_json` 1.0 - JSON support
-- `toml` 0.8 - Configuration files
-- `binrw` 0.14 - Binary parsing
+- `toml` 0.9 - Configuration files
+- `binrw` 0.15 - Binary parsing
 - `thiserror` 2.0 - Error handling
 - `anyhow` 1.0 - Error context
 - `tracing` 0.1 - Structured logging
 - `argon2` 0.5 - Password hashing
+- `sha2` 0.10 - Session token generation
+- `rand` 0.8 - Secure randomness
 - `sqlx` 0.8 - Database access
-- `axum` 0.7 - Web framework
+- `axum` 0.8 - Web framework
+- `bitflags` 2.6 - Pascal set types
 
 **Development:**
 - `proptest` 1.5 - Property-based testing
+- `serial_test` 3.0 - Test isolation
+- `tempfile` 3.8 - Temporary file handling
 
 **Build Optimization:**
 - LTO enabled in release builds
@@ -421,7 +436,10 @@ cargo doc --workspace --no-deps --open
 - ✅ Sprint 1: Project setup (COMPLETE)
 - ✅ Sprint 2: Core type system (COMPLETE)
 - ✅ Sprint 3: Pascal analysis (COMPLETE)
-- Sprint 4-8: Configuration, error handling, logging, database, testing
+- ✅ Sprint 4: Configuration system (COMPLETE)
+- ✅ Sprint 5: RECORDS.PAS conversion (COMPLETE)
+- ✅ Sprint 6: User system implementation (COMPLETE)
+- Sprint 7-8: Logging infrastructure, testing framework
 
 **Phase 2: Core Features (Months 7-12, Sprints 9-16)**
 - User authentication and sessions
@@ -459,20 +477,19 @@ cargo doc --workspace --no-deps --open
 
 ### Current Test Suite
 
-**Total Tests**: 82 (100% passing)
+**Total Tests**: 454 (100% passing)
 
-- **Unit Tests**: 56 tests (validation logic)
-- **Integration Tests**: 11 tests (serialization)
-- **Doc Tests**: 15 tests (documentation examples)
+- **Unit Tests**: 380+ tests (validation logic, CRUD operations, authentication)
+- **Integration Tests**: 50+ tests (serialization, file I/O, session management)
+- **Doc Tests**: 24 tests (documentation examples)
 
 ### Test Coverage by Component
 
-- User type: 10 tests
-- FileEntry type: 10 tests
-- Message type: 11 tests
-- BbsConfig type: 13 tests
-- Error handling: 3 tests
-- Serialization: 11 tests (JSON + bincode)
+- impulse-types: 195 tests (Pascal compatibility, core types)
+- impulse-config: 37 tests (configuration, validation)
+- impulse-user: 26 tests (CRUD, authentication, file I/O)
+- impulse-auth: 16 tests (hashing, sessions, concurrency)
+- Other crates: 180 tests (protocols, terminal, message, file, door, web)
 
 ### Running Tests
 
