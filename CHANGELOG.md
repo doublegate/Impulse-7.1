@@ -7,6 +7,55 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added - Sprint 4 (Configuration System)
+
+#### impulse-config Crate Implementation
+- **New crate: impulse-config** - Complete configuration management system
+  - Hierarchical configuration loading with figment integration
+  - TOML file support for human-readable configuration
+  - Environment variable overrides (IMPULSE_* prefix)
+  - Three validation modes: config_only(), strict(), deployment()
+  - Comprehensive error handling with 15 error variants
+  - Save/load functionality with round-trip support
+  - Type-safe configuration through Rust's type system
+
+#### Configuration Features
+- **Config Precedence**: Hardcoded defaults < TOML file < Environment variables
+- **Validation Options**:
+  - Config-only: Value validation without filesystem/network checks
+  - Strict: Full validation including path existence and port availability
+  - Deployment: Path validation allowing directory creation, skipping port checks
+- **Path Validation**: Checks all 7 BBS directory paths (data, users, messages, files, logs, temp, doors)
+- **Port Validation**: TCP listener checks for Telnet (2323), SSH (2222), Web Admin (8080)
+- **Environment Variables**: Override any config value via IMPULSE_* prefix (e.g., IMPULSE_NAME, IMPULSE_SERVERS_0_PORT)
+
+#### Testing & Quality
+- **37 tests total** (27 unit + 11 integration + 10 doc tests) - All passing
+- **Integration tests** with serial execution for environment variable isolation
+- **Rust 2024 edition safety**: Proper unsafe blocks for environment manipulation
+- **Test fixtures**: TOML round-trip tests, environment override tests, validation mode tests
+- **0 clippy warnings**: Boxed large error variants, proper struct initialization patterns
+
+#### Documentation
+- **Comprehensive README.md** (321 lines) with:
+  - Quick start guide and basic usage examples
+  - Environment variable override examples
+  - Validation mode comparison (config_only vs strict vs deployment)
+  - Complete example config.toml
+  - Error handling patterns
+  - Testing guide
+
+#### Dependencies
+- `figment 0.10` - Hierarchical configuration framework
+- `toml 0.8` - TOML serialization/deserialization
+- `serial_test 3.0` - Test isolation for environment variables
+- `tempfile 3.8` - Temporary file handling in tests
+
+#### Performance Optimizations
+- **Boxed large error variants**: Reduced ConfigError size by boxing figment::Error (208+ bytes)
+- **Efficient config merging**: Single-pass configuration loading with figment
+- **Lazy validation**: Optional filesystem/network checks only when needed
+
 ### Added - Sprint 3 (Pascal Analysis)
 
 #### Comprehensive Pascal Codebase Analysis
