@@ -3,11 +3,17 @@
 //! This crate provides the fundamental data structures, error types, and constants
 //! used throughout the Impulse 7.1 BBS modernization project. All types support
 //! serialization via Serde for JSON and binary formats.
+
+#![allow(clippy::empty_docs)] // Bitflags macro generates empty doc strings
+#![allow(missing_docs)] // Allow missing docs for bitflags generated items
 //!
 //! # Core Modules
 //!
 //! - [`error`] - Unified error handling framework
-//! - [`user`] - User account data structures
+//! - [`user`] - Modern user account data structures
+//! - [`security`] - Security level types and access control
+//! - [`user_stats`] - User activity statistics tracking
+//! - [`user_prefs`] - User preferences and display settings
 //! - [`message`] - Message board data structures
 //! - [`file`] - File area data structures
 //! - [`config`] - BBS configuration structures
@@ -36,8 +42,17 @@ pub mod error;
 /// BBS configuration types
 pub mod config;
 
-/// User data types
+/// Modern user data types
 pub mod user;
+
+/// Security level types and access control
+pub mod security;
+
+/// User activity statistics tracking
+pub mod user_stats;
+
+/// User preferences and display settings
+pub mod user_prefs;
 
 /// Message data types
 pub mod message;

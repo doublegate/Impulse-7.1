@@ -42,8 +42,8 @@ pub fn execute(config1: PathBuf, config2: PathBuf) -> Result<()> {
     differences_found |= compare_field("Sysop", &c1.sysop, &c2.sysop);
     differences_found |= compare_field(
         "Location",
-        &c1.location.as_deref().unwrap_or("(none)"),
-        &c2.location.as_deref().unwrap_or("(none)"),
+        c1.location.as_deref().unwrap_or("(none)"),
+        c2.location.as_deref().unwrap_or("(none)"),
     );
 
     // Compare network servers
@@ -195,15 +195,13 @@ pub fn execute(config1: PathBuf, config2: PathBuf) -> Result<()> {
     if !differences_found {
         println!("\n{}", "✓ Configurations are identical".green().bold());
     } else {
-        println!(
-            "\n{}",
-            format!(
-                "Legend: {} A only | {} B only | {} Different",
-                "[-]".red(),
-                "[+]".green(),
-                "[≠]".yellow()
-            )
+        let legend = format!(
+            "Legend: {} A only | {} B only | {} Different",
+            "[-]".red(),
+            "[+]".green(),
+            "[≠]".yellow()
         );
+        println!("\n{}", legend);
     }
 
     Ok(())

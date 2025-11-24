@@ -6,6 +6,8 @@
 //! The structure is designed for reading and writing USER.LST files in the
 //! original format for backward compatibility.
 
+#![allow(unused_variables)] // binrw temp fields trigger false positives
+
 use binrw::binrw;
 use serde::{Deserialize, Serialize};
 
@@ -22,6 +24,7 @@ pub struct PascalString<const N: usize> {
     /// Length of the string (0..=N)
     #[br(temp)]
     #[bw(calc = data.len().min(N) as u8)]
+    #[allow(unused)]
     length: u8,
 
     /// String data (exactly N bytes, padded with zeros)
@@ -43,6 +46,7 @@ impl<const N: usize> PascalString<N> {
     }
 
     /// Convert to Rust string
+    #[allow(clippy::inherent_to_string)] // Pascal compatibility, not Display-worthy
     pub fn to_string(&self) -> String {
         // Find the actual length (first zero or N)
         let len = self.data.iter().position(|&b| b == 0).unwrap_or(N).min(N);
@@ -424,6 +428,7 @@ impl Default for PascalUserRec {
 
 impl PascalUserRec {
     /// Create a new user record with minimal initialization
+    #[allow(clippy::field_reassign_with_default)] // Pascal-style initialization pattern
     pub fn new(name: impl AsRef<str>) -> Self {
         let mut rec = Self::default();
         rec.name = PascalString::from_string(name);
@@ -461,11 +466,12 @@ impl PascalUserRec {
 
     /// Check if user is a SysOp (security level 255)
     pub fn is_sysop(&self) -> bool {
-        self.sl >= 255
+        self.sl == 255
     }
 }
 
 #[cfg(test)]
+#[allow(clippy::field_reassign_with_default)]
 mod tests {
     use super::*;
 

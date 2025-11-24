@@ -15,9 +15,9 @@ pub enum ConfigEvent {
     /// Contains the old and new configuration for comparison
     Reloaded {
         /// Configuration before reload
-        old_config: BbsConfig,
+        old_config: Box<BbsConfig>,
         /// Configuration after reload
-        new_config: BbsConfig,
+        new_config: Box<BbsConfig>,
     },
 
     /// Configuration reload failed
@@ -126,8 +126,8 @@ impl ReloadNotifier {
     /// * `new_config` - Configuration after reload
     pub fn notify_reloaded(&self, old_config: BbsConfig, new_config: BbsConfig) {
         let _ = self.tx.send(ConfigEvent::Reloaded {
-            old_config,
-            new_config,
+            old_config: Box::new(old_config),
+            new_config: Box::new(new_config),
         });
     }
 
@@ -245,8 +245,10 @@ mod tests {
         let mut subscriber = notifier.subscribe();
 
         let old_config = BbsConfig::default();
-        let mut new_config = BbsConfig::default();
-        new_config.name = "Updated BBS".to_string();
+        let new_config = BbsConfig {
+            name: "Updated BBS".to_string(),
+            ..Default::default()
+        };
 
         notifier.notify_reloaded(old_config.clone(), new_config.clone());
 

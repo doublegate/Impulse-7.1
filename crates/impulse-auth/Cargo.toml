@@ -12,3 +12,5 @@ impulse-types = { path = "../impulse-types" }
 argon2 = { workspace = true }
 sha2 = { workspace = true }
 thiserror = { workspace = true }
+tokio = { workspace = true }
+rand = { workspace = true }

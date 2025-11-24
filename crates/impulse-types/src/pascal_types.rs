@@ -4,6 +4,8 @@
 //! from the original Impulse 7.1 BBS system. These types enable reading and
 //! writing binary data files in the original format.
 
+#![allow(missing_docs)] // bitflags! macro generates undocumented consts
+
 use bitflags::bitflags;
 use serde::{Deserialize, Serialize};
 
@@ -92,6 +94,7 @@ bitflags! {
     /// Bits 0-26 correspond to flags '@' through 'Z'.
     #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, Serialize, Deserialize)]
     #[serde(transparent)]
+    #[allow(missing_docs)] // Bitflags generates undocumented internal items
     pub struct ArFlags: u32 {
         const AR_AT = 1 << 0;   // '@'
         const AR_A  = 1 << 1;   // 'A'

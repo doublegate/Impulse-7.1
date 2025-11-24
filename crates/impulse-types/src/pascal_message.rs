@@ -27,12 +27,12 @@ use crate::pascal_user::PascalString;
 /// Packed date/time (Pascal: `cpackdatetime = array[1..6] of byte`)
 ///
 /// Stores date and time in 6 bytes:
-/// - [0]: Year (0-99, relative to 1900 or 2000)
-/// - [1]: Month (1-12)
-/// - [2]: Day (1-31)
-/// - [3]: Hour (0-23)
-/// - [4]: Minute (0-59)
-/// - [5]: Second (0-59)
+/// - `[0]`: Year (0-99, relative to 1900 or 2000)
+/// - `[1]`: Month (1-12)
+/// - `[2]`: Day (1-31)
+/// - `[3]`: Hour (0-23)
+/// - `[4]`: Minute (0-59)
+/// - `[5]`: Second (0-59)
 #[binrw]
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize, Default)]
 pub struct CPackDateTime {
@@ -690,6 +690,7 @@ impl BoardRec {
 }
 
 #[cfg(test)]
+#[allow(clippy::field_reassign_with_default)]
 mod tests {
     use super::*;
 
