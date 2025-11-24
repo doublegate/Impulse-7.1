@@ -49,6 +49,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Phase 3 (Sprints 19-26):** Advanced Features - SYSOP*.PAS, protocols, terminal emulation
 - **Phase 4 (Sprints 27-32):** Integration - IMP.PAS, high-risk modules, testing
 
+#### Conversion Strategy & Prioritization Plan
+- **Created comprehensive roadmap document** `docs/09-conversion-strategy-plan.md` (1,679 lines, ~11,750 words)
+  - 16-part strategic document synthesizing all 19 Pascal analysis files
+  - Executive summary with key statistics and timeline
+  - 6 strategic principles guiding all conversion decisions
+  - Risk-based prioritization framework with detailed scoring methodology
+  - Platform-specific migration strategy (DOS → modern OS)
+  - Complete 4-phase conversion roadmap (Sprints 3-32, 24 months)
+  - Type system migration strategy (Pascal → Rust mappings)
+  - Global state refactoring strategy (BbsState design)
+  - Binary file format strategy (bincode + serde)
+  - Dependency management strategy (1,070 dependencies)
+  - Testing strategy with coverage targets by risk level
+  - High-risk module strategy (38 units requiring special attention)
+  - Sprint execution guidelines (3-week sprint structure)
+  - Success metrics & KPIs (progress, quality, performance)
+  - Risk mitigation timeline (critical risks by phase)
+  - Parallel conversion opportunities (30-40% time reduction potential)
+  - Cross-reference matrix linking all source documents
+
 #### Sprint Efficiency
 - **Estimated Duration:** 93 hours (3 weeks)
 - **Actual Duration:** ~2 hours
