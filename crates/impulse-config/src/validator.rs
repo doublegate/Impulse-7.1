@@ -278,6 +278,10 @@ mod tests {
     }
 
     #[test]
+    #[cfg_attr(
+        not(target_os = "linux"),
+        ignore = "Port binding behavior is platform-specific - SO_REUSEADDR differs on Windows/macOS"
+    )]
     fn test_is_port_available() {
         // Port 0 should be available (kernel will assign a free port)
         assert!(is_port_available(0));
@@ -297,6 +301,10 @@ mod tests {
     }
 
     #[test]
+    #[cfg_attr(
+        not(target_os = "linux"),
+        ignore = "Port binding behavior is platform-specific - SO_REUSEADDR differs on Windows/macOS"
+    )]
     fn test_validate_ports_in_use() {
         // Bind to all interfaces (0.0.0.0) to properly block the port
         let listener = std::net::TcpListener::bind(("0.0.0.0", 0)).unwrap();

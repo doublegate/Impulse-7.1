@@ -499,15 +499,16 @@ mod tests {
     #[test]
     fn test_session_expiration() {
         let user_id = UserId::new();
-        let timeout = Duration::from_millis(50);
+        // Use longer timeout to account for CI and tarpaulin overhead
+        let timeout = Duration::from_millis(500);
         let session = Session::new(user_id, timeout);
 
         // Session should not be expired immediately
         assert!(!session.is_expired());
         assert!(session.remaining_time().is_some());
 
-        // Wait for expiration (with margin for timing variability)
-        std::thread::sleep(Duration::from_millis(100));
+        // Wait for expiration (with margin for timing variability and tarpaulin overhead)
+        std::thread::sleep(Duration::from_millis(600));
 
         // Session should now be expired
         assert!(session.is_expired());
