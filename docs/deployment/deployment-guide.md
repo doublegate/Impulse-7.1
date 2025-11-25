@@ -1075,9 +1075,9 @@ sudo ss -tulpn | grep imp-cli
 ---
 
 **For detailed operational procedures, see also:**
-- [04-development-guide.md](./04-development-guide.md) - Build and development
-- [05-testing-strategy.md](./05-testing-strategy.md) - Testing before deployment
-- [08-security-architecture.md](./08-security-architecture.md) - Security details
+- [04-development-guide.md](../implementation/development-guide.md) - Build and development
+- [05-testing-strategy.md](../testing/testing-strategy.md) - Testing before deployment
+- [08-security-architecture.md](../architecture/security-architecture.md) - Security details
 
 ---
 

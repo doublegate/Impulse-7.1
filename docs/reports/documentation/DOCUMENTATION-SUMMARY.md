@@ -169,18 +169,18 @@ The documentation foundation is **exceptional and production-ready**. No additio
 ## Quick Navigation
 
 **Start Here:**
-- [00-project-overview.md](docs/00-project-overview.md) - Vision and objectives
-- [01-phase-sprint-plan.md](docs/01-phase-sprint-plan.md) - 32-sprint roadmap
-- [02-architecture.md](docs/02-architecture.md) - System design
+- [00-project-overview.md](../getting-started/project-overview.md) - Vision and objectives
+- [01-phase-sprint-plan.md](../planning/phase-sprint-plan.md) - 32-sprint roadmap
+- [02-architecture.md](../architecture/system-architecture.md) - System design
 
 **For Developers:**
-- [04-development-guide.md](docs/04-development-guide.md) - Setup and workflows
-- [05-testing-strategy.md](docs/05-testing-strategy.md) - Testing approach
+- [04-development-guide.md](../implementation/development-guide.md) - Setup and workflows
+- [05-testing-strategy.md](../testing/testing-strategy.md) - Testing approach
 - [sprint-01-project-setup.md](to-dos/phase-1-foundation/sprint-01-project-setup.md) - First sprint
 
 **For Deployment:**
-- [06-deployment-guide.md](docs/06-deployment-guide.md) - Docker, K8s, production
-- [08-security-architecture.md](docs/08-security-architecture.md) - Security design
+- [06-deployment-guide.md](../deployment/deployment-guide.md) - Docker, K8s, production
+- [08-security-architecture.md](../architecture/security-architecture.md) - Security design
 
 **For Historical Context:**
 - [impulse-history.md](ref-docs/impulse-history.md) - BBS history and genealogy

@@ -949,8 +949,8 @@ Contributors will be acknowledged in:
 - [Tokio Tutorial](https://tokio.rs/tokio/tutorial)
 
 ### Project-Specific
-- [03-technical-details.md](./03-technical-details.md) - Implementation details
-- [05-testing-strategy.md](./05-testing-strategy.md) - Testing approach
+- [03-technical-details.md](../architecture/technical-details.md) - Implementation details
+- [05-testing-strategy.md](../testing/testing-strategy.md) - Testing approach
 - [ref-docs/rust-conversion-technical.md](../ref-docs/rust-conversion-technical.md) - Conversion guide
 
 ### Tools

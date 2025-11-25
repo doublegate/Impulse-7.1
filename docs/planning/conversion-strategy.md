@@ -34,38 +34,38 @@
 
 This document provides a comprehensive strategy for converting the Impulse 7.1 BBS system from Borland Pascal 7.0 to Rust 2024 edition. The conversion encompasses **114 Pascal units** (39,079 lines of code) with **1,070 dependencies**, transforming a DOS-era bulletin board system into a modern, cross-platform application.
 
-**Source Files:** Based on comprehensive analysis documented in [../docs/pascal-analysis/](../docs/pascal-analysis/):
-- [pascal-inventory.md](../docs/pascal-analysis/pascal-inventory.md) - Complete unit inventory
-- [pascal-unit-analysis.md](../docs/pascal-analysis/pascal-unit-analysis.md) - Detailed unit analysis
-- [pascal-dependencies.md](../docs/pascal-analysis/pascal-dependencies.md) - Dependency documentation
-- [conversion-risk-assessment.md](../docs/pascal-analysis/conversion-risk-assessment.md) - Risk ratings
-- [conversion-order.md](../docs/pascal-analysis/conversion-order.md) - Priority order
+**Source Files:** Based on comprehensive analysis documented in [../pascal-reference/](../pascal-reference/):
+- [pascal-inventory.md](../pascal-reference/analysis/pascal-inventory.md) - Complete unit inventory
+- [pascal-unit-analysis.md](../pascal-reference/analysis/pascal-unit-analysis.md) - Detailed unit analysis
+- [pascal-dependencies.md](../pascal-reference/analysis/pascal-dependencies.md) - Dependency documentation
+- [conversion-risk-assessment.md](../pascal-reference/risk-assessment/conversion-risk-assessment.md) - Risk ratings
+- [conversion-order.md](../pascal-reference/conversion/conversion-order.md) - Priority order
 - 13 additional analysis documents
 
 ### Key Statistics
 
 | Metric | Value | Source |
 |--------|-------|--------|
-| **Total Pascal Units** | 114 | [pascal-inventory.md](../docs/pascal-analysis/pascal-inventory.md) |
-| **Total Lines of Code** | 39,079 | [pascal-inventory.md](../docs/pascal-analysis/pascal-inventory.md) |
-| **Total Dependencies** | 1,070 | [pascal-dependencies.md](../docs/pascal-analysis/pascal-dependencies.md) |
-| **Average Dependencies/Unit** | 9.4 | [pascal-dependencies.md](../docs/pascal-analysis/pascal-dependencies.md) |
-| **CRITICAL Risk Units** | 11 (9.6%) | [conversion-risk-assessment.md](../docs/pascal-analysis/conversion-risk-assessment.md) |
-| **HIGH Risk Units** | 27 (23.7%) | [conversion-risk-assessment.md](../docs/pascal-analysis/conversion-risk-assessment.md) |
-| **MEDIUM Risk Units** | 30 (26.3%) | [conversion-risk-assessment.md](../docs/pascal-analysis/conversion-risk-assessment.md) |
-| **LOW Risk Units** | 46 (40.4%) | [conversion-risk-assessment.md](../docs/pascal-analysis/conversion-risk-assessment.md) |
+| **Total Pascal Units** | 114 | [pascal-inventory.md](../pascal-reference/analysis/pascal-inventory.md) |
+| **Total Lines of Code** | 39,079 | [pascal-inventory.md](../pascal-reference/analysis/pascal-inventory.md) |
+| **Total Dependencies** | 1,070 | [pascal-dependencies.md](../pascal-reference/analysis/pascal-dependencies.md) |
+| **Average Dependencies/Unit** | 9.4 | [pascal-dependencies.md](../pascal-reference/analysis/pascal-dependencies.md) |
+| **CRITICAL Risk Units** | 11 (9.6%) | [conversion-risk-assessment.md](../pascal-reference/risk-assessment/conversion-risk-assessment.md) |
+| **HIGH Risk Units** | 27 (23.7%) | [conversion-risk-assessment.md](../pascal-reference/risk-assessment/conversion-risk-assessment.md) |
+| **MEDIUM Risk Units** | 30 (26.3%) | [conversion-risk-assessment.md](../pascal-reference/risk-assessment/conversion-risk-assessment.md) |
+| **LOW Risk Units** | 46 (40.4%) | [conversion-risk-assessment.md](../pascal-reference/risk-assessment/conversion-risk-assessment.md) |
 
 ### Platform Dependencies
 
 | Category | Count | Files | Source |
 |----------|-------|-------|--------|
-| **DOS Function Calls** | 23 files | EXEC, GETDIR, MKDIR, CHDIR, RMDIR, SWAPVECTORS, KEEP | [pascal-dos-specific.md](../docs/pascal-analysis/pascal-dos-specific.md) |
-| **Overlay Directives** | 75 directives | IMP.PAS (74), TIMETASK.PAS (1) | [pascal-overlays.md](../docs/pascal-analysis/pascal-overlays.md) |
-| **Interrupt Handlers** | 2 files | TMPCOM.PAS (48), TMPOLD.PAS (48) | [pascal-interrupts.md](../docs/pascal-analysis/pascal-interrupts.md) |
-| **Inline Assembly** | 14 files | NETFOSSL.PAS (26), MYIO.PAS (8), others | [pascal-interrupts.md](../docs/pascal-analysis/pascal-interrupts.md) |
-| **ABSOLUTE Variables** | 2 files | MAIL7.PAS (2), ZIPVIEWU.PAS (1) | [pascal-interrupts.md](../docs/pascal-analysis/pascal-interrupts.md) |
-| **Binary File I/O** | 29 files | FILE OF RecordType pattern | [pascal-binary-formats.md](../docs/pascal-analysis/pascal-binary-formats.md) |
-| **Global Variables** | 90 files | Mutable state in INTERFACE section | [pascal-globals.md](../docs/pascal-analysis/pascal-globals.md) |
+| **DOS Function Calls** | 23 files | EXEC, GETDIR, MKDIR, CHDIR, RMDIR, SWAPVECTORS, KEEP | [pascal-dos-specific.md](../pascal-reference/analysis/pascal-dos-specific.md) |
+| **Overlay Directives** | 75 directives | IMP.PAS (74), TIMETASK.PAS (1) | [pascal-overlays.md](../pascal-reference/analysis/pascal-overlays.md) |
+| **Interrupt Handlers** | 2 files | TMPCOM.PAS (48), TMPOLD.PAS (48) | [pascal-interrupts.md](../pascal-reference/analysis/pascal-interrupts.md) |
+| **Inline Assembly** | 14 files | NETFOSSL.PAS (26), MYIO.PAS (8), others | [pascal-interrupts.md](../pascal-reference/analysis/pascal-interrupts.md) |
+| **ABSOLUTE Variables** | 2 files | MAIL7.PAS (2), ZIPVIEWU.PAS (1) | [pascal-interrupts.md](../pascal-reference/analysis/pascal-interrupts.md) |
+| **Binary File I/O** | 29 files | FILE OF RecordType pattern | [pascal-binary-formats.md](../pascal-reference/conversion/pascal-binary-formats.md) |
+| **Global Variables** | 90 files | Mutable state in INTERFACE section | [pascal-globals.md](../pascal-reference/pascal-globals.md) |
 
 ### Conversion Timeline
 
@@ -78,7 +78,7 @@ This document provides a comprehensive strategy for converting the Impulse 7.1 B
 | **Phase 3** | 19-26 | Months 11-18 | 28 | Advanced Features (sysop, protocols) |
 | **Phase 4** | 27-32 | Months 19-24 | 30 | Integration (main program, high-risk) |
 
-**Source:** [conversion-order.md](../docs/pascal-analysis/conversion-order.md)
+**Source:** [conversion-order.md](../pascal-reference/conversion/conversion-order.md)
 
 ### Critical Success Factors
 
@@ -112,7 +112,7 @@ The conversion strategy is built on six core principles that guide all technical
 // Rust: fn process_upload(file_entry: &mut FileEntry) -> Result<(), BbsError>
 ```
 
-**Source:** [type-mapping.md](../docs/pascal-analysis/type-mapping.md)
+**Source:** [type-mapping.md](../pascal-reference/type-mapping.md)
 
 #### 2.2 Safety Without Sacrifice
 
@@ -129,7 +129,7 @@ The conversion strategy is built on six core principles that guide all technical
 - Increased code verbosity (Result types, error handling)
 - Stricter type requirements (worth the compile-time guarantees)
 
-**Source:** [pascal-globals.md](../docs/pascal-analysis/pascal-globals.md)
+**Source:** [pascal-globals.md](../pascal-reference/pascal-globals.md)
 
 #### 2.3 Dependency-Driven Conversion Order
 
@@ -146,7 +146,7 @@ priority_score = (risk_score * 10) + (dependency_count * 2) - (dependency_impact
 Lower score = Higher priority (convert earlier)
 ```
 
-**Source:** [conversion-order.md](../docs/pascal-analysis/conversion-order.md)
+**Source:** [conversion-order.md](../pascal-reference/conversion/conversion-order.md)
 
 #### 2.4 Risk-Based Resource Allocation
 
@@ -161,7 +161,7 @@ Lower score = Higher priority (convert earlier)
 | **MEDIUM** | 30 | 26.3% | Standard process + unit tests |
 | **LOW** | 46 | 40.4% | Junior/mid-level dev + basic tests |
 
-**Source:** [conversion-risk-assessment.md](../docs/pascal-analysis/conversion-risk-assessment.md)
+**Source:** [conversion-risk-assessment.md](../pascal-reference/risk-assessment/conversion-risk-assessment.md)
 
 #### 2.5 Test-Driven Migration
 
@@ -179,7 +179,7 @@ Lower score = Higher priority (convert earlier)
 - Medium risk modules: 75%+ coverage
 - Low risk modules: 60%+ coverage
 
-**Source:** [SPRINT-03-COMPLETION-REPORT.md](../docs/pascal-analysis/SPRINT-03-COMPLETION-REPORT.md)
+**Source:** [SPRINT-03-COMPLETION-REPORT.md](../reports/sprints/SPRINT-03-COMPLETION-REPORT.md)
 
 #### 2.6 Cross-Platform from Day One
 
@@ -202,7 +202,7 @@ trait FileSystemOps {
 // DOS: GETDIR, MKDIR, CHDIR → Rust: std::env, std::fs
 ```
 
-**Source:** [pascal-dos-specific.md](../docs/pascal-analysis/pascal-dos-specific.md)
+**Source:** [pascal-dos-specific.md](../pascal-reference/analysis/pascal-dos-specific.md)
 
 ---
 
@@ -212,7 +212,7 @@ trait FileSystemOps {
 
 The conversion risk assessment uses a **quantitative scoring system** to identify modules requiring special attention.
 
-**Source:** [conversion-risk-assessment.md](../docs/pascal-analysis/conversion-risk-assessment.md)
+**Source:** [conversion-risk-assessment.md](../pascal-reference/risk-assessment/conversion-risk-assessment.md)
 
 #### High Risk Factors (10 points each)
 
@@ -261,7 +261,7 @@ The conversion risk assessment uses a **quantitative scoring system** to identif
 
 ### Top 10 Highest-Risk Modules
 
-**Source:** [high-risk-units.md](../docs/pascal-analysis/high-risk-units.md)
+**Source:** [high-risk-units.md](../pascal-reference/high-risk-units.md)
 
 | Rank | Module | Risk Score | Risk Level | Key Challenges | Dependencies |
 |------|--------|------------|------------|----------------|--------------|
@@ -286,7 +286,7 @@ The conversion risk assessment uses a **quantitative scoring system** to identif
 
 The original Impulse 7.1 BBS was built for DOS, requiring extensive platform-specific code modernization.
 
-**Source:** [pascal-dos-specific.md](../docs/pascal-analysis/pascal-dos-specific.md), [pascal-interrupts.md](../docs/pascal-analysis/pascal-interrupts.md)
+**Source:** [pascal-dos-specific.md](../pascal-reference/analysis/pascal-dos-specific.md), [pascal-interrupts.md](../pascal-reference/analysis/pascal-interrupts.md)
 
 #### 4.1 DOS Function Replacement
 
@@ -353,7 +353,7 @@ fn setup_signal_handlers() -> Result<(), std::io::Error> {
 use winapi::um::consoleapi::SetConsoleCtrlHandler;
 ```
 
-**Source:** [risk-mitigations.md](../docs/pascal-analysis/risk-mitigations.md)
+**Source:** [risk-mitigations.md](../pascal-reference/risk-assessment/risk-mitigations.md)
 
 #### 4.3 Inline Assembly Replacement
 
@@ -388,7 +388,7 @@ unsafe fn low_level_operation() {
 }
 ```
 
-**Source:** [risk-mitigations.md](../docs/pascal-analysis/risk-mitigations.md)
+**Source:** [risk-mitigations.md](../pascal-reference/risk-assessment/risk-mitigations.md)
 
 #### 4.4 Overlay System Removal
 
@@ -411,7 +411,7 @@ mod mail1;
 mod mail2;
 ```
 
-**Source:** [pascal-overlays.md](../docs/pascal-analysis/pascal-overlays.md)
+**Source:** [pascal-overlays.md](../pascal-reference/analysis/pascal-overlays.md)
 
 #### 4.5 ABSOLUTE Variables
 
@@ -443,7 +443,7 @@ fn map_hardware_memory(address: usize, size: usize) -> Result<MmapMut, std::io::
 }
 ```
 
-**Source:** [high-risk-units.md](../docs/pascal-analysis/high-risk-units.md)
+**Source:** [high-risk-units.md](../pascal-reference/high-risk-units.md)
 
 ---
 
@@ -451,7 +451,7 @@ fn map_hardware_memory(address: usize, size: usize) -> Result<MmapMut, std::io::
 
 The conversion is organized into **4 phases** across **30 sprints** (Sprints 3-32), with each phase building upon the previous.
 
-**Source:** [conversion-order.md](../docs/pascal-analysis/conversion-order.md)
+**Source:** [conversion-order.md](../pascal-reference/conversion/conversion-order.md)
 
 ### Phase 1: Foundation (Sprints 3-10, Months 1-4)
 
@@ -652,7 +652,7 @@ The conversion is organized into **4 phases** across **30 sprints** (Sprints 3-3
 
 The Pascal type system differs significantly from Rust, requiring careful mapping to preserve functionality while gaining safety.
 
-**Source:** [type-mapping.md](../docs/pascal-analysis/type-mapping.md)
+**Source:** [type-mapping.md](../pascal-reference/type-mapping.md)
 
 ### Integer Types
 
@@ -805,7 +805,7 @@ bitflags! {
 
 The original Pascal codebase uses extensive global mutable state, which conflicts with Rust's ownership model and thread-safety guarantees.
 
-**Source:** [pascal-globals.md](../docs/pascal-analysis/pascal-globals.md)
+**Source:** [pascal-globals.md](../pascal-reference/pascal-globals.md)
 
 ### Global State Analysis
 
@@ -935,7 +935,7 @@ fn get_current_user() -> Option<User> {
 
 The original Impulse 7.1 BBS stores data in binary files using Pascal's `File of RecordType` pattern. Maintaining compatibility is **critical** for migration of existing BBS systems.
 
-**Source:** [pascal-binary-formats.md](../docs/pascal-analysis/pascal-binary-formats.md)
+**Source:** [pascal-binary-formats.md](../pascal-reference/conversion/pascal-binary-formats.md)
 
 ### Binary File Inventory
 
@@ -1077,7 +1077,7 @@ impl UserDatabase {
 
 The conversion order must respect module dependencies to avoid circular dependencies and minimize rework.
 
-**Source:** [pascal-dependencies.md](../docs/pascal-analysis/pascal-dependencies.md), [pascal-dependency-matrix.csv](../docs/pascal-analysis/pascal-dependency-matrix.csv)
+**Source:** [pascal-dependencies.md](../pascal-reference/analysis/pascal-dependencies.md), [pascal-dependency-matrix.csv](../pascal-reference/pascal-dependency-matrix.csv)
 
 ### Dependency Statistics
 
@@ -1117,7 +1117,7 @@ The conversion order must respect module dependencies to avoid circular dependen
 
 **Circular Dependency Detection:**
 
-Found via [pascal-dependencies.dot](../docs/pascal-analysis/pascal-dependencies.dot) graph analysis:
+Found via [pascal-dependencies.dot](../pascal-reference/pascal-dependencies.dot) graph analysis:
 
 - COMMON ↔ OUTPUT
 - MENUS ↔ NUV
@@ -1127,7 +1127,7 @@ Found via [pascal-dependencies.dot](../docs/pascal-analysis/pascal-dependencies.
 
 ### Dependency Visualization
 
-**Tool:** Graphviz dependency graph available at [pascal-dependencies.svg](../docs/pascal-analysis/pascal-dependencies.svg) (556KB, 114 nodes, 1,070 edges)
+**Tool:** Graphviz dependency graph available at [pascal-dependencies.svg](../pascal-reference/pascal-dependencies.svg) (556KB, 114 nodes, 1,070 edges)
 
 **Color Legend:**
 - **Red:** Main Program (IMP.PAS)
@@ -1145,7 +1145,7 @@ Found via [pascal-dependencies.dot](../docs/pascal-analysis/pascal-dependencies.
 
 Comprehensive testing is essential to ensure behavioral equivalence between Pascal original and Rust conversion.
 
-**Source:** [SPRINT-03-COMPLETION-REPORT.md](../docs/pascal-analysis/SPRINT-03-COMPLETION-REPORT.md), [risk-mitigations.md](../docs/pascal-analysis/risk-mitigations.md)
+**Source:** [SPRINT-03-COMPLETION-REPORT.md](../reports/sprints/SPRINT-03-COMPLETION-REPORT.md), [risk-mitigations.md](../pascal-reference/risk-assessment/risk-mitigations.md)
 
 ### Test Infrastructure (Sprint 8)
 
@@ -1291,7 +1291,7 @@ strategy:
 
 **38 modules** (33.3% of codebase) are classified as HIGH or CRITICAL risk, requiring special handling.
 
-**Source:** [high-risk-units.md](../docs/pascal-analysis/high-risk-units.md), [risk-mitigations.md](../docs/pascal-analysis/risk-mitigations.md)
+**Source:** [high-risk-units.md](../pascal-reference/high-risk-units.md), [risk-mitigations.md](../pascal-reference/risk-assessment/risk-mitigations.md)
 
 ### CRITICAL Risk Modules (11 units, 9.6%)
 
@@ -1609,25 +1609,25 @@ Once RECORDS.PAS is complete (Sprint 5), the following groups can be converted i
 ### Internal Documentation
 
 **Pascal Analysis Files:**
-1. [pascal-inventory.md](../docs/pascal-analysis/pascal-inventory.md) - Complete inventory of 114 units
-2. [pascal-unit-analysis.md](../docs/pascal-analysis/pascal-unit-analysis.md) - Detailed unit analysis
-3. [pascal-dependencies.md](../docs/pascal-analysis/pascal-dependencies.md) - 1,070 dependencies documented
-4. [pascal-dependency-matrix.csv](../docs/pascal-analysis/pascal-dependency-matrix.csv) - Structured dependency data
-5. [pascal-globals.md](../docs/pascal-analysis/pascal-globals.md) - Global constants and variables
-6. [pascal-overlays.md](../docs/pascal-analysis/pascal-overlays.md) - Overlay system analysis
-7. [pascal-interrupts.md](../docs/pascal-analysis/pascal-interrupts.md) - Interrupt handlers and assembly
-8. [pascal-dos-specific.md](../docs/pascal-analysis/pascal-dos-specific.md) - DOS function dependencies
-9. [pascal-binary-formats.md](../docs/pascal-analysis/pascal-binary-formats.md) - Binary file formats
-10. [type-mapping.md](../docs/pascal-analysis/type-mapping.md) - Pascal→Rust type mappings
-11. [conversion-risk-assessment.md](../docs/pascal-analysis/conversion-risk-assessment.md) - Risk ratings
-12. [high-risk-units.md](../docs/pascal-analysis/high-risk-units.md) - 38 high-risk units detailed
-13. [risk-mitigations.md](../docs/pascal-analysis/risk-mitigations.md) - Mitigation strategies
-14. [conversion-order.md](../docs/pascal-analysis/conversion-order.md) - Priority-ordered conversion plan
-15. [dependencies.json](../docs/pascal-analysis/dependencies.json) - Machine-readable dependencies
-16. [risk-data.json](../docs/pascal-analysis/risk-data.json) - Machine-readable risk scores
-17. [SPRINT-03-COMPLETION-REPORT.md](../docs/pascal-analysis/SPRINT-03-COMPLETION-REPORT.md) - Sprint 3 summary
-18. [pascal-dependencies.dot](../docs/pascal-analysis/pascal-dependencies.dot) - Graphviz dependency graph
-19. [pascal-dependencies.svg](../docs/pascal-analysis/pascal-dependencies.svg) - Visual dependency graph
+1. [pascal-inventory.md](../pascal-reference/analysis/pascal-inventory.md) - Complete inventory of 114 units
+2. [pascal-unit-analysis.md](../pascal-reference/analysis/pascal-unit-analysis.md) - Detailed unit analysis
+3. [pascal-dependencies.md](../pascal-reference/analysis/pascal-dependencies.md) - 1,070 dependencies documented
+4. [pascal-dependency-matrix.csv](../pascal-reference/pascal-dependency-matrix.csv) - Structured dependency data
+5. [pascal-globals.md](../pascal-reference/pascal-globals.md) - Global constants and variables
+6. [pascal-overlays.md](../pascal-reference/analysis/pascal-overlays.md) - Overlay system analysis
+7. [pascal-interrupts.md](../pascal-reference/analysis/pascal-interrupts.md) - Interrupt handlers and assembly
+8. [pascal-dos-specific.md](../pascal-reference/analysis/pascal-dos-specific.md) - DOS function dependencies
+9. [pascal-binary-formats.md](../pascal-reference/conversion/pascal-binary-formats.md) - Binary file formats
+10. [type-mapping.md](../pascal-reference/type-mapping.md) - Pascal→Rust type mappings
+11. [conversion-risk-assessment.md](../pascal-reference/risk-assessment/conversion-risk-assessment.md) - Risk ratings
+12. [high-risk-units.md](../pascal-reference/high-risk-units.md) - 38 high-risk units detailed
+13. [risk-mitigations.md](../pascal-reference/risk-assessment/risk-mitigations.md) - Mitigation strategies
+14. [conversion-order.md](../pascal-reference/conversion/conversion-order.md) - Priority-ordered conversion plan
+15. [dependencies.json](../pascal-reference/dependencies.json) - Machine-readable dependencies
+16. [risk-data.json](../pascal-reference/risk-data.json) - Machine-readable risk scores
+17. [SPRINT-03-COMPLETION-REPORT.md](../reports/sprints/SPRINT-03-COMPLETION-REPORT.md) - Sprint 3 summary
+18. [pascal-dependencies.dot](../pascal-reference/pascal-dependencies.dot) - Graphviz dependency graph
+19. [pascal-dependencies.svg](../pascal-reference/pascal-dependencies.svg) - Visual dependency graph
 
 **Project Documentation:**
 - [README.md](../README.md) - Project overview
@@ -1666,11 +1666,11 @@ Once RECORDS.PAS is complete (Sprint 5), the following groups can be converted i
 
 | Topic | Primary Document | Supporting Documents |
 |-------|------------------|---------------------|
-| **Risk Assessment** | [conversion-risk-assessment.md](../docs/pascal-analysis/conversion-risk-assessment.md) | [high-risk-units.md](../docs/pascal-analysis/high-risk-units.md), [risk-mitigations.md](../docs/pascal-analysis/risk-mitigations.md) |
-| **Dependencies** | [pascal-dependencies.md](../docs/pascal-analysis/pascal-dependencies.md) | [pascal-dependency-matrix.csv](../docs/pascal-analysis/pascal-dependency-matrix.csv), [dependencies.json](../docs/pascal-analysis/dependencies.json), [pascal-dependencies.svg](../docs/pascal-analysis/pascal-dependencies.svg) |
-| **Type Mapping** | [type-mapping.md](../docs/pascal-analysis/type-mapping.md) | [pascal-globals.md](../docs/pascal-analysis/pascal-globals.md), [pascal-binary-formats.md](../docs/pascal-analysis/pascal-binary-formats.md) |
-| **Platform Migration** | [pascal-dos-specific.md](../docs/pascal-analysis/pascal-dos-specific.md) | [pascal-interrupts.md](../docs/pascal-analysis/pascal-interrupts.md), [pascal-overlays.md](../docs/pascal-analysis/pascal-overlays.md) |
-| **Conversion Order** | [conversion-order.md](../docs/pascal-analysis/conversion-order.md) | [pascal-dependencies.md](../docs/pascal-analysis/pascal-dependencies.md), [conversion-risk-assessment.md](../docs/pascal-analysis/conversion-risk-assessment.md) |
+| **Risk Assessment** | [conversion-risk-assessment.md](../pascal-reference/risk-assessment/conversion-risk-assessment.md) | [high-risk-units.md](../pascal-reference/high-risk-units.md), [risk-mitigations.md](../pascal-reference/risk-assessment/risk-mitigations.md) |
+| **Dependencies** | [pascal-dependencies.md](../pascal-reference/analysis/pascal-dependencies.md) | [pascal-dependency-matrix.csv](../pascal-reference/pascal-dependency-matrix.csv), [dependencies.json](../pascal-reference/dependencies.json), [pascal-dependencies.svg](../pascal-reference/pascal-dependencies.svg) |
+| **Type Mapping** | [type-mapping.md](../pascal-reference/type-mapping.md) | [pascal-globals.md](../pascal-reference/pascal-globals.md), [pascal-binary-formats.md](../pascal-reference/conversion/pascal-binary-formats.md) |
+| **Platform Migration** | [pascal-dos-specific.md](../pascal-reference/analysis/pascal-dos-specific.md) | [pascal-interrupts.md](../pascal-reference/analysis/pascal-interrupts.md), [pascal-overlays.md](../pascal-reference/analysis/pascal-overlays.md) |
+| **Conversion Order** | [conversion-order.md](../pascal-reference/conversion/conversion-order.md) | [pascal-dependencies.md](../pascal-reference/analysis/pascal-dependencies.md), [conversion-risk-assessment.md](../pascal-reference/risk-assessment/conversion-risk-assessment.md) |
 
 ---
 

@@ -947,9 +947,9 @@ Successful migration requires:
 ---
 
 **For additional technical details:**
-- [03-technical-details.md](./03-technical-details.md) - Binary format specifications
-- [05-testing-strategy.md](./05-testing-strategy.md) - Migration testing approach
-- [06-deployment-guide.md](./06-deployment-guide.md) - Post-migration deployment
+- [03-technical-details.md](../architecture/technical-details.md) - Binary format specifications
+- [05-testing-strategy.md](../testing/testing-strategy.md) - Migration testing approach
+- [06-deployment-guide.md](deployment-guide.md) - Post-migration deployment
 
 ---
 

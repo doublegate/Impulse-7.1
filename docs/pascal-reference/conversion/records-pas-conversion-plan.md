@@ -1779,7 +1779,7 @@ pub fn chrono_date_to_pascal(date: chrono::NaiveDate) -> String {
 ### Documentation Files
 
 **Create:**
-1. `docs/pascal-analysis/records-pas-field-guide.md` - Field-by-field reference
+1. `docs/pascal-reference/analysis/records-pas-field-guide.md` - Field-by-field reference
 2. `docs/implementation/binary-file-format.md` - Binary file format specs
 3. `docs/implementation/type-conversion-guide.md` - How to convert Pascal types
 4. `crates/impulse-types/README.md` - Crate overview and usage guide
