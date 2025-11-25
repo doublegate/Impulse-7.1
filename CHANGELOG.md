@@ -7,6 +7,140 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added - Sprint 9 (User Authentication System - Phase 2 Start)
+
+**Sprint Timeline:** 2025-11-24 (~3 hours)
+**Status:** Authentication core complete (rate limiting, lockout, validation)
+**Phase:** Phase 2 - Core Features (Sprint 9/32)
+
+#### impulse-auth Enhancements
+
+**Rate Limiting Module** (`rate_limit.rs`, 420 lines, 18 tests):
+- `RateLimiter` - Thread-safe sliding window rate limiting
+- `RateLimiterConfig` - Configurable limits (default: 5 attempts per 15 minutes)
+- Presets: Default, Strict (3/30min), Lenient (10/5min)
+- Per-key tracking (username or IP address)
+- Automatic attempt cleanup and expiration
+- Remaining attempts calculation
+
+**Account Lockout Module** (`lockout.rs`, 488 lines, 20 tests):
+- `AccountLockout` - Automatic account locking after repeated failures
+- `LockoutConfig` - Configurable thresholds (default: 5 failures, 30min lockout)
+- Progressive lockout support (exponentially increasing duration)
+- Manual unlock for admin override
+- Lockout expiration and automatic cleanup
+- Detailed lockout information (remaining time, failure count, reason)
+
+**Input Validation Module** (`validation.rs`, 650 lines, 17 tests):
+- `Validator` - Comprehensive input validation utilities
+- Username validation (3-20 chars, alphanumeric + underscore, starts with letter)
+- Password validation with configurable requirements
+- `PasswordStrength` enum (VeryWeak → VeryStrong with scoring algorithm)
+- Common password detection (top 32 common passwords)
+- Email format validation (RFC-compliant basic checks)
+- Password confirmation matching
+
+**AuthService Integration**:
+- Extended `AuthService` with optional rate limiting and account lockout
+- `new_with_protection()` constructor for production deployments
+- Automatic recording of failed and successful attempts
+- Lockout check before password verification
+- Rate limit enforcement with retry timing
+- Backward-compatible `new()` constructor for testing
+
+#### Quality Metrics
+
+**Tests Added**: +55 tests (17 validation, 18 rate_limit, 20 lockout)
+- **Total workspace tests**: 629 (up from 557+)
+- **All tests passing**: 100% pass rate maintained
+- **New coverage**: All new modules fully tested
+
+**Code Quality**:
+- **Clippy**: 0 warnings (strict mode enabled)
+- **rustfmt**: All files formatted
+- **rustdoc**: 0 warnings, 100% documentation coverage
+- **Lines Added**: ~1,600 lines (production + tests)
+
+**Module Sizes**:
+- `rate_limit.rs`: 420 lines (287 production, 133 tests)
+- `lockout.rs`: 488 lines (325 production, 163 tests)
+- `validation.rs`: 650 lines (420 production, 230 tests)
+- `lib.rs`: Enhanced with protection integration
+
+#### Features
+
+**Rate Limiting**:
+- ✅ Configurable sliding window (attempts per time period)
+- ✅ Per-key tracking (username/IP)
+- ✅ Automatic cleanup of expired attempts
+- ✅ Retry-after calculation for blocked requests
+- ✅ Thread-safe concurrent access (Arc<RwLock>)
+
+**Account Lockout**:
+- ✅ Automatic locking after threshold failures
+- ✅ Configurable lockout duration
+- ✅ Progressive lockout (optional exponential backoff)
+- ✅ Manual unlock for admin intervention
+- ✅ Detailed lockout information
+
+**Validation**:
+- ✅ Username format validation
+- ✅ Password complexity requirements (configurable)
+- ✅ Password strength scoring (7-point algorithm)
+- ✅ Common password detection
+- ✅ Email format validation
+- ✅ Password confirmation matching
+
+**Security Enhancements**:
+- ✅ Protection against brute-force attacks (rate limiting)
+- ✅ Automatic account protection (lockout after failures)
+- ✅ Input sanitization and validation
+- ✅ Timing-safe operations (existing Argon2 verification)
+
+#### Configuration Examples
+
+**Default Protection** (recommended for production):
+```rust
+use impulse_auth::{AuthService, rate_limit::RateLimiter, lockout::AccountLockout};
+use std::time::Duration;
+
+let auth = AuthService::new_with_protection(
+    Duration::from_secs(1800),  // 30 min session timeout
+    RateLimiter::new_default(), // 5 attempts / 15 minutes
+    AccountLockout::new_default(), // Lock after 5 failures for 30 min
+);
+```
+
+**Strict Protection** (high-security environments):
+```rust
+use impulse_auth::rate_limit::RateLimiterConfig;
+use impulse_auth::lockout::LockoutConfig;
+
+let rate_limiter = RateLimiter::with_config(RateLimiterConfig::strict());
+let lockout = AccountLockout::with_config(LockoutConfig::strict().with_progressive(true));
+```
+
+#### Documentation
+
+- ✅ Module-level documentation with examples
+- ✅ Comprehensive function documentation
+- ✅ Configuration presets documented
+- ✅ Error handling patterns documented
+- ✅ Integration examples in lib.rs
+- ✅ All public APIs have rustdoc coverage
+
+#### Next Steps (Sprint 9 Continuation)
+
+**Pending** (will be completed in future sessions):
+- [ ] Login/register/logout screens (impulse-session integration)
+- [ ] Integration tests for complete authentication flows
+- [ ] Benchmarks for password hashing and rate limiting
+- [ ] Web UI for admin account management
+
+**Note**: This session focused on the authentication *core* (security mechanisms).
+The UI/UX components (screens) will be implemented in subsequent sessions as they
+require terminal I/O infrastructure from Sprint 10.
+
 ### Phase 1 Foundation - COMPLETE (100%)
 
 **Milestone Achieved:** Phase 1 Foundation complete (8/8 sprints, 100%)

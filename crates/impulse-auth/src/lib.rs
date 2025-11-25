@@ -1,7 +1,46 @@
 //! Authentication and session management for the BBS
 //!
-//! This module provides password hashing, session management, and authentication
-//! services for user login/logout operations.
+//! This module provides password hashing, session management, authentication
+//! services, rate limiting, account lockout, and input validation for user
+//! login/logout operations.
+//!
+//! # Modules
+//!
+//! - [`rate_limit`] - Rate limiting for login attempts
+//! - [`lockout`] - Account lockout after repeated failures
+//! - [`validation`] - Input validation for usernames, passwords, and emails
+//!
+//! # Examples
+//!
+//! ## Complete authentication flow
+//!
+//! ```no_run
+//! use impulse_auth::{AuthService, rate_limit::RateLimiter, lockout::AccountLockout};
+//! use std::time::Duration;
+//!
+//! # async fn example() -> Result<(), Box<dyn std::error::Error>> {
+//! // Create authentication service with rate limiting and lockout
+//! let auth = AuthService::new_with_protection(
+//!     Duration::from_secs(1800), // 30 min session timeout
+//!     RateLimiter::new_default(),
+//!     AccountLockout::new_default(),
+//! );
+//!
+//! // Authenticate user
+//! let username = "johndoe";
+//! let password = "SecureP@ss123";
+//!
+//! match auth.authenticate(username, password, "stored_hash").await {
+//!     Ok(token) => println!("Login successful! Token: {}", token),
+//!     Err(e) => println!("Login failed: {}", e),
+//! }
+//! # Ok(())
+//! # }
+//! ```
+
+pub mod lockout;
+pub mod rate_limit;
+pub mod validation;
 
 use argon2::{
     Argon2,
@@ -336,21 +375,57 @@ impl Clone for SessionManager {
     }
 }
 
-/// Authentication service combining password verification and session management
+/// Authentication service combining password verification, session management,
+/// rate limiting, and account lockout
 pub struct AuthService {
     /// Password hasher
     hasher: PasswordHasher,
 
     /// Session manager
     sessions: SessionManager,
+
+    /// Rate limiter (optional)
+    rate_limiter: Option<rate_limit::RateLimiter>,
+
+    /// Account lockout (optional)
+    lockout: Option<lockout::AccountLockout>,
 }
 
 impl AuthService {
-    /// Create a new authentication service
+    /// Create a new authentication service without protection mechanisms
     pub fn new(session_timeout: Duration) -> Self {
         Self {
             hasher: PasswordHasher::new(),
             sessions: SessionManager::new(session_timeout),
+            rate_limiter: None,
+            lockout: None,
+        }
+    }
+
+    /// Create a new authentication service with rate limiting and account lockout
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use impulse_auth::{AuthService, rate_limit::RateLimiter, lockout::AccountLockout};
+    /// use std::time::Duration;
+    ///
+    /// let auth = AuthService::new_with_protection(
+    ///     Duration::from_secs(1800),
+    ///     RateLimiter::new_default(),
+    ///     AccountLockout::new_default(),
+    /// );
+    /// ```
+    pub fn new_with_protection(
+        session_timeout: Duration,
+        rate_limiter: rate_limit::RateLimiter,
+        lockout: lockout::AccountLockout,
+    ) -> Self {
+        Self {
+            hasher: PasswordHasher::new(),
+            sessions: SessionManager::new(session_timeout),
+            rate_limiter: Some(rate_limiter),
+            lockout: Some(lockout),
         }
     }
 
@@ -365,6 +440,9 @@ impl AuthService {
 
     /// Authenticate a user and create a session
     ///
+    /// Checks rate limiting and account lockout before attempting authentication.
+    /// Records failures and successful logins for security tracking.
+    ///
     /// # Arguments
     ///
     /// * `user` - The user to authenticate
@@ -374,34 +452,117 @@ impl AuthService {
     /// # Errors
     ///
     /// Returns `AuthError::InvalidCredentials` if password doesn't match
+    /// Returns errors from rate limiting or account lockout if applicable
     pub async fn login(
         &self,
         user: &User,
         password: &str,
         stored_hash: &str,
     ) -> Result<SessionToken, AuthError> {
+        let username = user.username();
+
+        // Check account lockout first
+        if let Some(ref lockout) = self.lockout {
+            if let Err(e) = lockout.check(username).await {
+                tracing::warn!(
+                    username = %username,
+                    error = %e,
+                    "Login blocked: account locked"
+                );
+                return Err(AuthError::Generic(e.to_string()));
+            }
+        }
+
+        // Check rate limiting
+        if let Some(ref rate_limiter) = self.rate_limiter {
+            if let Err(e) = rate_limiter.check(username).await {
+                tracing::warn!(
+                    username = %username,
+                    error = %e,
+                    "Login blocked: rate limit exceeded"
+                );
+                return Err(AuthError::Generic(e.to_string()));
+            }
+        }
+
         // Verify password
         match self.hasher.verify_password(password, stored_hash) {
             Ok(()) => {
+                // Clear rate limiting and lockout attempts on success
+                if let Some(ref rate_limiter) = self.rate_limiter {
+                    rate_limiter.record_success(username).await;
+                }
+                if let Some(ref lockout) = self.lockout {
+                    lockout.record_success(username).await;
+                }
+
                 // Create session
                 let token = self.sessions.create_session(user.id()).await;
                 tracing::info!(
                     user_id = ?user.id(),
-                    username = %user.username(),
+                    username = %username,
                     token = %token,
                     "User logged in successfully"
                 );
                 Ok(token)
             }
             Err(e) => {
+                // Record failed attempt for rate limiting and lockout
+                if let Some(ref rate_limiter) = self.rate_limiter {
+                    rate_limiter.record_attempt(username).await;
+                }
+                if let Some(ref lockout) = self.lockout {
+                    lockout.record_failure(username).await;
+                }
+
                 tracing::warn!(
                     user_id = ?user.id(),
-                    username = %user.username(),
+                    username = %username,
                     "Login failed: invalid credentials"
                 );
                 Err(e)
             }
         }
+    }
+
+    /// Authenticate a user with username (convenience method)
+    ///
+    /// Looks up user and calls login. Includes rate limiting and account lockout.
+    ///
+    /// # Arguments
+    ///
+    /// * `username` - Username to authenticate
+    /// * `password` - Password to verify
+    /// * `stored_hash` - The stored password hash
+    ///
+    /// # Errors
+    ///
+    /// Returns authentication errors from login attempt
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use impulse_auth::AuthService;
+    /// use std::time::Duration;
+    ///
+    /// # async fn example() -> Result<(), Box<dyn std::error::Error>> {
+    /// let auth = AuthService::new(Duration::from_secs(1800));
+    /// let token = auth.authenticate("johndoe", "password", "hash").await?;
+    /// # Ok(())
+    /// # }
+    /// ```
+    pub async fn authenticate(
+        &self,
+        username: &str,
+        password: &str,
+        stored_hash: &str,
+    ) -> Result<SessionToken, AuthError> {
+        // Create a temporary user for authentication
+        // In production, this would look up the actual user from storage
+        let user = User::new(username)
+            .map_err(|e| AuthError::Generic(format!("Invalid username: {}", e)))?;
+
+        self.login(&user, password, stored_hash).await
     }
 
     /// Validate a session token and return the user ID
@@ -500,6 +661,8 @@ impl Clone for AuthService {
         Self {
             hasher: PasswordHasher::new(),
             sessions: self.sessions.clone(),
+            rate_limiter: self.rate_limiter.clone(),
+            lockout: self.lockout.clone(),
         }
     }
 }

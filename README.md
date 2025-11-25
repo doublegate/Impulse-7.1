@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/doublegate/Impulse-Next_BBS/workflows/CI/badge.svg)](https://github.com/doublegate/Impulse-Next_BBS/actions)
 [![License](https://img.shields.io/badge/license-MIT%20OR%20Apache--2.0-blue.svg)](https://github.com/doublegate/Impulse-Next_BBS#license)
-[![Rust Version](https://img.shields.io/badge/rust-1.85%2B%20(edition%202024)-orange.svg)](https://www.rust-lang.org)
+[![Rust Version](<https://img.shields.io/badge/rust-1.85%2B%20(edition%202024)-orange.svg>)](https://www.rust-lang.org)
 
 A complete modernization of the classic Impulse 7.1 Bulletin Board System from Borland Pascal 7.0 to modern Rust, preserving BBS history while leveraging contemporary software engineering practices.
 
@@ -32,17 +32,17 @@ A complete modernization of the classic Impulse 7.1 Bulletin Board System from B
 
 All documentation is centralized in the `docs/` directory. Start with **[docs/INDEX.md](docs/INDEX.md)** for the complete documentation hub.
 
-| Category | Description | Files | Key Documents |
-|----------|-------------|-------|---------------|
-| [Getting Started](docs/getting-started/) | Project overview and introduction | 1 | project-overview.md |
-| [Architecture](docs/architecture/) | System design and technical architecture | 3 | system-architecture.md, security-architecture.md |
-| [Planning](docs/planning/) | Phase plans, sprint roadmaps | 2 | phase-sprint-plan.md, conversion-strategy.md |
-| [Implementation](docs/implementation/) | Development guides, integration docs | 2 | development-guide.md, logging-integration.md |
-| [Testing](docs/testing/) | Testing strategies and requirements | 1 | testing-strategy.md |
-| [Deployment](docs/deployment/) | Deployment and migration guides | 2 | deployment-guide.md, migration-guide.md |
-| [Pascal Reference](docs/pascal-reference/) | Complete Pascal analysis and conversion | 21 | Analysis, conversion guides, risk assessments |
-| [Reports](docs/reports/) | Analysis reports, sprint completions | 9 | CI/CD analysis, sprint reports |
-| [Reference](docs/reference/) | Historical context, technical notes | 2 | impulse-history.md |
+| Category                                   | Description                              | Files | Key Documents                                    |
+| ------------------------------------------ | ---------------------------------------- | ----- | ------------------------------------------------ |
+| [Getting Started](docs/getting-started/)   | Project overview and introduction        | 1     | project-overview.md                              |
+| [Architecture](docs/architecture/)         | System design and technical architecture | 3     | system-architecture.md, security-architecture.md |
+| [Planning](docs/planning/)                 | Phase plans, sprint roadmaps             | 2     | phase-sprint-plan.md, conversion-strategy.md     |
+| [Implementation](docs/implementation/)     | Development guides, integration docs     | 2     | development-guide.md, logging-integration.md     |
+| [Testing](docs/testing/)                   | Testing strategies and requirements      | 1     | testing-strategy.md                              |
+| [Deployment](docs/deployment/)             | Deployment and migration guides          | 2     | deployment-guide.md, migration-guide.md          |
+| [Pascal Reference](docs/pascal-reference/) | Complete Pascal analysis and conversion  | 21    | Analysis, conversion guides, risk assessments    |
+| [Reports](docs/reports/)                   | Analysis reports, sprint completions     | 9     | CI/CD analysis, sprint reports                   |
+| [Reference](docs/reference/)               | Historical context, technical notes      | 2     | impulse-history.md                               |
 
 **Total Documentation**: 43 files (38 markdown + 5 data files) covering all aspects of the project.
 
@@ -101,12 +101,14 @@ This project aims to:
 ### Phase 1 Achievements
 
 **Infrastructure:**
+
 - 18 crates (16 libraries + 2 binaries)
 - 5-job CI/CD pipeline (lint, test×3, build×3, coverage, benchmarks)
 - 102 commits across 59 Rust source files
 - 17,284 lines of production code
 
 **Quality Metrics:**
+
 - **Tests**: 557+ (100% passing rate)
 - **Coverage**: 64.51% baseline (target: 75% for Phase 2)
 - **Clippy**: 0 warnings
@@ -115,6 +117,7 @@ This project aims to:
 - **Test Execution**: <2s all tests
 
 **Key Features:**
+
 - Complete type system with Pascal binary compatibility
 - User management with Argon2id authentication
 - Configuration system with hot-reload
@@ -138,18 +141,21 @@ This project aims to:
 **Phase 1 Foundation (Sprints 1-8, November 2025):**
 
 **Core Infrastructure (Sprint 1):**
+
 - ✅ 18-crate Rust workspace (16 libraries + 2 binaries)
 - ✅ CI/CD pipeline with 5 jobs (lint, test×3 platforms, build×3, coverage, benchmarks)
 - ✅ Cross-platform support (Linux, Windows, macOS)
 - ✅ Comprehensive documentation (34 files, 31,000+ lines)
 
 **Type System (Sprint 2):**
+
 - ✅ Core types: User, FileEntry, Message, BbsConfig
 - ✅ Unified error handling (15 error variants)
 - ✅ JSON and binary serialization (serde framework)
 - ✅ 82 initial tests for validation and serialization
 
 **Pascal Analysis (Sprint 3):**
+
 - ✅ 114 Pascal files analyzed (39,079 lines of code)
 - ✅ Dependency graph (1,070 relationships mapped)
 - ✅ Risk assessment (11 critical, 27 high, 30 medium, 46 low risk units)
@@ -157,6 +163,7 @@ This project aims to:
 - ✅ 16 analysis documents (796KB documentation)
 
 **Configuration System (Sprint 4):**
+
 - ✅ impulse-config crate with hierarchical loading
 - ✅ TOML + environment variable support
 - ✅ 3 validation modes (config-only, strict, deployment)
@@ -164,6 +171,7 @@ This project aims to:
 - ✅ 37 tests covering all configuration scenarios
 
 **Pascal Compatibility (Sprint 5):**
+
 - ✅ 11 Pascal record modules (RECORDS.PAS conversion)
 - ✅ PascalString<N> generic type (fixed-length strings)
 - ✅ Binary format support for SYSTAT.DAT, USER.LST, BOARDS.DAT, UPLOADS.DAT
@@ -172,6 +180,7 @@ This project aims to:
 - ✅ 195 tests with binary round-trip verification
 
 **User Management (Sprint 6):**
+
 - ✅ UserManager trait (async CRUD API)
 - ✅ InMemoryUserManager (HashMap-based, testing)
 - ✅ FileUserManager (Pascal USER.LST binary compatibility)
@@ -181,6 +190,7 @@ This project aims to:
 - ✅ 42 tests (26 impulse-user, 16 impulse-auth)
 
 **Logging Infrastructure (Sprint 7):**
+
 - ✅ impulse-logging crate (structured logging with tracing)
 - ✅ File rotation (hourly, daily, weekly, size-based policies)
 - ✅ Log archival (compression, retention management)
@@ -192,6 +202,7 @@ This project aims to:
 - ✅ <2µs overhead per log event
 
 **Testing Framework (Sprint 8):**
+
 - ✅ Code coverage baseline: 64.51% (1018/1578 lines)
 - ✅ Integration test framework (tests/common helpers)
 - ✅ Property-based testing infrastructure (proptest 1.5)
@@ -204,6 +215,7 @@ This project aims to:
 ### Planned Features
 
 **Phase 2 (Sprints 9-16, ~6-8 weeks) - Core Services**
+
 - Sprint 9: Session management (concurrent sessions, timeouts)
 - Sprint 10: Terminal I/O (ANSI rendering, input handling)
 - Sprint 11: Telnet server (RFC 854, IAC negotiation)
@@ -214,12 +226,14 @@ This project aims to:
 - Sprint 16: User profiles and statistics
 
 **Phase 3 (Sprints 17-24, ~6-8 weeks) - Feature Completion**
+
 - File transfer protocols (Zmodem, Xmodem, Ymodem)
 - Theme system
 - Door game interface (DOSBox integration)
 - QWK offline reader support
 
 **Phase 4 (Sprints 25-32, ~6-8 weeks) - Polish & Launch**
+
 - Performance optimization
 - Web-based administration
 - Legacy data migration tools
@@ -240,51 +254,54 @@ This project aims to:
 ### High-Level Design
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                     Impulse BBS System                          │
-│                                                                 │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐        │
-│  │   Telnet/    │  │     SSH      │  │  HTTP/REST   │        │
-│  │  Serial Port │  │   Server     │  │     API      │        │
-│  └──────┬───────┘  └──────┬───────┘  └──────┬───────┘        │
-│         │                  │                  │                 │
-│         └──────────────────┴──────────────────┘                │
-│                            │                                    │
-│                 ┌──────────▼──────────┐                        │
-│                 │  Session Manager    │                        │
-│                 │   (Async/Tokio)     │                        │
-│                 └──────────┬──────────┘                        │
-│                            │                                    │
-│         ┌──────────────────┼──────────────────┐               │
-│         │                  │                  │                │
-│  ┌──────▼───────┐  ┌──────▼──────┐  ┌───────▼────────┐       │
-│  │ Terminal I/O │  │   Message    │  │  File Transfer │       │
-│  │  Subsystem   │  │   Subsystem  │  │   Subsystem    │       │
-│  └──────┬───────┘  └──────┬───────┘  └───────┬────────┘       │
-│         │                  │                  │                 │
-│         └──────────────────┴──────────────────┘                │
-│                            │                                    │
-│                 ┌──────────▼──────────┐                        │
-│                 │   Storage Layer     │                        │
-│                 │  (SQLite/Postgres)  │                        │
-│                 └─────────────────────┘                        │
-└─────────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────┐
+│                     Impulse BBS System                  │
+│                                                         │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐   │
+│  │   Telnet/    │  │     SSH      │  │  HTTP/REST   │   │
+│  │  Serial Port │  │   Server     │  │     API      │   │
+│  └──────┬───────┘  └──────┬───────┘  └──────┬───────┘   │
+│         │                 │                 │           │
+│         └─────────────────┴─────────────────┘           │
+│                            │                            │
+│                 ┌──────────▼──────────┐                 │
+│                 │  Session Manager    │                 │
+│                 │   (Async/Tokio)     │                 │
+│                 └──────────┬──────────┘                 │
+│                            │                            │
+│         ┌──────────────────┼──────────────────┐         │
+│         │                  │                  │         │
+│  ┌──────▼───────┐  ┌──────▼───────┐  ┌────────▼───────┐ │
+│  │ Terminal I/O │  │   Message    │  │  File Transfer │ │
+│  │  Subsystem   │  │   Subsystem  │  │   Subsystem    │ │
+│  └──────┬───────┘  └──────┬───────┘  └───────┬────────┘ │
+│         │                  │                  │         │
+│         └──────────────────┴──────────────────┘         │
+│                            │                            │
+│                 ┌──────────▼──────────┐                 │
+│                 │   Storage Layer     │                 │
+│                 │  (SQLite/Postgres)  │                 │
+│                 └─────────────────────┘                 │
+└─────────────────────────────────────────────────────────┘
 ```
 
 ### 18-Crate Workspace Structure
 
 **Core Crates:**
+
 - `impulse-core` - Core BBS logic and state management
 - `impulse-types` - Shared data types and error handling
 - `impulse-config` - Configuration management
 - `impulse-logging` - Structured logging, file rotation, audit trails
 
 **Protocol Crates:**
+
 - `impulse-protocol` - Protocol trait definitions
 - `impulse-telnet` - Telnet protocol implementation
 - `impulse-ssh` - SSH protocol implementation
 
 **Feature Crates:**
+
 - `impulse-session` - Session management and event loops
 - `impulse-terminal` - Terminal I/O and ANSI rendering
 - `impulse-auth` - Authentication (Argon2id)
@@ -294,6 +311,7 @@ This project aims to:
 - `impulse-door` - Door game support
 
 **Application Crates:**
+
 - `impulse-web` - Web admin panel (Axum)
 - `impulse-server` - Main server binary
 - `impconfig` - Configuration management CLI tool (binary)
@@ -466,6 +484,7 @@ Impulse-Next_BBS/
 ### Key Dependencies
 
 **Production:**
+
 - `tokio` 1.47 - Async runtime (full features)
 - `tokio-util` 0.7 - Async utilities
 - `crossterm` 0.29 - Terminal I/O
@@ -484,11 +503,13 @@ Impulse-Next_BBS/
 - `bitflags` 2.6 - Pascal set types
 
 **Development:**
+
 - `proptest` 1.5 - Property-based testing
 - `serial_test` 3.0 - Test isolation
 - `tempfile` 3.8 - Temporary file handling
 
 **Build Optimization:**
+
 - LTO enabled in release builds
 - Single codegen unit for maximum optimization
 - Debug symbols stripped in release
@@ -504,39 +525,48 @@ All documentation has been reorganized into 9 logical categories with 43 files (
 ### Key Documentation by Category
 
 **Getting Started:**
+
 - [Project Overview](docs/getting-started/project-overview.md) - Vision, objectives, stakeholders
 
 **Architecture:**
+
 - [System Architecture](docs/architecture/system-architecture.md) - Overall system design
 - [Security Architecture](docs/architecture/security-architecture.md) - Security design and threat model
 - [Data Model](docs/architecture/data-model.md) - Database schema and relationships
 
 **Planning:**
+
 - [Phase & Sprint Plan](docs/planning/phase-sprint-plan.md) - Complete 32-sprint roadmap
 - [Conversion Strategy](docs/planning/conversion-strategy.md) - Pascal→Rust migration approach
 
 **Implementation:**
+
 - [Development Guide](docs/implementation/development-guide.md) - Developer onboarding
 - [Logging Integration](docs/implementation/logging-integration.md) - Structured logging guide
 
 **Testing:**
+
 - [Testing Strategy](docs/testing/testing-strategy.md) - Comprehensive testing methodology
 
 **Deployment:**
+
 - [Deployment Guide](docs/deployment/deployment-guide.md) - Docker, Kubernetes, production setup
 - [Migration Guide](docs/deployment/migration-guide.md) - Legacy data migration
 
 **Pascal Reference:**
+
 - [Analysis Reports](docs/pascal-reference/analysis/) - 7 analysis documents + 5 data files
 - [Conversion Guides](docs/pascal-reference/conversion/) - 6 module-specific guides
 - [Risk Assessments](docs/pascal-reference/risk-assessment/) - 3 risk analysis documents
 
 **Reports:**
+
 - [Sprint Completions](docs/reports/sprints/) - Phase 1 sprint reports
 - [CI/CD Analysis](docs/reports/ci-cd/) - Pipeline optimization reports
 - [Documentation Verification](docs/reports/documentation/) - Link checking, verification
 
 **Reference:**
+
 - [Impulse History](docs/reference/impulse-history.md) - BBS history and cultural context
 
 ### Sprint TODO Files (to-dos/)
@@ -553,6 +583,7 @@ Detailed sprint plans for all 32 sprints:
 ### Additional Resources
 
 For historical context and technical details:
+
 - See [docs/reference/](docs/reference/) for BBS history and cultural context
 - See [docs/pascal-reference/](docs/pascal-reference/) for complete Pascal analysis and conversion guides
 
@@ -569,6 +600,7 @@ cargo doc --workspace --no-deps --open
 ### 4 Phases, 24 Months, 32 Sprints
 
 **Phase 1: Foundation (November 2025, Sprints 1-8) - ✅ COMPLETE**
+
 - ✅ Sprint 1: Project setup (18-crate workspace, CI/CD)
 - ✅ Sprint 2: Core type system (User, FileEntry, Message, BbsConfig)
 - ✅ Sprint 3: Pascal analysis (114 files, 1,070 dependencies)
@@ -579,6 +611,7 @@ cargo doc --workspace --no-deps --open
 - ✅ Sprint 8: Testing framework (64.51% coverage, benchmarks)
 
 **Phase 2: Core Services (December 2025 - January 2026, Sprints 9-16)**
+
 - Sprint 9: Session management (WebSocket, concurrent handling)
 - Sprint 10: Terminal I/O (ANSI rendering, input processing)
 - Sprint 11: Telnet protocol (RFC 854, IAC negotiation)
@@ -589,6 +622,7 @@ cargo doc --workspace --no-deps --open
 - Sprint 16: User profiles (statistics, preferences)
 
 **Phase 3: Feature Completion (February - March 2026, Sprints 17-24)**
+
 - Zmodem and file transfer protocols
 - Theme system
 - Door game interface
@@ -596,6 +630,7 @@ cargo doc --workspace --no-deps --open
 - Administration interface
 
 **Phase 4: Polish & Launch (April - May 2026, Sprints 25-32)**
+
 - Performance optimization
 - Comprehensive documentation
 - Legacy migration tools
@@ -605,13 +640,13 @@ cargo doc --workspace --no-deps --open
 
 ### Key Milestones
 
-| Milestone | Target | Status | Completion |
-|-----------|--------|--------|------------|
-| Phase 1 Complete | Month 6 | ✅ **COMPLETE** | November 2025 (6 weeks) |
-| Phase 2 Complete | Month 12 | 🔄 In Progress | Target: January 2026 |
-| Phase 3 Complete | Month 18 | Pending | Target: March 2026 |
-| Phase 4 Complete | Month 24 | Pending | Target: May 2026 |
-| Production Launch | Month 24 | Pending | Target: May 2026 |
+| Milestone         | Target   | Status          | Completion              |
+| ----------------- | -------- | --------------- | ----------------------- |
+| Phase 1 Complete  | Month 6  | ✅ **COMPLETE** | November 2025 (6 weeks) |
+| Phase 2 Complete  | Month 12 | 🔄 In Progress  | Target: January 2026    |
+| Phase 3 Complete  | Month 18 | Pending         | Target: March 2026      |
+| Phase 4 Complete  | Month 24 | Pending         | Target: May 2026        |
+| Production Launch | Month 24 | Pending         | Target: May 2026        |
 
 **Progress:** 25% complete (8/32 sprints), ~10 weeks ahead of schedule
 
@@ -623,12 +658,14 @@ cargo doc --workspace --no-deps --open
 **Code Coverage**: 64.51% baseline (1018/1578 lines covered)
 
 **Test Types:**
+
 - **Unit Tests**: 400+ tests (validation logic, CRUD, authentication, logging)
 - **Integration Tests**: 100+ tests (serialization, file I/O, sessions, cross-crate workflows)
 - **Doc Tests**: 40+ tests (documentation examples)
 - **Benchmarks**: 7 performance benchmarks (authentication critical paths)
 
 **Test Breakdown by Crate:**
+
 - impulse-types: 241 tests (Pascal compatibility, core types, serialization)
 - impulse-logging: 80 tests (52 unit, 18 integration, 10 benchmarks)
 - impulse-config: 37 tests (configuration, validation, hot-reload)
@@ -637,6 +674,7 @@ cargo doc --workspace --no-deps --open
 - Other crates: 150+ tests (protocols, terminal, message, file, door, web)
 
 **Coverage by Crate:**
+
 - impulse-types: 81.23% (highest coverage)
 - impulse-auth: 75.89%
 - impulse-user: 72.45%
@@ -755,4 +793,4 @@ Built with excellent open-source technologies:
 
 **"We're figuring it out!"** - Preserving BBS history, one commit at a time.
 
-*For detailed sprint plans, architecture decisions, and technical specifications, see the comprehensive documentation in the [docs/](docs/) directory. Start with [docs/INDEX.md](docs/INDEX.md) for guided navigation.*
+_For detailed sprint plans, architecture decisions, and technical specifications, see the comprehensive documentation in the [docs/](docs/) directory. Start with [docs/INDEX.md](docs/INDEX.md) for guided navigation._
