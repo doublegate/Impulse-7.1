@@ -219,3 +219,94 @@ impl SearchCriteria {
         self
     }
 }
+
+/// New message for posting
+#[derive(Debug, Clone)]
+pub struct NewMessage {
+    /// Sender username
+    pub from: String,
+    /// Recipient username (or "All" for public)
+    pub to: String,
+    /// Message subject
+    pub subject: String,
+    /// Message body text
+    pub body: String,
+    /// Whether message is private
+    pub is_private: bool,
+    /// Parent message number (if reply)
+    pub reply_to: Option<u32>,
+    /// Message area name
+    pub area: String,
+}
+
+impl NewMessage {
+    /// Create a new message
+    pub fn new(from: impl Into<String>, to: impl Into<String>, subject: impl Into<String>) -> Self {
+        Self {
+            from: from.into(),
+            to: to.into(),
+            subject: subject.into(),
+            body: String::new(),
+            is_private: false,
+            reply_to: None,
+            area: "general".to_string(),
+        }
+    }
+
+    /// Set message body
+    pub fn with_body(mut self, body: impl Into<String>) -> Self {
+        self.body = body.into();
+        self
+    }
+
+    /// Mark as private
+    pub fn private(mut self) -> Self {
+        self.is_private = true;
+        self
+    }
+
+    /// Mark as public
+    pub fn public(mut self) -> Self {
+        self.is_private = false;
+        self
+    }
+
+    /// Set as reply to another message
+    pub fn reply_to(mut self, msg_num: u32) -> Self {
+        self.reply_to = Some(msg_num);
+        self
+    }
+
+    /// Set message area
+    pub fn in_area(mut self, area: impl Into<String>) -> Self {
+        self.area = area.into();
+        self
+    }
+}
+
+/// Message validation limits
+#[derive(Debug, Clone)]
+pub struct ValidationLimits {
+    /// Maximum subject length
+    pub max_subject_len: usize,
+    /// Maximum body length
+    pub max_body_len: usize,
+    /// Maximum line width
+    pub max_line_width: usize,
+    /// Minimum subject length
+    pub min_subject_len: usize,
+    /// Minimum body length
+    pub min_body_len: usize,
+}
+
+impl Default for ValidationLimits {
+    fn default() -> Self {
+        Self {
+            max_subject_len: 72,
+            max_body_len: 64 * 1024, // 64KB
+            max_line_width: 79,
+            min_subject_len: 1,
+            min_body_len: 1,
+        }
+    }
+}

@@ -1,13 +1,17 @@
 //! Message base management for Impulse 7.1 BBS
 //!
-//! This crate provides message base reading and management functionality,
+//! This crate provides complete message base functionality,
 //! supporting multiple formats (JAM, Hudson) with threaded conversations,
-//! search capabilities, and UI screens.
+//! message posting, reply functionality, search capabilities, and UI screens.
 //!
 //! # Features
 //!
 //! - **Multiple Formats**: JAM and Hudson message base formats
+//! - **Message Writing**: Post new messages and replies
 //! - **Threaded Discussions**: Full thread support with parent/child relationships
+//! - **Message Quoting**: Quote original messages in replies
+//! - **Validation**: Comprehensive message validation and sanitization
+//! - **Atomic Writes**: Safe, atomic file operations to prevent corruption
 //! - **Search**: Search messages by from, to, subject, body, and date
 //! - **UI Screens**: Message list and read screens for display
 //! - **Async**: Fully async API using tokio
@@ -26,6 +30,49 @@
 //! println!("From: {}", message.header.from);
 //! println!("Subject: {}", message.header.subject);
 //! println!("Body: {}", message.body);
+//! # Ok(())
+//! # }
+//! ```
+//!
+//! ## Posting a new message
+//!
+//! ```no_run
+//! use impulse_message::formats::JamMessageBase;
+//! use impulse_message::traits::MessageBase;
+//! use impulse_message::types::NewMessage;
+//!
+//! # async fn example() -> Result<(), Box<dyn std::error::Error>> {
+//! let mut base = JamMessageBase::new("/path/to/base");
+//! let message = NewMessage::new("Alice", "Bob", "Hello!")
+//!     .with_body("This is my first message.");
+//!
+//! let msg_num = base.post_message(message).await?;
+//! println!("Posted message #{}", msg_num);
+//! # Ok(())
+//! # }
+//! ```
+//!
+//! ## Replying to a message with quoting
+//!
+//! ```no_run
+//! use impulse_message::formats::JamMessageBase;
+//! use impulse_message::traits::MessageBase;
+//! use impulse_message::reply::ReplyBuilder;
+//!
+//! # async fn example() -> Result<(), Box<dyn std::error::Error>> {
+//! let mut base = JamMessageBase::new("/path/to/base");
+//!
+//! // Read original message
+//! let original = base.read_message(1).await?;
+//!
+//! // Build reply with quoting
+//! let reply = ReplyBuilder::new(original)
+//!     .quote_original(true)
+//!     .build("Bob", "Thanks for your message!");
+//!
+//! // Post the reply
+//! let msg_num = base.post_message(reply).await?;
+//! println!("Posted reply #{}", msg_num);
 //! # Ok(())
 //! # }
 //! ```
@@ -85,9 +132,28 @@ pub mod formats;
 /// UI screens
 pub mod screens;
 
+/// Message validation
+pub mod validation;
+
+/// Content sanitization
+pub mod sanitize;
+
+/// Atomic file operations
+pub mod atomic;
+
+/// Message quoting
+pub mod quote;
+
+/// Reply functionality
+pub mod reply;
+
 // Re-export commonly used types
 pub use error::{MessageError, Result};
+pub use reply::ReplyBuilder;
+pub use sanitize::MessageSanitizer;
 pub use traits::MessageBase;
 pub use types::{
-    FullMessage, KludgeLine, MessageBaseStats, MessageHeader, MessageThread, SearchCriteria,
+    FullMessage, KludgeLine, MessageBaseStats, MessageHeader, MessageThread, NewMessage,
+    SearchCriteria, ValidationLimits,
 };
+pub use validation::MessageValidator;

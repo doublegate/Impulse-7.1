@@ -1,12 +1,14 @@
 //! Message base trait definitions
 
 use crate::error::Result;
-use crate::types::{FullMessage, MessageBaseStats, MessageHeader, MessageThread, SearchCriteria};
+use crate::types::{
+    FullMessage, MessageBaseStats, MessageHeader, MessageThread, NewMessage, SearchCriteria,
+};
 use async_trait::async_trait;
 
-/// Message base interface for reading messages
+/// Message base interface for reading and writing messages
 ///
-/// This trait defines the operations for reading messages from a message base,
+/// This trait defines the operations for reading and writing messages to a message base,
 /// supporting various formats (JAM, Hudson, etc.).
 #[async_trait]
 pub trait MessageBase: Send + Sync {
@@ -73,4 +75,29 @@ pub trait MessageBase: Send + Sync {
     /// # Returns
     /// A tuple of (first_msg, last_msg)
     async fn get_message_range(&self) -> Result<(u32, u32)>;
+
+    /// Post a new message
+    ///
+    /// # Arguments
+    /// * `message` - The new message to post
+    ///
+    /// # Returns
+    /// The message number assigned to the new message
+    ///
+    /// # Errors
+    /// Returns error if validation fails or write operation fails
+    async fn post_message(&mut self, message: NewMessage) -> Result<u32>;
+
+    /// Reply to an existing message
+    ///
+    /// # Arguments
+    /// * `parent_msg_num` - The message number to reply to
+    /// * `message` - The reply message (reply_to will be set automatically)
+    ///
+    /// # Returns
+    /// The message number assigned to the reply
+    ///
+    /// # Errors
+    /// Returns error if parent doesn't exist, validation fails, or write operation fails
+    async fn reply_to_message(&mut self, parent_msg_num: u32, message: NewMessage) -> Result<u32>;
 }

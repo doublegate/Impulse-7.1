@@ -55,6 +55,58 @@ pub enum MessageError {
     /// Cache error
     #[error("Cache error: {0}")]
     Cache(String),
+
+    /// Validation error
+    #[error("Validation error: {0}")]
+    Validation(String),
+
+    /// Message body too long
+    #[error("Message body exceeds maximum length of {max} bytes (got {actual})")]
+    BodyTooLong {
+        /// Maximum allowed length
+        max: usize,
+        /// Actual length
+        actual: usize,
+    },
+
+    /// Subject too long
+    #[error("Subject exceeds maximum length of {max} characters (got {actual})")]
+    SubjectTooLong {
+        /// Maximum allowed length
+        max: usize,
+        /// Actual length
+        actual: usize,
+    },
+
+    /// Subject too short
+    #[error("Subject is too short (minimum {min} characters)")]
+    SubjectTooShort {
+        /// Minimum required length
+        min: usize,
+    },
+
+    /// Body too short
+    #[error("Message body is too short (minimum {min} characters)")]
+    BodyTooShort {
+        /// Minimum required length
+        min: usize,
+    },
+
+    /// Required field missing
+    #[error("Required field missing: {0}")]
+    RequiredFieldMissing(String),
+
+    /// Write error
+    #[error("Write error: {0}")]
+    WriteError(String),
+
+    /// Atomic operation failed
+    #[error("Atomic operation failed: {0}")]
+    AtomicFailed(String),
+
+    /// Index update failed
+    #[error("Index update failed: {0}")]
+    IndexUpdateFailed(String),
 }
 
 impl From<binrw::Error> for MessageError {

@@ -2,13 +2,19 @@
 
 mod header;
 mod kludge;
+mod write;
 
 pub use header::*;
 pub use kludge::*;
+pub use write::*;
 
 use crate::error::{MessageError, Result};
+use crate::sanitize::MessageSanitizer;
 use crate::traits::MessageBase;
-use crate::types::{FullMessage, MessageBaseStats, MessageHeader, MessageThread, SearchCriteria};
+use crate::types::{
+    FullMessage, MessageBaseStats, MessageHeader, MessageThread, NewMessage, SearchCriteria,
+};
+use crate::validation::MessageValidator;
 use async_trait::async_trait;
 use binrw::BinRead;
 use chrono::Utc;
@@ -370,6 +376,67 @@ impl MessageBase for JamMessageBase {
         let first = base_header.base_msg_num;
         let last = first + base_header.active - 1;
         Ok((first, last))
+    }
+
+    async fn post_message(&mut self, message: NewMessage) -> Result<u32> {
+        // Validate message
+        let validator = MessageValidator::new();
+        validator.validate(&message)?;
+
+        // Sanitize message
+        let sanitizer = MessageSanitizer::new();
+        let sanitized = sanitizer.sanitize(&message);
+
+        // Get current message count
+        let base_header = self.load_base_header().await?;
+        let next_msg_num = base_header.base_msg_num + base_header.active;
+
+        // Create writer
+        let writer = JamWriter::new(&self.base_path);
+
+        // Get current .JDT offset
+        let current_offset = writer.get_jdt_size().await?;
+
+        // Write message
+        let (jhr_data, jdt_data, _next_offset) = writer
+            .write_message(&sanitized, next_msg_num, current_offset)
+            .await?;
+
+        // Append to files
+        writer.append_message(&jhr_data, &jdt_data).await?;
+
+        // Update base header
+        writer.update_base_header(base_header.active + 1).await?;
+
+        // Invalidate cache
+        {
+            let mut cache = self.base_header.write().await;
+            *cache = None;
+        }
+
+        Ok(next_msg_num)
+    }
+
+    async fn reply_to_message(
+        &mut self,
+        parent_msg_num: u32,
+        mut message: NewMessage,
+    ) -> Result<u32> {
+        // Verify parent exists
+        if !self.message_exists(parent_msg_num).await? {
+            return Err(MessageError::MessageNotFound(parent_msg_num));
+        }
+
+        // Set reply_to field
+        message.reply_to = Some(parent_msg_num);
+
+        // Ensure subject starts with "Re: "
+        if !message.subject.starts_with("Re: ") {
+            message.subject = format!("Re: {}", message.subject);
+        }
+
+        // Post as normal message
+        self.post_message(message).await
     }
 }
 

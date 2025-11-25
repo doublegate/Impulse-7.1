@@ -137,16 +137,24 @@ impl MessageListScreen {
         let mut output = String::new();
 
         // Header
-        output.push_str("╔════════════════════════════════════════════════════════════════════════╗\n");
+        output.push_str(
+            "╔════════════════════════════════════════════════════════════════════════╗\n",
+        );
         output.push_str(&format!(
             "║  Messages - Page {}/{}  ({} total)                                \n",
             self.current_page + 1,
             self.max_page() + 1,
             self.total_count
         ));
-        output.push_str("╠═══╤═════════════════╤═════════════════╤════════════════════════╤═══════╣\n");
-        output.push_str("║ # │ From            │ To              │ Subject                │ Date  ║\n");
-        output.push_str("╠═══╪═════════════════╪═════════════════╪════════════════════════╪═══════╣\n");
+        output.push_str(
+            "╠═══╤═════════════════╤═════════════════╤════════════════════════╤═══════╣\n",
+        );
+        output.push_str(
+            "║ # │ From            │ To              │ Subject                │ Date  ║\n",
+        );
+        output.push_str(
+            "╠═══╪═════════════════╪═════════════════╪════════════════════════╪═══════╣\n",
+        );
 
         // Messages
         for msg in &self.messages {
@@ -170,7 +178,9 @@ impl MessageListScreen {
         }
 
         // Footer
-        output.push_str("╚═══╧═════════════════╧═════════════════╧════════════════════════╧═══════╝\n");
+        output.push_str(
+            "╚═══╧═════════════════╧═════════════════╧════════════════════════╧═══════╝\n",
+        );
         output.push_str("  [N]ext  [P]rev  [R]ead  [S]earch  [Q]uit\n");
 
         output

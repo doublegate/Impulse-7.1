@@ -6,7 +6,8 @@
 use crate::error::{MessageError, Result};
 use crate::traits::MessageBase;
 use crate::types::{
-    FullMessage, KludgeLine, MessageBaseStats, MessageHeader, MessageThread, SearchCriteria,
+    FullMessage, KludgeLine, MessageBaseStats, MessageHeader, MessageThread, NewMessage,
+    SearchCriteria,
 };
 use async_trait::async_trait;
 use binrw::{BinRead, binread};
@@ -457,6 +458,24 @@ impl MessageBase for HudsonMessageBase {
     async fn get_message_range(&self) -> Result<(u32, u32)> {
         let total = self.message_count().await?;
         Ok((1, total))
+    }
+
+    async fn post_message(&mut self, _message: NewMessage) -> Result<u32> {
+        // TODO: Implement Hudson message writing in future sprint
+        Err(MessageError::WriteError(
+            "Hudson write support not yet implemented".to_string(),
+        ))
+    }
+
+    async fn reply_to_message(
+        &mut self,
+        _parent_msg_num: u32,
+        _message: NewMessage,
+    ) -> Result<u32> {
+        // TODO: Implement Hudson reply writing in future sprint
+        Err(MessageError::WriteError(
+            "Hudson write support not yet implemented".to_string(),
+        ))
     }
 }
 

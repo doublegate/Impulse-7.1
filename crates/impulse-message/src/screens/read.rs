@@ -112,12 +112,16 @@ impl MessageReadScreen {
 
         if let Some(msg) = &self.message {
             // Header
-            output.push_str("╔════════════════════════════════════════════════════════════════════════╗\n");
+            output.push_str(
+                "╔════════════════════════════════════════════════════════════════════════╗\n",
+            );
             output.push_str(&format!(
                 "║ Message #{:<4}                                                         ║\n",
                 msg.header.msg_num
             ));
-            output.push_str("╠════════════════════════════════════════════════════════════════════════╣\n");
+            output.push_str(
+                "╠════════════════════════════════════════════════════════════════════════╣\n",
+            );
             output.push_str(&format!("║ From: {:<65} ║\n", msg.header.from));
             output.push_str(&format!("║ To:   {:<65} ║\n", msg.header.to));
             output.push_str(&format!("║ Subj: {:<65} ║\n", msg.header.subject));
@@ -136,7 +140,9 @@ impl MessageReadScreen {
                 }
             }
 
-            output.push_str("╠════════════════════════════════════════════════════════════════════════╣\n");
+            output.push_str(
+                "╠════════════════════════════════════════════════════════════════════════╣\n",
+            );
 
             // Body (wrapped)
             let wrapped = Self::wrap_text(&msg.body, self.config.wrap_width - 4);
@@ -153,7 +159,9 @@ impl MessageReadScreen {
 
             // Kludges (if enabled)
             if self.config.show_kludges && !msg.kludges.is_empty() {
-                output.push_str("╠════════════════════════════════════════════════════════════════════════╣\n");
+                output.push_str(
+                    "╠════════════════════════════════════════════════════════════════════════╣\n",
+                );
                 output.push_str("║ Kludges:                                                                 ║\n");
                 for kludge in &msg.kludges {
                     output.push_str(&format!(
@@ -164,7 +172,9 @@ impl MessageReadScreen {
             }
 
             // Footer
-            output.push_str("╚════════════════════════════════════════════════════════════════════════╝\n");
+            output.push_str(
+                "╚════════════════════════════════════════════════════════════════════════╝\n",
+            );
             output.push_str("  [N]ext  [P]rev  [R]eply  [L]ist  [Q]uit\n");
         } else {
             output.push_str("No message loaded\n");
