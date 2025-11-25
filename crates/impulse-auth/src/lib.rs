@@ -6,6 +6,7 @@
 //!
 //! # Modules
 //!
+//! - [`flows`] - High-level authentication workflows (login, register, logout)
 //! - [`rate_limit`] - Rate limiting for login attempts
 //! - [`lockout`] - Account lockout after repeated failures
 //! - [`validation`] - Input validation for usernames, passwords, and emails
@@ -38,6 +39,7 @@
 //! # }
 //! ```
 
+pub mod flows;
 pub mod lockout;
 pub mod rate_limit;
 pub mod validation;
@@ -243,6 +245,24 @@ impl Default for PasswordHasher {
     }
 }
 
+/// Session information
+///
+/// Contains metadata about an active session.
+#[derive(Debug, Clone)]
+pub struct SessionInfo {
+    /// User ID associated with this session
+    pub user_id: UserId,
+
+    /// When the session was created
+    pub created_at: chrono::DateTime<chrono::Utc>,
+
+    /// Last activity timestamp
+    pub last_activity: chrono::DateTime<chrono::Utc>,
+
+    /// When the session will expire
+    pub expires_at: chrono::DateTime<chrono::Utc>,
+}
+
 /// Session manager for tracking active sessions
 pub struct SessionManager {
     /// Active sessions by token
@@ -363,6 +383,96 @@ impl SessionManager {
     pub async fn session_count(&self) -> usize {
         let sessions = self.sessions.read().await;
         sessions.values().filter(|s| !s.is_expired()).count()
+    }
+
+    /// Check if session is still valid (not expired)
+    ///
+    /// # Arguments
+    ///
+    /// * `token` - Session token to check
+    ///
+    /// # Returns
+    ///
+    /// Returns `true` if session exists and is not expired
+    pub async fn is_valid(&self, token: &SessionToken) -> bool {
+        if let Ok(session) = self.get_session(token).await {
+            !session.is_expired()
+        } else {
+            false
+        }
+    }
+
+    /// Refresh session - update last activity timestamp
+    ///
+    /// This is an alias for `touch_session` for consistency with
+    /// common session management terminology.
+    ///
+    /// # Arguments
+    ///
+    /// * `token` - Session token to refresh
+    ///
+    /// # Errors
+    ///
+    /// Returns `AuthError::SessionNotFound` if session doesn't exist
+    /// Returns `AuthError::SessionExpired` if session is expired
+    pub async fn refresh(&self, token: &SessionToken) -> Result<(), AuthError> {
+        self.touch_session(token).await
+    }
+
+    /// Get session info (user_id, created_at, last_activity, expires_at)
+    ///
+    /// # Arguments
+    ///
+    /// * `token` - Session token to get info for
+    ///
+    /// # Returns
+    ///
+    /// Returns `Some(SessionInfo)` if session exists and is valid,
+    /// `None` if session doesn't exist or is expired
+    pub async fn get_info(&self, token: &SessionToken) -> Option<SessionInfo> {
+        match self.get_session(token).await {
+            Ok(session) => {
+                let created_at = session
+                    .created_at()
+                    .duration_since(std::time::UNIX_EPOCH)
+                    .ok()?;
+                let last_activity = session
+                    .last_activity()
+                    .duration_since(std::time::UNIX_EPOCH)
+                    .ok()?;
+                let expires_at = last_activity + session.timeout;
+
+                Some(SessionInfo {
+                    user_id: session.user_id(),
+                    created_at: chrono::DateTime::from_timestamp(
+                        created_at.as_secs() as i64,
+                        created_at.subsec_nanos(),
+                    )?,
+                    last_activity: chrono::DateTime::from_timestamp(
+                        last_activity.as_secs() as i64,
+                        last_activity.subsec_nanos(),
+                    )?,
+                    expires_at: chrono::DateTime::from_timestamp(
+                        expires_at.as_secs() as i64,
+                        expires_at.subsec_nanos(),
+                    )?,
+                })
+            }
+            Err(_) => None,
+        }
+    }
+
+    /// Get active session count for a user
+    ///
+    /// # Arguments
+    ///
+    /// * `user_id` - User ID to count sessions for
+    ///
+    /// # Returns
+    ///
+    /// Returns the number of active (non-expired) sessions for the user
+    pub async fn active_sessions_for_user(&self, user_id: UserId) -> u32 {
+        self.get_user_sessions(user_id).await.len() as u32
     }
 }
 
@@ -937,5 +1047,86 @@ mod tests {
         let count = auth.cleanup_expired_sessions().await;
         assert_eq!(count, 2);
         assert_eq!(auth.active_session_count().await, 0);
+    }
+
+    #[tokio::test]
+    async fn test_session_manager_is_valid() {
+        let manager = SessionManager::new(Duration::from_secs(3600));
+        let user_id = UserId::new();
+        let token = manager.create_session(user_id).await;
+
+        // Session should be valid
+        assert!(manager.is_valid(&token).await);
+
+        // Remove session
+        manager.remove_session(&token).await;
+
+        // Session should not be valid
+        assert!(!manager.is_valid(&token).await);
+    }
+
+    #[tokio::test]
+    async fn test_session_manager_refresh() {
+        let manager = SessionManager::new(Duration::from_secs(3600));
+        let user_id = UserId::new();
+        let token = manager.create_session(user_id).await;
+
+        // Get initial session
+        let session_before = manager.get_session(&token).await.unwrap();
+
+        // Wait a bit
+        tokio::time::sleep(Duration::from_millis(100)).await;
+
+        // Refresh session
+        assert!(manager.refresh(&token).await.is_ok());
+
+        // Get updated session
+        let session_after = manager.get_session(&token).await.unwrap();
+
+        // Last activity should be updated
+        assert!(session_after.last_activity() > session_before.last_activity());
+    }
+
+    #[tokio::test]
+    async fn test_session_manager_get_info() {
+        let manager = SessionManager::new(Duration::from_secs(3600));
+        let user_id = UserId::new();
+        let token = manager.create_session(user_id).await;
+
+        // Get session info
+        let info = manager.get_info(&token).await;
+        assert!(info.is_some());
+
+        let info = info.unwrap();
+        assert_eq!(info.user_id, user_id);
+        assert!(info.created_at <= chrono::Utc::now());
+        assert!(info.last_activity <= chrono::Utc::now());
+        assert!(info.expires_at > chrono::Utc::now());
+    }
+
+    #[tokio::test]
+    async fn test_session_manager_active_sessions_for_user() {
+        let manager = SessionManager::new(Duration::from_secs(3600));
+        let user_id = UserId::new();
+
+        // Initially no sessions
+        assert_eq!(manager.active_sessions_for_user(user_id).await, 0);
+
+        // Create sessions
+        manager.create_session(user_id).await;
+        manager.create_session(user_id).await;
+        manager.create_session(user_id).await;
+
+        // Should have 3 active sessions
+        assert_eq!(manager.active_sessions_for_user(user_id).await, 3);
+    }
+
+    #[tokio::test]
+    async fn test_session_info_for_non_existent_session() {
+        let manager = SessionManager::new(Duration::from_secs(3600));
+        let token = SessionToken::new();
+
+        // Should return None for non-existent session
+        assert!(manager.get_info(&token).await.is_none());
     }
 }

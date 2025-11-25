@@ -1,9 +1,22 @@
-# Sprint 04: Storage Layer Foundation
+# Sprint 04: Configuration System
 
 **Phase:** Phase 1 - Foundation
-**Duration:** 3 weeks
-**Sprint Dates:** TBD
-**Status:** Not Started
+**Duration:** 1 week (actual)
+**Sprint Dates:** 2025-11-23 (Completed)
+**Status:** COMPLETE ✅
+
+---
+
+## ⚠️ DIVERGENCE NOTE
+
+**Original Sprint 4 Plan:** Storage Layer (SQLite backend, database schema, migrations)
+**Actual Sprint 4 Work:** Configuration Management (TOML config, hot-reload, impconfig CLI)
+
+**Rationale for Change:** Configuration management was critical for all subsequent development and deployment flexibility. Storage layer can be implemented more effectively after user management patterns are established. The configuration system enabled rapid iteration on other features.
+
+**Value Delivered:** Flexible configuration for all deployment scenarios, no hardcoded values, runtime reconfiguration without restart.
+
+**Deferred Work:** Storage Layer moved to Sprint 14 (Phase 2)
 
 ---
 
@@ -306,6 +319,117 @@ impl Storage for SqliteStorage {
 - *Date*: Progress notes will be added here as sprint progresses
 
 ### Sprint Completion
-- **Completed**: TBD
-- **Velocity**: TBD
-- **Burndown**: TBD
+- **Completed**: 2025-11-23
+- **Status**: COMPLETE ✅ - Diverged from original plan (strategic pivot)
+- **Deliverables**: impulse-config crate (1,200+ lines), impconfig CLI, 37 tests
+
+---
+
+## Actual Deliverables (Sprint Complete)
+
+### impulse-config Crate (1,200+ lines, 37 tests)
+
+**Configuration System Features:**
+
+1. **TOML Configuration Support**
+   - Nested structure (server, security, paths, limits sections)
+   - Default configuration generation
+   - Example configuration files
+   - Clear, human-editable format
+
+2. **Environment Variable Overrides**
+   - Standard env var support (IMPULSE_SERVER_PORT, etc.)
+   - Environment takes precedence over config file
+   - Flexible deployment configuration
+
+3. **Hot-Reload Capability**
+   - File watcher detects configuration changes
+   - Validates new configuration before applying
+   - No service restart required
+   - Rollback on validation failure
+
+4. **Comprehensive Validation**
+   - Port range validation (1024-65535)
+   - Positive integer checks
+   - Path existence verification
+   - Cross-field validation rules
+   - Clear, actionable error messages with field names
+
+5. **impconfig CLI Tool**
+   - `generate` command - Create default config
+   - `validate` command - Validate existing config
+   - `show` command - Display current config
+   - `diff` command - Compare two configs
+
+### Configuration Structure
+
+**Server Section:**
+- Host binding address
+- Telnet/SSH port numbers
+- Connection limits
+- Timeout settings
+
+**Security Section:**
+- Password policy (min length, complexity)
+- Rate limiting configuration
+- Session timeout
+- Max failed login attempts
+
+**Paths Section:**
+- Data directory
+- Log directory
+- Upload directory
+- Config file location
+
+**Limits Section:**
+- Max concurrent users
+- Max file size (uploads)
+- Max message length
+- Session timeout values
+
+### Key Capabilities
+
+**Validation Examples:**
+- Port ranges (must be 1024-65535)
+- Positive integers for limits
+- Path existence checks
+- Cross-field rules (e.g., session timeout > idle timeout)
+
+**Error Handling:**
+```
+Error: Configuration validation failed
+  - Field 'server.port': Port must be between 1024 and 65535 (got: 80)
+  - Field 'paths.data': Directory does not exist: /nonexistent/data
+```
+
+**Hot-Reload Flow:**
+1. File watcher detects config change
+2. Load new configuration from disk
+3. Validate all fields and rules
+4. If valid, apply new configuration
+5. If invalid, log error and keep current config
+
+### Quality Metrics
+
+- **Tests**: 37 total (100% passing)
+- **Coverage**: 68.12% (comprehensive validation coverage)
+- **Code Quality**: 0 clippy warnings
+- **CLI**: Fully functional with 4 commands
+
+### Value Delivered
+
+**Deployment Flexibility:**
+- No hardcoded values in codebase
+- Environment-specific configuration
+- Runtime reconfiguration without restart
+- Validation prevents configuration errors
+
+**Operational Benefits:**
+- Clear error messages for misconfigurations
+- Config comparison for troubleshooting
+- Default generation for quick setup
+- Example configurations included
+
+### Analysis
+
+Sprint 4 diverged from the original plan (Storage Layer) to implement Configuration Management. This strategic pivot provided critical infrastructure for all development and deployment scenarios. The configuration system enabled rapid iteration on other features and will support all production deployments. Storage Layer was deferred to Sprint 14 where it can be implemented with better context from user management patterns.

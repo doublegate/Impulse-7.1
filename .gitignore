@@ -32,4 +32,7 @@ Thumbs.db
 *.local
 .env
 
+# Backups
+backups/
+
 
