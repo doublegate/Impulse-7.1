@@ -1433,7 +1433,9 @@ version = "0.1.0"
 dependencies = [
  "async-trait",
  "binrw",
+ "chrono",
  "impulse-types",
+ "serde",
  "thiserror 2.0.17",
  "tokio",
 ]
