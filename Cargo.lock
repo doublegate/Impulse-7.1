@@ -1414,6 +1414,20 @@ dependencies = [
 ]
 
 [[package]]
+name = "impulse-menu"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "async-trait",
+ "serde",
+ "tempfile",
+ "thiserror 2.0.17",
+ "tokio",
+ "toml 0.9.8",
+ "tracing",
+]
+
+[[package]]
 name = "impulse-message"
 version = "0.1.0"
 dependencies = [

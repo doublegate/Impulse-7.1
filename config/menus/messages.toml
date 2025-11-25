@@ -1,0 +1,43 @@
+# Message Areas Menu
+# Read, post, and search messages
+
+[menu]
+name = "messages"
+title = "Message Areas"
+mode = "hotkey"
+
+[[option]]
+key = "R"
+command = "msg_read"
+description = "Read Messages"
+min_security = 10
+
+[[option]]
+key = "P"
+command = "msg_post"
+description = "Post Message"
+min_security = 20
+
+[[option]]
+key = "E"
+command = "msg_email"
+description = "Private Email"
+min_security = 10
+
+[[option]]
+key = "S"
+command = "msg_search"
+description = "Search Messages"
+min_security = 10
+
+[[option]]
+key = "?"
+command = "help"
+description = "Help"
+min_security = 0
+
+[[option]]
+key = "Q"
+command = "back"
+description = "Return to Main"
+min_security = 0

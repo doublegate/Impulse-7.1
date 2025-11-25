@@ -1,0 +1,37 @@
+# User Settings Menu
+# Manage user profile and preferences
+
+[menu]
+name = "user_settings"
+title = "Your Settings"
+mode = "hotkey"
+
+[[option]]
+key = "P"
+command = "change_password"
+description = "Change Password"
+min_security = 10
+
+[[option]]
+key = "E"
+command = "edit_profile"
+description = "Edit Profile"
+min_security = 10
+
+[[option]]
+key = "T"
+command = "terminal_settings"
+description = "Terminal Settings"
+min_security = 10
+
+[[option]]
+key = "?"
+command = "help"
+description = "Help"
+min_security = 0
+
+[[option]]
+key = "Q"
+command = "back"
+description = "Return to Main"
+min_security = 0

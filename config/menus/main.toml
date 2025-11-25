@@ -1,0 +1,44 @@
+# Main Menu
+# Primary entry point for the BBS
+
+[menu]
+name = "main"
+title = "Main Menu"
+mode = "hotkey"
+# ansi_art = "main.ans"  # Uncomment to add ANSI art header
+
+[[option]]
+key = "F"
+command = "files"
+description = "File Areas"
+min_security = 10
+
+[[option]]
+key = "M"
+command = "messages"
+description = "Message Areas"
+min_security = 10
+
+[[option]]
+key = "U"
+command = "user_settings"
+description = "Your Settings"
+min_security = 10
+
+[[option]]
+key = "W"
+command = "who"
+description = "Who's Online"
+min_security = 10
+
+[[option]]
+key = "?"
+command = "help"
+description = "Help"
+min_security = 0
+
+[[option]]
+key = "G"
+command = "goodbye"
+description = "Logoff"
+min_security = 0

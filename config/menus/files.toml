@@ -1,0 +1,43 @@
+# File Areas Menu
+# Browse, download, and upload files
+
+[menu]
+name = "files"
+title = "File Areas"
+mode = "hotkey"
+
+[[option]]
+key = "L"
+command = "file_list"
+description = "List Files"
+min_security = 10
+
+[[option]]
+key = "D"
+command = "file_download"
+description = "Download Files"
+min_security = 20
+
+[[option]]
+key = "U"
+command = "file_upload"
+description = "Upload Files"
+min_security = 30
+
+[[option]]
+key = "S"
+command = "file_search"
+description = "Search Files"
+min_security = 10
+
+[[option]]
+key = "?"
+command = "help"
+description = "Help"
+min_security = 0
+
+[[option]]
+key = "Q"
+command = "back"
+description = "Return to Main"
+min_security = 0
