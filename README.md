@@ -83,8 +83,8 @@ This project aims to:
 ## Project Status
 
 **Current Version**: 0.1.0 (Phase 1 Foundation Complete!)
-**Development Phase**: Phase 2 - Core Services (Starting)
-**Completion**: Sprint 8/32 (25%) - Phase 1: 8/8 sprints (100% ✅)
+**Development Phase**: Phase 2 - Core Services (In Progress)
+**Completion**: Sprint 10/32 (31.25%) - Phase 1: 8/8 (100% ✅), Phase 2: 2/8 (25%)
 
 ### Recent Milestones
 
@@ -97,24 +97,26 @@ This project aims to:
 - ✅ **Sprint 6** (User System): impulse-user (26 tests), impulse-auth (16 tests), Argon2id, session management
 - ✅ **Sprint 7** (Logging): impulse-logging crate, rotation/archival/audit, 80 tests, <2µs overhead
 - ✅ **Sprint 8** (Testing Framework): 64.51% coverage baseline, integration tests, property tests, 7 benchmarks
+- ✅ **Sprint 9** (User Authentication): Rate limiting, account lockout, input validation, registration/login/logout flows
+- ✅ **Sprint 10** (Menu System): impulse-menu crate, TOML parser, hotkey/fullmenu modes, navigation state machine
 
 ### Phase 1 Achievements
 
 **Infrastructure:**
 
-- 18 crates (16 libraries + 2 binaries)
+- 19 crates (17 libraries + 2 binaries)
 - 5-job CI/CD pipeline (lint, test×3, build×3, coverage, benchmarks)
-- 102 commits across 59 Rust source files
-- 17,284 lines of production code
+- 110+ commits across 65+ Rust source files
+- 20,000+ lines of production code
 
 **Quality Metrics:**
 
-- **Tests**: 557+ (100% passing rate)
+- **Tests**: 771+ (100% passing rate)
 - **Coverage**: 64.51% baseline (target: 75% for Phase 2)
 - **Clippy**: 0 warnings
-- **Documentation**: 34 files, 31,000+ lines
+- **Documentation**: 43 files, 35,000+ lines
 - **Build**: <10s full workspace
-- **Test Execution**: <2s all tests
+- **Test Execution**: <3s all tests
 
 **Key Features:**
 
@@ -126,13 +128,14 @@ This project aims to:
 
 ### Next Steps
 
-- **Phase 2**: Core Services (Sprints 9-16, ~6-8 weeks)
-  - Sprint 9: Session Management (WebSocket, concurrent sessions)
-  - Sprint 10: Terminal I/O (ANSI/Avatar rendering)
-  - Sprint 11: Telnet Protocol (RFC 854, IAC negotiation)
-  - Sprint 12-16: Message base, file areas, menu system
+- **Phase 2**: Core Services (Sprints 9-16, 2/8 complete - 25%)
+  - ✅ Sprint 9: User Authentication (rate limiting, lockout, validation)
+  - ✅ Sprint 10: Menu System (TOML parser, navigation)
+  - 🔄 Sprint 11: Terminal I/O (ANSI/Avatar rendering) - CURRENT
+  - Sprint 12: Telnet Protocol (RFC 854, IAC negotiation)
+  - Sprint 13-16: Message base, file areas, session management
 - **Goal**: Functional BBS with basic features by end of Phase 2
-- **Timeline**: 24 months total, currently 25% complete (ahead of schedule)
+- **Timeline**: 24 months total, currently 31.25% complete (ahead of schedule)
 
 ## Features
 
@@ -212,18 +215,39 @@ This project aims to:
 - ✅ Test fixtures and shared utilities
 - ✅ 557+ total tests (100% passing rate)
 
+**Phase 2 - Core Services (Sprints 9-10, November 2025):**
+
+**User Authentication System (Sprint 9):**
+
+- ✅ Rate limiting (sliding window algorithm, configurable limits)
+- ✅ Account lockout (progressive delays, configurable thresholds)
+- ✅ Input validation (username, password, email validation)
+- ✅ Password strength checking (configurable complexity requirements)
+- ✅ Authentication flows (login, registration, logout)
+- ✅ Email validation with DNS and disposable domain checking
+- ✅ Comprehensive error handling with detailed security events
+- ✅ 130+ new tests (rate limiting, lockout, validation, flows)
+
+**Menu System & Navigation (Sprint 10):**
+
+- ✅ impulse-menu crate (complete menu framework)
+- ✅ TOML-based menu configuration (4 menu files: main, files, messages, settings)
+- ✅ Menu parser (item, submenu, command, separator support)
+- ✅ Menu renderer (hotkey mode with numbered selections, fullmenu mode with descriptions)
+- ✅ Command router (built-in commands: Quit, GoTo, Back, Up)
+- ✅ Navigation state machine (history tracking, breadcrumbs)
+- ✅ 84+ new tests (parser, renderer, router, state management)
+
 ### Planned Features
 
-**Phase 2 (Sprints 9-16, ~6-8 weeks) - Core Services**
+**Phase 2 (Sprints 11-16, remaining ~4-6 weeks) - Core Services**
 
-- Sprint 9: Session management (concurrent sessions, timeouts)
-- Sprint 10: Terminal I/O (ANSI rendering, input handling)
-- Sprint 11: Telnet server (RFC 854, IAC negotiation)
-- Sprint 12: Message base (JAM/Hudson formats)
-- Sprint 13: File areas (browsing, descriptions)
-- Sprint 14: File upload handling
-- Sprint 15: Menu system and navigation
-- Sprint 16: User profiles and statistics
+- Sprint 11: Terminal I/O (ANSI rendering, input handling, Avatar graphics)
+- Sprint 12: Telnet server (RFC 854, IAC negotiation)
+- Sprint 13: Session management (concurrent sessions, timeouts, WebSocket)
+- Sprint 14: Message base (JAM/Hudson formats, threading)
+- Sprint 15: File areas (browsing, descriptions, upload/download)
+- Sprint 16: User profiles and statistics (activity tracking, preferences)
 
 **Phase 3 (Sprints 17-24, ~6-8 weeks) - Feature Completion**
 
@@ -285,7 +309,7 @@ This project aims to:
 └─────────────────────────────────────────────────────────┘
 ```
 
-### 18-Crate Workspace Structure
+### 19-Crate Workspace Structure
 
 **Core Crates:**
 
@@ -304,11 +328,12 @@ This project aims to:
 
 - `impulse-session` - Session management and event loops
 - `impulse-terminal` - Terminal I/O and ANSI rendering
-- `impulse-auth` - Authentication (Argon2id)
+- `impulse-auth` - Authentication (Argon2id, rate limiting, lockout)
 - `impulse-message` - Message bases (JAM/Hudson)
 - `impulse-file` - File areas and transfers
 - `impulse-user` - User management
 - `impulse-door` - Door game support
+- `impulse-menu` - Menu system (TOML parser, renderer, navigation)
 
 **Application Crates:**
 
@@ -435,10 +460,17 @@ Impulse-Next_BBS/
 │   ├── impulse-file/       # File areas
 │   ├── impulse-user/       # User management
 │   ├── impulse-door/       # Door games
+│   ├── impulse-menu/       # Menu system (NEW)
 │   ├── impulse-web/        # Web admin panel
 │   ├── impulse-logging/    # Logging infrastructure
 │   ├── impulse-server/     # Main server binary
 │   └── impconfig/          # CLI configuration tool (binary)
+├── config/                 # Configuration files
+│   └── menus/              # Menu definitions (NEW)
+│       ├── main.toml       # Main menu
+│       ├── files.toml      # File areas menu
+│       ├── messages.toml   # Message areas menu
+│       └── settings.toml   # User settings menu
 ├── docs/                   # Comprehensive documentation (43 files)
 │   ├── INDEX.md            # Documentation hub
 │   ├── getting-started/    # Project overview (1 file)
@@ -610,16 +642,16 @@ cargo doc --workspace --no-deps --open
 - ✅ Sprint 7: Logging infrastructure (rotation, archival, audit)
 - ✅ Sprint 8: Testing framework (64.51% coverage, benchmarks)
 
-**Phase 2: Core Services (December 2025 - January 2026, Sprints 9-16)**
+**Phase 2: Core Services (November 2025 - January 2026, Sprints 9-16)**
 
-- Sprint 9: Session management (WebSocket, concurrent handling)
-- Sprint 10: Terminal I/O (ANSI rendering, input processing)
-- Sprint 11: Telnet protocol (RFC 854, IAC negotiation)
-- Sprint 12: Message base (JAM/Hudson formats)
-- Sprint 13: File areas (browsing, descriptions)
-- Sprint 14: File upload (validation, virus scanning)
-- Sprint 15: Menu system (navigation, hotkeys)
-- Sprint 16: User profiles (statistics, preferences)
+- ✅ Sprint 9: User authentication (rate limiting, lockout, validation, flows)
+- ✅ Sprint 10: Menu system (TOML parser, renderer, navigation state machine)
+- Sprint 11: Terminal I/O (ANSI rendering, input processing, Avatar graphics)
+- Sprint 12: Telnet protocol (RFC 854, IAC negotiation)
+- Sprint 13: Session management (WebSocket, concurrent handling, timeouts)
+- Sprint 14: Message base (JAM/Hudson formats, threading)
+- Sprint 15: File areas (browsing, descriptions, upload/download)
+- Sprint 16: User profiles (statistics, preferences, activity tracking)
 
 **Phase 3: Feature Completion (February - March 2026, Sprints 17-24)**
 
@@ -640,37 +672,38 @@ cargo doc --workspace --no-deps --open
 
 ### Key Milestones
 
-| Milestone         | Target   | Status          | Completion              |
-| ----------------- | -------- | --------------- | ----------------------- |
-| Phase 1 Complete  | Month 6  | ✅ **COMPLETE** | November 2025 (6 weeks) |
-| Phase 2 Complete  | Month 12 | 🔄 In Progress  | Target: January 2026    |
-| Phase 3 Complete  | Month 18 | Pending         | Target: March 2026      |
-| Phase 4 Complete  | Month 24 | Pending         | Target: May 2026        |
-| Production Launch | Month 24 | Pending         | Target: May 2026        |
+| Milestone         | Target   | Status              | Completion              |
+| ----------------- | -------- | ------------------- | ----------------------- |
+| Phase 1 Complete  | Month 6  | ✅ **COMPLETE**     | November 2025 (6 weeks) |
+| Phase 2 Complete  | Month 12 | 🔄 In Progress 25%  | Target: January 2026    |
+| Phase 3 Complete  | Month 18 | Pending             | Target: March 2026      |
+| Phase 4 Complete  | Month 24 | Pending             | Target: May 2026        |
+| Production Launch | Month 24 | Pending             | Target: May 2026        |
 
-**Progress:** 25% complete (8/32 sprints), ~10 weeks ahead of schedule
+**Progress:** 31.25% complete (10/32 sprints), ~12 weeks ahead of schedule
 
 ## Testing
 
-### Current Test Suite (Sprint 8 - Phase 1 Complete)
+### Current Test Suite (Phase 1 + Sprint 9-10)
 
-**Total Tests**: 557+ (100% passing rate)
+**Total Tests**: 771+ (100% passing rate)
 **Code Coverage**: 64.51% baseline (1018/1578 lines covered)
 
 **Test Types:**
 
-- **Unit Tests**: 400+ tests (validation logic, CRUD, authentication, logging)
-- **Integration Tests**: 100+ tests (serialization, file I/O, sessions, cross-crate workflows)
-- **Doc Tests**: 40+ tests (documentation examples)
+- **Unit Tests**: 550+ tests (validation logic, CRUD, authentication, logging, rate limiting, menu parsing)
+- **Integration Tests**: 150+ tests (serialization, file I/O, sessions, cross-crate workflows, navigation flows)
+- **Doc Tests**: 50+ tests (documentation examples)
 - **Benchmarks**: 7 performance benchmarks (authentication critical paths)
 
 **Test Breakdown by Crate:**
 
 - impulse-types: 241 tests (Pascal compatibility, core types, serialization)
+- impulse-auth: 146+ tests (hashing, sessions, rate limiting, lockout, validation, flows)
+- impulse-menu: 84+ tests (parser, renderer, router, navigation state machine)
 - impulse-logging: 80 tests (52 unit, 18 integration, 10 benchmarks)
 - impulse-config: 37 tests (configuration, validation, hot-reload)
 - impulse-user: 33 tests (CRUD, file I/O, Pascal binary compatibility)
-- impulse-auth: 16 tests (hashing, sessions, concurrency, tokens)
 - Other crates: 150+ tests (protocols, terminal, message, file, door, web)
 
 **Coverage by Crate:**
