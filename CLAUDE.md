@@ -17,22 +17,26 @@ Project-specific guidance for Impulse-Next_BBS modernization (classic Impulse 7.
 
 ## Current Status
 
-**Phase:** 1 - Foundation (Sprints 1-8)
-**Sprints Complete:** 2 of 32 (6.25%)
-**Version:** 0.1.0
-**Last Commit:** faa3269 (2025-11-23)
+**Phase:** 2 - Core Features (Sprints 9-16)
+**Sprints Complete:** 12 of 32 (37.5%)
+**Version:** 0.1.0 (Phase 2: 50% Complete)
+**Last Commit:** 777750f (2025-11-25)
 
 ### Sprint Progress
-- ✅ **Sprint 1:** Project Setup (100%)
-- ✅ **Sprint 2:** Core Types (100%)
-- ⏳ **Sprint 3:** Pascal Analysis (Pending)
-- 📋 **Sprints 4-32:** Planned
+- ✅ **Phase 1:** Foundation (Sprints 1-8, 100%)
+- ✅ **Sprint 9:** User Authentication (100%)
+- ✅ **Sprint 10:** Menu System (100%)
+- ✅ **Sprint 11:** Message Read (100%)
+- ✅ **Sprint 12:** Message Write (100%)
+- 📋 **Sprints 13-32:** Planned
 
 ### Quality Metrics
-- **Tests:** 82/82 passing (100%)
-- **Coverage:** Not yet measured
+- **Tests:** 870+ passing (100% pass rate)
+- **Coverage:** 64.51% baseline (target: 75%+ Phase 2)
 - **Clippy:** 0 warnings
 - **CI/CD:** 100% passing on main branch
+- **Crates:** 19 (17 libraries + 2 binaries)
+- **Code:** 28,000+ lines total
 
 ---
 
@@ -212,18 +216,40 @@ cargo build --workspace --all-features
 - ✅ Error handling (117 lines, 15 error variants)
 - ✅ Serialization tests (372 lines, 11 round-trip tests)
 
+### Recent Sprints (Phase 2)
+
+#### Sprint 11: Message Read
+**TODO:** `to-dos/phase-2-core-features/sprint-11-message-read.md`
+
+**Deliverables:**
+- ✅ MessageBase trait (9 async methods)
+- ✅ JAM format support (.JHR, .JDT, .JDX)
+- ✅ Hudson format support
+- ✅ Message list screen
+- ✅ Message read screen with threading
+- ✅ 72+ tests (42 JAM, 18 Hudson, 12 screens)
+
+#### Sprint 12: Message Write
+**TODO:** `to-dos/phase-2-core-features/sprint-12-message-write.md`
+
+**Deliverables:**
+- ✅ MessageWriter trait
+- ✅ Message posting (validation, sanitization)
+- ✅ Reply functionality with threading
+- ✅ Message quoting with attribution
+- ✅ JAM format writing
+- ✅ 27+ tests (15 posting, 8 reply, 4 quoting)
+
 ### Next Sprint
 
-#### Sprint 3: Pascal Analysis
-**TODO:** `to-dos/phase-1-foundation/sprint-03-pascal-analysis.md`
+#### Sprint 13: Terminal I/O
+**TODO:** `to-dos/phase-2-core-features/sprint-13-terminal-io.md` (estimated)
 
 **Goals:**
-- Analyze 96 Pascal units from original Impulse 7.1 codebase
-- Document functionality, dependencies, data structures
-- Create migration notes for Rust conversion
-- Identify modernization opportunities
-
-**Location:** `ref-docs/original-pascal/` (reference materials available)
+- ANSI escape sequence rendering
+- Input handling (keyboard, mouse)
+- Avatar graphics support
+- Terminal emulation layer
 
 ---
 
@@ -370,10 +396,15 @@ cargo doc --workspace --no-deps 2>&1 | grep warning
 - 📋 Sprint 7: Database Schema
 - 📋 Sprint 8: Testing Framework
 
-### Phase 2: Core Services (Sprints 9-16, Months 5-10)
-- User management, authentication, session handling
-- Message system, file management
-- Telnet/SSH protocols
+### Phase 2: Core Features (Sprints 9-16, November 2025 - January 2026) - 50% COMPLETE
+- ✅ Sprint 9: User authentication (rate limiting, lockout, validation)
+- ✅ Sprint 10: Menu system (TOML parser, navigation)
+- ✅ Sprint 11: Message read (MessageBase trait, JAM/Hudson, screens)
+- ✅ Sprint 12: Message write (posting, replies, quoting)
+- 📋 Sprint 13: Terminal I/O (ANSI rendering, input handling)
+- 📋 Sprint 14: Telnet protocol (RFC 854, IAC negotiation)
+- 📋 Sprint 15: File areas (browsing, upload/download)
+- 📋 Sprint 16: Session management (WebSocket, concurrent handling)
 
 ### Phase 3: Advanced Features (Sprints 17-24, Months 11-18)
 - Terminal emulation, door games

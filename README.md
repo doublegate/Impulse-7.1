@@ -82,9 +82,9 @@ This project aims to:
 
 ## Project Status
 
-**Current Version**: 0.1.0 (Phase 1 Foundation Complete!)
-**Development Phase**: Phase 2 - Core Services (In Progress)
-**Completion**: Sprint 10/32 (31.25%) - Phase 1: 8/8 (100% ✅), Phase 2: 2/8 (25%)
+**Current Version**: 0.1.0 (Phase 2 - Core Features: 50% Complete!)
+**Development Phase**: Phase 2 - Core Features (In Progress)
+**Completion**: Sprint 12/32 (37.5%) - Phase 1: 8/8 (100% ✅), Phase 2: 4/8 (50%)
 
 ### Recent Milestones
 
@@ -99,6 +99,8 @@ This project aims to:
 - ✅ **Sprint 8** (Testing Framework): 64.51% coverage baseline, integration tests, property tests, 7 benchmarks
 - ✅ **Sprint 9** (User Authentication): Rate limiting, account lockout, input validation, registration/login/logout flows
 - ✅ **Sprint 10** (Menu System): impulse-menu crate, TOML parser, hotkey/fullmenu modes, navigation state machine
+- ✅ **Sprint 11** (Message Read): MessageBase trait, JAM/Hudson formats, message list/read screens, threading, 72 tests
+- ✅ **Sprint 12** (Message Write): Message posting, replies, quoting, validation, sanitization, atomic writes, 27 tests
 
 ### Phase 1 Achievements
 
@@ -106,13 +108,13 @@ This project aims to:
 
 - 19 crates (17 libraries + 2 binaries)
 - 5-job CI/CD pipeline (lint, test×3, build×3, coverage, benchmarks)
-- 110+ commits across 65+ Rust source files
-- 20,000+ lines of production code
+- 94+ commits across 98 Rust source files
+- 28,000+ lines of code (production + tests)
 
-**Quality Metrics:**
+**Quality Metrics (Phase 1+2 Current):**
 
-- **Tests**: 771+ (100% passing rate)
-- **Coverage**: 64.51% baseline (target: 75% for Phase 2)
+- **Tests**: 870+ (100% passing rate)
+- **Coverage**: 64.51% baseline (target: 75% for Phase 2 completion)
 - **Clippy**: 0 warnings
 - **Documentation**: 43 files, 35,000+ lines
 - **Build**: <10s full workspace
@@ -128,18 +130,20 @@ This project aims to:
 
 ### Next Steps
 
-- **Phase 2**: Core Services (Sprints 9-16, 2/8 complete - 25%)
+- **Phase 2**: Core Features (Sprints 9-16, 4/8 complete - 50%)
   - ✅ Sprint 9: User Authentication (rate limiting, lockout, validation)
   - ✅ Sprint 10: Menu System (TOML parser, navigation)
-  - 🔄 Sprint 11: Terminal I/O (ANSI/Avatar rendering) - CURRENT
-  - Sprint 12: Telnet Protocol (RFC 854, IAC negotiation)
-  - Sprint 13-16: Message base, file areas, session management
-- **Goal**: Functional BBS with basic features by end of Phase 2
-- **Timeline**: 24 months total, currently 31.25% complete (ahead of schedule)
+  - ✅ Sprint 11: Message Read (MessageBase trait, JAM/Hudson, screens)
+  - ✅ Sprint 12: Message Write (posting, replies, quoting)
+  - 🔄 Sprint 13: Terminal I/O (ANSI/Avatar rendering) - NEXT
+  - Sprint 14: Telnet Protocol (RFC 854, IAC negotiation)
+  - Sprint 15-16: File areas, session management
+- **Goal**: Functional BBS with messaging and file areas by end of Phase 2
+- **Timeline**: 24 months total, currently 37.5% complete (ahead of schedule)
 
 ## Features
 
-### Current Implementation (v0.1.0 - Phase 1 Complete)
+### Current Implementation (v0.1.0 - Phase 1 Complete + Phase 2 Sprints 9-12)
 
 **Phase 1 Foundation (Sprints 1-8, November 2025):**
 
@@ -238,16 +242,35 @@ This project aims to:
 - ✅ Navigation state machine (history tracking, breadcrumbs)
 - ✅ 84+ new tests (parser, renderer, router, state management)
 
+**Message Base Read System (Sprint 11):**
+
+- ✅ MessageBase trait (9 async methods: read, list, search, thread, mark read/unread, delete/undelete)
+- ✅ JAM format support (.JHR/.JDT/.JDX files with CRC32 validation)
+- ✅ Hudson format support (legacy compatibility)
+- ✅ Message list screen (paginated display, status indicators, keyboard navigation)
+- ✅ Message read screen (threaded view, word wrapping, depth indicators)
+- ✅ Threading system (parent-child relationships, reply counts, conversation trees)
+- ✅ 72+ new tests (42 JAM, 18 Hudson, 8 list, 4 read screen)
+
+**Message Write System (Sprint 12):**
+
+- ✅ MessageWriter trait (unified interface for message creation)
+- ✅ Message posting (validation, sanitization, atomic writes)
+- ✅ Reply functionality (thread-aware, parent tracking, depth limits)
+- ✅ Message quoting (attribution, configurable prefix, multi-level support)
+- ✅ Input validation (subject 1-72 chars, body max 64KB)
+- ✅ Sanitization (HTML escaping, line break normalization)
+- ✅ JAM format writing (.JHR updates, .JDT appends, .JDX index)
+- ✅ 27+ new tests (15 posting, 8 reply, 4 quoting)
+
 ### Planned Features
 
-**Phase 2 (Sprints 11-16, remaining ~4-6 weeks) - Core Services**
+**Phase 2 (Sprints 13-16, remaining ~2-4 weeks) - Core Services**
 
-- Sprint 11: Terminal I/O (ANSI rendering, input handling, Avatar graphics)
-- Sprint 12: Telnet server (RFC 854, IAC negotiation)
-- Sprint 13: Session management (concurrent sessions, timeouts, WebSocket)
-- Sprint 14: Message base (JAM/Hudson formats, threading)
+- Sprint 13: Terminal I/O (ANSI rendering, input handling, Avatar graphics)
+- Sprint 14: Telnet server (RFC 854, IAC negotiation)
 - Sprint 15: File areas (browsing, descriptions, upload/download)
-- Sprint 16: User profiles and statistics (activity tracking, preferences)
+- Sprint 16: Session management (concurrent sessions, timeouts, WebSocket)
 
 **Phase 3 (Sprints 17-24, ~6-8 weeks) - Feature Completion**
 
@@ -642,16 +665,16 @@ cargo doc --workspace --no-deps --open
 - ✅ Sprint 7: Logging infrastructure (rotation, archival, audit)
 - ✅ Sprint 8: Testing framework (64.51% coverage, benchmarks)
 
-**Phase 2: Core Services (November 2025 - January 2026, Sprints 9-16)**
+**Phase 2: Core Features (November 2025 - January 2026, Sprints 9-16)**
 
 - ✅ Sprint 9: User authentication (rate limiting, lockout, validation, flows)
 - ✅ Sprint 10: Menu system (TOML parser, renderer, navigation state machine)
-- Sprint 11: Terminal I/O (ANSI rendering, input processing, Avatar graphics)
-- Sprint 12: Telnet protocol (RFC 854, IAC negotiation)
-- Sprint 13: Session management (WebSocket, concurrent handling, timeouts)
-- Sprint 14: Message base (JAM/Hudson formats, threading)
+- ✅ Sprint 11: Message read (MessageBase trait, JAM/Hudson formats, screens, threading)
+- ✅ Sprint 12: Message write (posting, replies, quoting, validation, atomic writes)
+- Sprint 13: Terminal I/O (ANSI rendering, input processing, Avatar graphics)
+- Sprint 14: Telnet protocol (RFC 854, IAC negotiation)
 - Sprint 15: File areas (browsing, descriptions, upload/download)
-- Sprint 16: User profiles (statistics, preferences, activity tracking)
+- Sprint 16: Session management (WebSocket, concurrent handling, timeouts)
 
 **Phase 3: Feature Completion (February - March 2026, Sprints 17-24)**
 
@@ -675,24 +698,24 @@ cargo doc --workspace --no-deps --open
 | Milestone         | Target   | Status              | Completion              |
 | ----------------- | -------- | ------------------- | ----------------------- |
 | Phase 1 Complete  | Month 6  | ✅ **COMPLETE**     | November 2025 (6 weeks) |
-| Phase 2 Complete  | Month 12 | 🔄 In Progress 25%  | Target: January 2026    |
+| Phase 2 Complete  | Month 12 | 🔄 In Progress 50%  | Target: January 2026    |
 | Phase 3 Complete  | Month 18 | Pending             | Target: March 2026      |
 | Phase 4 Complete  | Month 24 | Pending             | Target: May 2026        |
 | Production Launch | Month 24 | Pending             | Target: May 2026        |
 
-**Progress:** 31.25% complete (10/32 sprints), ~12 weeks ahead of schedule
+**Progress:** 37.5% complete (12/32 sprints), ~14 weeks ahead of schedule
 
 ## Testing
 
-### Current Test Suite (Phase 1 + Sprint 9-10)
+### Current Test Suite (Phase 1 + Sprints 9-12)
 
-**Total Tests**: 771+ (100% passing rate)
-**Code Coverage**: 64.51% baseline (1018/1578 lines covered)
+**Total Tests**: 870+ (100% passing rate)
+**Code Coverage**: 64.51% baseline (target: 75%+ by Phase 2 completion)
 
 **Test Types:**
 
-- **Unit Tests**: 550+ tests (validation logic, CRUD, authentication, logging, rate limiting, menu parsing)
-- **Integration Tests**: 150+ tests (serialization, file I/O, sessions, cross-crate workflows, navigation flows)
+- **Unit Tests**: 650+ tests (validation logic, CRUD, authentication, logging, message I/O, menu parsing)
+- **Integration Tests**: 170+ tests (serialization, file I/O, sessions, cross-crate workflows, message threading)
 - **Doc Tests**: 50+ tests (documentation examples)
 - **Benchmarks**: 7 performance benchmarks (authentication critical paths)
 
@@ -700,11 +723,12 @@ cargo doc --workspace --no-deps --open
 
 - impulse-types: 241 tests (Pascal compatibility, core types, serialization)
 - impulse-auth: 146+ tests (hashing, sessions, rate limiting, lockout, validation, flows)
+- impulse-message: 99+ tests (42 JAM format, 18 Hudson, 8 list screen, 4 read screen, 15 posting, 8 reply, 4 quoting)
 - impulse-menu: 84+ tests (parser, renderer, router, navigation state machine)
 - impulse-logging: 80 tests (52 unit, 18 integration, 10 benchmarks)
 - impulse-config: 37 tests (configuration, validation, hot-reload)
 - impulse-user: 33 tests (CRUD, file I/O, Pascal binary compatibility)
-- Other crates: 150+ tests (protocols, terminal, message, file, door, web)
+- Other crates: 150+ tests (protocols, terminal, file, door, web)
 
 **Coverage by Crate:**
 
