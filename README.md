@@ -8,6 +8,7 @@ A complete modernization of the classic Impulse 7.1 Bulletin Board System from B
 
 ## Table of Contents
 
+- [Documentation Structure](#documentation-structure)
 - [Overview](#overview)
 - [Project Status](#project-status)
 - [Features](#features)
@@ -22,6 +23,36 @@ A complete modernization of the classic Impulse 7.1 Bulletin Board System from B
 - [Contributing](#contributing)
 - [License](#license)
 - [Acknowledgments](#acknowledgments)
+
+## Documentation Structure
+
+**Recently Reorganized** (November 2024): Our documentation has been comprehensively reorganized from 44 scattered files into a structured hierarchy with 9 categories and 7 subcategories for improved navigation and discoverability.
+
+### Quick Navigation
+
+All documentation is centralized in the `docs/` directory. Start with **[docs/INDEX.md](docs/INDEX.md)** for the complete documentation hub.
+
+| Category | Description | Files | Key Documents |
+|----------|-------------|-------|---------------|
+| [Getting Started](docs/getting-started/) | Project overview and introduction | 1 | project-overview.md |
+| [Architecture](docs/architecture/) | System design and technical architecture | 3 | system-architecture.md, security-architecture.md |
+| [Planning](docs/planning/) | Phase plans, sprint roadmaps | 2 | phase-sprint-plan.md, conversion-strategy.md |
+| [Implementation](docs/implementation/) | Development guides, integration docs | 2 | development-guide.md, logging-integration.md |
+| [Testing](docs/testing/) | Testing strategies and requirements | 1 | testing-strategy.md |
+| [Deployment](docs/deployment/) | Deployment and migration guides | 2 | deployment-guide.md, migration-guide.md |
+| [Pascal Reference](docs/pascal-reference/) | Complete Pascal analysis and conversion | 21 | Analysis, conversion guides, risk assessments |
+| [Reports](docs/reports/) | Analysis reports, sprint completions | 9 | CI/CD analysis, sprint reports |
+| [Reference](docs/reference/) | Historical context, technical notes | 2 | impulse-history.md |
+
+**Total Documentation**: 43 files (38 markdown + 5 data files) covering all aspects of the project.
+
+### Benefits of New Structure
+
+- **Clear Navigation**: Logical categorization by purpose (getting started → architecture → implementation)
+- **Easier Discovery**: Find what you need quickly with organized categories
+- **Comprehensive Coverage**: All documentation in one structured location
+- **Maintained History**: Complete Pascal analysis and conversion tracking
+- **Progress Tracking**: Sprint reports and completion documentation
 
 ## Overview
 
@@ -58,7 +89,7 @@ This project aims to:
 ### Recent Milestones
 
 - ✅ **Phase 1 Foundation COMPLETE** (November 2025 - 8 sprints in ~6 weeks)
-- ✅ **Sprint 1** (Project Setup): 16-crate workspace, CI/CD pipeline (5 jobs), cross-platform support
+- ✅ **Sprint 1** (Project Setup): 18-crate workspace, CI/CD pipeline (5 jobs), cross-platform support
 - ✅ **Sprint 2** (Core Types): User, FileEntry, Message, BbsConfig types with 82 tests
 - ✅ **Sprint 3** (Pascal Analysis): 114 files analyzed (39,079 LOC), 1,070 dependencies, 16 analysis documents
 - ✅ **Sprint 4** (Configuration): impulse-config crate, TOML + ENV loading, 3 validation modes, 37 tests
@@ -240,7 +271,7 @@ This project aims to:
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-### 16-Crate Workspace Structure
+### 18-Crate Workspace Structure
 
 **Core Crates:**
 - `impulse-core` - Core BBS logic and state management
@@ -264,10 +295,10 @@ This project aims to:
 
 **Application Crates:**
 - `impulse-web` - Web admin panel (Axum)
-- `impulse-cli` - CLI tools
 - `impulse-server` - Main server binary
+- `impconfig` - Configuration management CLI tool (binary)
 
-See [/home/parobek/Code/Impulse-Next_BBS/docs/02-architecture.md](/home/parobek/Code/Impulse-Next_BBS/docs/02-architecture.md) for complete architecture documentation.
+See [docs/architecture/system-architecture.md](docs/architecture/system-architecture.md) for complete architecture documentation.
 
 ## Quick Start
 
@@ -358,7 +389,7 @@ The project uses GitHub Actions with 5 jobs:
 
 ### Contributing
 
-We welcome contributions! Please see [/home/parobek/Code/Impulse-Next_BBS/CONTRIBUTING.md](/home/parobek/Code/Impulse-Next_BBS/CONTRIBUTING.md) for:
+We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for:
 
 - Code of conduct
 - Development workflow
@@ -387,18 +418,27 @@ Impulse-Next_BBS/
 │   ├── impulse-user/       # User management
 │   ├── impulse-door/       # Door games
 │   ├── impulse-web/        # Web admin panel
-│   ├── impulse-cli/        # CLI tools
-│   └── impulse-server/     # Main server binary
-├── docs/                   # Comprehensive documentation
-│   ├── 00-project-overview.md
-│   ├── 01-phase-sprint-plan.md
-│   ├── 02-architecture.md
-│   ├── 03-technical-details.md
-│   ├── 04-development-guide.md
-│   ├── 05-testing-strategy.md
-│   ├── 06-deployment-guide.md
-│   ├── 07-migration-guide.md
-│   └── 08-security-architecture.md
+│   ├── impulse-logging/    # Logging infrastructure
+│   ├── impulse-server/     # Main server binary
+│   └── impconfig/          # CLI configuration tool (binary)
+├── docs/                   # Comprehensive documentation (43 files)
+│   ├── INDEX.md            # Documentation hub
+│   ├── getting-started/    # Project overview (1 file)
+│   ├── architecture/       # System design (3 files)
+│   ├── planning/           # Phase and sprint plans (2 files)
+│   ├── implementation/     # Development guides (2 files)
+│   ├── testing/            # Testing strategy (1 file)
+│   ├── deployment/         # Deployment guides (2 files)
+│   ├── pascal-reference/   # Pascal analysis (21 files)
+│   │   ├── analysis/       # Source analysis (7 docs + 5 data)
+│   │   ├── conversion/     # Conversion guides (6 docs)
+│   │   └── risk-assessment/ # Risk analysis (3 docs)
+│   ├── reports/            # Analysis reports (9 files)
+│   │   ├── ci-cd/          # CI/CD reports (2 docs)
+│   │   ├── documentation/  # Doc verification (3 docs)
+│   │   ├── edition2024/    # Rust 2024 migration (2 docs)
+│   │   └── sprints/        # Sprint completions (3 docs)
+│   └── reference/          # Historical context (2 files)
 ├── to-dos/                 # Sprint TODO files (32 sprints)
 │   ├── phase-1-foundation/
 │   ├── phase-2-core-features/
@@ -455,21 +495,49 @@ Impulse-Next_BBS/
 
 ## Documentation
 
-### Core Documentation (docs/)
+### Documentation Hub
 
-Comprehensive documentation covering all aspects:
+**Start Here**: [docs/INDEX.md](docs/INDEX.md) - Your complete guide to all project documentation.
 
-1. [00-project-overview.md](/home/parobek/Code/Impulse-Next_BBS/docs/00-project-overview.md) - Vision, objectives, stakeholders (272 lines)
-2. [01-phase-sprint-plan.md](/home/parobek/Code/Impulse-Next_BBS/docs/01-phase-sprint-plan.md) - 32-sprint roadmap (1,270 lines)
-3. [02-architecture.md](/home/parobek/Code/Impulse-Next_BBS/docs/02-architecture.md) - System design (1,219 lines)
-4. [03-technical-details.md](/home/parobek/Code/Impulse-Next_BBS/docs/03-technical-details.md) - Pascal→Rust conversion (1,768 lines)
-5. [04-development-guide.md](/home/parobek/Code/Impulse-Next_BBS/docs/04-development-guide.md) - Developer onboarding (965 lines)
-6. [05-testing-strategy.md](/home/parobek/Code/Impulse-Next_BBS/docs/05-testing-strategy.md) - Testing methodology (948 lines)
-7. [06-deployment-guide.md](/home/parobek/Code/Impulse-Next_BBS/docs/06-deployment-guide.md) - Docker, K8s (1,084 lines)
-8. [07-migration-guide.md](/home/parobek/Code/Impulse-Next_BBS/docs/07-migration-guide.md) - Legacy data migration (956 lines)
-9. [08-security-architecture.md](/home/parobek/Code/Impulse-Next_BBS/docs/08-security-architecture.md) - Security design (1,150 lines)
+All documentation has been reorganized into 9 logical categories with 43 files (38 markdown + 5 data files) totaling over 31,000 lines of comprehensive coverage.
 
-**Total**: 9,632 lines of comprehensive documentation
+### Key Documentation by Category
+
+**Getting Started:**
+- [Project Overview](docs/getting-started/project-overview.md) - Vision, objectives, stakeholders
+
+**Architecture:**
+- [System Architecture](docs/architecture/system-architecture.md) - Overall system design
+- [Security Architecture](docs/architecture/security-architecture.md) - Security design and threat model
+- [Data Model](docs/architecture/data-model.md) - Database schema and relationships
+
+**Planning:**
+- [Phase & Sprint Plan](docs/planning/phase-sprint-plan.md) - Complete 32-sprint roadmap
+- [Conversion Strategy](docs/planning/conversion-strategy.md) - Pascal→Rust migration approach
+
+**Implementation:**
+- [Development Guide](docs/implementation/development-guide.md) - Developer onboarding
+- [Logging Integration](docs/implementation/logging-integration.md) - Structured logging guide
+
+**Testing:**
+- [Testing Strategy](docs/testing/testing-strategy.md) - Comprehensive testing methodology
+
+**Deployment:**
+- [Deployment Guide](docs/deployment/deployment-guide.md) - Docker, Kubernetes, production setup
+- [Migration Guide](docs/deployment/migration-guide.md) - Legacy data migration
+
+**Pascal Reference:**
+- [Analysis Reports](docs/pascal-reference/analysis/) - 7 analysis documents + 5 data files
+- [Conversion Guides](docs/pascal-reference/conversion/) - 6 module-specific guides
+- [Risk Assessments](docs/pascal-reference/risk-assessment/) - 3 risk analysis documents
+
+**Reports:**
+- [Sprint Completions](docs/reports/sprints/) - Phase 1 sprint reports
+- [CI/CD Analysis](docs/reports/ci-cd/) - Pipeline optimization reports
+- [Documentation Verification](docs/reports/documentation/) - Link checking, verification
+
+**Reference:**
+- [Impulse History](docs/reference/impulse-history.md) - BBS history and cultural context
 
 ### Sprint TODO Files (to-dos/)
 
@@ -482,10 +550,11 @@ Detailed sprint plans for all 32 sprints:
 
 **Total**: 19,214 lines across 30 files with 93 Rust code examples
 
-### Reference Documentation (ref-docs/)
+### Additional Resources
 
-- [impulse-history.md](/home/parobek/Code/Impulse-Next_BBS/ref-docs/impulse-history.md) - BBS history and cultural context
-- [rust-conversion-technical.md](/home/parobek/Code/Impulse-Next_BBS/ref-docs/rust-conversion-technical.md) - Conversion strategies
+For historical context and technical details:
+- See [docs/reference/](docs/reference/) for BBS history and cultural context
+- See [docs/pascal-reference/](docs/pascal-reference/) for complete Pascal analysis and conversion guides
 
 ### API Documentation
 
@@ -500,7 +569,7 @@ cargo doc --workspace --no-deps --open
 ### 4 Phases, 24 Months, 32 Sprints
 
 **Phase 1: Foundation (November 2025, Sprints 1-8) - ✅ COMPLETE**
-- ✅ Sprint 1: Project setup (16-crate workspace, CI/CD)
+- ✅ Sprint 1: Project setup (18-crate workspace, CI/CD)
 - ✅ Sprint 2: Core type system (User, FileEntry, Message, BbsConfig)
 - ✅ Sprint 3: Pascal analysis (114 files, 1,070 dependencies)
 - ✅ Sprint 4: Configuration system (TOML + ENV, hot-reload)
@@ -595,7 +664,7 @@ cargo test --workspace --doc
 
 ### Testing Strategy
 
-See [/home/parobek/Code/Impulse-Next_BBS/docs/05-testing-strategy.md](/home/parobek/Code/Impulse-Next_BBS/docs/05-testing-strategy.md) for:
+See [docs/testing/testing-strategy.md](docs/testing/testing-strategy.md) for:
 
 - Unit testing approach
 - Integration testing
@@ -613,7 +682,7 @@ We welcome contributions from the community! Whether you're interested in:
 - Writing tests
 - Optimizing performance
 
-Please read our [CONTRIBUTING.md](/home/parobek/Code/Impulse-Next_BBS/CONTRIBUTING.md) for:
+Please read our [CONTRIBUTING.md](CONTRIBUTING.md) for:
 
 - Development workflow
 - Coding standards
@@ -635,8 +704,8 @@ Please read our [CONTRIBUTING.md](/home/parobek/Code/Impulse-Next_BBS/CONTRIBUTI
 
 This project is dual-licensed under:
 
-- **MIT License** ([LICENSE-MIT](/home/parobek/Code/Impulse-Next_BBS/LICENSE-MIT))
-- **Apache License 2.0** ([LICENSE-APACHE](/home/parobek/Code/Impulse-Next_BBS/LICENSE-APACHE))
+- **MIT License** ([LICENSE-MIT](LICENSE-MIT))
+- **Apache License 2.0** ([LICENSE-APACHE](LICENSE-APACHE))
 
 You may choose either license for your use.
 
@@ -680,10 +749,10 @@ Built with excellent open-source technologies:
 - **Repository**: [https://github.com/doublegate/Impulse-Next_BBS](https://github.com/doublegate/Impulse-Next_BBS)
 - **Issues**: [GitHub Issues](https://github.com/doublegate/Impulse-Next_BBS/issues)
 - **Discussions**: [GitHub Discussions](https://github.com/doublegate/Impulse-Next_BBS/discussions)
-- **Documentation**: [/home/parobek/Code/Impulse-Next_BBS/docs](/home/parobek/Code/Impulse-Next_BBS/docs)
+- **Documentation Hub**: [docs/INDEX.md](docs/INDEX.md)
 
 ---
 
 **"We're figuring it out!"** - Preserving BBS history, one commit at a time.
 
-*For detailed sprint plans, architecture decisions, and technical specifications, see the comprehensive documentation in the [/home/parobek/Code/Impulse-Next_BBS/docs](/home/parobek/Code/Impulse-Next_BBS/docs) directory.*
+*For detailed sprint plans, architecture decisions, and technical specifications, see the comprehensive documentation in the [docs/](docs/) directory. Start with [docs/INDEX.md](docs/INDEX.md) for guided navigation.*
