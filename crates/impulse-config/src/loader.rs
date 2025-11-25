@@ -38,8 +38,17 @@ impl Config {
     pub fn load<P: AsRef<Path>>(path: P) -> Result<Self> {
         let path_ref = path.as_ref();
 
+        tracing::debug!(
+            file_path = ?path_ref,
+            "Loading configuration from file"
+        );
+
         // Check if file exists first
         if !path_ref.exists() {
+            tracing::error!(
+                file_path = ?path_ref,
+                "Configuration file not found"
+            );
             return Err(ConfigError::IoError(std::io::Error::new(
                 std::io::ErrorKind::NotFound,
                 format!("Configuration file not found: {}", path_ref.display()),
@@ -50,12 +59,30 @@ impl Config {
             .merge(Serialized::defaults(BbsConfig::default()))
             .merge(Toml::file(path_ref))
             .merge(Env::prefixed("IMPULSE_").split("_"))
-            .extract()?;
+            .extract()
+            .map_err(|e| {
+                tracing::error!(
+                    file_path = ?path_ref,
+                    error = %e,
+                    "Failed to parse configuration"
+                );
+                ConfigError::from(e)
+            })?;
 
         // Validate the configuration
         config.validate().map_err(|e| {
+            tracing::warn!(
+                file_path = ?path_ref,
+                error = %e,
+                "Configuration validation failed"
+            );
             ConfigError::ValidationError(format!("Configuration validation failed: {}", e))
         })?;
+
+        tracing::info!(
+            file_path = ?path_ref,
+            "Successfully loaded configuration"
+        );
 
         Ok(Self { inner: config })
     }
@@ -92,14 +119,40 @@ impl Config {
     /// - TOML serialization fails
     /// - File cannot be written
     pub fn save<P: AsRef<Path>>(&self, path: P) -> Result<()> {
-        let toml_string = toml::to_string_pretty(&self.inner)?;
-        std::fs::write(path.as_ref(), toml_string).map_err(|e| {
+        let path_ref = path.as_ref();
+
+        tracing::debug!(
+            file_path = ?path_ref,
+            "Saving configuration to file"
+        );
+
+        let toml_string = toml::to_string_pretty(&self.inner).map_err(|e| {
+            tracing::error!(
+                file_path = ?path_ref,
+                error = %e,
+                "Failed to serialize configuration to TOML"
+            );
+            ConfigError::from(e)
+        })?;
+
+        std::fs::write(path_ref, toml_string).map_err(|e| {
+            tracing::error!(
+                file_path = ?path_ref,
+                error = %e,
+                "Failed to write configuration file"
+            );
             ConfigError::SaveError(format!(
                 "Failed to write config to {}: {}",
-                path.as_ref().display(),
+                path_ref.display(),
                 e
             ))
         })?;
+
+        tracing::info!(
+            file_path = ?path_ref,
+            "Successfully saved configuration"
+        );
+
         Ok(())
     }
 
@@ -119,6 +172,10 @@ impl Config {
     /// # Errors
     /// Returns `ConfigError` if file cannot be written
     pub fn generate_default<P: AsRef<Path>>(path: P) -> Result<()> {
+        tracing::info!(
+            file_path = ?path.as_ref(),
+            "Generating default configuration file"
+        );
         let config = Self::with_defaults();
         config.save(path)
     }
@@ -182,9 +239,18 @@ impl Config {
     /// # Errors
     /// Returns `ConfigError` if validation fails
     pub fn validate(&self) -> Result<()> {
+        tracing::debug!("Validating configuration");
+
         self.inner.validate().map_err(|e| {
+            tracing::warn!(
+                error = %e,
+                "Configuration validation failed"
+            );
             ConfigError::ValidationError(format!("Configuration validation failed: {}", e))
-        })
+        })?;
+
+        tracing::debug!("Configuration validation successful");
+        Ok(())
     }
 }
 

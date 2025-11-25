@@ -188,13 +188,25 @@ impl UserManager for InMemoryUserManager {
 
         // Check if username already exists
         if users.values().any(|u| u.username() == user.username()) {
+            tracing::warn!(
+                username = %user.username(),
+                "Failed to create user: username already exists"
+            );
             return Err(Error::AlreadyExists(format!(
                 "User '{}' already exists",
                 user.username()
             )));
         }
 
+        let user_id = user.id();
+        let username = user.username().to_string();
         users.insert(user.id(), user);
+
+        tracing::info!(
+            user_id = ?user_id,
+            username = %username,
+            "User created successfully"
+        );
         Ok(())
     }
 
@@ -219,22 +231,47 @@ impl UserManager for InMemoryUserManager {
         let mut users = self.users.write().unwrap();
 
         if !users.contains_key(&user.id()) {
+            tracing::warn!(
+                user_id = ?user.id(),
+                "Failed to update user: user not found"
+            );
             return Err(Error::NotFound(format!(
                 "User with ID {:?} not found",
                 user.id()
             )));
         }
 
+        let user_id = user.id();
+        let username = user.username().to_string();
         users.insert(user.id(), user);
+
+        tracing::info!(
+            user_id = ?user_id,
+            username = %username,
+            "User updated successfully"
+        );
         Ok(())
     }
 
     async fn delete_user(&mut self, id: UserId) -> Result<()> {
         let mut users = self.users.write().unwrap();
-        users
-            .remove(&id)
-            .ok_or_else(|| Error::NotFound(format!("User with ID {:?} not found", id)))?;
-        Ok(())
+        match users.remove(&id) {
+            Some(user) => {
+                tracing::info!(
+                    user_id = ?id,
+                    username = %user.username(),
+                    "User deleted successfully"
+                );
+                Ok(())
+            }
+            None => {
+                tracing::warn!(
+                    user_id = ?id,
+                    "Failed to delete user: user not found"
+                );
+                Err(Error::NotFound(format!("User with ID {:?} not found", id)))
+            }
+        }
     }
 
     async fn list_users(&self) -> Result<Vec<User>> {
@@ -327,7 +364,17 @@ impl FileUserManager {
         use std::fs::File;
         use std::io::{BufReader, Seek};
 
+        tracing::debug!(
+            file_path = ?self.path,
+            "Loading users from file"
+        );
+
         let file = File::open(&self.path).map_err(|e| {
+            tracing::error!(
+                file_path = ?self.path,
+                error = %e,
+                "Failed to open USER.LST file"
+            );
             Error::UserManagement(format!("Failed to open USER.LST at {:?}: {}", self.path, e))
         })?;
 
@@ -350,9 +397,11 @@ impl FileUserManager {
                         }
                         Err(e) => {
                             // Log warning but continue (some records might be corrupted)
-                            eprintln!(
-                                "Warning: Failed to convert user record at position {}: {}",
-                                pos, e
+                            tracing::warn!(
+                                file_path = ?self.path,
+                                position = pos,
+                                error = %e,
+                                "Failed to convert user record, skipping"
                             );
                         }
                     }
@@ -362,6 +411,12 @@ impl FileUserManager {
                     if reader.stream_position().map(|p| p == pos).unwrap_or(true) {
                         break; // EOF reached
                     } else {
+                        tracing::error!(
+                            file_path = ?self.path,
+                            position = pos,
+                            error = %e,
+                            "Failed to read user record"
+                        );
                         return Err(Error::UserManagement(format!(
                             "Failed to read user record at position {}: {}",
                             pos, e
@@ -371,7 +426,14 @@ impl FileUserManager {
             }
         }
 
+        let user_count = users_map.len();
         *self.users.write().unwrap() = users_map;
+
+        tracing::info!(
+            file_path = ?self.path,
+            user_count = user_count,
+            "Successfully loaded users from file"
+        );
         Ok(())
     }
 
@@ -400,7 +462,17 @@ impl FileUserManager {
         use std::fs::File;
         use std::io::BufWriter;
 
+        tracing::debug!(
+            file_path = ?self.path,
+            "Saving users to file"
+        );
+
         let file = File::create(&self.path).map_err(|e| {
+            tracing::error!(
+                file_path = ?self.path,
+                error = %e,
+                "Failed to create USER.LST file"
+            );
             Error::UserManagement(format!(
                 "Failed to create USER.LST at {:?}: {}",
                 self.path, e
@@ -409,10 +481,17 @@ impl FileUserManager {
 
         let mut writer = BufWriter::new(file);
         let users = self.users.read().unwrap();
+        let user_count = users.len();
 
         for user in users.values() {
             let rec = user.to_pascal();
             rec.write_le(&mut writer).map_err(|e| {
+                tracing::error!(
+                    file_path = ?self.path,
+                    username = %user.username(),
+                    error = %e,
+                    "Failed to write user record"
+                );
                 Error::UserManagement(format!(
                     "Failed to write user record for {}: {}",
                     user.username(),
@@ -421,6 +500,11 @@ impl FileUserManager {
             })?;
         }
 
+        tracing::info!(
+            file_path = ?self.path,
+            user_count = user_count,
+            "Successfully saved users to file"
+        );
         Ok(())
     }
 
@@ -445,11 +529,19 @@ impl FileUserManager {
 #[async_trait]
 impl UserManager for FileUserManager {
     async fn create_user(&mut self, user: User) -> Result<()> {
+        let user_id = user.id();
+        let username = user.username().to_string();
+
         {
             let mut users = self.users.write().unwrap();
 
             // Check if username already exists
             if users.values().any(|u| u.username() == user.username()) {
+                tracing::warn!(
+                    username = %username,
+                    file_path = ?self.path,
+                    "Failed to create user: username already exists"
+                );
                 return Err(Error::AlreadyExists(format!(
                     "User '{}' already exists",
                     user.username()
@@ -460,6 +552,13 @@ impl UserManager for FileUserManager {
         } // Lock released here
 
         self.save().await?;
+
+        tracing::info!(
+            user_id = ?user_id,
+            username = %username,
+            file_path = ?self.path,
+            "User created and saved to file"
+        );
         Ok(())
     }
 
@@ -481,10 +580,18 @@ impl UserManager for FileUserManager {
     }
 
     async fn update_user(&mut self, user: User) -> Result<()> {
+        let user_id = user.id();
+        let username = user.username().to_string();
+
         {
             let mut users = self.users.write().unwrap();
 
             if !users.contains_key(&user.id()) {
+                tracing::warn!(
+                    user_id = ?user_id,
+                    file_path = ?self.path,
+                    "Failed to update user: user not found"
+                );
                 return Err(Error::NotFound(format!(
                     "User with ID {:?} not found",
                     user.id()
@@ -495,18 +602,40 @@ impl UserManager for FileUserManager {
         } // Lock released here
 
         self.save().await?;
+
+        tracing::info!(
+            user_id = ?user_id,
+            username = %username,
+            file_path = ?self.path,
+            "User updated and saved to file"
+        );
         Ok(())
     }
 
     async fn delete_user(&mut self, id: UserId) -> Result<()> {
-        {
+        let username = {
             let mut users = self.users.write().unwrap();
-            users
-                .remove(&id)
-                .ok_or_else(|| Error::NotFound(format!("User with ID {:?} not found", id)))?;
-        } // Lock released here
+            match users.remove(&id) {
+                Some(user) => user.username().to_string(),
+                None => {
+                    tracing::warn!(
+                        user_id = ?id,
+                        file_path = ?self.path,
+                        "Failed to delete user: user not found"
+                    );
+                    return Err(Error::NotFound(format!("User with ID {:?} not found", id)));
+                }
+            }
+        }; // Lock released here
 
         self.save().await?;
+
+        tracing::info!(
+            user_id = ?id,
+            username = %username,
+            file_path = ?self.path,
+            "User deleted and changes saved to file"
+        );
         Ok(())
     }
 

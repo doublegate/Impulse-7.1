@@ -1,0 +1,2 @@
+[2m2025-11-25T00:00:25.421253Z[0m [32m INFO[0m [2mdoctest_bundle_2024::__doctest_18[0m[2m:[0m [2m266:[0m User logged in [3muser_id[0m[2m=[0m42
+[2m2025-11-25T00:00:25.421262Z[0m [31mERROR[0m [2mdoctest_bundle_2024::__doctest_18[0m[2m:[0m [2m267:[0m Authentication failed [3merror[0m[2m=[0m"auth failed"

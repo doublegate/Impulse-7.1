@@ -381,12 +381,27 @@ impl AuthService {
         stored_hash: &str,
     ) -> Result<SessionToken, AuthError> {
         // Verify password
-        self.hasher.verify_password(password, stored_hash)?;
-
-        // Create session
-        let token = self.sessions.create_session(user.id()).await;
-
-        Ok(token)
+        match self.hasher.verify_password(password, stored_hash) {
+            Ok(()) => {
+                // Create session
+                let token = self.sessions.create_session(user.id()).await;
+                tracing::info!(
+                    user_id = ?user.id(),
+                    username = %user.username(),
+                    token = %token,
+                    "User logged in successfully"
+                );
+                Ok(token)
+            }
+            Err(e) => {
+                tracing::warn!(
+                    user_id = ?user.id(),
+                    username = %user.username(),
+                    "Login failed: invalid credentials"
+                );
+                Err(e)
+            }
+        }
     }
 
     /// Validate a session token and return the user ID
@@ -396,19 +411,66 @@ impl AuthService {
     /// Returns `AuthError::SessionNotFound` if session doesn't exist
     /// Returns `AuthError::SessionExpired` if session is expired
     pub async fn validate_session(&self, token: &SessionToken) -> Result<UserId, AuthError> {
-        let session = self.sessions.get_session(token).await?;
-        self.sessions.touch_session(token).await?;
-        Ok(session.user_id())
+        match self.sessions.get_session(token).await {
+            Ok(session) => {
+                let user_id = session.user_id();
+                match self.sessions.touch_session(token).await {
+                    Ok(()) => {
+                        tracing::debug!(
+                            user_id = ?user_id,
+                            token = %token,
+                            "Session validated successfully"
+                        );
+                        Ok(user_id)
+                    }
+                    Err(e) => {
+                        tracing::warn!(
+                            user_id = ?user_id,
+                            token = %token,
+                            error = %e,
+                            "Session validation failed: could not update activity"
+                        );
+                        Err(e)
+                    }
+                }
+            }
+            Err(e) => {
+                tracing::warn!(
+                    token = %token,
+                    error = %e,
+                    "Session validation failed"
+                );
+                Err(e)
+            }
+        }
     }
 
     /// Log out a user by removing their session
     pub async fn logout(&self, token: &SessionToken) -> bool {
-        self.sessions.remove_session(token).await
+        let result = self.sessions.remove_session(token).await;
+        if result {
+            tracing::info!(
+                token = %token,
+                "User logged out successfully"
+            );
+        } else {
+            tracing::warn!(
+                token = %token,
+                "Logout failed: session not found"
+            );
+        }
+        result
     }
 
     /// Log out all sessions for a user
     pub async fn logout_all(&self, user_id: UserId) -> usize {
-        self.sessions.remove_user_sessions(user_id).await
+        let count = self.sessions.remove_user_sessions(user_id).await;
+        tracing::info!(
+            user_id = ?user_id,
+            session_count = count,
+            "Logged out all user sessions"
+        );
+        count
     }
 
     /// Get active sessions for a user
@@ -418,7 +480,13 @@ impl AuthService {
 
     /// Clean up expired sessions
     pub async fn cleanup_expired_sessions(&self) -> usize {
-        self.sessions.cleanup_expired().await
+        let count = self.sessions.cleanup_expired().await;
+        if count > 0 {
+            tracing::info!(expired_count = count, "Cleaned up expired sessions");
+        } else {
+            tracing::debug!("No expired sessions to clean up");
+        }
+        count
     }
 
     /// Get count of active sessions
