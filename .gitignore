@@ -35,4 +35,7 @@ Thumbs.db
 # Backups
 backups/
 
+# Daily logs (local development artifacts)
+logs/
+
 
