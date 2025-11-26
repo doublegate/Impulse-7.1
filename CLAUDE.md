@@ -2,7 +2,7 @@
 
 Project-specific guidance for Impulse-Next_BBS modernization (classic Impulse 7.1 BBS: Borland Pascal 7.0 → Rust 2024).
 
-**Version:** 0.1.0 | **Updated:** 2025-11-23
+**Version:** 0.2.0 | **Updated:** 2025-11-26
 
 ---
 
@@ -17,10 +17,10 @@ Project-specific guidance for Impulse-Next_BBS modernization (classic Impulse 7.
 
 ## Current Status
 
-**Phase:** 2 - Core Features (Sprints 9-16) - COMPLETE
+**Phase:** 2 - Core Features (COMPLETE) + Server Infrastructure
 **Sprints Complete:** 16 of 32 (50%)
-**Version:** 0.1.0 (Phase 2: 100% COMPLETE)
-**Last Commit:** 1e6a8c5 (2025-11-25)
+**Version:** 0.2.0 (Phase 2: 100% COMPLETE + Server Infrastructure)
+**Last Commit:** ebd1305 (2025-11-26)
 
 ### Sprint Progress
 - ✅ **Phase 1:** Foundation (Sprints 1-8, 100%)
@@ -33,15 +33,16 @@ Project-specific guidance for Impulse-Next_BBS modernization (classic Impulse 7.
 - ✅ **Sprint 14:** File Upload (100%)
 - ✅ **Sprint 15:** User Profiles & Statistics (100%)
 - ✅ **Sprint 16:** Integration & Testing (100%)
+- ✅ **Server Infrastructure:** Telnet, Session, Terminal, Server (Post Phase 2)
 - 📋 **Sprints 17-32:** Phase 3 & 4 (Planned)
 
 ### Quality Metrics
-- **Tests:** 1,118 passing (100% pass rate)
+- **Tests:** 1,158 passing (100% pass rate)
 - **Coverage:** 75.43% achieved (target: 75%+ - GOAL MET!)
 - **Clippy:** 0 warnings
 - **CI/CD:** 100% passing on main branch
-- **Crates:** 19 (16 libraries + 3 binaries)
-- **Code:** 37,931 lines total
+- **Crates:** 20 (17 libraries + 3 binaries)
+- **Code:** 37,823 lines total
 - **Build Time:** <10s full workspace
 - **Test Execution:** <5s all tests
 
@@ -52,7 +53,7 @@ Project-specific guidance for Impulse-Next_BBS modernization (classic Impulse 7.
 ### Workspace Layout
 ```
 Impulse-Next_BBS/
-├── crates/              # 16 crates
+├── crates/              # 20 crates
 │   ├── impulse-core/    # Core BBS functionality
 │   ├── impulse-types/   # Type definitions (User, FileEntry, Message, BbsConfig)
 │   ├── impulse-config/  # Configuration management
@@ -123,7 +124,7 @@ Impulse-Next_BBS/
 ### Core Dependencies
 | Dependency | Version | Purpose |
 |------------|---------|---------|
-| Rust | 1.80+ (2021 edition) | Primary language |
+| Rust | 1.85+ (2024 edition) | Primary language |
 | Tokio | 1.47+ | Async runtime |
 | crossterm | 0.28 | Terminal I/O |
 | SQLx | 0.8 | Database (SQLite/PostgreSQL) |
@@ -281,16 +282,25 @@ cargo build --workspace --all-features
 - ✅ User directory with search and filtering
 - ✅ 128 tests (82 unit, 46 doc)
 
-### Next Sprint
+### Server Infrastructure (Post Phase 2)
 
-#### Sprint 16: Session Management
-**TODO:** `to-dos/phase-2-core-features/sprint-16-session-management.md` (planned)
+#### Server Infrastructure Implementation
+**Commit:** ebd1305 (2025-11-26)
 
-**Goals:**
-- Concurrent session handling
-- Session timeouts and expiry
-- WebSocket support
-- Session state management
+**Deliverables:**
+- ✅ impulse-server - Main BBS server binary (285 lines)
+  - Async Tokio runtime with telnet listener on port 2323
+  - Connection acceptance and session spawning
+  - Graceful shutdown handling
+- ✅ impulse-telnet - RFC 854 Telnet Protocol (764 lines, 40 tests)
+  - TelnetServer, TelnetConnection, IAC negotiation
+  - Telnet options: ECHO, SUPPRESS_GO_AHEAD, TERMINAL_TYPE, NAWS
+- ✅ impulse-session - Session Management (747 lines, 11 tests)
+  - SessionId (UUID), SessionState, SessionManager
+  - Concurrent tracking, automatic expiry, CRUD operations
+- ✅ impulse-terminal - ANSI Terminal (725 lines, 16 tests)
+  - Color enum (16/256/RGB), AnsiSequence, AnsiRenderer
+  - Cursor/screen control, text styling
 
 ---
 

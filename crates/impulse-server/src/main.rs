@@ -37,7 +37,7 @@ async fn main() -> Result<()> {
         )
         .init();
 
-    info!("Impulse 7.1 BBS Server v0.1.0");
+    info!("Impulse 7.1 BBS Server v0.2.0");
     info!("=================================");
 
     // Load configuration
@@ -182,7 +182,7 @@ async fn handle_connection(
                         renderer.reset();
                         renderer.write_line(&format!("Active Sessions: {}", session_count));
                         renderer.write_line("BBS Software: Impulse 7.1 (Rust Edition)");
-                        renderer.write_line("Version: 0.1.0");
+                        renderer.write_line("Version: 0.2.0");
                         renderer.write_line("\r\n");
                         connection
                             .send_raw(renderer.take_output().as_bytes())

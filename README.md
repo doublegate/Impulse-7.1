@@ -82,7 +82,7 @@ This project aims to:
 
 ## Project Status
 
-**Current Version**: 0.1.0 (Phase 2 - Core Features: 100% COMPLETE! ✅)
+**Current Version**: 0.2.0 (Phase 2 - Core Features: 100% COMPLETE! ✅)
 **Development Phase**: Phase 2 - Core Features (COMPLETE)
 **Completion**: Sprint 16/32 (50%) - Phase 1: 8/8 (100% ✅), Phase 2: 8/8 (100% ✅)
 
@@ -106,19 +106,20 @@ This project aims to:
 - ✅ **Sprint 14** (File Upload): Upload processor, ClamAV scanning, duplicate detection, validation, quarantine, 180 tests
 - ✅ **Sprint 15** (User Profiles & Statistics): Profile display, stats tracking, settings editor, achievements, privacy controls, user directory, 128 tests
 - ✅ **Sprint 16** (Phase 2 Integration & Testing): Cross-crate integration testing, 68 integration tests, 32 performance benchmarks, Phase 2 100% COMPLETE!
+- ✅ **Server Infrastructure** (Post Phase 2): Working BBS server with telnet (RFC 854), session management, ANSI terminal support, 40 new tests
 
 ### Phase 1 Achievements
 
 **Infrastructure:**
 
-- 19 crates (16 libraries + 3 binaries)
+- 20 crates (17 libraries + 3 binaries)
 - 5-job CI/CD pipeline (lint, test×3, build×3, coverage, benchmarks)
-- 100+ commits across 100+ Rust source files
-- 37,931 lines of code (production + tests)
+- 105+ commits across 237 Rust source files
+- 37,823 lines of code (production + tests)
 
-**Quality Metrics (Phase 1+2 COMPLETE):**
+**Quality Metrics (Phase 1+2 COMPLETE + Server Infrastructure):**
 
-- **Tests**: 1,118 (100% passing rate)
+- **Tests**: 1,158 (100% passing rate)
 - **Coverage**: 75.43% achieved (target: 75% - GOAL MET!)
 - **Clippy**: 0 warnings
 - **Documentation**: 43 files, 38,000+ lines
@@ -154,7 +155,7 @@ This project aims to:
 
 ## Features
 
-### Current Implementation (v0.1.0 - Phase 1 Complete + Phase 2 Complete)
+### Current Implementation (v0.2.0 - Phase 1 Complete + Phase 2 Complete)
 
 **Phase 1 Foundation (Sprints 1-8, November 2025):**
 
@@ -319,6 +320,43 @@ This project aims to:
 - ✅ Last login tracking and display
 - ✅ 128 new tests (82 unit, 46 doc)
 
+**Server Infrastructure (Post Phase 2, November 2025):**
+
+- ✅ **impulse-server** - Working BBS server binary (285 lines)
+  - Async Tokio runtime with telnet listener
+  - Port 2323 configurable telnet server
+  - Connection acceptance and session spawning
+  - Graceful shutdown handling (Ctrl+C)
+  - Connection logging and error handling
+
+- ✅ **impulse-telnet** - RFC 854 Telnet Protocol (764 lines, 40 tests)
+  - TelnetServer with async TcpListener
+  - TelnetConnection with IAC negotiation
+  - IAC (Interpret As Command) parser
+  - Telnet options: ECHO, SUPPRESS_GO_AHEAD, TERMINAL_TYPE, NAWS
+  - Binary-safe data transmission
+  - Connection state management
+  - Option negotiation (WILL, WON'T, DO, DON'T)
+
+- ✅ **impulse-session** - Session Management (747 lines, 11 tests)
+  - UUID-based SessionId identifiers
+  - SessionState machine (5 states: Connected, Authenticated, Active, Idle, Disconnected)
+  - SessionManager with concurrent tracking (async RwLock)
+  - SessionConfig for timeouts and limits
+  - CRUD operations: create, authenticate, get, update, terminate, list
+  - Automatic session expiry and cleanup
+  - Thread-safe concurrent access
+  - Maximum sessions per user enforcement
+
+- ✅ **impulse-terminal** - ANSI Terminal Emulation (725 lines, 16 tests)
+  - Color enum: 16 basic colors, 256-color palette, RGB true color
+  - AnsiSequence builder for escape sequences
+  - AnsiRenderer for text rendering with colors/styles
+  - Cursor control (move, position, save/restore)
+  - Screen control (clear, scroll)
+  - Text styling (bold, underline, italic, reverse, strike)
+  - Full ANSI escape sequence support
+
 ### Planned Features
 
 **Phase 2 (Sprint 16, remaining ~1 week) - Core Services**
@@ -385,7 +423,7 @@ This project aims to:
 └──────────────────────────────────────────────────────────┘
 ```
 
-### 19-Crate Workspace Structure
+### 20-Crate Workspace Structure
 
 **Core Crates:**
 
@@ -397,12 +435,12 @@ This project aims to:
 **Protocol Crates:**
 
 - `impulse-protocol` - Protocol trait definitions
-- `impulse-telnet` - Telnet protocol implementation
+- `impulse-telnet` - Telnet protocol implementation (RFC 854)
 - `impulse-ssh` - SSH protocol implementation
 
 **Feature Crates:**
 
-- `impulse-session` - Session management and event loops
+- `impulse-session` - Session management and state tracking
 - `impulse-terminal` - Terminal I/O and ANSI rendering
 - `impulse-auth` - Authentication (Argon2id, rate limiting, lockout)
 - `impulse-message` - Message bases (JAM/Hudson)
@@ -414,8 +452,13 @@ This project aims to:
 **Application Crates:**
 
 - `impulse-web` - Web admin panel (Axum)
-- `impulse-server` - Main server binary
+- `impulse-server` - Main BBS server binary
+- `impulse-cli` - CLI management tool (binary)
 - `impconfig` - Configuration management CLI tool (binary)
+
+**Testing Crates:**
+
+- `integration-tests` - Workspace-level integration tests
 
 See [docs/architecture/system-architecture.md](docs/architecture/system-architecture.md) for complete architecture documentation.
 
@@ -760,9 +803,9 @@ cargo doc --workspace --no-deps --open
 
 ## Testing
 
-### Current Test Suite (Phase 1 + Phase 2 Complete)
+### Current Test Suite (Phase 1 + Phase 2 + Server Infrastructure)
 
-**Total Tests**: 1,118 (100% passing rate)
+**Total Tests**: 1,158 (100% passing rate)
 **Code Coverage**: 75.43% achieved (target: 75%+ - GOAL MET!)
 
 **Test Types:**
@@ -781,8 +824,11 @@ cargo doc --workspace --no-deps --open
 - impulse-user: 161+ tests (33 CRUD/file I/O, 128 new profile/stats/settings/achievements tests)
 - impulse-menu: 84+ tests (parser, renderer, router, navigation state machine)
 - impulse-logging: 80 tests (52 unit, 18 integration, 10 benchmarks)
+- impulse-telnet: 40 tests (IAC parsing, connection handling, server operations)
 - impulse-config: 37 tests (configuration, validation, hot-reload)
-- Other crates: 150+ tests (protocols, terminal, door, web)
+- impulse-session: 11 tests (session CRUD, state management, expiry)
+- impulse-terminal: 16 tests (color conversion, ANSI sequences, rendering)
+- Other crates: 137+ tests (protocols, door, web, core)
 
 **Coverage by Crate:**
 

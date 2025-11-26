@@ -2,8 +2,8 @@
 
 Welcome to the Impulse-Next_BBS beta testing program! This guide will help you install, configure, and test the BBS software.
 
-**Version:** 0.1.0 (Phase 2 Complete)
-**Last Updated:** 2025-11-25
+**Version:** 0.2.0 (Phase 2 Complete)
+**Last Updated:** 2025-11-26
 
 ---
 
@@ -402,7 +402,7 @@ Extra blank lines appear between quoted lines
 **System Info:**
 - OS: Ubuntu 22.04
 - Terminal: xterm-256color
-- Server Version: 0.1.0
+- Server Version: 0.2.0
 ```
 
 ---

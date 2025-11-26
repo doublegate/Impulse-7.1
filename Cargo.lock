@@ -1378,7 +1378,7 @@ dependencies = [
 
 [[package]]
 name = "impconfig"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "anyhow",
  "assert_cmd",
@@ -1394,7 +1394,7 @@ dependencies = [
 
 [[package]]
 name = "impulse-auth"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "argon2",
  "chrono",
@@ -1410,7 +1410,7 @@ dependencies = [
 
 [[package]]
 name = "impulse-cli"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "anyhow",
  "impulse-config",
@@ -1423,7 +1423,7 @@ dependencies = [
 
 [[package]]
 name = "impulse-config"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "async-trait",
  "figment",
@@ -1441,7 +1441,7 @@ dependencies = [
 
 [[package]]
 name = "impulse-core"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "async-trait",
  "impulse-types",
@@ -1452,7 +1452,7 @@ dependencies = [
 
 [[package]]
 name = "impulse-door"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "async-trait",
  "impulse-types",
@@ -1462,7 +1462,7 @@ dependencies = [
 
 [[package]]
 name = "impulse-file"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "async-trait",
  "chrono",
@@ -1480,7 +1480,7 @@ dependencies = [
 
 [[package]]
 name = "impulse-logging"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "anyhow",
  "flate2",
@@ -1499,7 +1499,7 @@ dependencies = [
 
 [[package]]
 name = "impulse-menu"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "anyhow",
  "async-trait",
@@ -1513,7 +1513,7 @@ dependencies = [
 
 [[package]]
 name = "impulse-message"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "async-trait",
  "binrw",
@@ -1528,7 +1528,7 @@ dependencies = [
 
 [[package]]
 name = "impulse-protocol"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "async-trait",
  "impulse-types",
@@ -1537,7 +1537,7 @@ dependencies = [
 
 [[package]]
 name = "impulse-server"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "anyhow",
  "impulse-config",
@@ -1554,7 +1554,7 @@ dependencies = [
 
 [[package]]
 name = "impulse-session"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "async-trait",
  "impulse-core",
@@ -1568,7 +1568,7 @@ dependencies = [
 
 [[package]]
 name = "impulse-ssh"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "async-trait",
  "impulse-protocol",
@@ -1579,7 +1579,7 @@ dependencies = [
 
 [[package]]
 name = "impulse-telnet"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "async-trait",
  "impulse-protocol",
@@ -1590,7 +1590,7 @@ dependencies = [
 
 [[package]]
 name = "impulse-terminal"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "async-trait",
  "crossterm",
@@ -1600,7 +1600,7 @@ dependencies = [
 
 [[package]]
 name = "impulse-types"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "bincode",
  "binrw",
@@ -1616,7 +1616,7 @@ dependencies = [
 
 [[package]]
 name = "impulse-user"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "async-trait",
  "binrw",
@@ -1633,7 +1633,7 @@ dependencies = [
 
 [[package]]
 name = "impulse-web"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "axum",
  "impulse-core",

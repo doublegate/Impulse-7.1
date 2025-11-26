@@ -38,7 +38,7 @@ A clear and concise description of what actually happened.
 - Color support: (e.g., ANSI 16-color, monochrome)
 
 **BBS Server:**
-- Version: (e.g., 0.1.0)
+- Version: (e.g., 0.2.0)
 - Build: (e.g., release, debug)
 - Commit: (if building from source, e.g., abc123)
 

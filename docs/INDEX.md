@@ -1,7 +1,7 @@
 # Impulse-Next BBS Documentation Index
 
-**Last Updated:** 2025-11-24
-**Project Version:** 0.1.0
+**Last Updated:** 2025-11-26
+**Project Version:** 0.2.0
 **Phase:** 2 - Core Services (Sprints 9-16)
 **Repository:** [doublegate/Impulse-Next_BBS](https://github.com/doublegate/Impulse-Next_BBS)
 
