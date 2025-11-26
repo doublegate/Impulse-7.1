@@ -109,10 +109,9 @@ impl DoorIoHandler {
     ///
     /// Ok if the data was sent successfully
     pub async fn send_input(&self, data: &[u8]) -> Result<()> {
-        self.stdin_tx
-            .send(data.to_vec())
-            .await
-            .map_err(|_| std::io::Error::new(std::io::ErrorKind::BrokenPipe, "Stdin channel closed"))?;
+        self.stdin_tx.send(data.to_vec()).await.map_err(|_| {
+            std::io::Error::new(std::io::ErrorKind::BrokenPipe, "Stdin channel closed")
+        })?;
         Ok(())
     }
 

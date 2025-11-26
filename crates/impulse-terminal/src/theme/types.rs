@@ -342,7 +342,10 @@ mod tests {
         );
 
         theme.add_screen("main".to_string(), "screens/main.ans".to_string());
-        assert_eq!(theme.get_screen("main"), Some(&"screens/main.ans".to_string()));
+        assert_eq!(
+            theme.get_screen("main"),
+            Some(&"screens/main.ans".to_string())
+        );
     }
 
     #[test]
@@ -361,7 +364,10 @@ mod tests {
         );
 
         theme.add_prompt("login".to_string(), "Enter password: ".to_string());
-        assert_eq!(theme.get_prompt("login"), Some(&"Enter password: ".to_string()));
+        assert_eq!(
+            theme.get_prompt("login"),
+            Some(&"Enter password: ".to_string())
+        );
     }
 
     #[test]
@@ -435,7 +441,14 @@ mod tests {
     fn test_theme_color_rgb() {
         let color = Color::Rgb(255, 128, 0);
         let theme_color = ThemeColor::from_color(color);
-        assert_eq!(theme_color, ThemeColor::Rgb { r: 255, g: 128, b: 0 });
+        assert_eq!(
+            theme_color,
+            ThemeColor::Rgb {
+                r: 255,
+                g: 128,
+                b: 0
+            }
+        );
 
         let converted_back = theme_color.to_color();
         if let Color::Rgb(r, g, b) = converted_back {

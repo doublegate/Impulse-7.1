@@ -53,7 +53,10 @@ impl DoorManager {
 
     /// Load all door configurations from the door directory.
     async fn load_doors(&mut self) -> Result<()> {
-        info!("Loading door configurations from {}", self.door_dir.display());
+        info!(
+            "Loading door configurations from {}",
+            self.door_dir.display()
+        );
 
         let mut entries = tokio::fs::read_dir(&self.door_dir).await?;
         let mut loaded_count = 0;
@@ -265,7 +268,9 @@ mod tests {
     #[tokio::test]
     async fn test_remove_door() {
         let mut manager = create_test_manager().await;
-        manager.add_door(create_test_config("test-door", 10)).unwrap();
+        manager
+            .add_door(create_test_config("test-door", 10))
+            .unwrap();
 
         assert_eq!(manager.door_count(), 1);
 
@@ -285,7 +290,9 @@ mod tests {
     #[tokio::test]
     async fn test_has_door() {
         let mut manager = create_test_manager().await;
-        manager.add_door(create_test_config("test-door", 10)).unwrap();
+        manager
+            .add_door(create_test_config("test-door", 10))
+            .unwrap();
 
         assert!(manager.has_door("test-door"));
         assert!(!manager.has_door("nonexistent"));

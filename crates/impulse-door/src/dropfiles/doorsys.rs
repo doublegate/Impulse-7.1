@@ -207,9 +207,8 @@ impl DoorSysDropfile {
     /// Write the DOOR.SYS dropfile to a file.
     pub fn write_to_file(&self, path: &Path) -> Result<()> {
         let content = self.format_dropfile();
-        fs::write(path, content).map_err(|e| {
-            DoorError::DropfileCreation(format!("Failed to write DOOR.SYS: {}", e))
-        })?;
+        fs::write(path, content)
+            .map_err(|e| DoorError::DropfileCreation(format!("Failed to write DOOR.SYS: {}", e)))?;
         Ok(())
     }
 

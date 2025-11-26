@@ -24,7 +24,8 @@ impl ThemePreview {
             "\x1b[1;37m║ \x1b[1;36mTheme Preview: {:<30}\x1b[1;37m ║\x1b[0m\n",
             theme.metadata.name
         ));
-        preview.push_str("\x1b[1;37m╚══════════════════════════════════════════════════╝\x1b[0m\n\n");
+        preview
+            .push_str("\x1b[1;37m╚══════════════════════════════════════════════════╝\x1b[0m\n\n");
 
         // Add metadata
         preview.push_str(&format!(
@@ -167,8 +168,8 @@ impl Default for ThemePreview {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::theme::metadata::ThemeMetadata;
     use crate::Color;
+    use crate::theme::metadata::ThemeMetadata;
 
     fn create_test_theme() -> Theme {
         Theme::new(

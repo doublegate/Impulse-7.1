@@ -96,7 +96,7 @@ pub mod session;
 
 // Re-export commonly used types
 pub use config::{DoorConfig, DosBoxConfig};
-pub use dropfiles::{DorinfoDropfile, DoorSysDropfile, DropfileGenerator, DropfileType};
+pub use dropfiles::{DoorSysDropfile, DorinfoDropfile, DropfileGenerator, DropfileType};
 pub use error::{DoorError, Result};
 pub use executor::{DoorExecutor, DoorResult};
 pub use io::DoorIoHandler;

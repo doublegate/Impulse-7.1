@@ -7,8 +7,8 @@ use crate::error::{DoorError, Result};
 use crate::session::DoorSession;
 use std::path::{Path, PathBuf};
 
-use super::dorinfo::DorinfoDropfile;
 use super::doorsys::DoorSysDropfile;
+use super::dorinfo::DorinfoDropfile;
 
 /// Supported dropfile types.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -184,11 +184,7 @@ mod tests {
         let session = create_test_session();
         let temp_dir = tempfile::tempdir().unwrap();
 
-        let result = DropfileGenerator::generate(
-            DropfileType::DoorSys,
-            &session,
-            temp_dir.path(),
-        );
+        let result = DropfileGenerator::generate(DropfileType::DoorSys, &session, temp_dir.path());
 
         assert!(result.is_ok());
         let path = result.unwrap();
@@ -205,11 +201,8 @@ mod tests {
         let session = create_test_session();
         let temp_dir = tempfile::tempdir().unwrap();
 
-        let result = DropfileGenerator::generate(
-            DropfileType::Dorinfo1Def,
-            &session,
-            temp_dir.path(),
-        );
+        let result =
+            DropfileGenerator::generate(DropfileType::Dorinfo1Def, &session, temp_dir.path());
 
         assert!(result.is_ok());
         let path = result.unwrap();
@@ -226,11 +219,8 @@ mod tests {
         let session = create_test_session();
         let temp_dir = tempfile::tempdir().unwrap();
 
-        let result = DropfileGenerator::generate(
-            DropfileType::DorinfoDef,
-            &session,
-            temp_dir.path(),
-        );
+        let result =
+            DropfileGenerator::generate(DropfileType::DorinfoDef, &session, temp_dir.path());
 
         assert!(result.is_ok());
         let path = result.unwrap();
@@ -243,11 +233,7 @@ mod tests {
         let session = create_test_session();
         let temp_dir = tempfile::tempdir().unwrap();
 
-        let result = DropfileGenerator::generate(
-            DropfileType::ChainTxt,
-            &session,
-            temp_dir.path(),
-        );
+        let result = DropfileGenerator::generate(DropfileType::ChainTxt, &session, temp_dir.path());
 
         assert!(result.is_err());
         assert!(matches!(result, Err(DoorError::DropfileCreation(_))));
@@ -258,11 +244,7 @@ mod tests {
         let session = create_test_session();
         let temp_dir = tempfile::tempdir().unwrap();
 
-        let result = DropfileGenerator::generate(
-            DropfileType::CallInfo,
-            &session,
-            temp_dir.path(),
-        );
+        let result = DropfileGenerator::generate(DropfileType::CallInfo, &session, temp_dir.path());
 
         assert!(result.is_err());
         assert!(matches!(result, Err(DoorError::DropfileCreation(_))));
@@ -294,11 +276,7 @@ mod tests {
 
         assert!(!output_dir.exists());
 
-        let result = DropfileGenerator::generate(
-            DropfileType::DoorSys,
-            &session,
-            &output_dir,
-        );
+        let result = DropfileGenerator::generate(DropfileType::DoorSys, &session, &output_dir);
 
         assert!(result.is_ok());
         assert!(output_dir.exists());

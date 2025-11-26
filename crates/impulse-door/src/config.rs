@@ -53,7 +53,9 @@ impl DoorConfig {
     /// Validate the door configuration.
     pub fn validate(&self) -> Result<()> {
         if self.name.is_empty() {
-            return Err(DoorError::InvalidConfig("Door name cannot be empty".to_string()));
+            return Err(DoorError::InvalidConfig(
+                "Door name cannot be empty".to_string(),
+            ));
         }
 
         if !self.executable.exists() {

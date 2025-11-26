@@ -54,10 +54,7 @@ impl ThemeSelector {
                 active_marker, number, theme.name, theme.version
             ));
 
-            menu.push_str(&format!(
-                "     \x1b[0;36mby {:<18}\x1b[0m\n",
-                theme.author
-            ));
+            menu.push_str(&format!("     \x1b[0;36mby {:<18}\x1b[0m\n", theme.author));
 
             menu.push_str(&format!(
                 "     \x1b[0;37m{}\x1b[0m\n\n",
@@ -117,11 +114,12 @@ impl ThemeSelector {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::theme::{ColorScheme, Theme};
     use crate::theme::metadata::ThemeMetadata;
+    use crate::theme::{ColorScheme, Theme};
 
     async fn create_test_manager() -> Arc<ThemeManager> {
-        let temp_dir = std::env::temp_dir().join(format!("impulse_test_selector_{}", rand::random::<u32>()));
+        let temp_dir =
+            std::env::temp_dir().join(format!("impulse_test_selector_{}", rand::random::<u32>()));
         let _ = std::fs::create_dir_all(&temp_dir);
 
         let manager = ThemeManager::new(temp_dir).await.unwrap();

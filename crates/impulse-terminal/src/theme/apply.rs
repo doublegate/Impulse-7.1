@@ -82,7 +82,8 @@ mod tests {
     use super::*;
 
     async fn create_test_config_dir() -> PathBuf {
-        let dir = std::env::temp_dir().join(format!("impulse_test_apply_{}", rand::random::<u32>()));
+        let dir =
+            std::env::temp_dir().join(format!("impulse_test_apply_{}", rand::random::<u32>()));
         let _ = fs::create_dir_all(&dir).await;
         dir
     }
@@ -187,7 +188,8 @@ mod tests {
 
     #[tokio::test]
     async fn test_apply_creates_config_dir() {
-        let base_dir = std::env::temp_dir().join(format!("impulse_test_apply_dir_{}", rand::random::<u32>()));
+        let base_dir =
+            std::env::temp_dir().join(format!("impulse_test_apply_dir_{}", rand::random::<u32>()));
         let config_dir = base_dir.join("nested").join("config");
 
         // Config dir doesn't exist yet

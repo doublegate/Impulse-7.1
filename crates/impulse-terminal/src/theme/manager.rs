@@ -242,7 +242,10 @@ mod tests {
         let colors = manager.get_color_scheme().await;
 
         // Should have default color scheme
-        assert_eq!(colors.primary().foreground, super::super::types::ThemeColor::BrightBlue);
+        assert_eq!(
+            colors.primary().foreground,
+            super::super::types::ThemeColor::BrightBlue
+        );
 
         let _ = std::fs::remove_dir_all(&temp_dir);
     }

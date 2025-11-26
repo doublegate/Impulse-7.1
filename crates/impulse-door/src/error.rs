@@ -99,7 +99,10 @@ mod tests {
     #[test]
     fn test_dropfile_creation_error() {
         let error = DoorError::DropfileCreation("Invalid format".to_string());
-        assert_eq!(error.to_string(), "Failed to create dropfile: Invalid format");
+        assert_eq!(
+            error.to_string(),
+            "Failed to create dropfile: Invalid format"
+        );
     }
 
     #[test]
@@ -114,7 +117,10 @@ mod tests {
     #[test]
     fn test_config_error() {
         let error = DoorError::Config("Missing field 'name'".to_string());
-        assert_eq!(error.to_string(), "Configuration error: Missing field 'name'");
+        assert_eq!(
+            error.to_string(),
+            "Configuration error: Missing field 'name'"
+        );
     }
 
     #[test]

@@ -29,12 +29,7 @@ fn default_true() -> bool {
 
 impl ThemeMetadata {
     /// Create new theme metadata
-    pub fn new(
-        name: String,
-        author: String,
-        version: String,
-        description: String,
-    ) -> Self {
+    pub fn new(name: String, author: String, version: String, description: String) -> Self {
         Self {
             name,
             author,

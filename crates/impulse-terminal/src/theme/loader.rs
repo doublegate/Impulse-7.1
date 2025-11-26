@@ -22,24 +22,22 @@ impl ThemeLoader {
     /// Load a theme from a TOML file
     pub async fn load_theme<P: AsRef<Path>>(&mut self, path: P) -> Result<Theme> {
         let path = path.as_ref();
-        let content = fs::read_to_string(path)
-            .await
-            .map_err(TerminalError::Io)?;
+        let content = fs::read_to_string(path).await.map_err(TerminalError::Io)?;
 
         self.parse_theme(&content, path)
     }
 
     /// Parse theme from TOML string
     fn parse_theme(&mut self, content: &str, _path: &Path) -> Result<Theme> {
-        let theme: Theme = toml::from_str(content)
-            .map_err(|e| TerminalError::TomlParse(e.to_string()))?;
+        let theme: Theme =
+            toml::from_str(content).map_err(|e| TerminalError::TomlParse(e.to_string()))?;
 
         // Validate the theme
-        theme.validate()
-            .map_err(TerminalError::ThemeValidation)?;
+        theme.validate().map_err(TerminalError::ThemeValidation)?;
 
         // Cache the theme
-        self.cache.insert(theme.metadata.name.clone(), theme.clone());
+        self.cache
+            .insert(theme.metadata.name.clone(), theme.clone());
 
         Ok(theme)
     }
@@ -55,13 +53,9 @@ impl ThemeLoader {
         }
 
         let mut themes = Vec::new();
-        let mut entries = fs::read_dir(dir)
-            .await
-            .map_err(TerminalError::Io)?;
+        let mut entries = fs::read_dir(dir).await.map_err(TerminalError::Io)?;
 
-        while let Some(entry) = entries.next_entry()
-            .await
-            .map_err(TerminalError::Io)? {
+        while let Some(entry) = entries.next_entry().await.map_err(TerminalError::Io)? {
             let path = entry.path();
 
             // Check if it's a directory
@@ -72,7 +66,11 @@ impl ThemeLoader {
                     match self.load_theme(&theme_file).await {
                         Ok(theme) => themes.push(theme),
                         Err(e) => {
-                            eprintln!("Warning: Failed to load theme from {}: {}", theme_file.display(), e);
+                            eprintln!(
+                                "Warning: Failed to load theme from {}: {}",
+                                theme_file.display(),
+                                e
+                            );
                         }
                     }
                 }
@@ -100,15 +98,12 @@ impl ThemeLoader {
     /// Validate a theme file without loading it into cache
     pub async fn validate_theme_file<P: AsRef<Path>>(path: P) -> Result<()> {
         let path = path.as_ref();
-        let content = fs::read_to_string(path)
-            .await
-            .map_err(TerminalError::Io)?;
+        let content = fs::read_to_string(path).await.map_err(TerminalError::Io)?;
 
-        let theme: Theme = toml::from_str(&content)
-            .map_err(|e| TerminalError::TomlParse(e.to_string()))?;
+        let theme: Theme =
+            toml::from_str(&content).map_err(|e| TerminalError::TomlParse(e.to_string()))?;
 
-        theme.validate()
-            .map_err(TerminalError::ThemeValidation)?;
+        theme.validate().map_err(TerminalError::ThemeValidation)?;
 
         Ok(())
     }
@@ -130,13 +125,9 @@ pub async fn find_theme_dirs<P: AsRef<Path>>(base_dir: P) -> Result<Vec<PathBuf>
         return Ok(theme_dirs);
     }
 
-    let mut entries = fs::read_dir(base_dir)
-        .await
-        .map_err(TerminalError::Io)?;
+    let mut entries = fs::read_dir(base_dir).await.map_err(TerminalError::Io)?;
 
-    while let Some(entry) = entries.next_entry()
-        .await
-        .map_err(TerminalError::Io)? {
+    while let Some(entry) = entries.next_entry().await.map_err(TerminalError::Io)? {
         let path = entry.path();
         if path.is_dir() && path.join("theme.toml").exists() {
             theme_dirs.push(path);
@@ -219,7 +210,9 @@ success = { foreground = "bright_green", background = "black", bold = true, blin
 "#;
 
         let mut loader = ThemeLoader::new();
-        let theme = loader.parse_theme(toml_content, Path::new("test.toml")).unwrap();
+        let theme = loader
+            .parse_theme(toml_content, Path::new("test.toml"))
+            .unwrap();
 
         assert_eq!(theme.metadata.name, "Test Theme");
         assert_eq!(theme.metadata.author, "Test Author");
@@ -243,7 +236,9 @@ success = { foreground = "bright_green", background = "black", bold = true, blin
     #[tokio::test]
     async fn test_load_nonexistent_directory() {
         let mut loader = ThemeLoader::new();
-        let result = loader.load_themes_from_dir("/nonexistent/path/to/themes").await;
+        let result = loader
+            .load_themes_from_dir("/nonexistent/path/to/themes")
+            .await;
 
         assert!(result.is_err());
     }

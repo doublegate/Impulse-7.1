@@ -114,7 +114,11 @@ impl DoorExecutor {
     }
 
     /// Execute a native door (not via DOSBox).
-    async fn execute_native(&self, config: &DoorConfig, session: &mut DoorSession) -> Result<DoorResult> {
+    async fn execute_native(
+        &self,
+        config: &DoorConfig,
+        session: &mut DoorSession,
+    ) -> Result<DoorResult> {
         debug!("Executing native door: {}", config.name);
 
         // Prepare node directory
@@ -182,7 +186,11 @@ impl DoorExecutor {
     }
 
     /// Execute a door via DOSBox.
-    async fn execute_dosbox(&self, config: &DoorConfig, session: &mut DoorSession) -> Result<DoorResult> {
+    async fn execute_dosbox(
+        &self,
+        config: &DoorConfig,
+        session: &mut DoorSession,
+    ) -> Result<DoorResult> {
         debug!("Executing DOSBox door: {}", config.name);
 
         // Check if DOSBox is available
@@ -451,8 +459,12 @@ mod tests {
         tokio::fs::create_dir_all(&test_node_dir).await.unwrap();
 
         // Create some test dropfiles
-        tokio::fs::write(test_node_dir.join("DOOR.SYS"), "test").await.unwrap();
-        tokio::fs::write(test_node_dir.join("DORINFO1.DEF"), "test").await.unwrap();
+        tokio::fs::write(test_node_dir.join("DOOR.SYS"), "test")
+            .await
+            .unwrap();
+        tokio::fs::write(test_node_dir.join("DORINFO1.DEF"), "test")
+            .await
+            .unwrap();
 
         let manager = Arc::new(DoorManager::new(door_dir, node_dir).await.unwrap());
         let executor = DoorExecutor::new(manager);
