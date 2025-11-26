@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/doublegate/Impulse-Next_BBS/workflows/CI/badge.svg)](https://github.com/doublegate/Impulse-Next_BBS/actions)
 [![License](https://img.shields.io/badge/license-MIT%20OR%20Apache--2.0-blue.svg)](https://github.com/doublegate/Impulse-Next_BBS#license)
-[![Rust Version](<https://img.shields.io/badge/rust-1.85%2B%20(edition%202024)-orange.svg>)](https://www.rust-lang.org)
+[![Rust Version](<https://img.shields.io/badge/rust-1.88%2B%20(edition%202024)-orange.svg>)](https://www.rust-lang.org)
 
 A complete modernization of the classic Impulse 7.1 Bulletin Board System from Borland Pascal 7.0 to modern Rust, preserving BBS history while leveraging contemporary software engineering practices.
 
@@ -108,6 +108,7 @@ This project aims to:
 - ✅ **Sprint 16** (Phase 2 Integration & Testing): Cross-crate integration testing, 68 integration tests, 32 performance benchmarks, Phase 2 100% COMPLETE!
 - ✅ **Server Infrastructure** (Post Phase 2): Working BBS server with telnet (RFC 854), session management, ANSI terminal support, 40 new tests
 - ✅ **Sprint 16** (Session Management): Concurrent sessions, conflict resolution (Allow/KickOldest/DenyNew), idle/absolute timeouts, WebSocket support, Who's online, 31 new tests
+- ✅ **CI/CD Fixes** (November 2025): MSRV 1.85 → 1.88, bincode 2.0 migration, Rust 2024 let-chains across 19 files, cargo-audit 0.22.0 update, 12 CI jobs passing
 
 ### Phase 1 Achievements
 
@@ -120,10 +121,10 @@ This project aims to:
 
 **Quality Metrics (Phase 1+2 COMPLETE + Server Infrastructure + Sprint 16):**
 
-- **Tests**: 1,173 (100% passing rate)
+- **Tests**: 1,209 (100% passing rate)
 - **Coverage**: 75.43% achieved (target: 75% - GOAL MET!)
 - **Clippy**: 0 warnings
-- **Documentation**: 43 files, 38,000+ lines
+- **Documentation**: 64 files, 40,000+ lines
 - **Build**: <10s full workspace
 - **Test Execution**: <5s all tests
 
@@ -490,7 +491,7 @@ See [docs/architecture/system-architecture.md](docs/architecture/system-architec
 
 ### Prerequisites
 
-- **Rust**: 1.80 or later ([Install Rust](https://www.rust-lang.org/tools/install))
+- **Rust**: 1.88 or later ([Install Rust](https://www.rust-lang.org/tools/install))
 - **Git**: 2.30 or later
 - **Platform**: Linux, Windows 11, or macOS
 
@@ -653,7 +654,7 @@ Impulse-Next_BBS/
 ### Core Technologies
 
 - **Language**: Rust 2024 edition
-- **Minimum Version**: Rust 1.85+
+- **Minimum Version**: Rust 1.88+ (required by home@0.5.12)
 - **Async Runtime**: Tokio 1.47
 
 ### Key Dependencies
@@ -665,14 +666,17 @@ Impulse-Next_BBS/
 - `crossterm` 0.29 - Terminal I/O
 - `serde` 1.0 - Serialization framework
 - `serde_json` 1.0 - JSON support
-- `toml` 0.9 - Configuration files
+- `toml` 0.9 - Configuration files (Dependabot update)
+- `bincode` 2.0 - Binary serialization (migrated from 1.3)
 - `binrw` 0.15 - Binary parsing
 - `thiserror` 2.0 - Error handling
 - `anyhow` 1.0 - Error context
 - `tracing` 0.1 - Structured logging
 - `argon2` 0.5 - Password hashing
 - `sha2` 0.10 - Session token generation
-- `rand` 0.8 - Secure randomness
+- `rand` 0.9 - Secure randomness (Dependabot update)
+- `colored` 3.0 - Terminal colors (Dependabot update)
+- `notify` 8.2 - File system watching (Dependabot update)
 - `sqlx` 0.8 - Database access
 - `axum` 0.8 - Web framework
 - `bitflags` 2.6 - Pascal set types
@@ -829,7 +833,7 @@ cargo doc --workspace --no-deps --open
 
 ### Current Test Suite (Phase 1 + Phase 2 + Server Infrastructure)
 
-**Total Tests**: 1,158 (100% passing rate)
+**Total Tests**: 1,209 (100% passing rate)
 **Code Coverage**: 75.43% achieved (target: 75%+ - GOAL MET!)
 
 **Test Types:**

@@ -7,6 +7,116 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+---
+
+## [0.2.0] - 2025-11-26
+
+### Phase 2: Core Features - 50% Complete (Sprints 9-16)
+
+**Release Date:** 2025-11-26
+**Status:** Phase 2 halfway complete - 4 of 8 core feature sprints delivered
+**Overall Progress:** 12/32 sprints (37.5%)
+
+This release marks significant progress in Phase 2, delivering user authentication, menu systems, complete message handling (read/write), and comprehensive CI/CD improvements. Quality metrics maintained at 100% test pass rate with 1,209+ tests and 75.43% code coverage.
+
+---
+
+### Fixed - CI/CD and Dependency Updates (2025-11-26)
+
+**Issue Resolution:** GitHub Actions CI failures after Dependabot merged breaking changes
+**Timeline:** 2025-11-26 (4 commits, ~2 hours)
+
+#### Dependency Updates
+
+**bincode 2.0 Migration** (commit e76c461):
+- Migrated from bincode 1.3 → 2.0 API breaking changes
+- Updated serialization tests: `encode()` → `encode_to_vec()`
+- Updated deserialization tests: `decode()` → `decode_from_slice()`
+- All impulse-types serialization tests passing (11 tests updated)
+- Binary format compatibility preserved
+
+**rand 0.9 Update** (Dependabot PR #11):
+- Updated from rand 0.8 → 0.9
+- No API changes required (compatible upgrade)
+- All tests passing with new version
+
+**Dependency Updates via Dependabot**:
+- colored 2.1 → 3.0 (PR #12, merged)
+- notify 6.1 → 8.2 (PR #10, merged)
+- toml 0.8 → 0.9 (PR #8, pending)
+- crossterm 0.28 → 0.29 (PR #7, pending)
+- binrw 0.14 → 0.15 (PR #5, pending)
+- bincode 1.3 → 2.0 (PR #6, merged with API migration)
+
+#### MSRV Update (commit 567a8ab)
+
+**Rust 1.85 → 1.88**:
+- Required by home@0.5.12 transitive dependency
+- Updated Cargo.toml workspace.package.rust-version
+- Updated CI matrix to test MSRV 1.88
+- All 12 CI jobs passing on MSRV
+
+**cargo-audit Update**:
+- Updated from 0.20 → 0.22.0
+- Required for Cargo.lock v4 format compatibility
+- Security audit job restored and passing
+
+#### Rust 2024 Edition Syntax (commits 6568729 + eee18b7)
+
+**let-chains Migration**:
+- Collapsed 19 nested if statements to use Rust 2024 let-chains
+- Files updated: impulse-auth (4), impulse-file (4), impulse-message (2), impulse-session (2), impulse-user (3), impulse-telnet (1), impulse-menu (1), impulse-logging (1), impulse-terminal (1)
+- Improved code readability and idiomaticity
+- cargo fmt --all applied for consistent formatting
+- All clippy warnings resolved (0 warnings)
+
+**Syntax Pattern**:
+```rust
+// Before (nested):
+if let Some(x) = value {
+    if x > 0 {
+        // code
+    }
+}
+
+// After (let-chains):
+if let Some(x) = value && x > 0 {
+    // code
+}
+```
+
+#### CI/CD Status
+
+**All 12 Jobs Passing**:
+1. ✅ Lint (rustfmt + clippy)
+2. ✅ Test - Linux (ubuntu-latest)
+3. ✅ Test - Windows (windows-latest)
+4. ✅ Test - macOS (macos-latest)
+5. ✅ Build - Linux (release)
+6. ✅ Build - Windows (release)
+7. ✅ Build - macOS (release)
+8. ✅ Coverage (tarpaulin + Codecov)
+9. ✅ Benchmark (criterion)
+10. ✅ Security Audit (cargo-audit 0.22)
+11. ✅ MSRV Check (Rust 1.88)
+12. ✅ CI Success Gate
+
+**Quality Metrics Maintained**:
+- Tests: 1,209 passing (100% pass rate)
+- Clippy: 0 warnings
+- rustfmt: All files formatted
+- Coverage: 75.43% (target met)
+- Build time: <2s (dev), ~10s (release)
+
+#### Commits
+
+- `eee18b7` - style: run cargo fmt on let-chain syntax
+- `6568729` - fix(clippy): collapse nested if statements for Rust 2024 edition
+- `567a8ab` - fix(ci): update MSRV to 1.88 and fix security audit
+- `e76c461` - fix(deps): migrate to bincode 2.0 API for serialization tests
+
+---
+
 ### Added - Sprint 16 (Session Management - Phase 2 COMPLETE!)
 
 **Sprint Timeline:** 2025-11-26 (~3 hours)
@@ -199,7 +309,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Overall Progress**: 16/32 sprints complete (50%)
 - **Timeline Achievement**: ~2 months ahead of schedule
 
-## [0.2.0] - 2025-11-26
+---
 
 ### Added - Server Infrastructure Implementation (Post Phase 2)
 
