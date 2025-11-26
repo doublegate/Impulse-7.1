@@ -5,7 +5,7 @@
 <!-- Row 1: Build Status & Quality -->
 [![CI](https://github.com/doublegate/Impulse-Next_BBS/workflows/CI/badge.svg)](https://github.com/doublegate/Impulse-Next_BBS/actions)
 [![Coverage](https://img.shields.io/badge/coverage-75.43%25-brightgreen)](https://github.com/doublegate/Impulse-Next_BBS#testing)
-[![Tests](https://img.shields.io/badge/tests-1,890_passing-brightgreen)](https://github.com/doublegate/Impulse-Next_BBS#testing)
+[![Tests](https://img.shields.io/badge/tests-1,969_passing-brightgreen)](https://github.com/doublegate/Impulse-Next_BBS#testing)
 [![Clippy](https://img.shields.io/badge/clippy-0_warnings-brightgreen)](https://github.com/doublegate/Impulse-Next_BBS#development)
 
 <!-- Row 2: Project Identity -->
@@ -105,9 +105,9 @@ This project aims to:
 
 ## Project Status
 
-**Current Version**: 0.6.0 (Phase 2 COMPLETE + Sprint 17-21 - File Transfer, Themes & Door Games)
+**Current Version**: 0.7.0 (Phase 2 COMPLETE + Sprint 17-22 - File Transfer, Themes, Doors & QWK)
 **Development Phase**: Phase 3 - Feature Completion (In Progress)
-**Completion**: Sprint 21/32 (65.6%) - Phase 1: 8/8 (100% ✅), Phase 2: 8/8 (100% ✅), Phase 3: 5/8 (62.5%)
+**Completion**: Sprint 22/32 (68.75%) - Phase 1: 8/8 (100% ✅), Phase 2: 8/8 (100% ✅), Phase 3: 6/8 (75%)
 
 ### Recent Milestones
 
@@ -137,6 +137,7 @@ This project aims to:
 - ✅ **Sprint 19** (Protocol Completion): Ymodem-G streaming mode, protocol auto-detection, user preferences, batch transfers, 108 tests
 - ✅ **Sprint 20** (Theme System): Theme architecture, 3 default themes (Classic, Matrix, Cyberpunk), theme manager, color schemes, user preferences, 62 tests
 - ✅ **Sprint 21** (Door Game Interface): Complete door system with DOOR.SYS/DORINFO1.DEF dropfiles, door manager, executor with DOSBox support, async I/O, security levels, 126 tests
+- ✅ **Sprint 22** (Advanced Messaging): QWK offline mail packets, message import/export (Text/JSON/CSV), FidoNet addressing (zone:net/node.point), message routing infrastructure, 79 tests
 
 ### Phase 1 Achievements
 
@@ -149,7 +150,7 @@ This project aims to:
 
 **Quality Metrics (Phase 1+2 COMPLETE + Server Infrastructure + Sprints 17-20):**
 
-- **Tests**: 1,890 (100% passing rate)
+- **Tests**: 1,969 (100% passing rate)
 - **Coverage**: 75.43% achieved (target: 75% - GOAL MET!)
 - **Clippy**: 0 warnings
 - **Documentation**: 64 files, 40,000+ lines
@@ -181,9 +182,10 @@ This project aims to:
   - ✅ Sprint 19: Protocol Completion (Ymodem-G, auto-detection, preferences, 108 tests)
   - ✅ Sprint 20: Theme System (architecture, 3 default themes, color schemes, 62 tests)
   - ✅ Sprint 21: Door Game Interface (dropfiles, executor, DOSBox, 126 tests)
-  - 📋 Sprint 22-24: Advanced features, QWK support
-- **Goal**: Functional BBS with complete file transfer protocols and door game support! 5 of 8 Phase 3 sprints complete (62.5%).
-- **Timeline**: 24 months total, currently 65.6% complete (3+ months ahead of schedule)
+  - ✅ Sprint 22: Advanced Messaging (QWK packets, import/export, FidoNet addressing, 79 tests)
+  - 📋 Sprint 23-24: User interface enhancements, integration testing
+- **Goal**: Functional BBS with complete file transfer protocols, door games, and QWK offline mail! 6 of 8 Phase 3 sprints complete (75%).
+- **Timeline**: 24 months total, currently 68.75% complete (3+ months ahead of schedule)
 
 ## Features
 

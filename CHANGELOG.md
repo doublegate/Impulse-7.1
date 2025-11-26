@@ -9,6 +9,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.7.0] - 2025-11-26
+
+### Added - Sprint 22 (Advanced Message Base Features - Phase 3)
+
+**Sprint Timeline:** 2025-11-26 (~2 hours)
+**Status:** Complete QWK offline mail, import/export, FidoNet addressing, and routing
+**Phase:** Phase 3 - Feature Completion (Sprint 22/32, 6 of 8 sprints complete - 75%)
+
+#### QWK Offline Mail Support
+
+**QWK Module** (`impulse-message/src/qwk/`, 6 files, ~1,460 lines, 36 tests):
+- **QwkMessageHeader** (`header.rs`) - 128-byte binary format with binrw
+- **QwkPacketGenerator** (`generate.rs`) - CONTROL.DAT, DOOR.ID, MESSAGES.DAT
+- **QwkReplyParser** (`parse.rs`) - Parse .REP reply packets
+- **QwkCompressor** (`compress.rs`) - ZIP archive creation/extraction
+- **QwkError** (`error.rs`) - QWK-specific error types
+
+#### Message Import/Export
+
+- **MessageExporter** (`export.rs`, 264 lines, 11 tests) - Text/JSON/CSV formats
+- **MessageImporter** (`import.rs`, 403 lines, 14 tests) - Text/JSON formats
+
+#### FidoNet Addressing
+
+- **FidoAddress** (`addressing/fidonet.rs`, 321 lines, 18 tests)
+  - zone:net/node.point format parsing
+  - is_local(), is_same_zone(), is_same_net() comparison methods
+
+#### Message Routing Infrastructure
+
+- **MessageRouter** (`routing/router.rs`, 320 lines, 11 tests)
+  - RoutingDecision: Local, DirectRoute, ViaHub, ViaGate, Unroutable
+  - RouterConfig with local address, hub, gateway settings
+
+### Quality Metrics (Sprint 22)
+
+- **New Tests**: 79 tests (total: 1,969)
+- **New Code**: ~2,821 lines
+- **Components**: 12 new files across 4 modules
+
+---
+
 ## [0.6.0] - 2025-11-26
 
 ### Added - Sprint 21 (Door Game Interface - Phase 3)

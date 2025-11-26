@@ -2,7 +2,7 @@
 
 Project-specific guidance for Impulse-Next_BBS modernization (classic Impulse 7.1 BBS: Borland Pascal 7.0 → Rust 2024).
 
-**Version:** 0.6.0 | **Updated:** 2025-11-26
+**Version:** 0.7.0 | **Updated:** 2025-11-26
 
 ---
 
@@ -17,10 +17,10 @@ Project-specific guidance for Impulse-Next_BBS modernization (classic Impulse 7.
 
 ## Current Status
 
-**Phase:** 3 - Feature Completion (Sprints 17-21 COMPLETE)
-**Sprints Complete:** 21 of 32 (65.6%)
-**Version:** 0.6.0 (Phase 2: 100% + Phase 3: 62.5% - File Transfer, Themes & Door Games Complete)
-**Last Commit:** c88ee8c (2025-11-26 - Sprint 21: Door Game Interface)
+**Phase:** 3 - Feature Completion (Sprints 17-22 COMPLETE)
+**Sprints Complete:** 22 of 32 (68.75%)
+**Version:** 0.7.0 (Phase 2: 100% + Phase 3: 75% - File Transfer, Themes, Doors & QWK Complete)
+**Last Commit:** b672d65 (2025-11-26 - Sprint 22: Advanced Messaging)
 
 ### Sprint Progress
 - ✅ **Phase 1:** Foundation (Sprints 1-8, 100%)
@@ -41,16 +41,17 @@ Project-specific guidance for Impulse-Next_BBS modernization (classic Impulse 7.
 - ✅ **Sprint 19 (Protocol Completion):** Ymodem-G streaming, auto-detection, user preferences (108 tests)
 - ✅ **Sprint 20 (Theme System):** Theme architecture, 3 default themes (Classic, Matrix, Cyberpunk), color schemes (62 tests)
 - ✅ **Sprint 21 (Door Game Interface):** DOOR.SYS/DORINFO1.DEF dropfiles, door manager, executor with DOSBox support, async I/O (126 tests)
-- 📋 **Sprints 22-32:** Phase 3 & 4 (Continuing)
+- ✅ **Sprint 22 (Advanced Messaging):** QWK offline mail, message import/export, FidoNet addressing, routing infrastructure (79 tests)
+- 📋 **Sprints 23-32:** Phase 3 & 4 (Continuing)
 
 ### Quality Metrics
-- **Tests:** 1,890 passing (100% pass rate)
+- **Tests:** 1,969 passing (100% pass rate)
 - **Coverage:** 75.43% achieved (target: 75%+ - GOAL MET!)
 - **Clippy:** 0 warnings
 - **CI/CD:** 12 jobs, 100% passing on main branch
 - **Crates:** 20 (17 libraries + 3 binaries)
-- **Code:** ~56,400 lines total (production + tests)
-- **Commits:** 134 total
+- **Code:** ~59,200 lines total (production + tests)
+- **Commits:** 137 total
 - **Build Time:** <2s dev, <10s release
 - **Test Execution:** <10s all tests
 
