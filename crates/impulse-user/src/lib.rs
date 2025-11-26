@@ -4,6 +4,11 @@
 //! - UserManager trait defining the API contract
 //! - InMemoryUserManager for testing and development
 //! - FileUserManager for Pascal .DAT file I/O
+//! - Statistics tracking and display
+//! - User settings and preferences management
+//! - User profile display with privacy enforcement
+//! - User directory with search and pagination
+//! - Achievement tracking and notifications
 //!
 //! # Architecture
 //!
@@ -33,6 +38,13 @@
 //! # Ok(())
 //! # }
 //! ```
+
+pub mod achievements;
+pub mod directory;
+pub mod privacy;
+pub mod profile;
+pub mod settings;
+pub mod stats;
 
 use async_trait::async_trait;
 use impulse_types::{
@@ -649,6 +661,14 @@ impl UserManager for FileUserManager {
         Ok(users.len())
     }
 }
+
+// Re-export commonly used types
+pub use achievements::{Achievement, AchievementChecker, AchievementProgress, UserAchievement};
+pub use directory::UserDirectory;
+pub use privacy::PrivacySettings;
+pub use profile::{ProfileDisplayOptions, ProfileViewer};
+pub use settings::{PasswordStrength, SettingsManager, Theme};
+pub use stats::StatsTracker;
 
 #[cfg(test)]
 mod tests {

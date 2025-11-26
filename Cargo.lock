@@ -1618,8 +1618,11 @@ version = "0.1.0"
 dependencies = [
  "async-trait",
  "binrw",
+ "chrono",
  "impulse-auth",
  "impulse-types",
+ "serde",
+ "serde_json",
  "sqlx",
  "thiserror 2.0.17",
  "tokio",
