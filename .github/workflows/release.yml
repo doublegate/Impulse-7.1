@@ -1,0 +1,279 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Release tag (e.g., v0.2.0)'
+        required: true
+        type: string
+      create_release:
+        description: 'Create GitHub release'
+        required: false
+        default: true
+        type: boolean
+      draft:
+        description: 'Create as draft release'
+        required: false
+        default: false
+        type: boolean
+
+env:
+  CARGO_TERM_COLOR: always
+  RUST_BACKTRACE: 1
+
+jobs:
+  # Create release if triggered manually
+  create-release:
+    name: Create Release
+    if: github.event_name == 'workflow_dispatch' && inputs.create_release
+    runs-on: ubuntu-latest
+    outputs:
+      upload_url: ${{ steps.create_release.outputs.upload_url }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Extract version from tag
+        id: version
+        run: |
+          TAG="${{ inputs.tag }}"
+          VERSION="${TAG#v}"
+          echo "version=${VERSION}" >> $GITHUB_OUTPUT
+          echo "tag=${TAG}" >> $GITHUB_OUTPUT
+
+      - name: Extract release notes
+        id: notes
+        run: |
+          # Extract release notes from CHANGELOG.md
+          # Look for section matching the version
+          VERSION="${{ steps.version.outputs.version }}"
+
+          # Try to find version-specific section
+          if grep -q "## \[${VERSION}\]" CHANGELOG.md; then
+            sed -n "/## \[${VERSION}\]/,/## \[/p" CHANGELOG.md | sed '$d' > release_notes.md
+          elif grep -q "## \[Unreleased\]" CHANGELOG.md; then
+            sed -n "/## \[Unreleased\]/,/## \[/p" CHANGELOG.md | sed '$d' > release_notes.md
+          else
+            echo "Release $VERSION" > release_notes.md
+            echo "" >> release_notes.md
+            echo "See [CHANGELOG.md](https://github.com/${{ github.repository }}/blob/main/CHANGELOG.md) for details." >> release_notes.md
+          fi
+
+      - name: Create GitHub Release
+        id: create_release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.version.outputs.tag }}
+          name: Release ${{ steps.version.outputs.version }}
+          body_path: release_notes.md
+          draft: ${{ inputs.draft }}
+          prerelease: false
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # Build release binaries for all platforms
+  build-release:
+    name: Build ${{ matrix.target }}
+    runs-on: ${{ matrix.os }}
+    needs: create-release
+    if: always() && (needs.create-release.result == 'success' || needs.create-release.result == 'skipped')
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # Linux x86_64 (glibc)
+          - os: ubuntu-latest
+            target: x86_64-unknown-linux-gnu
+            archive: tar.gz
+
+          # Linux x86_64 (musl - static binary)
+          - os: ubuntu-latest
+            target: x86_64-unknown-linux-musl
+            archive: tar.gz
+
+          # Windows x86_64
+          - os: windows-latest
+            target: x86_64-pc-windows-msvc
+            archive: zip
+
+          # macOS x86_64 (Intel)
+          - os: macos-latest
+            target: x86_64-apple-darwin
+            archive: tar.gz
+
+          # macOS aarch64 (Apple Silicon)
+          - os: macos-latest
+            target: aarch64-apple-darwin
+            archive: tar.gz
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.target }}
+
+      - name: Setup Rust cache
+        uses: Swatinem/rust-cache@v2
+        with:
+          shared-key: "release-${{ matrix.target }}"
+          cache-on-failure: false
+
+      # Install musl tools for static Linux builds
+      - name: Install musl tools
+        if: matrix.target == 'x86_64-unknown-linux-musl'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y musl-tools
+
+      # Build all binary crates
+      - name: Build release binaries
+        run: cargo build --release --target ${{ matrix.target }} --bin impulse-server --bin impulse-cli --bin impconfig
+
+      - name: Extract version
+        id: version
+        shell: bash
+        run: |
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            TAG="${{ inputs.tag }}"
+          else
+            TAG="${GITHUB_REF#refs/tags/}"
+          fi
+          VERSION="${TAG#v}"
+          echo "version=${VERSION}" >> $GITHUB_OUTPUT
+          echo "tag=${TAG}" >> $GITHUB_OUTPUT
+
+      - name: Create archive directory
+        shell: bash
+        run: mkdir -p dist
+
+      # Package binaries for Unix-like systems
+      - name: Package binaries (Unix)
+        if: matrix.archive == 'tar.gz'
+        shell: bash
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          TARGET="${{ matrix.target }}"
+
+          # Create archives for each binary
+          for BINARY in impulse-server impulse-cli impconfig; do
+            ARCHIVE_NAME="${BINARY}-${VERSION}-${TARGET}.tar.gz"
+            tar -czf "dist/${ARCHIVE_NAME}" -C "target/${TARGET}/release" "${BINARY}"
+            echo "Created: ${ARCHIVE_NAME}"
+          done
+
+      # Package binaries for Windows
+      - name: Package binaries (Windows)
+        if: matrix.archive == 'zip'
+        shell: pwsh
+        run: |
+          $VERSION = "${{ steps.version.outputs.version }}"
+          $TARGET = "${{ matrix.target }}"
+
+          # Create archives for each binary
+          foreach ($BINARY in @("impulse-server", "impulse-cli", "impconfig")) {
+            $ARCHIVE_NAME = "${BINARY}-${VERSION}-${TARGET}.zip"
+            Compress-Archive -Path "target/${TARGET}/release/${BINARY}.exe" -DestinationPath "dist/${ARCHIVE_NAME}"
+            Write-Host "Created: ${ARCHIVE_NAME}"
+          }
+
+      # Generate SHA256 checksums
+      - name: Generate checksums
+        shell: bash
+        run: |
+          cd dist
+          if command -v sha256sum &> /dev/null; then
+            sha256sum * > SHA256SUMS-${{ matrix.target }}.txt
+          elif command -v shasum &> /dev/null; then
+            shasum -a 256 * > SHA256SUMS-${{ matrix.target }}.txt
+          fi
+          cat SHA256SUMS-${{ matrix.target }}.txt
+
+      # Upload artifacts for later use
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-${{ matrix.target }}
+          path: dist/*
+          retention-days: 7
+
+  # Upload all artifacts to GitHub Release
+  upload-release:
+    name: Upload Release Assets
+    needs: [create-release, build-release]
+    if: always() && needs.build-release.result == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Display structure
+        run: ls -R artifacts
+
+      - name: Prepare release assets
+        run: |
+          mkdir -p release-assets
+          find artifacts -type f -exec cp {} release-assets/ \;
+          ls -lh release-assets/
+
+      - name: Create combined checksums file
+        run: |
+          cd release-assets
+          cat SHA256SUMS-*.txt > SHA256SUMS.txt
+          rm SHA256SUMS-*.txt
+          echo "Combined checksums:"
+          cat SHA256SUMS.txt
+
+      - name: Extract version
+        id: version
+        run: |
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            TAG="${{ inputs.tag }}"
+          else
+            TAG="${GITHUB_REF#refs/tags/}"
+          fi
+          echo "tag=${TAG}" >> $GITHUB_OUTPUT
+
+      # Upload to existing release
+      - name: Upload release assets
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.version.outputs.tag }}
+          files: release-assets/*
+          fail_on_unmatched_files: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # Optional: Publish to crates.io
+  publish-crates:
+    name: Publish to crates.io
+    needs: upload-release
+    runs-on: ubuntu-latest
+    if: false # Disabled by default - enable when ready to publish
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Publish to crates.io
+        run: |
+          # Publish workspace crates in dependency order
+          # Start with leaf crates (no dependencies) first
+          cargo publish -p impulse-types --token ${{ secrets.CARGO_TOKEN }}
+          cargo publish -p impulse-core --token ${{ secrets.CARGO_TOKEN }}
+          cargo publish -p impulse-config --token ${{ secrets.CARGO_TOKEN }}
+          # Add other crates as needed
+        continue-on-error: true

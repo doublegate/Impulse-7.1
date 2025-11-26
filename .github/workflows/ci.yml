@@ -6,6 +6,11 @@ on:
   pull_request:
     branches: [main, develop]
 
+# Cancel previous runs on new push
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 env:
   CARGO_TERM_COLOR: always
   RUST_BACKTRACE: 1
@@ -15,6 +20,7 @@ env:
   RUSTUP_MAX_RETRIES: 10
 
 jobs:
+  # Fast-fail: Check formatting and linting first
   lint:
     name: Lint
     runs-on: ubuntu-latest
@@ -31,6 +37,7 @@ jobs:
         uses: Swatinem/rust-cache@v2
         with:
           shared-key: "lint"
+          cache-on-failure: true
 
       - name: Check code formatting
         run: cargo fmt --all -- --check
@@ -38,27 +45,27 @@ jobs:
       - name: Run clippy
         run: cargo clippy --all-targets --all-features -- -D warnings
 
+  # Run tests on all platforms
   test:
-    name: Test
+    name: Test (${{ matrix.os }})
+    needs: lint
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
-        rust: [stable]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
 
       - name: Install Rust toolchain
-        uses: dtolnay/rust-toolchain@master
-        with:
-          toolchain: ${{ matrix.rust }}
+        uses: dtolnay/rust-toolchain@stable
 
       - name: Setup Rust cache
         uses: Swatinem/rust-cache@v2
         with:
           shared-key: "test-${{ matrix.os }}"
+          cache-on-failure: true
 
       - name: Run tests
         run: cargo test --workspace --all-features --verbose
@@ -66,8 +73,10 @@ jobs:
       - name: Run doc tests
         run: cargo test --workspace --doc
 
+  # Build on all platforms (only after tests pass)
   build:
-    name: Build
+    name: Build (${{ matrix.os }})
+    needs: test
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -84,15 +93,18 @@ jobs:
         uses: Swatinem/rust-cache@v2
         with:
           shared-key: "build-${{ matrix.os }}"
+          cache-on-failure: true
 
-      - name: Build workspace
+      - name: Build workspace (debug)
         run: cargo build --workspace --all-features
 
-      - name: Build release
+      - name: Build workspace (release)
         run: cargo build --workspace --all-features --release
 
+  # Code coverage (parallel with build)
   coverage:
     name: Code Coverage
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -105,6 +117,7 @@ jobs:
         uses: Swatinem/rust-cache@v2
         with:
           shared-key: "coverage"
+          cache-on-failure: true
 
       - name: Cache cargo-tarpaulin
         uses: actions/cache@v4
@@ -131,8 +144,10 @@ jobs:
           verbose: true
           token: ${{ secrets.CODECOV_TOKEN }}
 
+  # Performance benchmarks (parallel with build)
   benchmark:
     name: Performance Benchmarks
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -145,6 +160,7 @@ jobs:
         uses: Swatinem/rust-cache@v2
         with:
           shared-key: "benchmark"
+          cache-on-failure: true
 
       - name: Run benchmarks
         run: cargo bench --workspace --no-fail-fast -- --output-format bencher | tee benchmark_results.txt
@@ -175,3 +191,76 @@ jobs:
                 body: `## Benchmark Results\n\`\`\`\n${results}\n\`\`\``
               });
             }
+
+  # Security audit (parallel with build)
+  security:
+    name: Security Audit
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Cache cargo-audit
+        uses: actions/cache@v4
+        with:
+          path: ~/.cargo/bin/cargo-audit
+          key: ${{ runner.os }}-cargo-audit-0.20.0
+          restore-keys: |
+            ${{ runner.os }}-cargo-audit-
+
+      - name: Install cargo-audit
+        run: |
+          if ! command -v cargo-audit &> /dev/null; then
+            cargo install cargo-audit --version 0.20.0
+          fi
+
+      - name: Run security audit
+        run: cargo audit
+
+  # MSRV check (parallel with test)
+  msrv:
+    name: MSRV Check
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Install Rust MSRV toolchain
+        uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: "1.85"
+
+      - name: Setup Rust cache
+        uses: Swatinem/rust-cache@v2
+        with:
+          shared-key: "msrv"
+          cache-on-failure: true
+
+      - name: Check MSRV compatibility
+        run: cargo check --workspace --all-features
+
+  # CI Success gate - all jobs must pass
+  ci-success:
+    name: CI Success
+    needs: [lint, test, build, coverage, benchmark, security, msrv]
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - name: Check all jobs succeeded
+        run: |
+          if [[ "${{ needs.lint.result }}" != "success" ]] || \
+             [[ "${{ needs.test.result }}" != "success" ]] || \
+             [[ "${{ needs.build.result }}" != "success" ]] || \
+             [[ "${{ needs.coverage.result }}" != "success" ]] || \
+             [[ "${{ needs.benchmark.result }}" != "success" ]] || \
+             [[ "${{ needs.security.result }}" != "success" ]] || \
+             [[ "${{ needs.msrv.result }}" != "success" ]]; then
+            echo "One or more CI jobs failed"
+            exit 1
+          fi
+          echo "All CI jobs passed successfully!"
