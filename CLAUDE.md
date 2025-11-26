@@ -18,9 +18,9 @@ Project-specific guidance for Impulse-Next_BBS modernization (classic Impulse 7.
 ## Current Status
 
 **Phase:** 2 - Core Features (Sprints 9-16)
-**Sprints Complete:** 14 of 32 (43.75%)
-**Version:** 0.1.0 (Phase 2: 75% Complete)
-**Last Commit:** 13731fa (2025-11-25)
+**Sprints Complete:** 15 of 32 (46.88%)
+**Version:** 0.1.0 (Phase 2: 87.5% Complete)
+**Last Commit:** 2763ac6 (2025-11-25)
 
 ### Sprint Progress
 - ✅ **Phase 1:** Foundation (Sprints 1-8, 100%)
@@ -30,15 +30,16 @@ Project-specific guidance for Impulse-Next_BBS modernization (classic Impulse 7.
 - ✅ **Sprint 12:** Message Write (100%)
 - ✅ **Sprint 13:** File Browsing (100%)
 - ✅ **Sprint 14:** File Upload (100%)
-- 📋 **Sprints 15-32:** Planned
+- ✅ **Sprint 15:** User Profiles & Statistics (100%)
+- 📋 **Sprints 16-32:** Planned
 
 ### Quality Metrics
-- **Tests:** 1,126+ passing (100% pass rate)
+- **Tests:** 1,254+ passing (100% pass rate)
 - **Coverage:** 64.51% baseline (target: 75%+ Phase 2)
 - **Clippy:** 0 warnings
 - **CI/CD:** 100% passing on main branch
 - **Crates:** 19 (17 libraries + 2 binaries)
-- **Code:** 31,500+ lines total
+- **Code:** 35,000+ lines total
 
 ---
 
@@ -264,16 +265,28 @@ cargo build --workspace --all-features
 - ✅ Upload UI screens (prompt, progress, scanning, confirmation)
 - ✅ 180 tests (45 upload, 35 validation, 28 scanning, 32 DIZ, 20 UI)
 
+#### Sprint 15: User Profiles & Statistics
+**TODO:** `to-dos/phase-2-core-features/sprint-15-user-profiles.md`
+
+**Deliverables:**
+- ✅ User profile display screen
+- ✅ Statistics tracking (calls, uploads, downloads, posts, time online)
+- ✅ User settings editor (password, theme, terminal config)
+- ✅ Achievement system with notifications
+- ✅ Privacy controls (hide email, stats, online status)
+- ✅ User directory with search and filtering
+- ✅ 128 tests (82 unit, 46 doc)
+
 ### Next Sprint
 
-#### Sprint 15: File Download/Transfer
-**TODO:** `to-dos/phase-2-core-features/sprint-15-file-download.md` (planned)
+#### Sprint 16: Session Management
+**TODO:** `to-dos/phase-2-core-features/sprint-16-session-management.md` (planned)
 
 **Goals:**
-- File download with resume support
-- Zmodem/Xmodem/Ymodem protocols (Phase 2-3 bridge)
-- Transfer progress indication
-- Protocol negotiation with client
+- Concurrent session handling
+- Session timeouts and expiry
+- WebSocket support
+- Session state management
 
 ---
 
@@ -420,14 +433,14 @@ cargo doc --workspace --no-deps 2>&1 | grep warning
 - 📋 Sprint 7: Database Schema
 - 📋 Sprint 8: Testing Framework
 
-### Phase 2: Core Features (Sprints 9-16, November 2025 - January 2026) - 75% COMPLETE
+### Phase 2: Core Features (Sprints 9-16, November 2025 - December 2025) - 87.5% COMPLETE
 - ✅ Sprint 9: User authentication (rate limiting, lockout, validation)
 - ✅ Sprint 10: Menu system (TOML parser, navigation)
 - ✅ Sprint 11: Message read (MessageBase trait, JAM/Hudson, screens)
 - ✅ Sprint 12: Message write (posting, replies, quoting)
 - ✅ Sprint 13: File browsing (areas, list, details, search, FILE_ID.DIZ)
 - ✅ Sprint 14: File upload (processor, ClamAV scanning, validation, quarantine)
-- 📋 Sprint 15: File download/transfer (transfer protocols, resume support)
+- ✅ Sprint 15: User profiles (profile display, stats, settings, achievements, privacy)
 - 📋 Sprint 16: Session management (WebSocket, concurrent handling)
 
 ### Phase 3: Advanced Features (Sprints 17-24, Months 11-18)

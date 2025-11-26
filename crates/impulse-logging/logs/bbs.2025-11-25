@@ -67,3 +67,7 @@
 [2m2025-11-25T07:04:41.234227Z[0m [31mERROR[0m [2mdoctest_bundle_2024::__doctest_18[0m[2m:[0m [2m267:[0m Authentication failed [3merror[0m[2m=[0m"auth failed"
 [2m2025-11-25T07:05:39.387044Z[0m [32m INFO[0m [2mdoctest_bundle_2024::__doctest_18[0m[2m:[0m [2m266:[0m User logged in [3muser_id[0m[2m=[0m42
 [2m2025-11-25T07:05:39.387056Z[0m [31mERROR[0m [2mdoctest_bundle_2024::__doctest_18[0m[2m:[0m [2m267:[0m Authentication failed [3merror[0m[2m=[0m"auth failed"
+[2m2025-11-25T07:19:20.036274Z[0m [32m INFO[0m [2mdoctest_bundle_2024::__doctest_18[0m[2m:[0m [2m266:[0m User logged in [3muser_id[0m[2m=[0m42
+[2m2025-11-25T07:19:20.036285Z[0m [31mERROR[0m [2mdoctest_bundle_2024::__doctest_18[0m[2m:[0m [2m267:[0m Authentication failed [3merror[0m[2m=[0m"auth failed"
+[2m2025-11-25T07:19:30.708979Z[0m [32m INFO[0m [2mdoctest_bundle_2024::__doctest_18[0m[2m:[0m [2m266:[0m User logged in [3muser_id[0m[2m=[0m42
+[2m2025-11-25T07:19:30.708987Z[0m [31mERROR[0m [2mdoctest_bundle_2024::__doctest_18[0m[2m:[0m [2m267:[0m Authentication failed [3merror[0m[2m=[0m"auth failed"

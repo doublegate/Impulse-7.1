@@ -82,9 +82,9 @@ This project aims to:
 
 ## Project Status
 
-**Current Version**: 0.1.0 (Phase 2 - Core Features: 75% Complete!)
+**Current Version**: 0.1.0 (Phase 2 - Core Features: 87.5% Complete!)
 **Development Phase**: Phase 2 - Core Features (In Progress)
-**Completion**: Sprint 14/32 (43.75%) - Phase 1: 8/8 (100% ✅), Phase 2: 6/8 (75%)
+**Completion**: Sprint 15/32 (46.88%) - Phase 1: 8/8 (100% ✅), Phase 2: 7/8 (87.5%)
 
 ### Recent Milestones
 
@@ -103,6 +103,7 @@ This project aims to:
 - ✅ **Sprint 12** (Message Write): Message posting, replies, quoting, validation, sanitization, atomic writes, 27 tests
 - ✅ **Sprint 13** (File Browsing): File area management, list/details screens, wildcard search, FILE_ID.DIZ extraction, 76 tests
 - ✅ **Sprint 14** (File Upload): Upload processor, ClamAV scanning, duplicate detection, validation, quarantine, 180 tests
+- ✅ **Sprint 15** (User Profiles & Statistics): Profile display, stats tracking, settings editor, achievements, privacy controls, user directory, 128 tests
 
 ### Phase 1 Achievements
 
@@ -115,7 +116,7 @@ This project aims to:
 
 **Quality Metrics (Phase 1+2 Current):**
 
-- **Tests**: 1,126+ (100% passing rate)
+- **Tests**: 1,254+ (100% passing rate)
 - **Coverage**: 64.51% baseline (target: 75% for Phase 2 completion)
 - **Clippy**: 0 warnings
 - **Documentation**: 43 files, 35,000+ lines
@@ -132,21 +133,21 @@ This project aims to:
 
 ### Next Steps
 
-- **Phase 2**: Core Features (Sprints 9-16, 6/8 complete - 75%)
+- **Phase 2**: Core Features (Sprints 9-16, 7/8 complete - 87.5%)
   - ✅ Sprint 9: User Authentication (rate limiting, lockout, validation)
   - ✅ Sprint 10: Menu System (TOML parser, navigation)
   - ✅ Sprint 11: Message Read (MessageBase trait, JAM/Hudson, screens)
   - ✅ Sprint 12: Message Write (posting, replies, quoting)
   - ✅ Sprint 13: File Browsing (areas, list, details, search, FILE_ID.DIZ)
   - ✅ Sprint 14: File Upload (processor, ClamAV scanning, validation, quarantine)
-  - 🔄 Sprint 15: File Download/Transfer Protocols - NEXT
-  - Sprint 16: Session management (WebSocket, concurrent handling)
-- **Goal**: Functional BBS with messaging and file areas by end of Phase 2
-- **Timeline**: 24 months total, currently 43.75% complete (ahead of schedule)
+  - ✅ Sprint 15: User Profiles & Statistics (profile display, settings, achievements, privacy)
+  - 🔄 Sprint 16: Session Management - NEXT
+- **Goal**: Functional BBS with messaging, file areas, and user profiles by end of Phase 2
+- **Timeline**: 24 months total, currently 46.88% complete (ahead of schedule)
 
 ## Features
 
-### Current Implementation (v0.1.0 - Phase 1 Complete + Phase 2 Sprints 9-14)
+### Current Implementation (v0.1.0 - Phase 1 Complete + Phase 2 Sprints 9-15)
 
 **Phase 1 Foundation (Sprints 1-8, November 2025):**
 
@@ -295,11 +296,26 @@ This project aims to:
 - ✅ Atomic operations with failure rollback
 - ✅ 180 new tests (176 unit, 4 doc)
 
+**User Profiles & Statistics (Sprint 15):**
+
+- ✅ User profile display screen with comprehensive information
+- ✅ Statistics tracking system (calls, uploads, downloads, posts, time online)
+- ✅ Real-time statistics updates with atomic operations
+- ✅ User settings editor (password, theme, terminal configuration)
+- ✅ Preference persistence across sessions
+- ✅ Achievement system (predefined achievement types, condition-based awarding)
+- ✅ Achievement notifications and display
+- ✅ Privacy controls (hide email, hide stats, hide online status)
+- ✅ User directory with search and filtering
+- ✅ Upload/download ratio calculation
+- ✅ User signature display (custom taglines, ANSI art support)
+- ✅ Last login tracking and display
+- ✅ 128 new tests (82 unit, 46 doc)
+
 ### Planned Features
 
-**Phase 2 (Sprints 15-16, remaining ~1-2 weeks) - Core Services**
+**Phase 2 (Sprint 16, remaining ~1 week) - Core Services**
 
-- Sprint 15: File download/transfer (Zmodem/Xmodem/Ymodem protocols, resumable downloads)
 - Sprint 16: Session management (concurrent sessions, timeouts, WebSocket)
 
 **Phase 3 (Sprints 17-24, ~6-8 weeks) - Feature Completion**
@@ -695,7 +711,7 @@ cargo doc --workspace --no-deps --open
 - ✅ Sprint 7: Logging infrastructure (rotation, archival, audit)
 - ✅ Sprint 8: Testing framework (64.51% coverage, benchmarks)
 
-**Phase 2: Core Features (November 2025 - January 2026, Sprints 9-16)**
+**Phase 2: Core Features (November 2025 - December 2025, Sprints 9-16)**
 
 - ✅ Sprint 9: User authentication (rate limiting, lockout, validation, flows)
 - ✅ Sprint 10: Menu system (TOML parser, renderer, navigation state machine)
@@ -703,7 +719,7 @@ cargo doc --workspace --no-deps --open
 - ✅ Sprint 12: Message write (posting, replies, quoting, validation, atomic writes)
 - ✅ Sprint 13: File browsing (file areas, list/details screens, search, FILE_ID.DIZ)
 - ✅ Sprint 14: File upload (processor, ClamAV scanning, validation, quarantine, DIZ extraction)
-- Sprint 15: File download/transfer (Zmodem/Xmodem/Ymodem protocols, resumable downloads)
+- ✅ Sprint 15: User profiles (profile display, stats tracking, settings, achievements, privacy)
 - Sprint 16: Session management (WebSocket, concurrent handling, timeouts)
 
 **Phase 3: Feature Completion (February - March 2026, Sprints 17-24)**
@@ -728,18 +744,18 @@ cargo doc --workspace --no-deps --open
 | Milestone         | Target   | Status              | Completion              |
 | ----------------- | -------- | ------------------- | ----------------------- |
 | Phase 1 Complete  | Month 6  | ✅ **COMPLETE**     | November 2025 (6 weeks) |
-| Phase 2 Complete  | Month 12 | 🔄 In Progress 75%  | Target: December 2025   |
+| Phase 2 Complete  | Month 12 | 🔄 In Progress 87.5%| Target: December 2025   |
 | Phase 3 Complete  | Month 18 | Pending             | Target: February 2026   |
 | Phase 4 Complete  | Month 24 | Pending             | Target: April 2026      |
 | Production Launch | Month 24 | Pending             | Target: April 2026      |
 
-**Progress:** 43.75% complete (14/32 sprints), ~15 weeks ahead of schedule
+**Progress:** 46.88% complete (15/32 sprints), ~15 weeks ahead of schedule
 
 ## Testing
 
-### Current Test Suite (Phase 1 + Sprints 9-14)
+### Current Test Suite (Phase 1 + Sprints 9-15)
 
-**Total Tests**: 1,126+ (100% passing rate)
+**Total Tests**: 1,254+ (100% passing rate)
 **Code Coverage**: 64.51% baseline (target: 75%+ by Phase 2 completion)
 
 **Test Types:**
@@ -755,10 +771,10 @@ cargo doc --workspace --no-deps --open
 - impulse-auth: 146+ tests (hashing, sessions, rate limiting, lockout, validation, flows)
 - impulse-message: 99+ tests (42 JAM format, 18 Hudson, 8 list screen, 4 read screen, 15 posting, 8 reply, 4 quoting)
 - impulse-file: 256+ tests (18 area, 22 list, 16 details, 20 search, 45 upload, 35 validation, 28 scanning, 32 DIZ, 20 UI)
+- impulse-user: 161+ tests (33 CRUD/file I/O, 128 new profile/stats/settings/achievements tests)
 - impulse-menu: 84+ tests (parser, renderer, router, navigation state machine)
 - impulse-logging: 80 tests (52 unit, 18 integration, 10 benchmarks)
 - impulse-config: 37 tests (configuration, validation, hot-reload)
-- impulse-user: 33 tests (CRUD, file I/O, Pascal binary compatibility)
 - Other crates: 150+ tests (protocols, terminal, door, web)
 
 **Coverage by Crate:**
