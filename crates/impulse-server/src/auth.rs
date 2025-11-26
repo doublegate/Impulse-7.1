@@ -14,7 +14,10 @@ use tracing::{info, warn};
 /// Authentication result
 pub enum AuthResult {
     /// User authenticated successfully (User is boxed to reduce enum size variance)
-    Authenticated { user: Box<User>, token: SessionToken },
+    Authenticated {
+        user: Box<User>,
+        token: SessionToken,
+    },
 
     /// User quit during authentication
     Quit,
@@ -140,7 +143,9 @@ async fn handle_login(
     renderer.set_foreground(Color::BrightGreen);
     renderer.write_text("Username: ");
     renderer.reset();
-    connection.send_raw(renderer.take_output().as_bytes()).await?;
+    connection
+        .send_raw(renderer.take_output().as_bytes())
+        .await?;
 
     let username = match connection.read_line().await {
         Ok(line) => line.trim().to_string(),
@@ -157,7 +162,9 @@ async fn handle_login(
         renderer.set_foreground(Color::BrightYellow);
         renderer.write_line("Press any key to continue...");
         renderer.reset();
-        connection.send_raw(renderer.take_output().as_bytes()).await?;
+        connection
+            .send_raw(renderer.take_output().as_bytes())
+            .await?;
         connection.read_char().await.ok();
         return Ok(None);
     }
@@ -167,7 +174,9 @@ async fn handle_login(
     renderer.set_foreground(Color::BrightGreen);
     renderer.write_text("Password: ");
     renderer.reset();
-    connection.send_raw(renderer.take_output().as_bytes()).await?;
+    connection
+        .send_raw(renderer.take_output().as_bytes())
+        .await?;
 
     // For this demo, we'll skip actual password validation
     // In production, this would read the password securely
@@ -205,16 +214,24 @@ async fn handle_login(
                     renderer.reset();
                     renderer.write_line("");
                     renderer.set_foreground(Color::Yellow);
-                    renderer.write_line(&format!("Security Level: {}", user.security_level().value()));
+                    renderer.write_line(&format!(
+                        "Security Level: {}",
+                        user.security_level().value()
+                    ));
                     renderer.reset();
                     renderer.write_line("\r\n");
                     renderer.set_foreground(Color::BrightYellow);
                     renderer.write_line("Press any key to continue...");
                     renderer.reset();
-                    connection.send_raw(renderer.take_output().as_bytes()).await?;
+                    connection
+                        .send_raw(renderer.take_output().as_bytes())
+                        .await?;
                     connection.read_char().await.ok();
 
-                    Ok(Some(AuthResult::Authenticated { user: Box::new(user), token }))
+                    Ok(Some(AuthResult::Authenticated {
+                        user: Box::new(user),
+                        token,
+                    }))
                 }
                 Err(e) => {
                     warn!(username = %username, error = %e, "Login failed");
@@ -227,7 +244,9 @@ async fn handle_login(
                     renderer.set_foreground(Color::BrightYellow);
                     renderer.write_line("Press any key to continue...");
                     renderer.reset();
-                    connection.send_raw(renderer.take_output().as_bytes()).await?;
+                    connection
+                        .send_raw(renderer.take_output().as_bytes())
+                        .await?;
                     connection.read_char().await.ok();
 
                     Ok(None)
@@ -245,7 +264,9 @@ async fn handle_login(
             renderer.set_foreground(Color::BrightYellow);
             renderer.write_line("Press any key to continue...");
             renderer.reset();
-            connection.send_raw(renderer.take_output().as_bytes()).await?;
+            connection
+                .send_raw(renderer.take_output().as_bytes())
+                .await?;
             connection.read_char().await.ok();
 
             Ok(None)

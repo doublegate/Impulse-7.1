@@ -163,7 +163,8 @@ fn render_main_menu(renderer: &mut AnsiRenderer, user: &User) {
 
     renderer.write_line("");
     renderer.set_foreground(Color::BrightWhite);
-    renderer.write_line(&format!("User: {}  |  Security: {}  |  Time Left: 58 min",
+    renderer.write_line(&format!(
+        "User: {}  |  Security: {}  |  Time Left: 58 min",
         user.username(),
         user.security_level().value()
     ));
@@ -198,7 +199,9 @@ async fn handle_messages(
     renderer.set_foreground(Color::BrightYellow);
     renderer.write_line("Press any key to continue...");
     renderer.reset();
-    connection.send_raw(renderer.take_output().as_bytes()).await?;
+    connection
+        .send_raw(renderer.take_output().as_bytes())
+        .await?;
     connection.read_char().await.ok();
     Ok(())
 }
@@ -227,7 +230,9 @@ async fn handle_files(
     renderer.set_foreground(Color::BrightYellow);
     renderer.write_line("Press any key to continue...");
     renderer.reset();
-    connection.send_raw(renderer.take_output().as_bytes()).await?;
+    connection
+        .send_raw(renderer.take_output().as_bytes())
+        .await?;
     connection.read_char().await.ok();
     Ok(())
 }
@@ -257,7 +262,9 @@ async fn handle_doors(
     renderer.set_foreground(Color::BrightYellow);
     renderer.write_line("Press any key to continue...");
     renderer.reset();
-    connection.send_raw(renderer.take_output().as_bytes()).await?;
+    connection
+        .send_raw(renderer.take_output().as_bytes())
+        .await?;
     connection.read_char().await.ok();
     Ok(())
 }
@@ -275,7 +282,10 @@ async fn handle_user_profile(
     renderer.reset();
     renderer.write_line("");
     renderer.write_line(&format!("Username:       {}", user.username()));
-    renderer.write_line(&format!("Security Level: {}", user.security_level().value()));
+    renderer.write_line(&format!(
+        "Security Level: {}",
+        user.security_level().value()
+    ));
     renderer.write_line(&format!("User ID:        {:?}", user.id()));
     renderer.write_line("");
     renderer.set_foreground(Color::Yellow);
@@ -285,7 +295,9 @@ async fn handle_user_profile(
     renderer.set_foreground(Color::BrightYellow);
     renderer.write_line("Press any key to continue...");
     renderer.reset();
-    connection.send_raw(renderer.take_output().as_bytes()).await?;
+    connection
+        .send_raw(renderer.take_output().as_bytes())
+        .await?;
     connection.read_char().await.ok();
     Ok(())
 }
@@ -312,7 +324,9 @@ async fn handle_whos_online(
     renderer.set_foreground(Color::BrightYellow);
     renderer.write_line("Press any key to continue...");
     renderer.reset();
-    connection.send_raw(renderer.take_output().as_bytes()).await?;
+    connection
+        .send_raw(renderer.take_output().as_bytes())
+        .await?;
     connection.read_char().await.ok();
     Ok(())
 }
@@ -338,7 +352,9 @@ async fn handle_theme_selection(
     renderer.set_foreground(Color::BrightYellow);
     renderer.write_line("Press any key to continue...");
     renderer.reset();
-    connection.send_raw(renderer.take_output().as_bytes()).await?;
+    connection
+        .send_raw(renderer.take_output().as_bytes())
+        .await?;
     connection.read_char().await.ok();
     Ok(())
 }
@@ -368,7 +384,9 @@ async fn handle_admin(
     renderer.set_foreground(Color::BrightYellow);
     renderer.write_line("Press any key to continue...");
     renderer.reset();
-    connection.send_raw(renderer.take_output().as_bytes()).await?;
+    connection
+        .send_raw(renderer.take_output().as_bytes())
+        .await?;
     connection.read_char().await.ok();
     Ok(())
 }
@@ -400,16 +418,15 @@ async fn handle_system_stats(
     renderer.set_foreground(Color::BrightYellow);
     renderer.write_line("Press any key to continue...");
     renderer.reset();
-    connection.send_raw(renderer.take_output().as_bytes()).await?;
+    connection
+        .send_raw(renderer.take_output().as_bytes())
+        .await?;
     connection.read_char().await.ok();
     Ok(())
 }
 
 /// Handle help screen
-async fn handle_help(
-    connection: &mut TelnetConnection,
-    renderer: &mut AnsiRenderer,
-) -> Result<()> {
+async fn handle_help(connection: &mut TelnetConnection, renderer: &mut AnsiRenderer) -> Result<()> {
     renderer.write_line("\r\n");
     renderer.set_foreground(Color::BrightWhite);
     renderer.write_line("=== HELP ===");
@@ -433,7 +450,9 @@ async fn handle_help(
     renderer.set_foreground(Color::BrightYellow);
     renderer.write_line("Press any key to continue...");
     renderer.reset();
-    connection.send_raw(renderer.take_output().as_bytes()).await?;
+    connection
+        .send_raw(renderer.take_output().as_bytes())
+        .await?;
     connection.read_char().await.ok();
     Ok(())
 }

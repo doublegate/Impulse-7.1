@@ -7,7 +7,7 @@ mod menus;
 mod state;
 
 use anyhow::Result;
-use auth::{authenticate, AuthResult};
+use auth::{AuthResult, authenticate};
 use impulse_session::{SessionConfig, SessionManager};
 use impulse_telnet::TelnetServer;
 use menus::display_main_menu;
@@ -110,7 +110,9 @@ async fn main() -> Result<()> {
                 let session_mgr = session_manager.clone();
                 let state = server_state.clone();
                 tokio::spawn(async move {
-                    if let Err(e) = handle_connection(connection, session_id, session_mgr, state).await {
+                    if let Err(e) =
+                        handle_connection(connection, session_id, session_mgr, state).await
+                    {
                         error!(session_id = %session_id, "Connection error: {}", e);
                     }
                 });
