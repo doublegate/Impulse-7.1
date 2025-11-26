@@ -2,7 +2,7 @@
 //!
 //! Uses system `unrar` command for extraction (fallback approach).
 
-use crate::diz::parser::{clean_diz_content, DIZ_FILENAMES, MAX_DIZ_SIZE};
+use crate::diz::parser::{DIZ_FILENAMES, MAX_DIZ_SIZE, clean_diz_content};
 use crate::error::Result;
 use std::path::Path;
 use std::process::Command;
