@@ -1401,7 +1401,7 @@ dependencies = [
  "criterion",
  "impulse-types",
  "proptest",
- "rand 0.8.5",
+ "rand 0.9.2",
  "sha2",
  "thiserror 2.0.17",
  "tokio",
