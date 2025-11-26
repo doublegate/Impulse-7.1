@@ -12,3 +12,4 @@ impulse-types = { path = "../impulse-types" }
 async-trait = { workspace = true }
 thiserror = { workspace = true }
 tokio = { workspace = true, features = ["io-util", "fs", "time"] }
+serde = { workspace = true }

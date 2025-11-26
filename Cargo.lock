@@ -1549,6 +1549,7 @@ version = "0.2.0"
 dependencies = [
  "async-trait",
  "impulse-types",
+ "serde",
  "thiserror 2.0.17",
  "tokio",
 ]
@@ -1644,6 +1645,7 @@ dependencies = [
  "binrw",
  "chrono",
  "impulse-auth",
+ "impulse-protocol",
  "impulse-types",
  "serde",
  "serde_json",

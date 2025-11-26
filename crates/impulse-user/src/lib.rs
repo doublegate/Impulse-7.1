@@ -667,7 +667,7 @@ pub use achievements::{Achievement, AchievementChecker, AchievementProgress, Use
 pub use directory::UserDirectory;
 pub use privacy::PrivacySettings;
 pub use profile::{ProfileDisplayOptions, ProfileViewer};
-pub use settings::{PasswordStrength, SettingsManager, Theme};
+pub use settings::{PasswordStrength, ProtocolSettings, SettingsManager, Theme};
 pub use stats::StatsTracker;
 
 #[cfg(test)]

@@ -10,6 +10,7 @@ rust-version.workspace = true
 [dependencies]
 impulse-types = { path = "../impulse-types" }
 impulse-auth = { path = "../impulse-auth" }
+impulse-protocol = { path = "../impulse-protocol" }
 tokio = { workspace = true }
 async-trait = { workspace = true }
 sqlx = { workspace = true }
