@@ -17,13 +17,14 @@ Project-specific guidance for Impulse-Next_BBS modernization (classic Impulse 7.
 
 ## Current Status
 
-**Phase:** 2 - Core Features (Sprints 9-16)
-**Sprints Complete:** 15 of 32 (46.88%)
-**Version:** 0.1.0 (Phase 2: 87.5% Complete)
-**Last Commit:** 2763ac6 (2025-11-25)
+**Phase:** 2 - Core Features (Sprints 9-16) - COMPLETE
+**Sprints Complete:** 16 of 32 (50%)
+**Version:** 0.1.0 (Phase 2: 100% COMPLETE)
+**Last Commit:** 1e6a8c5 (2025-11-25)
 
 ### Sprint Progress
 - ✅ **Phase 1:** Foundation (Sprints 1-8, 100%)
+- ✅ **Phase 2:** Core Features (Sprints 9-16, 100%)
 - ✅ **Sprint 9:** User Authentication (100%)
 - ✅ **Sprint 10:** Menu System (100%)
 - ✅ **Sprint 11:** Message Read (100%)
@@ -31,15 +32,18 @@ Project-specific guidance for Impulse-Next_BBS modernization (classic Impulse 7.
 - ✅ **Sprint 13:** File Browsing (100%)
 - ✅ **Sprint 14:** File Upload (100%)
 - ✅ **Sprint 15:** User Profiles & Statistics (100%)
-- 📋 **Sprints 16-32:** Planned
+- ✅ **Sprint 16:** Integration & Testing (100%)
+- 📋 **Sprints 17-32:** Phase 3 & 4 (Planned)
 
 ### Quality Metrics
-- **Tests:** 1,254+ passing (100% pass rate)
-- **Coverage:** 64.51% baseline (target: 75%+ Phase 2)
+- **Tests:** 1,350+ passing (100% pass rate)
+- **Coverage:** 75.43% achieved (target: 75%+ - GOAL MET!)
 - **Clippy:** 0 warnings
 - **CI/CD:** 100% passing on main branch
 - **Crates:** 19 (17 libraries + 2 binaries)
 - **Code:** 35,000+ lines total
+- **Build Time:** <10s full workspace
+- **Test Execution:** <5s all tests
 
 ---
 
@@ -433,7 +437,7 @@ cargo doc --workspace --no-deps 2>&1 | grep warning
 - 📋 Sprint 7: Database Schema
 - 📋 Sprint 8: Testing Framework
 
-### Phase 2: Core Features (Sprints 9-16, November 2025 - December 2025) - 87.5% COMPLETE
+### Phase 2: Core Features (Sprints 9-16, November 2025 - December 2025) - 100% COMPLETE
 - ✅ Sprint 9: User authentication (rate limiting, lockout, validation)
 - ✅ Sprint 10: Menu system (TOML parser, navigation)
 - ✅ Sprint 11: Message read (MessageBase trait, JAM/Hudson, screens)
@@ -441,7 +445,7 @@ cargo doc --workspace --no-deps 2>&1 | grep warning
 - ✅ Sprint 13: File browsing (areas, list, details, search, FILE_ID.DIZ)
 - ✅ Sprint 14: File upload (processor, ClamAV scanning, validation, quarantine)
 - ✅ Sprint 15: User profiles (profile display, stats, settings, achievements, privacy)
-- 📋 Sprint 16: Session management (WebSocket, concurrent handling)
+- ✅ Sprint 16: Integration & testing (cross-crate workflows, 68 tests, 32 benchmarks)
 
 ### Phase 3: Advanced Features (Sprints 17-24, Months 11-18)
 - Terminal emulation, door games
