@@ -9,6 +9,7 @@ rust-version.workspace = true
 
 [dependencies]
 impulse-types = { path = "../impulse-types" }
+impulse-protocol = { path = "../impulse-protocol" }
 tokio = { workspace = true }
 async-trait = { workspace = true }
 thiserror = { workspace = true }

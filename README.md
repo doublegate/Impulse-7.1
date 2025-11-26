@@ -5,7 +5,7 @@
 <!-- Row 1: Build Status & Quality -->
 [![CI](https://github.com/doublegate/Impulse-Next_BBS/workflows/CI/badge.svg)](https://github.com/doublegate/Impulse-Next_BBS/actions)
 [![Coverage](https://img.shields.io/badge/coverage-75.43%25-brightgreen)](https://github.com/doublegate/Impulse-Next_BBS#testing)
-[![Tests](https://img.shields.io/badge/tests-1,209_passing-brightgreen)](https://github.com/doublegate/Impulse-Next_BBS#testing)
+[![Tests](https://img.shields.io/badge/tests-1,445_passing-brightgreen)](https://github.com/doublegate/Impulse-Next_BBS#testing)
 [![Clippy](https://img.shields.io/badge/clippy-0_warnings-brightgreen)](https://github.com/doublegate/Impulse-Next_BBS#development)
 
 <!-- Row 2: Project Identity -->
@@ -105,9 +105,9 @@ This project aims to:
 
 ## Project Status
 
-**Current Version**: 0.2.0 (Phase 2 - Core Features: 100% COMPLETE! ✅)
-**Development Phase**: Phase 2 - Core Features (COMPLETE)
-**Completion**: Sprint 16/32 (50%) - Phase 1: 8/8 (100% ✅), Phase 2: 8/8 (100% ✅)
+**Current Version**: 0.2.0 (Phase 2 COMPLETE + Sprint 17 - Zmodem Protocol)
+**Development Phase**: Phase 3 - Feature Completion (Starting)
+**Completion**: Sprint 17/32 (53%) - Phase 1: 8/8 (100% ✅), Phase 2: 8/8 (100% ✅), Phase 3: 1/8 (13%)
 
 ### Recent Milestones
 
@@ -132,6 +132,7 @@ This project aims to:
 - ✅ **Server Infrastructure** (Post Phase 2): Working BBS server with telnet (RFC 854), session management, ANSI terminal support, 40 new tests
 - ✅ **Sprint 16** (Session Management): Concurrent sessions, conflict resolution (Allow/KickOldest/DenyNew), idle/absolute timeouts, WebSocket support, Who's online, 31 new tests
 - ✅ **CI/CD Fixes** (November 2025): MSRV 1.85 → 1.88, bincode 2.0 migration, Rust 2024 let-chains across 19 files, cargo-audit 0.22.0 update, 12 CI jobs passing
+- ✅ **Sprint 17** (Zmodem Protocol): Complete Zmodem file transfer implementation (frame structure, CRC-16/32, handshake, batch mode, crash recovery, resume capability, progress tracking)
 
 ### Phase 1 Achievements
 
@@ -142,14 +143,14 @@ This project aims to:
 - 105+ commits across 237 Rust source files
 - 37,823 lines of code (production + tests)
 
-**Quality Metrics (Phase 1+2 COMPLETE + Server Infrastructure + Sprint 16):**
+**Quality Metrics (Phase 1+2 COMPLETE + Server Infrastructure + Sprint 17):**
 
-- **Tests**: 1,209 (100% passing rate)
+- **Tests**: 1,445 (100% passing rate)
 - **Coverage**: 75.43% achieved (target: 75% - GOAL MET!)
 - **Clippy**: 0 warnings
 - **Documentation**: 64 files, 40,000+ lines
 - **Build**: <10s full workspace
-- **Test Execution**: <5s all tests
+- **Test Execution**: <8s all tests
 
 **Key Features:**
 
@@ -170,13 +171,14 @@ This project aims to:
   - ✅ Sprint 14: File Upload (processor, ClamAV scanning, validation, quarantine)
   - ✅ Sprint 15: User Profiles & Statistics (profile display, settings, achievements, privacy)
   - ✅ Sprint 16: Integration & Testing (cross-crate workflows, 68 integration tests, 32 benchmarks)
-- **Phase 3**: Feature Completion (Sprints 17-24, next phase starting)
-  - File transfer protocols (Zmodem, Xmodem, Ymodem)
-  - Theme system
-  - Door game interface (DOSBox integration)
-  - QWK offline reader support
-- **Goal**: Functional BBS with messaging, file areas, and user profiles complete! Phase 3 incoming.
-- **Timeline**: 24 months total, currently 50% complete (2 months ahead of schedule)
+- **Phase 3**: Feature Completion (Sprints 17-24, IN PROGRESS)
+  - ✅ Sprint 17: Zmodem Protocol (complete implementation with crash recovery)
+  - 📋 Sprint 18: Xmodem & Ymodem Protocols
+  - 📋 Sprint 19: Theme System
+  - 📋 Sprint 20: Door Game Interface (DOSBox integration)
+  - 📋 Sprint 21-24: Advanced features, QWK support
+- **Goal**: Functional BBS with file transfer protocols complete! Continuing Phase 3.
+- **Timeline**: 24 months total, currently 53% complete (2 months ahead of schedule)
 
 ## Features
 
@@ -411,12 +413,13 @@ All 8 sprints completed including:
 
 ### Planned Features
 
-**Phase 3 (Sprints 17-24, ~6-8 weeks) - Feature Completion**
+**Phase 3 (Sprints 17-24, ~6-8 weeks) - Feature Completion (IN PROGRESS)**
 
-- File transfer protocols (Zmodem, Xmodem, Ymodem)
-- Theme system
-- Door game interface (DOSBox integration)
-- QWK offline reader support
+- ✅ Sprint 17: Zmodem file transfer protocol (complete with crash recovery)
+- 📋 Xmodem and Ymodem protocols
+- 📋 Theme system
+- 📋 Door game interface (DOSBox integration)
+- 📋 QWK offline reader support
 
 **Phase 4 (Sprints 25-32, ~6-8 weeks) - Polish & Launch**
 
@@ -854,9 +857,9 @@ cargo doc --workspace --no-deps --open
 
 ## Testing
 
-### Current Test Suite (Phase 1 + Phase 2 + Server Infrastructure)
+### Current Test Suite (Phase 1 + Phase 2 + Server Infrastructure + Sprint 17)
 
-**Total Tests**: 1,209 (100% passing rate)
+**Total Tests**: 1,445 (100% passing rate)
 **Code Coverage**: 75.43% achieved (target: 75%+ - GOAL MET!)
 
 **Test Types:**

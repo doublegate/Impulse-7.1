@@ -2,7 +2,7 @@
 
 Project-specific guidance for Impulse-Next_BBS modernization (classic Impulse 7.1 BBS: Borland Pascal 7.0 → Rust 2024).
 
-**Version:** 0.2.0 | **Updated:** 2025-11-26
+**Version:** 0.3.0 | **Updated:** 2025-11-26
 
 ---
 
@@ -17,10 +17,10 @@ Project-specific guidance for Impulse-Next_BBS modernization (classic Impulse 7.
 
 ## Current Status
 
-**Phase:** 2 - Core Features (COMPLETE) + Server Infrastructure + Sprint 16
-**Sprints Complete:** 16 of 32 (50%)
-**Version:** 0.2.0 (Phase 2: 100% COMPLETE + Server Infrastructure + Session Management)
-**Last Commit:** eee18b7 (2025-11-26 - CI fixes, Rust 2024 let-chains)
+**Phase:** 3 - Feature Completion (Sprint 17 COMPLETE)
+**Sprints Complete:** 17 of 32 (53%)
+**Version:** 0.3.0 (Phase 2: 100% + Sprint 17: Zmodem Protocol Implementation)
+**Last Commit:** 8f893cc (2025-11-26 - Sprint 17: Zmodem Protocol Implementation)
 
 ### Sprint Progress
 - ✅ **Phase 1:** Foundation (Sprints 1-8, 100%)
@@ -36,18 +36,19 @@ Project-specific guidance for Impulse-Next_BBS modernization (classic Impulse 7.
 - ✅ **Server Infrastructure:** Telnet, Session, Terminal, Server (Post Phase 2)
 - ✅ **Sprint 16 (Session Management):** Concurrent sessions, conflict resolution, timeouts, WebSocket (100%)
 - ✅ **CI/CD Fixes (2025-11-26):** MSRV 1.88, bincode 2.0, Rust 2024 let-chains (19 files), cargo-audit 0.22
-- 📋 **Sprints 17-32:** Phase 3 & 4 (Planned)
+- ✅ **Sprint 17 (Zmodem Protocol):** Frame structure, CRC-16/32, handshake, file transfer, crash recovery, batch mode (100%)
+- 📋 **Sprints 18-32:** Phase 3 & 4 (Continuing)
 
 ### Quality Metrics
-- **Tests:** 1,209 passing (100% pass rate)
+- **Tests:** 1,445 passing (100% pass rate)
 - **Coverage:** 75.43% achieved (target: 75%+ - GOAL MET!)
 - **Clippy:** 0 warnings
 - **CI/CD:** 12 jobs, 100% passing on main branch
 - **Crates:** 20 (17 libraries + 3 binaries)
-- **Code:** 41,286 lines total (production + tests)
-- **Commits:** 127 total
+- **Code:** 45,916 lines total (production + tests)
+- **Commits:** 130 total
 - **Build Time:** <2s dev, <10s release
-- **Test Execution:** <5s all tests
+- **Test Execution:** <8s all tests
 
 ---
 

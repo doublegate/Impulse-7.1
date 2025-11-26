@@ -100,6 +100,9 @@ pub mod scanning;
 /// Upload validation
 pub mod validation;
 
+/// File transfer protocol integration
+pub mod transfer;
+
 // Re-export commonly used types
 pub use error::{FileError, Result};
 pub use manager::InMemoryFileAreaManager;
@@ -117,4 +120,10 @@ pub use scanning::{MockScanner, QuarantineManager, ScanResult, VirusScanner};
 // Re-export validation functions
 pub use validation::{
     check_duplicate, check_extension, check_permissions, check_quota, check_size,
+};
+
+// Re-export transfer types
+pub use transfer::{
+    DownloadManager, DownloadResult, DownloadStats, Protocol, TransferConfig, TransferDirection,
+    TransferStatus, UploadManager, UploadResult,
 };

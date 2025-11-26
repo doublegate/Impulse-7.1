@@ -1483,6 +1483,7 @@ dependencies = [
  "async-trait",
  "chrono",
  "hex",
+ "impulse-protocol",
  "impulse-types",
  "indexmap",
  "serde",
@@ -1549,6 +1550,7 @@ dependencies = [
  "async-trait",
  "impulse-types",
  "thiserror 2.0.17",
+ "tokio",
 ]
 
 [[package]]
