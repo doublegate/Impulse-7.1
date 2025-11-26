@@ -28,4 +28,24 @@ pub enum TerminalError {
     /// Parse error
     #[error("Parse error: {0}")]
     Parse(String),
+
+    /// Theme not found
+    #[error("Theme not found: {0}")]
+    ThemeNotFound(String),
+
+    /// Invalid theme format
+    #[error("Invalid theme format: {0}")]
+    InvalidThemeFormat(String),
+
+    /// Missing required field in theme
+    #[error("Missing required field: {0}")]
+    MissingThemeField(String),
+
+    /// TOML parse error
+    #[error("TOML parse error: {0}")]
+    TomlParse(String),
+
+    /// Theme validation error
+    #[error("Theme validation error: {0}")]
+    ThemeValidation(String),
 }

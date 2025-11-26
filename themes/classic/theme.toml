@@ -1,0 +1,48 @@
+# Classic BBS Theme
+# Traditional blue and white color scheme reminiscent of DOS-era BBSes
+
+[metadata]
+name = "Classic BBS"
+author = "Impulse BBS Team"
+version = "1.0.0"
+description = "Traditional BBS theme with blue and white colors, reminiscent of the golden age of BBSes"
+compatible_bbs_version = ">=0.1.0"
+requires_ansi = true
+requires_utf8 = false
+
+[color_scheme]
+# Primary color - bright blue for headers and borders
+primary = { foreground = "bright_blue", background = "black", bold = false, blink = false }
+
+# Secondary color - cyan for secondary text
+secondary = { foreground = "cyan", background = "black", bold = false, blink = false }
+
+# Accent color - bright cyan for highlights
+accent = { foreground = "bright_cyan", background = "black", bold = true, blink = false }
+
+# Background color - black background with white text
+background = { foreground = "white", background = "black", bold = false, blink = false }
+
+# Text color - white for normal text
+text = { foreground = "white", background = "black", bold = false, blink = false }
+
+# Highlight color - bright yellow for important info
+highlight = { foreground = "bright_yellow", background = "black", bold = true, blink = false }
+
+# Error color - bright red for errors
+error = { foreground = "bright_red", background = "black", bold = true, blink = false }
+
+# Success color - bright green for success messages
+success = { foreground = "bright_green", background = "black", bold = true, blink = false }
+
+[screens]
+main_menu = "screens/main.ans"
+message_list = "screens/messages.ans"
+file_list = "screens/files.ans"
+
+[prompts]
+main_prompt = "Command: "
+login_prompt = "Enter your username: "
+password_prompt = "Enter your password: "
+message_prompt = "Message: "
+confirm_prompt = "Are you sure? [Y/N]: "

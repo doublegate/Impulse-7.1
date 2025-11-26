@@ -1,7 +1,7 @@
 //! Terminal rendering and ANSI handling for Impulse BBS
 //!
 //! This crate provides ANSI escape sequence rendering, color management,
-//! and terminal screen control for BBS display.
+//! terminal screen control, and theme management for BBS display.
 //!
 //! # Features
 //!
@@ -11,6 +11,7 @@
 //! - Text attributes (bold, blink, underline, reverse)
 //! - ANSI file rendering (.ANS files)
 //! - Terminal capability detection
+//! - Theme system with hot-reload support
 //!
 //! # Example
 //!
@@ -28,6 +29,7 @@ mod ansi;
 mod color;
 mod error;
 mod renderer;
+pub mod theme;
 
 pub use ansi::{AnsiCode, AnsiSequence};
 pub use color::{AnsiColor, Color};

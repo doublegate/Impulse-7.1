@@ -12,3 +12,8 @@ impulse-types = { path = "../impulse-types" }
 crossterm = { workspace = true }
 async-trait = { workspace = true }
 thiserror = { workspace = true }
+serde = { workspace = true, features = ["derive"] }
+serde_json = { workspace = true }
+toml = "0.8"
+tokio = { workspace = true, features = ["fs"] }
+rand = { workspace = true }

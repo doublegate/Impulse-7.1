@@ -1,0 +1,48 @@
+# Cyberpunk Theme
+# Neon magenta and cyan with futuristic aesthetics
+
+[metadata]
+name = "Cyberpunk 2077"
+author = "Impulse BBS Team"
+version = "1.0.0"
+description = "Futuristic neon theme with magenta and cyan colors - Welcome to Night City"
+compatible_bbs_version = ">=0.1.0"
+requires_ansi = true
+requires_utf8 = false
+
+[color_scheme]
+# Primary color - bright magenta for headers
+primary = { foreground = "bright_magenta", background = "black", bold = true, blink = false }
+
+# Secondary color - bright cyan for secondary elements
+secondary = { foreground = "bright_cyan", background = "black", bold = false, blink = false }
+
+# Accent color - magenta on cyan for emphasis
+accent = { foreground = "bright_magenta", background = "black", bold = true, blink = false }
+
+# Background color - cyan on black
+background = { foreground = "bright_cyan", background = "black", bold = false, blink = false }
+
+# Text color - cyan for normal text
+text = { foreground = "cyan", background = "black", bold = false, blink = false }
+
+# Highlight color - bright yellow for highlights
+highlight = { foreground = "bright_yellow", background = "black", bold = true, blink = false }
+
+# Error color - bright red for errors
+error = { foreground = "bright_red", background = "black", bold = true, blink = false }
+
+# Success color - bright green for success
+success = { foreground = "bright_green", background = "black", bold = true, blink = false }
+
+[screens]
+main_menu = "screens/cyber_main.ans"
+message_list = "screens/cyber_messages.ans"
+file_list = "screens/cyber_files.ans"
+
+[prompts]
+main_prompt = "▸ COMMAND: "
+login_prompt = "▸ NETRUNNER ID: "
+password_prompt = "▸ NEURAL KEY: "
+message_prompt = "▸ MESSAGE: "
+confirm_prompt = "▸ CONFIRM [Y/N]: "
