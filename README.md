@@ -107,6 +107,7 @@ This project aims to:
 - ✅ **Sprint 15** (User Profiles & Statistics): Profile display, stats tracking, settings editor, achievements, privacy controls, user directory, 128 tests
 - ✅ **Sprint 16** (Phase 2 Integration & Testing): Cross-crate integration testing, 68 integration tests, 32 performance benchmarks, Phase 2 100% COMPLETE!
 - ✅ **Server Infrastructure** (Post Phase 2): Working BBS server with telnet (RFC 854), session management, ANSI terminal support, 40 new tests
+- ✅ **Sprint 16** (Session Management): Concurrent sessions, conflict resolution (Allow/KickOldest/DenyNew), idle/absolute timeouts, WebSocket support, Who's online, 31 new tests
 
 ### Phase 1 Achievements
 
@@ -117,9 +118,9 @@ This project aims to:
 - 105+ commits across 237 Rust source files
 - 37,823 lines of code (production + tests)
 
-**Quality Metrics (Phase 1+2 COMPLETE + Server Infrastructure):**
+**Quality Metrics (Phase 1+2 COMPLETE + Server Infrastructure + Sprint 16):**
 
-- **Tests**: 1,158 (100% passing rate)
+- **Tests**: 1,173 (100% passing rate)
 - **Coverage**: 75.43% achieved (target: 75% - GOAL MET!)
 - **Clippy**: 0 warnings
 - **Documentation**: 43 files, 38,000+ lines
@@ -338,7 +339,7 @@ This project aims to:
   - Connection state management
   - Option negotiation (WILL, WON'T, DO, DON'T)
 
-- ✅ **impulse-session** - Session Management (747 lines, 11 tests)
+- ✅ **impulse-session** - Session Management (enhanced with Sprint 16, 31 tests)
   - UUID-based SessionId identifiers
   - SessionState machine (5 states: Connected, Authenticated, Active, Idle, Disconnected)
   - SessionManager with concurrent tracking (async RwLock)
@@ -347,6 +348,19 @@ This project aims to:
   - Automatic session expiry and cleanup
   - Thread-safe concurrent access
   - Maximum sessions per user enforcement
+  - **Sprint 16 Features:**
+    - Concurrent session handling with per-user limits
+    - Conflict resolution policies (Allow, KickOldest, DenyNew)
+    - Idle timeout (default: 15 minutes) with activity tracking
+    - Absolute timeout (default: 4 hours, optional)
+    - Timeout warning system (default: 1 minute before timeout)
+    - Unlimited session time for privileged users (sysop whitelist)
+    - Connection abstraction (Connection trait, ConnectionType enum)
+    - WebSocket support with tokio-tungstenite
+    - BbsMessage JSON protocol for WebSocket communication
+    - SessionEvent notifications (NewMail, ChatRequest, TimeoutWarning, Terminated)
+    - Who's online functionality (list_all_sessions, list_sessions_filtered)
+    - Session registry for efficient lookups
 
 - ✅ **impulse-terminal** - ANSI Terminal Emulation (725 lines, 16 tests)
   - Color enum: 16 basic colors, 256-color palette, RGB true color
@@ -357,11 +371,21 @@ This project aims to:
   - Text styling (bold, underline, italic, reverse, strike)
   - Full ANSI escape sequence support
 
+### Phase 2 COMPLETE!
+
+**Phase 2 (Sprints 9-16, November 2025) - ✅ 100% COMPLETE**
+
+All 8 sprints completed including:
+- Sprint 9: User Authentication
+- Sprint 10: Menu System
+- Sprint 11: Message Read
+- Sprint 12: Message Write
+- Sprint 13: File Browsing
+- Sprint 14: File Upload
+- Sprint 15: User Profiles & Statistics
+- Sprint 16: Session Management (concurrent sessions, timeouts, WebSocket, Who's online)
+
 ### Planned Features
-
-**Phase 2 (Sprint 16, remaining ~1 week) - Core Services**
-
-- Sprint 16: Session management (concurrent sessions, timeouts, WebSocket)
 
 **Phase 3 (Sprints 17-24, ~6-8 weeks) - Feature Completion**
 
@@ -770,7 +794,7 @@ cargo doc --workspace --no-deps --open
 - ✅ Sprint 13: File browsing (file areas, list/details screens, search, FILE_ID.DIZ)
 - ✅ Sprint 14: File upload (processor, ClamAV scanning, validation, quarantine, DIZ extraction)
 - ✅ Sprint 15: User profiles (profile display, stats tracking, settings, achievements, privacy)
-- ✅ Sprint 16: Integration & testing (cross-crate workflows, 68 integration tests, 32 benchmarks)
+- ✅ Sprint 16: Session management (concurrent sessions, conflict resolution, idle/absolute timeouts, WebSocket, Who's online)
 
 **Phase 3: Feature Completion (February - March 2026, Sprints 17-24)**
 
@@ -826,7 +850,7 @@ cargo doc --workspace --no-deps --open
 - impulse-logging: 80 tests (52 unit, 18 integration, 10 benchmarks)
 - impulse-telnet: 40 tests (IAC parsing, connection handling, server operations)
 - impulse-config: 37 tests (configuration, validation, hot-reload)
-- impulse-session: 11 tests (session CRUD, state management, expiry)
+- impulse-session: 31 tests (session CRUD, state management, expiry, concurrent handling, timeouts, conflict resolution, WebSocket)
 - impulse-terminal: 16 tests (color conversion, ANSI sequences, rendering)
 - Other crates: 137+ tests (protocols, door, web, core)
 

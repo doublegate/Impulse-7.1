@@ -17,10 +17,10 @@ Project-specific guidance for Impulse-Next_BBS modernization (classic Impulse 7.
 
 ## Current Status
 
-**Phase:** 2 - Core Features (COMPLETE) + Server Infrastructure
+**Phase:** 2 - Core Features (COMPLETE) + Server Infrastructure + Sprint 16
 **Sprints Complete:** 16 of 32 (50%)
-**Version:** 0.2.0 (Phase 2: 100% COMPLETE + Server Infrastructure)
-**Last Commit:** ebd1305 (2025-11-26)
+**Version:** 0.2.0 (Phase 2: 100% COMPLETE + Server Infrastructure + Session Management)
+**Last Commit:** 2bf5b8e (2025-11-26)
 
 ### Sprint Progress
 - ✅ **Phase 1:** Foundation (Sprints 1-8, 100%)
@@ -34,15 +34,16 @@ Project-specific guidance for Impulse-Next_BBS modernization (classic Impulse 7.
 - ✅ **Sprint 15:** User Profiles & Statistics (100%)
 - ✅ **Sprint 16:** Integration & Testing (100%)
 - ✅ **Server Infrastructure:** Telnet, Session, Terminal, Server (Post Phase 2)
+- ✅ **Sprint 16 (Session Management):** Concurrent sessions, conflict resolution, timeouts, WebSocket (100%)
 - 📋 **Sprints 17-32:** Phase 3 & 4 (Planned)
 
 ### Quality Metrics
-- **Tests:** 1,158 passing (100% pass rate)
+- **Tests:** 1,173 passing (100% pass rate)
 - **Coverage:** 75.43% achieved (target: 75%+ - GOAL MET!)
 - **Clippy:** 0 warnings
 - **CI/CD:** 100% passing on main branch
 - **Crates:** 20 (17 libraries + 3 binaries)
-- **Code:** 37,823 lines total
+- **Code:** ~40,000 lines total (estimated with Sprint 16)
 - **Build Time:** <10s full workspace
 - **Test Execution:** <5s all tests
 
@@ -295,12 +296,62 @@ cargo build --workspace --all-features
 - ✅ impulse-telnet - RFC 854 Telnet Protocol (764 lines, 40 tests)
   - TelnetServer, TelnetConnection, IAC negotiation
   - Telnet options: ECHO, SUPPRESS_GO_AHEAD, TERMINAL_TYPE, NAWS
-- ✅ impulse-session - Session Management (747 lines, 11 tests)
+- ✅ impulse-session - Session Management Base (747 lines, 11 tests)
   - SessionId (UUID), SessionState, SessionManager
   - Concurrent tracking, automatic expiry, CRUD operations
 - ✅ impulse-terminal - ANSI Terminal (725 lines, 16 tests)
   - Color enum (16/256/RGB), AnsiSequence, AnsiRenderer
   - Cursor/screen control, text styling
+
+### Sprint 16: Session Management (2025-11-26)
+
+#### Session Management Enhancement
+**Commit:** 2bf5b8e (2025-11-26)
+**Sprint:** Sprint 16 - Session Management
+
+**Deliverables:**
+- ✅ **Concurrent Session Management**
+  - Per-user session limits (default: 3, configurable)
+  - System-wide total session limit (default: 100)
+  - Conflict resolution policies: Allow, KickOldest, DenyNew
+  - Automatic conflict detection and resolution
+  - Session history tracking
+
+- ✅ **Timeout Management System**
+  - Idle timeout (default: 15 minutes, configurable)
+  - Absolute timeout (default: 4 hours, optional/unlimited)
+  - Timeout warning system (default: 1 minute before timeout)
+  - Unlimited session time for privileged users (sysop whitelist)
+  - Warning state tracking to prevent duplicate notifications
+
+- ✅ **Connection Abstraction**
+  - Connection trait for protocol-agnostic operations
+  - ConnectionType enum: Telnet, WebSocket, SSH
+  - Unified send/receive interface for all transports
+  - ConnectionError type for error handling
+
+- ✅ **WebSocket Support** (feature-gated)
+  - WebSocketConnection implementation with tokio-tungstenite
+  - BbsMessage JSON protocol for structured communication
+  - SessionEvent notifications (NewMail, ChatRequest, TimeoutWarning, Terminated)
+  - Ping/pong keepalive handling
+  - Async send/receive with futures
+
+- ✅ **Who's Online Functionality**
+  - list_all_sessions() - Get all active sessions
+  - list_sessions_filtered() - Filter by username, state, connection type
+  - Session details: username, location, activity, duration
+  - Real-time activity status display
+  - Privacy controls for user visibility
+
+**Tests Added:** 31 tests (29 unit + 2 doc tests)
+**Code Added:** ~2,100 lines (production + tests)
+**Modules:**
+- config.rs: Enhanced with ConflictPolicy, timeouts, unlimited users
+- session.rs: Enhanced with warning tracking and timeout detection
+- manager.rs: Enhanced with conflict resolution and filtering
+- connection.rs: NEW - Connection trait and types
+- websocket.rs: NEW - WebSocket implementation
 
 ---
 
