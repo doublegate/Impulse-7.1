@@ -5,7 +5,7 @@
 <!-- Row 1: Build Status & Quality -->
 [![CI](https://github.com/doublegate/Impulse-Next_BBS/workflows/CI/badge.svg)](https://github.com/doublegate/Impulse-Next_BBS/actions)
 [![Coverage](https://img.shields.io/badge/coverage-75.43%25-brightgreen)](https://github.com/doublegate/Impulse-Next_BBS#testing)
-[![Tests](https://img.shields.io/badge/tests-1,727_passing-brightgreen)](https://github.com/doublegate/Impulse-Next_BBS#testing)
+[![Tests](https://img.shields.io/badge/tests-1,890_passing-brightgreen)](https://github.com/doublegate/Impulse-Next_BBS#testing)
 [![Clippy](https://img.shields.io/badge/clippy-0_warnings-brightgreen)](https://github.com/doublegate/Impulse-Next_BBS#development)
 
 <!-- Row 2: Project Identity -->
@@ -105,9 +105,9 @@ This project aims to:
 
 ## Project Status
 
-**Current Version**: 0.5.0 (Phase 2 COMPLETE + Sprint 17-20 - File Transfer & Theme System)
+**Current Version**: 0.6.0 (Phase 2 COMPLETE + Sprint 17-21 - File Transfer, Themes & Door Games)
 **Development Phase**: Phase 3 - Feature Completion (In Progress)
-**Completion**: Sprint 20/32 (62.5%) - Phase 1: 8/8 (100% ✅), Phase 2: 8/8 (100% ✅), Phase 3: 4/8 (50%)
+**Completion**: Sprint 21/32 (65.6%) - Phase 1: 8/8 (100% ✅), Phase 2: 8/8 (100% ✅), Phase 3: 5/8 (62.5%)
 
 ### Recent Milestones
 
@@ -136,6 +136,7 @@ This project aims to:
 - ✅ **Sprint 18** (Xmodem/Ymodem): Xmodem (checksum/CRC/1K variants), Ymodem (batch mode, metadata), 128/1024-byte blocks, error recovery, 112 tests
 - ✅ **Sprint 19** (Protocol Completion): Ymodem-G streaming mode, protocol auto-detection, user preferences, batch transfers, 108 tests
 - ✅ **Sprint 20** (Theme System): Theme architecture, 3 default themes (Classic, Matrix, Cyberpunk), theme manager, color schemes, user preferences, 62 tests
+- ✅ **Sprint 21** (Door Game Interface): Complete door system with DOOR.SYS/DORINFO1.DEF dropfiles, door manager, executor with DOSBox support, async I/O, security levels, 126 tests
 
 ### Phase 1 Achievements
 
@@ -148,7 +149,7 @@ This project aims to:
 
 **Quality Metrics (Phase 1+2 COMPLETE + Server Infrastructure + Sprints 17-20):**
 
-- **Tests**: 1,727 (100% passing rate)
+- **Tests**: 1,890 (100% passing rate)
 - **Coverage**: 75.43% achieved (target: 75% - GOAL MET!)
 - **Clippy**: 0 warnings
 - **Documentation**: 64 files, 40,000+ lines
@@ -179,10 +180,10 @@ This project aims to:
   - ✅ Sprint 18: Xmodem & Ymodem Protocols (checksum/CRC/1K, batch mode, 112 tests)
   - ✅ Sprint 19: Protocol Completion (Ymodem-G, auto-detection, preferences, 108 tests)
   - ✅ Sprint 20: Theme System (architecture, 3 default themes, color schemes, 62 tests)
-  - 📋 Sprint 21: Door Game Interface (DOSBox integration)
+  - ✅ Sprint 21: Door Game Interface (dropfiles, executor, DOSBox, 126 tests)
   - 📋 Sprint 22-24: Advanced features, QWK support
-- **Goal**: Functional BBS with complete file transfer protocols! 4 of 8 Phase 3 sprints complete (50%).
-- **Timeline**: 24 months total, currently 62.5% complete (3+ months ahead of schedule)
+- **Goal**: Functional BBS with complete file transfer protocols and door game support! 5 of 8 Phase 3 sprints complete (62.5%).
+- **Timeline**: 24 months total, currently 65.6% complete (3+ months ahead of schedule)
 
 ## Features
 
