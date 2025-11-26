@@ -2,7 +2,7 @@
 
 Project-specific guidance for Impulse-Next_BBS modernization (classic Impulse 7.1 BBS: Borland Pascal 7.0 → Rust 2024).
 
-**Version:** 0.1.0 | **Updated:** 2025-11-23
+**Version:** 0.2.0 | **Updated:** 2025-11-26
 
 ---
 
@@ -17,26 +17,35 @@ Project-specific guidance for Impulse-Next_BBS modernization (classic Impulse 7.
 
 ## Current Status
 
-**Phase:** 2 - Core Features (Sprints 9-16)
-**Sprints Complete:** 12 of 32 (37.5%)
-**Version:** 0.1.0 (Phase 2: 50% Complete)
-**Last Commit:** 777750f (2025-11-25)
+**Phase:** 2 - Core Features (COMPLETE) + Server Infrastructure + Sprint 16
+**Sprints Complete:** 16 of 32 (50%)
+**Version:** 0.2.0 (Phase 2: 100% COMPLETE + Server Infrastructure + Session Management)
+**Last Commit:** 2bf5b8e (2025-11-26)
 
 ### Sprint Progress
 - ✅ **Phase 1:** Foundation (Sprints 1-8, 100%)
+- ✅ **Phase 2:** Core Features (Sprints 9-16, 100%)
 - ✅ **Sprint 9:** User Authentication (100%)
 - ✅ **Sprint 10:** Menu System (100%)
 - ✅ **Sprint 11:** Message Read (100%)
 - ✅ **Sprint 12:** Message Write (100%)
-- 📋 **Sprints 13-32:** Planned
+- ✅ **Sprint 13:** File Browsing (100%)
+- ✅ **Sprint 14:** File Upload (100%)
+- ✅ **Sprint 15:** User Profiles & Statistics (100%)
+- ✅ **Sprint 16:** Integration & Testing (100%)
+- ✅ **Server Infrastructure:** Telnet, Session, Terminal, Server (Post Phase 2)
+- ✅ **Sprint 16 (Session Management):** Concurrent sessions, conflict resolution, timeouts, WebSocket (100%)
+- 📋 **Sprints 17-32:** Phase 3 & 4 (Planned)
 
 ### Quality Metrics
-- **Tests:** 870+ passing (100% pass rate)
-- **Coverage:** 64.51% baseline (target: 75%+ Phase 2)
+- **Tests:** 1,173 passing (100% pass rate)
+- **Coverage:** 75.43% achieved (target: 75%+ - GOAL MET!)
 - **Clippy:** 0 warnings
 - **CI/CD:** 100% passing on main branch
-- **Crates:** 19 (17 libraries + 2 binaries)
-- **Code:** 28,000+ lines total
+- **Crates:** 20 (17 libraries + 3 binaries)
+- **Code:** ~40,000 lines total (estimated with Sprint 16)
+- **Build Time:** <10s full workspace
+- **Test Execution:** <5s all tests
 
 ---
 
@@ -45,7 +54,7 @@ Project-specific guidance for Impulse-Next_BBS modernization (classic Impulse 7.
 ### Workspace Layout
 ```
 Impulse-Next_BBS/
-├── crates/              # 16 crates
+├── crates/              # 20 crates
 │   ├── impulse-core/    # Core BBS functionality
 │   ├── impulse-types/   # Type definitions (User, FileEntry, Message, BbsConfig)
 │   ├── impulse-config/  # Configuration management
@@ -116,7 +125,7 @@ Impulse-Next_BBS/
 ### Core Dependencies
 | Dependency | Version | Purpose |
 |------------|---------|---------|
-| Rust | 1.80+ (2021 edition) | Primary language |
+| Rust | 1.85+ (2024 edition) | Primary language |
 | Tokio | 1.47+ | Async runtime |
 | crossterm | 0.28 | Terminal I/O |
 | SQLx | 0.8 | Database (SQLite/PostgreSQL) |
@@ -240,16 +249,109 @@ cargo build --workspace --all-features
 - ✅ JAM format writing
 - ✅ 27+ tests (15 posting, 8 reply, 4 quoting)
 
-### Next Sprint
+#### Sprint 13: File Browsing
+**TODO:** `to-dos/phase-2-core-features/sprint-13-file-browsing.md`
 
-#### Sprint 13: Terminal I/O
-**TODO:** `to-dos/phase-2-core-features/sprint-13-terminal-io.md` (estimated)
+**Deliverables:**
+- ✅ FileArea and FileRecord structs
+- ✅ FileAreaManager trait with InMemory implementation
+- ✅ File list screen (paginated, sortable)
+- ✅ File details screen with FILE_ID.DIZ extraction
+- ✅ Search with wildcards, date/size filters
+- ✅ 76+ tests (18 area, 22 list, 16 details, 20 search)
 
-**Goals:**
-- ANSI escape sequence rendering
-- Input handling (keyboard, mouse)
-- Avatar graphics support
-- Terminal emulation layer
+#### Sprint 14: File Upload
+**TODO:** `to-dos/phase-2-core-features/sprint-14-file-upload.md`
+
+**Deliverables:**
+- ✅ UploadProcessor pipeline with rollback
+- ✅ File validation (size, duplicates, quotas, extensions, permissions)
+- ✅ ClamAV virus scanning with quarantine
+- ✅ FILE_ID.DIZ extraction (ZIP/RAR/7Z)
+- ✅ Upload UI screens (prompt, progress, scanning, confirmation)
+- ✅ 180 tests (45 upload, 35 validation, 28 scanning, 32 DIZ, 20 UI)
+
+#### Sprint 15: User Profiles & Statistics
+**TODO:** `to-dos/phase-2-core-features/sprint-15-user-profiles.md`
+
+**Deliverables:**
+- ✅ User profile display screen
+- ✅ Statistics tracking (calls, uploads, downloads, posts, time online)
+- ✅ User settings editor (password, theme, terminal config)
+- ✅ Achievement system with notifications
+- ✅ Privacy controls (hide email, stats, online status)
+- ✅ User directory with search and filtering
+- ✅ 128 tests (82 unit, 46 doc)
+
+### Server Infrastructure (Post Phase 2)
+
+#### Server Infrastructure Implementation
+**Commit:** ebd1305 (2025-11-26)
+
+**Deliverables:**
+- ✅ impulse-server - Main BBS server binary (285 lines)
+  - Async Tokio runtime with telnet listener on port 2323
+  - Connection acceptance and session spawning
+  - Graceful shutdown handling
+- ✅ impulse-telnet - RFC 854 Telnet Protocol (764 lines, 40 tests)
+  - TelnetServer, TelnetConnection, IAC negotiation
+  - Telnet options: ECHO, SUPPRESS_GO_AHEAD, TERMINAL_TYPE, NAWS
+- ✅ impulse-session - Session Management Base (747 lines, 11 tests)
+  - SessionId (UUID), SessionState, SessionManager
+  - Concurrent tracking, automatic expiry, CRUD operations
+- ✅ impulse-terminal - ANSI Terminal (725 lines, 16 tests)
+  - Color enum (16/256/RGB), AnsiSequence, AnsiRenderer
+  - Cursor/screen control, text styling
+
+### Sprint 16: Session Management (2025-11-26)
+
+#### Session Management Enhancement
+**Commit:** 2bf5b8e (2025-11-26)
+**Sprint:** Sprint 16 - Session Management
+
+**Deliverables:**
+- ✅ **Concurrent Session Management**
+  - Per-user session limits (default: 3, configurable)
+  - System-wide total session limit (default: 100)
+  - Conflict resolution policies: Allow, KickOldest, DenyNew
+  - Automatic conflict detection and resolution
+  - Session history tracking
+
+- ✅ **Timeout Management System**
+  - Idle timeout (default: 15 minutes, configurable)
+  - Absolute timeout (default: 4 hours, optional/unlimited)
+  - Timeout warning system (default: 1 minute before timeout)
+  - Unlimited session time for privileged users (sysop whitelist)
+  - Warning state tracking to prevent duplicate notifications
+
+- ✅ **Connection Abstraction**
+  - Connection trait for protocol-agnostic operations
+  - ConnectionType enum: Telnet, WebSocket, SSH
+  - Unified send/receive interface for all transports
+  - ConnectionError type for error handling
+
+- ✅ **WebSocket Support** (feature-gated)
+  - WebSocketConnection implementation with tokio-tungstenite
+  - BbsMessage JSON protocol for structured communication
+  - SessionEvent notifications (NewMail, ChatRequest, TimeoutWarning, Terminated)
+  - Ping/pong keepalive handling
+  - Async send/receive with futures
+
+- ✅ **Who's Online Functionality**
+  - list_all_sessions() - Get all active sessions
+  - list_sessions_filtered() - Filter by username, state, connection type
+  - Session details: username, location, activity, duration
+  - Real-time activity status display
+  - Privacy controls for user visibility
+
+**Tests Added:** 31 tests (29 unit + 2 doc tests)
+**Code Added:** ~2,100 lines (production + tests)
+**Modules:**
+- config.rs: Enhanced with ConflictPolicy, timeouts, unlimited users
+- session.rs: Enhanced with warning tracking and timeout detection
+- manager.rs: Enhanced with conflict resolution and filtering
+- connection.rs: NEW - Connection trait and types
+- websocket.rs: NEW - WebSocket implementation
 
 ---
 
@@ -396,15 +498,15 @@ cargo doc --workspace --no-deps 2>&1 | grep warning
 - 📋 Sprint 7: Database Schema
 - 📋 Sprint 8: Testing Framework
 
-### Phase 2: Core Features (Sprints 9-16, November 2025 - January 2026) - 50% COMPLETE
+### Phase 2: Core Features (Sprints 9-16, November 2025 - December 2025) - 100% COMPLETE
 - ✅ Sprint 9: User authentication (rate limiting, lockout, validation)
 - ✅ Sprint 10: Menu system (TOML parser, navigation)
 - ✅ Sprint 11: Message read (MessageBase trait, JAM/Hudson, screens)
 - ✅ Sprint 12: Message write (posting, replies, quoting)
-- 📋 Sprint 13: Terminal I/O (ANSI rendering, input handling)
-- 📋 Sprint 14: Telnet protocol (RFC 854, IAC negotiation)
-- 📋 Sprint 15: File areas (browsing, upload/download)
-- 📋 Sprint 16: Session management (WebSocket, concurrent handling)
+- ✅ Sprint 13: File browsing (areas, list, details, search, FILE_ID.DIZ)
+- ✅ Sprint 14: File upload (processor, ClamAV scanning, validation, quarantine)
+- ✅ Sprint 15: User profiles (profile display, stats, settings, achievements, privacy)
+- ✅ Sprint 16: Integration & testing (cross-crate workflows, 68 tests, 32 benchmarks)
 
 ### Phase 3: Advanced Features (Sprints 17-24, Months 11-18)
 - Terminal emulation, door games

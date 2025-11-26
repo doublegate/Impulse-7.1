@@ -91,8 +91,30 @@ pub mod search;
 /// UI screens
 pub mod screens;
 
+/// Upload functionality
+pub mod upload;
+
+/// Virus scanning
+pub mod scanning;
+
+/// Upload validation
+pub mod validation;
+
 // Re-export commonly used types
 pub use error::{FileError, Result};
 pub use manager::InMemoryFileAreaManager;
 pub use traits::FileAreaManager;
 pub use types::{FileArea, FileStatus, SearchCriteria, SortBy};
+
+// Re-export upload types
+pub use upload::{PendingUpload, UploadConfig, UploadProcessor, UploadRollback, UploadStats};
+
+// Re-export scanning types
+#[cfg(unix)]
+pub use scanning::ClamAvScanner;
+pub use scanning::{MockScanner, QuarantineManager, ScanResult, VirusScanner};
+
+// Re-export validation functions
+pub use validation::{
+    check_duplicate, check_extension, check_permissions, check_quota, check_size,
+};

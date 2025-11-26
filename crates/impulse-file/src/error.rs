@@ -36,10 +36,51 @@ pub enum FileError {
     /// Area path not configured
     #[error("Area path not configured for area {0}")]
     PathNotConfigured(u32),
+
+    /// File too large
+    #[error("File size {0} bytes exceeds limit of {1} bytes")]
+    FileTooLarge(u64, u64),
+
+    /// Duplicate file detected
+    #[error("Duplicate file detected (hash: {0})")]
+    DuplicateFile(String),
+
+    /// Upload quota exceeded
+    #[error("Upload quota exceeded: {0}")]
+    QuotaExceeded(String),
+
+    /// Extension not allowed
+    #[error("File extension '.{0}' is not allowed")]
+    ExtensionNotAllowed(String),
+
+    /// Virus detected
+    #[error("Virus detected: {0}")]
+    VirusDetected(String),
+
+    /// Upload not allowed in area
+    #[error("Uploads not allowed in area {0}")]
+    UploadNotAllowed(u32),
+
+    /// Virus scanner unavailable
+    #[error("Virus scanner unavailable: {0}")]
+    ScannerUnavailable(String),
+
+    /// Archive extraction error
+    #[error("Failed to extract archive: {0}")]
+    ArchiveError(String),
 }
 
 /// Result type for file area operations
 pub type Result<T> = std::result::Result<T, FileError>;
+
+impl From<impulse_types::Error> for FileError {
+    fn from(err: impulse_types::Error) -> Self {
+        match err {
+            impulse_types::Error::Validation(msg) => FileError::InvalidPath(msg),
+            _ => FileError::InvalidPath(format!("Type validation error: {}", err)),
+        }
+    }
+}
 
 #[cfg(test)]
 mod tests {
