@@ -82,9 +82,9 @@ This project aims to:
 
 ## Project Status
 
-**Current Version**: 0.1.0 (Phase 2 - Core Features: 62.5% Complete!)
+**Current Version**: 0.1.0 (Phase 2 - Core Features: 75% Complete!)
 **Development Phase**: Phase 2 - Core Features (In Progress)
-**Completion**: Sprint 13/32 (40.6%) - Phase 1: 8/8 (100% ✅), Phase 2: 5/8 (62.5%)
+**Completion**: Sprint 14/32 (43.75%) - Phase 1: 8/8 (100% ✅), Phase 2: 6/8 (75%)
 
 ### Recent Milestones
 
@@ -102,6 +102,7 @@ This project aims to:
 - ✅ **Sprint 11** (Message Read): MessageBase trait, JAM/Hudson formats, message list/read screens, threading, 72 tests
 - ✅ **Sprint 12** (Message Write): Message posting, replies, quoting, validation, sanitization, atomic writes, 27 tests
 - ✅ **Sprint 13** (File Browsing): File area management, list/details screens, wildcard search, FILE_ID.DIZ extraction, 76 tests
+- ✅ **Sprint 14** (File Upload): Upload processor, ClamAV scanning, duplicate detection, validation, quarantine, 180 tests
 
 ### Phase 1 Achievements
 
@@ -114,12 +115,12 @@ This project aims to:
 
 **Quality Metrics (Phase 1+2 Current):**
 
-- **Tests**: 946 (100% passing rate)
+- **Tests**: 1,126+ (100% passing rate)
 - **Coverage**: 64.51% baseline (target: 75% for Phase 2 completion)
 - **Clippy**: 0 warnings
 - **Documentation**: 43 files, 35,000+ lines
 - **Build**: <10s full workspace
-- **Test Execution**: <3s all tests
+- **Test Execution**: <5s all tests
 
 **Key Features:**
 
@@ -131,21 +132,21 @@ This project aims to:
 
 ### Next Steps
 
-- **Phase 2**: Core Features (Sprints 9-16, 5/8 complete - 62.5%)
+- **Phase 2**: Core Features (Sprints 9-16, 6/8 complete - 75%)
   - ✅ Sprint 9: User Authentication (rate limiting, lockout, validation)
   - ✅ Sprint 10: Menu System (TOML parser, navigation)
   - ✅ Sprint 11: Message Read (MessageBase trait, JAM/Hudson, screens)
   - ✅ Sprint 12: Message Write (posting, replies, quoting)
   - ✅ Sprint 13: File Browsing (areas, list, details, search, FILE_ID.DIZ)
-  - 🔄 Sprint 14: Telnet Protocol (RFC 854, IAC negotiation) - NEXT
-  - Sprint 15: File Upload/Download (transfer protocols)
+  - ✅ Sprint 14: File Upload (processor, ClamAV scanning, validation, quarantine)
+  - 🔄 Sprint 15: File Download/Transfer Protocols - NEXT
   - Sprint 16: Session management (WebSocket, concurrent handling)
 - **Goal**: Functional BBS with messaging and file areas by end of Phase 2
-- **Timeline**: 24 months total, currently 40.6% complete (ahead of schedule)
+- **Timeline**: 24 months total, currently 43.75% complete (ahead of schedule)
 
 ## Features
 
-### Current Implementation (v0.1.0 - Phase 1 Complete + Phase 2 Sprints 9-12)
+### Current Implementation (v0.1.0 - Phase 1 Complete + Phase 2 Sprints 9-14)
 
 **Phase 1 Foundation (Sprints 1-8, November 2025):**
 
@@ -278,12 +279,27 @@ This project aims to:
 - ✅ Status indicators (new, offline, missing, popular)
 - ✅ 76+ new tests (18 area, 22 list, 16 details, 20 search)
 
+**File Upload System (Sprint 14):**
+
+- ✅ UploadProcessor pipeline (validate → scan → extract → store → confirm)
+- ✅ Multi-stage async upload processing with rollback
+- ✅ File validation (size limits, duplicates, quotas, extensions, permissions)
+- ✅ SHA-256 duplicate detection and prevention
+- ✅ User upload quotas (per day/month/unlimited)
+- ✅ ClamAV virus scanning (TCP/Unix socket, INSTREAM protocol)
+- ✅ Quarantine management for infected files
+- ✅ FILE_ID.DIZ extraction (ZIP/RAR/7Z archives)
+- ✅ Safe temporary extraction with automatic cleanup
+- ✅ Upload UI screens (prompt, progress, scanning, confirmation)
+- ✅ SysOp notifications for infections
+- ✅ Atomic operations with failure rollback
+- ✅ 180 new tests (176 unit, 4 doc)
+
 ### Planned Features
 
-**Phase 2 (Sprints 14-16, remaining ~1-3 weeks) - Core Services**
+**Phase 2 (Sprints 15-16, remaining ~1-2 weeks) - Core Services**
 
-- Sprint 14: Telnet server (RFC 854, IAC negotiation, option handling)
-- Sprint 15: File upload/download (transfer protocols, resumable uploads)
+- Sprint 15: File download/transfer (Zmodem/Xmodem/Ymodem protocols, resumable downloads)
 - Sprint 16: Session management (concurrent sessions, timeouts, WebSocket)
 
 **Phase 3 (Sprints 17-24, ~6-8 weeks) - Feature Completion**
@@ -686,8 +702,8 @@ cargo doc --workspace --no-deps --open
 - ✅ Sprint 11: Message read (MessageBase trait, JAM/Hudson formats, screens, threading)
 - ✅ Sprint 12: Message write (posting, replies, quoting, validation, atomic writes)
 - ✅ Sprint 13: File browsing (file areas, list/details screens, search, FILE_ID.DIZ)
-- Sprint 14: Telnet protocol (RFC 854, IAC negotiation, option handling)
-- Sprint 15: File upload/download (transfer protocols, resumable uploads)
+- ✅ Sprint 14: File upload (processor, ClamAV scanning, validation, quarantine, DIZ extraction)
+- Sprint 15: File download/transfer (Zmodem/Xmodem/Ymodem protocols, resumable downloads)
 - Sprint 16: Session management (WebSocket, concurrent handling, timeouts)
 
 **Phase 3: Feature Completion (February - March 2026, Sprints 17-24)**
@@ -712,18 +728,18 @@ cargo doc --workspace --no-deps --open
 | Milestone         | Target   | Status              | Completion              |
 | ----------------- | -------- | ------------------- | ----------------------- |
 | Phase 1 Complete  | Month 6  | ✅ **COMPLETE**     | November 2025 (6 weeks) |
-| Phase 2 Complete  | Month 12 | 🔄 In Progress 62.5% | Target: December 2025   |
+| Phase 2 Complete  | Month 12 | 🔄 In Progress 75%  | Target: December 2025   |
 | Phase 3 Complete  | Month 18 | Pending             | Target: February 2026   |
 | Phase 4 Complete  | Month 24 | Pending             | Target: April 2026      |
 | Production Launch | Month 24 | Pending             | Target: April 2026      |
 
-**Progress:** 40.6% complete (13/32 sprints), ~15 weeks ahead of schedule
+**Progress:** 43.75% complete (14/32 sprints), ~15 weeks ahead of schedule
 
 ## Testing
 
-### Current Test Suite (Phase 1 + Sprints 9-13)
+### Current Test Suite (Phase 1 + Sprints 9-14)
 
-**Total Tests**: 946 (100% passing rate)
+**Total Tests**: 1,126+ (100% passing rate)
 **Code Coverage**: 64.51% baseline (target: 75%+ by Phase 2 completion)
 
 **Test Types:**
@@ -738,7 +754,7 @@ cargo doc --workspace --no-deps --open
 - impulse-types: 241 tests (Pascal compatibility, core types, serialization)
 - impulse-auth: 146+ tests (hashing, sessions, rate limiting, lockout, validation, flows)
 - impulse-message: 99+ tests (42 JAM format, 18 Hudson, 8 list screen, 4 read screen, 15 posting, 8 reply, 4 quoting)
-- impulse-file: 76+ tests (18 area, 22 list, 16 details, 20 search - file browsing)
+- impulse-file: 256+ tests (18 area, 22 list, 16 details, 20 search, 45 upload, 35 validation, 28 scanning, 32 DIZ, 20 UI)
 - impulse-menu: 84+ tests (parser, renderer, router, navigation state machine)
 - impulse-logging: 80 tests (52 unit, 18 integration, 10 benchmarks)
 - impulse-config: 37 tests (configuration, validation, hot-reload)

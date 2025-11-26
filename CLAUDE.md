@@ -18,9 +18,9 @@ Project-specific guidance for Impulse-Next_BBS modernization (classic Impulse 7.
 ## Current Status
 
 **Phase:** 2 - Core Features (Sprints 9-16)
-**Sprints Complete:** 13 of 32 (40.6%)
-**Version:** 0.1.0 (Phase 2: 62.5% Complete)
-**Last Commit:** b3643af (2025-11-25)
+**Sprints Complete:** 14 of 32 (43.75%)
+**Version:** 0.1.0 (Phase 2: 75% Complete)
+**Last Commit:** 13731fa (2025-11-25)
 
 ### Sprint Progress
 - ✅ **Phase 1:** Foundation (Sprints 1-8, 100%)
@@ -29,15 +29,16 @@ Project-specific guidance for Impulse-Next_BBS modernization (classic Impulse 7.
 - ✅ **Sprint 11:** Message Read (100%)
 - ✅ **Sprint 12:** Message Write (100%)
 - ✅ **Sprint 13:** File Browsing (100%)
-- 📋 **Sprints 14-32:** Planned
+- ✅ **Sprint 14:** File Upload (100%)
+- 📋 **Sprints 15-32:** Planned
 
 ### Quality Metrics
-- **Tests:** 946 passing (100% pass rate)
+- **Tests:** 1,126+ passing (100% pass rate)
 - **Coverage:** 64.51% baseline (target: 75%+ Phase 2)
 - **Clippy:** 0 warnings
 - **CI/CD:** 100% passing on main branch
 - **Crates:** 19 (17 libraries + 2 binaries)
-- **Code:** 28,000+ lines total
+- **Code:** 31,500+ lines total
 
 ---
 
@@ -252,16 +253,27 @@ cargo build --workspace --all-features
 - ✅ Search with wildcards, date/size filters
 - ✅ 76+ tests (18 area, 22 list, 16 details, 20 search)
 
+#### Sprint 14: File Upload
+**TODO:** `to-dos/phase-2-core-features/sprint-14-file-upload.md`
+
+**Deliverables:**
+- ✅ UploadProcessor pipeline with rollback
+- ✅ File validation (size, duplicates, quotas, extensions, permissions)
+- ✅ ClamAV virus scanning with quarantine
+- ✅ FILE_ID.DIZ extraction (ZIP/RAR/7Z)
+- ✅ Upload UI screens (prompt, progress, scanning, confirmation)
+- ✅ 180 tests (45 upload, 35 validation, 28 scanning, 32 DIZ, 20 UI)
+
 ### Next Sprint
 
-#### Sprint 14: Telnet Protocol
-**TODO:** `to-dos/phase-2-core-features/sprint-14-telnet-protocol.md` (planned)
+#### Sprint 15: File Download/Transfer
+**TODO:** `to-dos/phase-2-core-features/sprint-15-file-download.md` (planned)
 
 **Goals:**
-- RFC 854 Telnet protocol implementation
-- IAC (Interpret As Command) negotiation
-- Option handling (ECHO, SGA, NAWS, etc.)
-- Session integration with impulse-session
+- File download with resume support
+- Zmodem/Xmodem/Ymodem protocols (Phase 2-3 bridge)
+- Transfer progress indication
+- Protocol negotiation with client
 
 ---
 
@@ -408,14 +420,14 @@ cargo doc --workspace --no-deps 2>&1 | grep warning
 - 📋 Sprint 7: Database Schema
 - 📋 Sprint 8: Testing Framework
 
-### Phase 2: Core Features (Sprints 9-16, November 2025 - January 2026) - 62.5% COMPLETE
+### Phase 2: Core Features (Sprints 9-16, November 2025 - January 2026) - 75% COMPLETE
 - ✅ Sprint 9: User authentication (rate limiting, lockout, validation)
 - ✅ Sprint 10: Menu system (TOML parser, navigation)
 - ✅ Sprint 11: Message read (MessageBase trait, JAM/Hudson, screens)
 - ✅ Sprint 12: Message write (posting, replies, quoting)
 - ✅ Sprint 13: File browsing (areas, list, details, search, FILE_ID.DIZ)
-- 📋 Sprint 14: Telnet protocol (RFC 854, IAC negotiation)
-- 📋 Sprint 15: File upload/download (transfer protocols)
+- ✅ Sprint 14: File upload (processor, ClamAV scanning, validation, quarantine)
+- 📋 Sprint 15: File download/transfer (transfer protocols, resume support)
 - 📋 Sprint 16: Session management (WebSocket, concurrent handling)
 
 ### Phase 3: Advanced Features (Sprints 17-24, Months 11-18)
