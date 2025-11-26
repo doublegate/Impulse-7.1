@@ -32,11 +32,14 @@ fn test_user_json_roundtrip() {
 fn test_user_bincode_roundtrip() {
     let user = User::new("TestUser").expect("Valid username");
 
-    // Serialize to bincode
-    let encoded = bincode::serialize(&user).expect("Failed to serialize to bincode");
+    // Serialize to bincode (bincode 2.0 API)
+    let encoded = bincode::serde::encode_to_vec(&user, bincode::config::standard())
+        .expect("Failed to serialize to bincode");
 
-    // Deserialize back
-    let decoded: User = bincode::deserialize(&encoded).expect("Failed to deserialize from bincode");
+    // Deserialize back (bincode 2.0 API returns (T, usize) tuple)
+    let decoded: User = bincode::serde::decode_from_slice(&encoded, bincode::config::standard())
+        .map(|(v, _)| v)
+        .expect("Failed to deserialize from bincode");
 
     // Verify key fields match
     assert_eq!(user.id(), decoded.id());
@@ -90,12 +93,14 @@ fn test_message_bincode_roundtrip() {
         is_deleted: false,
     };
 
-    // Serialize to bincode
-    let encoded = bincode::serialize(&message).expect("Failed to serialize to bincode");
+    // Serialize to bincode (bincode 2.0 API)
+    let encoded = bincode::serde::encode_to_vec(&message, bincode::config::standard())
+        .expect("Failed to serialize to bincode");
 
-    // Deserialize back
-    let decoded: Message =
-        bincode::deserialize(&encoded).expect("Failed to deserialize from bincode");
+    // Deserialize back (bincode 2.0 API returns (T, usize) tuple)
+    let decoded: Message = bincode::serde::decode_from_slice(&encoded, bincode::config::standard())
+        .map(|(v, _)| v)
+        .expect("Failed to deserialize from bincode");
 
     // Verify key fields match
     assert_eq!(message.from, decoded.from);
@@ -153,12 +158,15 @@ fn test_file_entry_bincode_roundtrip() {
         cost_credits: None,
     };
 
-    // Serialize to bincode
-    let encoded = bincode::serialize(&file_entry).expect("Failed to serialize to bincode");
+    // Serialize to bincode (bincode 2.0 API)
+    let encoded = bincode::serde::encode_to_vec(&file_entry, bincode::config::standard())
+        .expect("Failed to serialize to bincode");
 
-    // Deserialize back
+    // Deserialize back (bincode 2.0 API returns (T, usize) tuple)
     let decoded: FileEntry =
-        bincode::deserialize(&encoded).expect("Failed to deserialize from bincode");
+        bincode::serde::decode_from_slice(&encoded, bincode::config::standard())
+            .map(|(v, _)| v)
+            .expect("Failed to deserialize from bincode");
 
     // Verify key fields match
     assert_eq!(file_entry.filename, decoded.filename);
@@ -283,12 +291,15 @@ fn test_user_stats_bincode_roundtrip() {
     stats.record_upload(5, 512);
     stats.record_download(15, 1024);
 
-    // Serialize to bincode
-    let encoded = bincode::serialize(&stats).expect("Failed to serialize to bincode");
+    // Serialize to bincode (bincode 2.0 API)
+    let encoded = bincode::serde::encode_to_vec(&stats, bincode::config::standard())
+        .expect("Failed to serialize to bincode");
 
-    // Deserialize back
+    // Deserialize back (bincode 2.0 API returns (T, usize) tuple)
     let decoded: UserStats =
-        bincode::deserialize(&encoded).expect("Failed to deserialize from bincode");
+        bincode::serde::decode_from_slice(&encoded, bincode::config::standard())
+            .map(|(v, _)| v)
+            .expect("Failed to deserialize from bincode");
 
     // Verify fields match
     assert_eq!(stats.uploads, decoded.uploads);
