@@ -1,8 +1,31 @@
 # Impulse-Next - Modern BBS Software
 
+<div align="center">
+
+<!-- Row 1: Build Status & Quality -->
 [![CI](https://github.com/doublegate/Impulse-Next_BBS/workflows/CI/badge.svg)](https://github.com/doublegate/Impulse-Next_BBS/actions)
-[![License](https://img.shields.io/badge/license-MIT%20OR%20Apache--2.0-blue.svg)](https://github.com/doublegate/Impulse-Next_BBS#license)
-[![Rust Version](<https://img.shields.io/badge/rust-1.88%2B%20(edition%202024)-orange.svg>)](https://www.rust-lang.org)
+[![Coverage](https://img.shields.io/badge/coverage-75.43%25-brightgreen)](https://github.com/doublegate/Impulse-Next_BBS#testing)
+[![Tests](https://img.shields.io/badge/tests-1,209_passing-brightgreen)](https://github.com/doublegate/Impulse-Next_BBS#testing)
+[![Clippy](https://img.shields.io/badge/clippy-0_warnings-brightgreen)](https://github.com/doublegate/Impulse-Next_BBS#development)
+
+<!-- Row 2: Project Identity -->
+[![Release](https://img.shields.io/github/v/release/doublegate/Impulse-Next_BBS?color=blue)](https://github.com/doublegate/Impulse-Next_BBS/releases)
+[![License](https://img.shields.io/badge/license-MIT_OR_Apache--2.0-blue)](https://github.com/doublegate/Impulse-Next_BBS#license)
+[![Rust](https://img.shields.io/badge/rust-1.88+-orange?logo=rust)](https://www.rust-lang.org)
+[![Edition](https://img.shields.io/badge/edition-2024-orange)](https://doc.rust-lang.org/edition-guide/)
+
+<!-- Row 3: Project Metrics -->
+[![Crates](https://img.shields.io/badge/crates-20-informational)](#architecture)
+[![LoC](https://img.shields.io/badge/lines_of_code-41,286-informational)](#project-status)
+[![Last Commit](https://img.shields.io/github/last-commit/doublegate/Impulse-Next_BBS)](https://github.com/doublegate/Impulse-Next_BBS/commits/main)
+
+<!-- Row 4: Community -->
+[![Stars](https://img.shields.io/github/stars/doublegate/Impulse-Next_BBS?style=social)](https://github.com/doublegate/Impulse-Next_BBS/stargazers)
+[![Forks](https://img.shields.io/github/forks/doublegate/Impulse-Next_BBS?style=social)](https://github.com/doublegate/Impulse-Next_BBS/network/members)
+[![Issues](https://img.shields.io/github/issues/doublegate/Impulse-Next_BBS)](https://github.com/doublegate/Impulse-Next_BBS/issues)
+[![PRs](https://img.shields.io/github/issues-pr/doublegate/Impulse-Next_BBS)](https://github.com/doublegate/Impulse-Next_BBS/pulls)
+
+</div>
 
 A complete modernization of the classic Impulse 7.1 Bulletin Board System from Borland Pascal 7.0 to modern Rust, preserving BBS history while leveraging contemporary software engineering practices.
 
