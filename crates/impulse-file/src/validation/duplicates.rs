@@ -38,15 +38,29 @@ pub async fn calculate_file_hash(path: &Path) -> Result<String> {
 ///
 /// In a real implementation, this would query a database of file hashes.
 /// This is a placeholder that always returns Ok (no duplicate).
+///
+/// # Current Behavior
+///
+/// This function currently:
+/// 1. Calculates the SHA-256 hash of the file
+/// 2. Returns Ok without checking for duplicates
+///
+/// # Production Implementation
+///
+/// For production use, this should:
+/// 1. Query the database for existing files with the calculated hash
+/// 2. Compare file sizes as a quick preliminary check
+/// 3. Return Err(FileError::DuplicateFile(hash)) if duplicate found
+/// 4. Consider implementing configurable duplicate handling policies:
+///    - Reject duplicates (current planned behavior)
+///    - Allow duplicates with different names
+///    - Replace existing file
 pub async fn check_duplicate(path: &Path, _file_manager: &dyn FileAreaManager) -> Result<()> {
     // Calculate hash
     let _hash = calculate_file_hash(path).await?;
 
-    // TODO: Query database for existing files with this hash
-    // For now, assume no duplicates
-
-    // If duplicate found:
-    // return Err(FileError::DuplicateFile(hash));
+    // NOTE: Stub implementation - always returns Ok (no duplicate detected).
+    // See function documentation for production implementation requirements.
 
     Ok(())
 }

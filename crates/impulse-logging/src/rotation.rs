@@ -55,12 +55,17 @@ impl RotationPolicy {
                 RollingFileAppender::new(TracingRotation::NEVER, parent, file_name)
             }
             RotationPolicy::Size(max_bytes) => {
-                // Size-based rotation using custom implementation
-                // For now, fall back to daily rotation
-                // TODO: Implement true size-based rotation
+                // NOTE: Size-based rotation not yet implemented.
+                // The tracing-appender crate doesn't provide built-in size-based rotation.
+                // Custom implementation would require:
+                // 1. File size monitoring thread
+                // 2. Atomic log rotation mechanism
+                // 3. Proper handling of concurrent writes
+                // Current workaround: Falls back to daily rotation with a warning.
+                // This ensures logs rotate regularly and don't grow unbounded.
                 tracing::warn!(
                     max_bytes = %max_bytes,
-                    "Size-based rotation not yet implemented, using daily rotation"
+                    "Size-based rotation not yet implemented, using daily rotation as fallback"
                 );
                 RollingFileAppender::new(TracingRotation::DAILY, parent, file_name)
             }

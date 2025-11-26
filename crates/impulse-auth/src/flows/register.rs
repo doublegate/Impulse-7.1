@@ -284,9 +284,13 @@ impl RegistrationFlow {
     ///
     /// Returns `true` if username is available, `false` if taken
     pub async fn check_username_available(&self, username: &str) -> bool {
-        // TODO: In production, query user storage to check existence
-        // For now, always return true (available)
-        tracing::debug!(username = %username, "Checking username availability");
+        // NOTE: Stub implementation - always returns true (available).
+        // In production, this should:
+        // 1. Query user storage/database to check if username exists
+        // 2. Handle case-insensitive comparison based on system config
+        // 3. Return false if username is taken or reserved
+        // Current behavior allows all registrations to proceed to validation step.
+        tracing::debug!(username = %username, "Checking username availability (stub - always available)");
         true
     }
 

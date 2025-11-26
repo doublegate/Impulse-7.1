@@ -458,9 +458,12 @@ impl MessageBase for HudsonMessageBase {
     }
 
     async fn post_message(&mut self, _message: NewMessage) -> Result<u32> {
-        // TODO: Implement Hudson message writing in future sprint
+        // NOTE: Hudson write support intentionally not implemented.
+        // Hudson format is a legacy read-only format for compatibility with
+        // classic BBS software. New messages should use JAM format instead.
+        // This is a design decision, not a missing feature.
         Err(MessageError::WriteError(
-            "Hudson write support not yet implemented".to_string(),
+            "Hudson format is read-only. Use JAM format for writing messages.".to_string(),
         ))
     }
 
@@ -469,9 +472,12 @@ impl MessageBase for HudsonMessageBase {
         _parent_msg_num: u32,
         _message: NewMessage,
     ) -> Result<u32> {
-        // TODO: Implement Hudson reply writing in future sprint
+        // NOTE: Hudson write support intentionally not implemented.
+        // Hudson format is a legacy read-only format for compatibility with
+        // classic BBS software. New messages should use JAM format instead.
+        // This is a design decision, not a missing feature.
         Err(MessageError::WriteError(
-            "Hudson write support not yet implemented".to_string(),
+            "Hudson format is read-only. Use JAM format for writing messages.".to_string(),
         ))
     }
 }

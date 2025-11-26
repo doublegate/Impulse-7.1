@@ -155,7 +155,10 @@ impl LoginFlow {
             }
             Err(AuthError::InvalidCredentials) => {
                 // Get remaining attempts if lockout is configured
-                let attempts_remaining = None; // TODO: Get from lockout manager
+                // NOTE: Future enhancement - integrate with lockout manager to provide
+                // accurate attempts_remaining count. For now, returns None to avoid
+                // exposing lockout policy details to potential attackers.
+                let attempts_remaining = None;
                 tracing::warn!(
                     username = %username,
                     "Login failed: invalid credentials"

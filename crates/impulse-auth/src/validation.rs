@@ -187,10 +187,14 @@ impl Validator {
         }
 
         // Must start with a letter
-        if !username.chars().next().unwrap().is_ascii_alphabetic() {
-            return Err(ValidationError::InvalidUsername(
-                "Username must start with a letter".to_string(),
-            ));
+        // SAFETY: Safe pattern - handles edge cases even though length check above ensures username is not empty
+        match username.chars().next() {
+            Some(c) if c.is_ascii_alphabetic() => {} // Valid, continue
+            _ => {
+                return Err(ValidationError::InvalidUsername(
+                    "Username must start with a letter".to_string(),
+                ));
+            }
         }
 
         // Only alphanumeric and underscore
