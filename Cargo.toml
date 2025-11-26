@@ -28,7 +28,7 @@ edition = "2024"
 authors = ["DoubleGate <parobek@gmail.com>"]
 license = "MIT OR Apache-2.0"
 repository = "https://github.com/doublegate/Impulse-Next_BBS"
-rust-version = "1.85"
+rust-version = "1.88"
 
 [workspace.dependencies]
 # Async runtime
