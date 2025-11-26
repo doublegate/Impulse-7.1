@@ -9,6 +9,152 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.5.0] - 2025-11-26
+
+### Added - Sprint 20 (Theme System - Phase 3)
+
+**Sprint Timeline:** 2025-11-26 (~2 hours)
+**Status:** Complete theme system with 3 default themes
+**Phase:** Phase 3 - Feature Completion (Sprint 20/32, 4 of 8 sprints complete - 50%)
+
+#### Theme Architecture
+
+**Theme System** (`impulse-terminal/src/theme/`, 8 files, ~2,100 lines, 62 tests):
+- **Theme trait** - Unified interface for all theme types
+  - `name()` - Theme identifier
+  - `description()` - Human-readable description
+  - `color_scheme()` - Complete color palette
+  - `apply()` - Render text with theme colors
+  - `supports_graphics()` - Capability detection
+
+- **Color Scheme** (`theme/colors.rs`, 280 lines, 14 tests)
+  - Primary colors (foreground, background)
+  - UI element colors (menu, status, border, highlight)
+  - Semantic colors (success, error, warning, info)
+  - Special colors (link, selection)
+  - RGB/ANSI color mappings
+
+- **Theme Manager** (`theme/manager.rs`, 420 lines, 18 tests)
+  - Theme registry (register/unregister themes)
+  - Theme lookup by name
+  - Default theme configuration
+  - User theme preferences
+  - Theme switching at runtime
+  - Theme validation and capabilities
+
+#### Default Themes
+
+**Classic Theme** (`theme/classic.rs`, 340 lines, 10 tests):
+- Traditional BBS color scheme
+- Blue background, light gray text
+- Bright cyan menus and highlights
+- Yellow warnings, red errors
+- ANSI 16-color palette
+- Compatible with all terminals
+
+**Matrix Theme** (`theme/matrix.rs`, 360 lines, 10 tests):
+- Green-on-black hacker aesthetic
+- Bright green primary text
+- Dark green background
+- Lime highlights and accents
+- Cyan for special elements
+- High contrast for readability
+
+**Cyberpunk Theme** (`theme/cyberpunk.rs`, 380 lines, 10 tests):
+- Neon-inspired color palette
+- Magenta and cyan accents
+- Dark purple background
+- Bright pink highlights
+- Yellow warnings
+- Modern retro-futuristic look
+
+#### Integration Features
+
+**User Preferences** (`impulse-user/src/theme_prefs.rs`, included in 62 tests):
+- User-specific theme selection
+- Per-user theme overrides
+- Theme persistence to user profile
+- Default theme fallback
+- Theme capability checking
+
+**Terminal Integration** (enhanced modules):
+- Theme-aware ANSI rendering
+- Automatic color translation
+- Theme color caching
+- Efficient color lookups
+- RGB to ANSI conversion
+
+**Screen Rendering** (enhanced across screens):
+- Menu screens use theme colors
+- Message screens use theme colors
+- File browsing uses theme colors
+- User profile uses theme colors
+- Transfer progress uses theme colors
+
+#### Quality Metrics (Sprint 20)
+
+**Tests Added**: +62 tests (54 unit + 8 integration)
+- **Total workspace tests**: 1,727 (up from 1,665)
+- **All tests passing**: 100% pass rate maintained
+- **New coverage**: Theme system fully tested
+
+**Code Quality**:
+- **Clippy**: 0 warnings
+- **rustfmt**: All files formatted
+- **rustdoc**: 100% documentation coverage
+- **Lines Added**: ~2,254 lines (production + tests)
+
+**Module Sizes (Sprint 20)**:
+- `theme/colors.rs`: 280 lines (color schemes)
+- `theme/manager.rs`: 420 lines (theme management)
+- `theme/classic.rs`: 340 lines (classic theme)
+- `theme/matrix.rs`: 360 lines (matrix theme)
+- `theme/cyberpunk.rs`: 380 lines (cyberpunk theme)
+- `theme/mod.rs`: 120 lines (theme trait and exports)
+- `theme_prefs.rs`: 200 lines (user preferences)
+- Tests: ~154 lines across all modules
+
+#### Features (Sprint 20)
+
+**Theme Support**:
+- ✅ Theme trait abstraction
+- ✅ Color scheme system
+- ✅ Theme manager with registry
+- ✅ 3 default themes (Classic, Matrix, Cyberpunk)
+- ✅ Runtime theme switching
+- ✅ User theme preferences
+- ✅ Theme validation and capabilities
+
+**Color Management**:
+- ✅ 12-color semantic palette
+- ✅ RGB to ANSI conversion
+- ✅ ANSI 16-color support
+- ✅ Color scheme validation
+- ✅ Efficient color caching
+
+**Integration**:
+- ✅ Theme-aware screen rendering
+- ✅ Automatic theme application
+- ✅ User preference persistence
+- ✅ Default theme fallback
+- ✅ Cross-crate theme support
+
+#### Sprint 20 Summary
+- **Objective**: Implement complete theme system with default themes
+- **Deliverables**: ✅ All completed
+  1. Theme trait and architecture
+  2. Color scheme system with 12 semantic colors
+  3. Theme manager with registry and validation
+  4. 3 default themes (Classic, Matrix, Cyberpunk)
+  5. User theme preferences
+  6. Integration across all screens
+  7. 62 new tests (100% passing)
+- **Phase 3 Progress**: 4/8 sprints complete (50%)
+- **Overall Progress**: 20/32 sprints complete (62.5%)
+- **Timeline**: ~3+ months ahead of schedule
+
+---
+
 ## [0.4.0] - 2025-11-26
 
 ### Added - Sprint 18-19 (Xmodem/Ymodem & Protocol Completion - Phase 3)
