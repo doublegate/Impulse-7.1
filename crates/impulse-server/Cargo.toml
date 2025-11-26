@@ -15,7 +15,15 @@ impulse-session = { path = "../impulse-session" }
 impulse-telnet = { path = "../impulse-telnet" }
 impulse-terminal = { path = "../impulse-terminal" }
 impulse-ssh = { path = "../impulse-ssh" }
+impulse-auth = { path = "../impulse-auth" }
+impulse-message = { path = "../impulse-message" }
+impulse-file = { path = "../impulse-file" }
+impulse-user = { path = "../impulse-user" }
+impulse-door = { path = "../impulse-door" }
+impulse-admin = { path = "../impulse-admin" }
+impulse-protocol = { path = "../impulse-protocol" }
 tokio = { workspace = true }
 anyhow = { workspace = true }
 tracing = { workspace = true }
 tracing-subscriber = { workspace = true }
+async-trait = { workspace = true }

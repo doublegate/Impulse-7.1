@@ -2,10 +2,16 @@
 //!
 //! Modern BBS server implementation in Rust
 
+mod auth;
+mod menus;
+mod state;
+
 use anyhow::Result;
+use auth::{authenticate, AuthResult};
 use impulse_session::{SessionConfig, SessionManager};
 use impulse_telnet::TelnetServer;
-use impulse_terminal::{AnsiRenderer, Color};
+use menus::display_main_menu;
+use state::ServerState;
 use std::sync::Arc;
 use std::time::Duration;
 use tracing::{error, info, warn};
@@ -37,7 +43,7 @@ async fn main() -> Result<()> {
         )
         .init();
 
-    info!("Impulse 7.1 BBS Server v0.2.0");
+    info!("Impulse 7.1 BBS Server v0.8.0");
     info!("=================================");
 
     // Load configuration
@@ -46,6 +52,11 @@ async fn main() -> Result<()> {
     info!("  Telnet address: {}", config.telnet_address);
     info!("  Session timeout: {:?}", config.session_idle_timeout);
     info!("  Max sessions: {}", config.max_sessions);
+
+    // Initialize server state (user managers, message bases, etc.)
+    info!("Initializing server state...");
+    let server_state = Arc::new(ServerState::new().await?);
+    info!("Server state initialized");
 
     // Create session manager
     let session_config = SessionConfig::new()
@@ -66,6 +77,11 @@ async fn main() -> Result<()> {
 
     info!("Server initialization complete - ready to accept connections");
     info!("Press Ctrl+C to stop the server");
+    println!();
+    println!("Demo credentials:");
+    println!("  Username: sysop   (security level 255)");
+    println!("  Username: testuser (security level 10)");
+    println!("  Password: demo123 (for any user)");
     println!();
 
     // Main server loop
@@ -92,8 +108,9 @@ async fn main() -> Result<()> {
 
                 // Spawn handler for this connection
                 let session_mgr = session_manager.clone();
+                let state = server_state.clone();
                 tokio::spawn(async move {
-                    if let Err(e) = handle_connection(connection, session_id, session_mgr).await {
+                    if let Err(e) = handle_connection(connection, session_id, session_mgr, state).await {
                         error!(session_id = %session_id, "Connection error: {}", e);
                     }
                 });
@@ -110,176 +127,66 @@ async fn handle_connection(
     mut connection: impulse_telnet::TelnetConnection,
     session_id: impulse_session::SessionId,
     session_manager: Arc<SessionManager>,
+    state: Arc<ServerState>,
 ) -> Result<()> {
     info!(session_id = %session_id, "Starting connection handler");
 
     // Initialize telnet session (negotiate options)
     connection.initialize().await?;
 
-    // Create terminal renderer
-    let mut renderer = AnsiRenderer::new();
+    // Authentication phase
+    info!(session_id = %session_id, "Starting authentication");
+    match authenticate(&mut connection, &state).await? {
+        AuthResult::Authenticated { user, token } => {
+            info!(
+                session_id = %session_id,
+                username = %user.username(),
+                user_id = ?user.id(),
+                "User authenticated successfully"
+            );
 
-    // Display welcome screen
-    display_welcome(&mut renderer);
-    connection
-        .send_raw(renderer.take_output().as_bytes())
-        .await?;
+            // Main menu loop
+            loop {
+                // Update activity
+                session_manager.update_activity(session_id).await.ok();
 
-    // Display main prompt
-    renderer.clear();
-    renderer.write_line("");
-    renderer.set_foreground(Color::BrightCyan);
-    renderer.write_text("Impulse BBS");
-    renderer.reset();
-    renderer.write_line(" - Main Menu");
-    renderer.write_line("");
-    renderer.set_foreground(Color::BrightGreen);
-    renderer.write_line("Commands:");
-    renderer.reset();
-    renderer.write_line("  H - Help");
-    renderer.write_line("  S - System Statistics");
-    renderer.write_line("  W - Who's Online");
-    renderer.write_line("  Q - Quit");
-    renderer.write_line("");
-    renderer.set_foreground(Color::BrightYellow);
-    renderer.write_text("Command: ");
-    renderer.reset();
-    connection
-        .send_raw(renderer.take_output().as_bytes())
-        .await?;
-
-    // Simple command loop
-    loop {
-        // Update activity
-        session_manager.update_activity(session_id).await.ok();
-
-        // Read command
-        match connection.read_char().await {
-            Ok(ch) => {
-                let cmd = ch.to_ascii_uppercase();
-                renderer.clear();
-
-                match cmd {
-                    'H' => {
-                        // Help
-                        renderer.write_line("\r\n");
-                        renderer.set_foreground(Color::BrightWhite);
-                        renderer.write_line("=== HELP ===");
-                        renderer.reset();
-                        renderer.write_line("This is Impulse BBS - A modern bulletin board system");
-                        renderer.write_line("Built with Rust for reliability and performance");
-                        renderer.write_line("\r\n");
-                        connection
-                            .send_raw(renderer.take_output().as_bytes())
-                            .await?;
+                // Display main menu and handle commands
+                match display_main_menu(&mut connection, &user, &token, &state, &session_manager)
+                    .await
+                {
+                    Ok(should_continue) => {
+                        if !should_continue {
+                            // User logged out
+                            break;
+                        }
                     }
-                    'S' => {
-                        // Statistics
-                        let session_count = session_manager.active_session_count().await;
-                        renderer.write_line("\r\n");
-                        renderer.set_foreground(Color::BrightWhite);
-                        renderer.write_line("=== SYSTEM STATISTICS ===");
-                        renderer.reset();
-                        renderer.write_line(&format!("Active Sessions: {}", session_count));
-                        renderer.write_line("BBS Software: Impulse 7.1 (Rust Edition)");
-                        renderer.write_line("Version: 0.2.0");
-                        renderer.write_line("\r\n");
-                        connection
-                            .send_raw(renderer.take_output().as_bytes())
-                            .await?;
-                    }
-                    'W' => {
-                        // Who's online
-                        let session_count = session_manager.active_session_count().await;
-                        renderer.write_line("\r\n");
-                        renderer.set_foreground(Color::BrightWhite);
-                        renderer.write_line("=== WHO'S ONLINE ===");
-                        renderer.reset();
-                        renderer.write_line(&format!("Total users online: {}", session_count));
-                        renderer.write_line("\r\n");
-                        connection
-                            .send_raw(renderer.take_output().as_bytes())
-                            .await?;
-                    }
-                    'Q' => {
-                        // Quit
-                        renderer.write_line("\r\n");
-                        renderer.set_foreground(Color::BrightYellow);
-                        renderer.write_line("Thank you for visiting Impulse BBS!");
-                        renderer.write_line("Come back soon!");
-                        renderer.reset();
-                        renderer.write_line("\r\n");
-                        connection
-                            .send_raw(renderer.take_output().as_bytes())
-                            .await?;
-
-                        // Terminate session
-                        session_manager.terminate_session(session_id).await.ok();
-                        connection.close().await.ok();
-                        return Ok(());
-                    }
-                    _ => {
-                        // Unknown command
-                        renderer.write_line("\r\n");
-                        renderer.set_foreground(Color::BrightRed);
-                        renderer.write_line("Unknown command. Press H for help.");
-                        renderer.reset();
-                        renderer.write_line("\r\n");
-                        connection
-                            .send_raw(renderer.take_output().as_bytes())
-                            .await?;
+                    Err(e) => {
+                        error!(
+                            session_id = %session_id,
+                            error = %e,
+                            "Error in main menu"
+                        );
+                        break;
                     }
                 }
+            }
 
-                // Show prompt again
-                renderer.clear();
-                renderer.set_foreground(Color::BrightYellow);
-                renderer.write_text("Command: ");
-                renderer.reset();
-                connection
-                    .send_raw(renderer.take_output().as_bytes())
-                    .await?;
-            }
-            Err(e) => {
-                info!(session_id = %session_id, "Client disconnected: {}", e);
-                session_manager.terminate_session(session_id).await.ok();
-                return Ok(());
-            }
+            // Logout
+            state.auth_service.logout(&token).await;
+            info!(
+                session_id = %session_id,
+                username = %user.username(),
+                "User logged out"
+            );
+        }
+        AuthResult::Quit => {
+            info!(session_id = %session_id, "User quit during authentication");
         }
     }
-}
 
-/// Display welcome screen with ANSI art
-fn display_welcome(renderer: &mut AnsiRenderer) {
-    renderer.clear_screen();
+    // Terminate session
+    session_manager.terminate_session(session_id).await.ok();
+    connection.close().await.ok();
 
-    // ANSI Art Banner
-    renderer.set_foreground(Color::BrightCyan);
-    renderer.write_line("  ___                 _           ____  ____  ____  ");
-    renderer.write_line(" |_ _|_ __ ___  _ __ | |__   ___ | __ )| __ )/ ___| ");
-    renderer.write_line("  | || '_ ` _ \\| '_ \\| '_ \\ / _ \\|  _ \\|  _ \\\\___ \\ ");
-    renderer.write_line("  | || | | | | | |_) | | | |  __/| |_) | |_) |___) |");
-    renderer.write_line(" |___|_| |_| |_| .__/|_| |_|\\___||____/|____/|____/ ");
-    renderer.write_line("               |_|                                   ");
-    renderer.reset();
-    renderer.write_line("");
-
-    renderer.set_foreground(Color::BrightWhite);
-    renderer.write_line("              Welcome to Impulse BBS");
-    renderer.reset();
-    renderer.set_foreground(Color::BrightGreen);
-    renderer.write_line("                    Version 7.1");
-    renderer.reset();
-    renderer.write_line("");
-
-    renderer.set_foreground(Color::Yellow);
-    renderer.write_line("  A Modern Bulletin Board System");
-    renderer.write_line("  Powered by Rust - Fast, Safe, Reliable");
-    renderer.reset();
-    renderer.write_line("");
-
-    renderer.set_foreground(Color::BrightBlue);
-    renderer.write_line("  ===========================================");
-    renderer.reset();
-    renderer.write_line("");
+    Ok(())
 }
