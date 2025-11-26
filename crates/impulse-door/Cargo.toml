@@ -9,6 +9,15 @@ rust-version.workspace = true
 
 [dependencies]
 impulse-types = { path = "../impulse-types" }
-tokio = { workspace = true }
+tokio = { workspace = true, features = ["process", "io-util", "fs", "sync", "time"] }
 async-trait = { workspace = true }
 thiserror = { workspace = true }
+serde = { workspace = true, features = ["derive"] }
+toml = "0.8"
+tempfile = "3.14"
+chrono = { version = "0.4", features = ["serde"] }
+tracing = "0.1"
+which = "7.0"
+
+[dev-dependencies]
+tokio-test = "0.4"
