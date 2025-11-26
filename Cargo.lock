@@ -1466,9 +1466,12 @@ version = "0.1.0"
 dependencies = [
  "async-trait",
  "chrono",
+ "hex",
  "impulse-types",
  "indexmap",
  "serde",
+ "sha2",
+ "tempfile",
  "thiserror 2.0.17",
  "tokio",
  "wildmatch",

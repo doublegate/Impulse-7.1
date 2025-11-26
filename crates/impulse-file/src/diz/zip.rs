@@ -38,7 +38,7 @@ const MAX_DIZ_SIZE: u64 = 32 * 1024;
 /// # Examples
 ///
 /// ```no_run
-/// use impulse_file::diz::extract_file_id_diz;
+/// use impulse_file::diz::zip::extract_file_id_diz;
 /// use std::path::Path;
 ///
 /// # fn example() -> Result<(), Box<dyn std::error::Error>> {
