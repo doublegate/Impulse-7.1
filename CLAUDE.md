@@ -2,7 +2,7 @@
 
 Project-specific guidance for Impulse-Next_BBS modernization (classic Impulse 7.1 BBS: Borland Pascal 7.0 → Rust 2024).
 
-**Version:** 0.3.0 | **Updated:** 2025-11-26
+**Version:** 0.4.0 | **Updated:** 2025-11-26
 
 ---
 
@@ -17,10 +17,10 @@ Project-specific guidance for Impulse-Next_BBS modernization (classic Impulse 7.
 
 ## Current Status
 
-**Phase:** 3 - Feature Completion (Sprint 17 COMPLETE)
-**Sprints Complete:** 17 of 32 (53%)
-**Version:** 0.3.0 (Phase 2: 100% + Sprint 17: Zmodem Protocol Implementation)
-**Last Commit:** 8f893cc (2025-11-26 - Sprint 17: Zmodem Protocol Implementation)
+**Phase:** 3 - Feature Completion (Sprints 17-19 COMPLETE)
+**Sprints Complete:** 19 of 32 (59%)
+**Version:** 0.4.0 (Phase 2: 100% + Phase 3: 37.5% - File Transfer Protocols Complete)
+**Last Commit:** 920f0da (2025-11-26 - Sprint 18-19: Xmodem/Ymodem Protocol Implementation)
 
 ### Sprint Progress
 - ✅ **Phase 1:** Foundation (Sprints 1-8, 100%)
@@ -36,19 +36,21 @@ Project-specific guidance for Impulse-Next_BBS modernization (classic Impulse 7.
 - ✅ **Server Infrastructure:** Telnet, Session, Terminal, Server (Post Phase 2)
 - ✅ **Sprint 16 (Session Management):** Concurrent sessions, conflict resolution, timeouts, WebSocket (100%)
 - ✅ **CI/CD Fixes (2025-11-26):** MSRV 1.88, bincode 2.0, Rust 2024 let-chains (19 files), cargo-audit 0.22
-- ✅ **Sprint 17 (Zmodem Protocol):** Frame structure, CRC-16/32, handshake, file transfer, crash recovery, batch mode (100%)
-- 📋 **Sprints 18-32:** Phase 3 & 4 (Continuing)
+- ✅ **Sprint 17 (Zmodem Protocol):** Frame structure, CRC-16/32, handshake, file transfer, crash recovery, batch mode (236 tests)
+- ✅ **Sprint 18 (Xmodem/Ymodem):** Xmodem (checksum/CRC/1K), Ymodem batch mode, error recovery (112 tests)
+- ✅ **Sprint 19 (Protocol Completion):** Ymodem-G streaming, auto-detection, user preferences (108 tests)
+- 📋 **Sprints 20-32:** Phase 3 & 4 (Continuing)
 
 ### Quality Metrics
-- **Tests:** 1,445 passing (100% pass rate)
+- **Tests:** 1,665 passing (100% pass rate)
 - **Coverage:** 75.43% achieved (target: 75%+ - GOAL MET!)
 - **Clippy:** 0 warnings
 - **CI/CD:** 12 jobs, 100% passing on main branch
 - **Crates:** 20 (17 libraries + 3 binaries)
-- **Code:** 45,916 lines total (production + tests)
-- **Commits:** 130 total
+- **Code:** ~50,780 lines total (production + tests, up from 45,916)
+- **Commits:** 131 total
 - **Build Time:** <2s dev, <10s release
-- **Test Execution:** <8s all tests
+- **Test Execution:** <10s all tests
 
 ---
 

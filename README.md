@@ -5,7 +5,7 @@
 <!-- Row 1: Build Status & Quality -->
 [![CI](https://github.com/doublegate/Impulse-Next_BBS/workflows/CI/badge.svg)](https://github.com/doublegate/Impulse-Next_BBS/actions)
 [![Coverage](https://img.shields.io/badge/coverage-75.43%25-brightgreen)](https://github.com/doublegate/Impulse-Next_BBS#testing)
-[![Tests](https://img.shields.io/badge/tests-1,445_passing-brightgreen)](https://github.com/doublegate/Impulse-Next_BBS#testing)
+[![Tests](https://img.shields.io/badge/tests-1,665_passing-brightgreen)](https://github.com/doublegate/Impulse-Next_BBS#testing)
 [![Clippy](https://img.shields.io/badge/clippy-0_warnings-brightgreen)](https://github.com/doublegate/Impulse-Next_BBS#development)
 
 <!-- Row 2: Project Identity -->
@@ -105,9 +105,9 @@ This project aims to:
 
 ## Project Status
 
-**Current Version**: 0.2.0 (Phase 2 COMPLETE + Sprint 17 - Zmodem Protocol)
-**Development Phase**: Phase 3 - Feature Completion (Starting)
-**Completion**: Sprint 17/32 (53%) - Phase 1: 8/8 (100% ✅), Phase 2: 8/8 (100% ✅), Phase 3: 1/8 (13%)
+**Current Version**: 0.4.0 (Phase 2 COMPLETE + Sprint 17-19 - File Transfer Protocols)
+**Development Phase**: Phase 3 - Feature Completion (In Progress)
+**Completion**: Sprint 19/32 (59%) - Phase 1: 8/8 (100% ✅), Phase 2: 8/8 (100% ✅), Phase 3: 3/8 (37.5%)
 
 ### Recent Milestones
 
@@ -132,7 +132,9 @@ This project aims to:
 - ✅ **Server Infrastructure** (Post Phase 2): Working BBS server with telnet (RFC 854), session management, ANSI terminal support, 40 new tests
 - ✅ **Sprint 16** (Session Management): Concurrent sessions, conflict resolution (Allow/KickOldest/DenyNew), idle/absolute timeouts, WebSocket support, Who's online, 31 new tests
 - ✅ **CI/CD Fixes** (November 2025): MSRV 1.85 → 1.88, bincode 2.0 migration, Rust 2024 let-chains across 19 files, cargo-audit 0.22.0 update, 12 CI jobs passing
-- ✅ **Sprint 17** (Zmodem Protocol): Complete Zmodem file transfer implementation (frame structure, CRC-16/32, handshake, batch mode, crash recovery, resume capability, progress tracking)
+- ✅ **Sprint 17** (Zmodem Protocol): Complete Zmodem file transfer implementation (frame structure, CRC-16/32, handshake, batch mode, crash recovery, resume capability, progress tracking, 236 tests)
+- ✅ **Sprint 18** (Xmodem/Ymodem): Xmodem (checksum/CRC/1K variants), Ymodem (batch mode, metadata), 128/1024-byte blocks, error recovery, 112 tests
+- ✅ **Sprint 19** (Protocol Completion): Ymodem-G streaming mode, protocol auto-detection, user preferences, batch transfers, 108 tests
 
 ### Phase 1 Achievements
 
@@ -143,14 +145,14 @@ This project aims to:
 - 105+ commits across 237 Rust source files
 - 37,823 lines of code (production + tests)
 
-**Quality Metrics (Phase 1+2 COMPLETE + Server Infrastructure + Sprint 17):**
+**Quality Metrics (Phase 1+2 COMPLETE + Server Infrastructure + Sprints 17-19):**
 
-- **Tests**: 1,445 (100% passing rate)
+- **Tests**: 1,665 (100% passing rate)
 - **Coverage**: 75.43% achieved (target: 75% - GOAL MET!)
 - **Clippy**: 0 warnings
 - **Documentation**: 64 files, 40,000+ lines
 - **Build**: <10s full workspace
-- **Test Execution**: <8s all tests
+- **Test Execution**: <10s all tests
 
 **Key Features:**
 
@@ -172,13 +174,14 @@ This project aims to:
   - ✅ Sprint 15: User Profiles & Statistics (profile display, settings, achievements, privacy)
   - ✅ Sprint 16: Integration & Testing (cross-crate workflows, 68 integration tests, 32 benchmarks)
 - **Phase 3**: Feature Completion (Sprints 17-24, IN PROGRESS)
-  - ✅ Sprint 17: Zmodem Protocol (complete implementation with crash recovery)
-  - 📋 Sprint 18: Xmodem & Ymodem Protocols
-  - 📋 Sprint 19: Theme System
-  - 📋 Sprint 20: Door Game Interface (DOSBox integration)
-  - 📋 Sprint 21-24: Advanced features, QWK support
-- **Goal**: Functional BBS with file transfer protocols complete! Continuing Phase 3.
-- **Timeline**: 24 months total, currently 53% complete (2 months ahead of schedule)
+  - ✅ Sprint 17: Zmodem Protocol (complete implementation with crash recovery, 236 tests)
+  - ✅ Sprint 18: Xmodem & Ymodem Protocols (checksum/CRC/1K, batch mode, 112 tests)
+  - ✅ Sprint 19: Protocol Completion (Ymodem-G, auto-detection, preferences, 108 tests)
+  - 📋 Sprint 20: Theme System (ANSI/Avatar/RIP themes)
+  - 📋 Sprint 21: Door Game Interface (DOSBox integration)
+  - 📋 Sprint 22-24: Advanced features, QWK support
+- **Goal**: Functional BBS with complete file transfer protocols! 3 of 8 Phase 3 sprints complete.
+- **Timeline**: 24 months total, currently 59% complete (2+ months ahead of schedule)
 
 ## Features
 
@@ -413,13 +416,14 @@ All 8 sprints completed including:
 
 ### Planned Features
 
-**Phase 3 (Sprints 17-24, ~6-8 weeks) - Feature Completion (IN PROGRESS)**
+**Phase 3 (Sprints 17-24, ~6-8 weeks) - Feature Completion (37.5% COMPLETE)**
 
-- ✅ Sprint 17: Zmodem file transfer protocol (complete with crash recovery)
-- 📋 Xmodem and Ymodem protocols
-- 📋 Theme system
-- 📋 Door game interface (DOSBox integration)
-- 📋 QWK offline reader support
+- ✅ Sprint 17: Zmodem file transfer protocol (complete with crash recovery, 236 tests)
+- ✅ Sprint 18: Xmodem and Ymodem protocols (checksum/CRC/1K, batch mode, 112 tests)
+- ✅ Sprint 19: Protocol completion (Ymodem-G, auto-detection, preferences, 108 tests)
+- 📋 Sprint 20: Theme system (ANSI/Avatar/RIP themes)
+- 📋 Sprint 21: Door game interface (DOSBox integration)
+- 📋 Sprints 22-24: QWK offline reader support, advanced features
 
 **Phase 4 (Sprints 25-32, ~6-8 weeks) - Polish & Launch**
 
@@ -857,9 +861,9 @@ cargo doc --workspace --no-deps --open
 
 ## Testing
 
-### Current Test Suite (Phase 1 + Phase 2 + Server Infrastructure + Sprint 17)
+### Current Test Suite (Phase 1 + Phase 2 + Server Infrastructure + Sprints 17-19)
 
-**Total Tests**: 1,445 (100% passing rate)
+**Total Tests**: 1,665 (100% passing rate)
 **Code Coverage**: 75.43% achieved (target: 75%+ - GOAL MET!)
 
 **Test Types:**
@@ -882,7 +886,8 @@ cargo doc --workspace --no-deps --open
 - impulse-config: 37 tests (configuration, validation, hot-reload)
 - impulse-session: 31 tests (session CRUD, state management, expiry, concurrent handling, timeouts, conflict resolution, WebSocket)
 - impulse-terminal: 16 tests (color conversion, ANSI sequences, rendering)
-- Other crates: 137+ tests (protocols, door, web, core)
+- impulse-protocol: 456+ tests (Sprint 17 Zmodem: 236, Sprint 18 Xmodem/Ymodem: 112, Sprint 19 completion: 108)
+- Other crates: 137+ tests (door, web, core)
 
 **Coverage by Crate:**
 
