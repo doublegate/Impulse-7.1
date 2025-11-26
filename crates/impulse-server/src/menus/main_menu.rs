@@ -406,7 +406,7 @@ async fn handle_system_stats(
     renderer.write_line("");
     renderer.write_line(&format!("Active Sessions:   {}", session_count));
     renderer.write_line("BBS Software:      Impulse 7.1 (Rust Edition)");
-    renderer.write_line("Version:           0.8.0");
+    renderer.write_line("Version:           0.3.0");
     renderer.write_line("Platform:          Rust 2024 Edition");
     renderer.write_line("Test Coverage:     75.43%");
     renderer.write_line("Total Tests:       2,082 passing");

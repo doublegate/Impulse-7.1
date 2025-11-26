@@ -2,7 +2,7 @@
 
 **Last Updated:** 2025-11-26
 **Project:** Impulse-Next_BBS
-**Version:** 0.9.0
+**Version:** 0.3.0
 
 ---
 

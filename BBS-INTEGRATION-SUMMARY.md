@@ -1,7 +1,7 @@
 # Impulse BBS Server - Full Integration Summary
 
 **Date:** 2025-11-26
-**Version:** 0.8.0
+**Version:** 0.3.0
 **Integration Status:** ✅ COMPLETE
 
 ---
@@ -162,7 +162,7 @@ cargo run --bin impulse-server
 
 Server will display:
 ```
-Impulse 7.1 BBS Server v0.8.0
+Impulse 7.1 BBS Server v0.3.0
 =================================
 ...
 Demo credentials:

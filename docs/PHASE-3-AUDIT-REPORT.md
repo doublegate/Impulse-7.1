@@ -2,7 +2,7 @@
 
 **Date:** 2025-11-26
 **Project:** Impulse-Next_BBS
-**Version:** 0.9.0
+**Version:** 0.3.0
 **Audit Phase:** Phase 3 Complete - Transition to Phase 4
 
 ---
@@ -475,7 +475,7 @@ All Phase 3 audit remediation actions have been successfully completed. The code
 
 **Audit Date:** 2025-11-26
 **Auditor:** Claude Code (Sonnet 4.5)
-**Project Version:** 0.9.0
+**Project Version:** 0.3.0
 **Git Branch:** main
 **Git Commit:** TBD (pending commit of remediation changes)
 

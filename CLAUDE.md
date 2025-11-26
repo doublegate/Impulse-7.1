@@ -2,7 +2,7 @@
 
 Project-specific guidance for Impulse-Next_BBS modernization (classic Impulse 7.1 BBS: Borland Pascal 7.0 → Rust 2024).
 
-**Version:** 0.9.0 | **Updated:** 2025-11-26
+**Version:** 0.3.0 | **Updated:** 2025-11-26
 
 ---
 
@@ -19,7 +19,7 @@ Project-specific guidance for Impulse-Next_BBS modernization (classic Impulse 7.
 
 **Phase:** 4 - Polish & Launch (Sprint 25 Starting - Performance Optimization)
 **Sprints Complete:** 24 of 32 (75.0%)
-**Version:** 0.9.0 (Phases 1, 2, 3: 100% COMPLETE - All Advanced Features Implemented)
+**Version:** 0.3.0 (Phases 1, 2, 3: 100% COMPLETE - All Advanced Features Implemented)
 **Last Commit:** 87ecdc3 (2025-11-26 - Phase 3 Server Integration Complete)
 
 ### Sprint Progress
