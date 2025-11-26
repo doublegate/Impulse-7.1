@@ -18,9 +18,9 @@ Project-specific guidance for Impulse-Next_BBS modernization (classic Impulse 7.
 ## Current Status
 
 **Phase:** 2 - Core Features (Sprints 9-16)
-**Sprints Complete:** 12 of 32 (37.5%)
-**Version:** 0.1.0 (Phase 2: 50% Complete)
-**Last Commit:** 777750f (2025-11-25)
+**Sprints Complete:** 13 of 32 (40.6%)
+**Version:** 0.1.0 (Phase 2: 62.5% Complete)
+**Last Commit:** b3643af (2025-11-25)
 
 ### Sprint Progress
 - ✅ **Phase 1:** Foundation (Sprints 1-8, 100%)
@@ -28,10 +28,11 @@ Project-specific guidance for Impulse-Next_BBS modernization (classic Impulse 7.
 - ✅ **Sprint 10:** Menu System (100%)
 - ✅ **Sprint 11:** Message Read (100%)
 - ✅ **Sprint 12:** Message Write (100%)
-- 📋 **Sprints 13-32:** Planned
+- ✅ **Sprint 13:** File Browsing (100%)
+- 📋 **Sprints 14-32:** Planned
 
 ### Quality Metrics
-- **Tests:** 870+ passing (100% pass rate)
+- **Tests:** 946 passing (100% pass rate)
 - **Coverage:** 64.51% baseline (target: 75%+ Phase 2)
 - **Clippy:** 0 warnings
 - **CI/CD:** 100% passing on main branch
@@ -240,16 +241,27 @@ cargo build --workspace --all-features
 - ✅ JAM format writing
 - ✅ 27+ tests (15 posting, 8 reply, 4 quoting)
 
+#### Sprint 13: File Browsing
+**TODO:** `to-dos/phase-2-core-features/sprint-13-file-browsing.md`
+
+**Deliverables:**
+- ✅ FileArea and FileRecord structs
+- ✅ FileAreaManager trait with InMemory implementation
+- ✅ File list screen (paginated, sortable)
+- ✅ File details screen with FILE_ID.DIZ extraction
+- ✅ Search with wildcards, date/size filters
+- ✅ 76+ tests (18 area, 22 list, 16 details, 20 search)
+
 ### Next Sprint
 
-#### Sprint 13: Terminal I/O
-**TODO:** `to-dos/phase-2-core-features/sprint-13-terminal-io.md` (estimated)
+#### Sprint 14: Telnet Protocol
+**TODO:** `to-dos/phase-2-core-features/sprint-14-telnet-protocol.md` (planned)
 
 **Goals:**
-- ANSI escape sequence rendering
-- Input handling (keyboard, mouse)
-- Avatar graphics support
-- Terminal emulation layer
+- RFC 854 Telnet protocol implementation
+- IAC (Interpret As Command) negotiation
+- Option handling (ECHO, SGA, NAWS, etc.)
+- Session integration with impulse-session
 
 ---
 
@@ -396,14 +408,14 @@ cargo doc --workspace --no-deps 2>&1 | grep warning
 - 📋 Sprint 7: Database Schema
 - 📋 Sprint 8: Testing Framework
 
-### Phase 2: Core Features (Sprints 9-16, November 2025 - January 2026) - 50% COMPLETE
+### Phase 2: Core Features (Sprints 9-16, November 2025 - January 2026) - 62.5% COMPLETE
 - ✅ Sprint 9: User authentication (rate limiting, lockout, validation)
 - ✅ Sprint 10: Menu system (TOML parser, navigation)
 - ✅ Sprint 11: Message read (MessageBase trait, JAM/Hudson, screens)
 - ✅ Sprint 12: Message write (posting, replies, quoting)
-- 📋 Sprint 13: Terminal I/O (ANSI rendering, input handling)
+- ✅ Sprint 13: File browsing (areas, list, details, search, FILE_ID.DIZ)
 - 📋 Sprint 14: Telnet protocol (RFC 854, IAC negotiation)
-- 📋 Sprint 15: File areas (browsing, upload/download)
+- 📋 Sprint 15: File upload/download (transfer protocols)
 - 📋 Sprint 16: Session management (WebSocket, concurrent handling)
 
 ### Phase 3: Advanced Features (Sprints 17-24, Months 11-18)
