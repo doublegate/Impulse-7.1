@@ -15,8 +15,8 @@
 [![Edition](https://img.shields.io/badge/edition-2024-orange)](https://doc.rust-lang.org/edition-guide/)
 
 <!-- Row 3: Project Metrics -->
-[![Crates](https://img.shields.io/badge/crates-22-informational)](#architecture)
-[![LoC](https://img.shields.io/badge/lines_of_code-67,908-informational)](#project-status)
+[![Crates](https://img.shields.io/badge/crates-21-informational)](#architecture)
+[![LoC](https://img.shields.io/badge/lines_of_code-71,987-informational)](#project-status)
 [![Last Commit](https://img.shields.io/github/last-commit/doublegate/Impulse-Next_BBS)](https://github.com/doublegate/Impulse-Next_BBS/commits/main)
 
 <!-- Row 4: Community -->
@@ -105,9 +105,9 @@ This project aims to:
 
 ## Project Status
 
-**Current Version**: 0.9.0 (Phase 3 COMPLETE - File Transfer, Themes, Doors, QWK, Admin & Integration Testing)
-**Development Phase**: Phase 4 - Polish & Launch (Starting)
-**Completion**: Sprint 24/32 (75%) - Phase 1: 8/8 (100% ✅), Phase 2: 8/8 (100% ✅), Phase 3: 8/8 (100% ✅)
+**Current Version**: 0.9.0 (Phase 3 COMPLETE - All Advanced Features Implemented)
+**Development Phase**: Phase 4 - Polish & Launch (Sprint 25 Starting - Performance Optimization)
+**Completion**: 24 of 32 sprints (75.0%) - Phase 1: 8/8 (100% ✅), Phase 2: 8/8 (100% ✅), Phase 3: 8/8 (100% ✅), Phase 4: 0/8 (0%)
 
 ### Recent Milestones
 
@@ -137,19 +137,20 @@ This project aims to:
 - ✅ **Sprint 19** (Protocol Completion): Ymodem-G streaming mode, protocol auto-detection, user preferences, batch transfers, 108 tests
 - ✅ **Sprint 20** (Theme System): Theme architecture, 3 default themes (Classic, Matrix, Cyberpunk), theme manager, color schemes, user preferences, 62 tests
 - ✅ **Sprint 21** (Door Game Interface): Complete door system with DOOR.SYS/DORINFO1.DEF dropfiles, door manager, executor with DOSBox support, async I/O, security levels, 126 tests
-- ✅ **Sprint 23** (Administration): SysOp admin interface with access control, user management (list/edit/ban/delete), file area management, system maintenance (sessions/kick/broadcast), audit logging, 149 tests
 - ✅ **Sprint 22** (Advanced Messaging): QWK offline mail packets, message import/export (Text/JSON/CSV), FidoNet addressing (zone:net/node.point), message routing infrastructure, 79 tests
+- ✅ **Sprint 23** (Administration): SysOp admin interface with access control, user management (list/edit/ban/delete), file area management, system maintenance (sessions/kick/broadcast), audit logging, 149 tests
 - ✅ **Sprint 24** (Integration Testing): Comprehensive Phase 3 integration testing - BbsTestFixture, user journey tests, security audit suite (injection, auth, uploads), load generator (50+ users), cross-crate integration, 83 tests
-- ✅ **Phase 3 Feature Completion COMPLETE** (November 2025 - 8 sprints)
+- ✅ **Phase 3 Feature Completion COMPLETE** (November 2025 - 8 sprints in ~4 days!)
+- ✅ **Server Integration** (Post Phase 3): Integrated all features into impulse-server with complete BBS functionality
 
 ### Phase 1 Achievements
 
 **Infrastructure:**
 
-- 20 crates (17 libraries + 3 binaries)
-- 5-job CI/CD pipeline (lint, test×3, build×3, coverage, benchmarks)
-- 105+ commits across 237 Rust source files
-- 37,823 lines of code (production + tests)
+- 21 crates (18 libraries + 3 binaries)
+- 12-job CI/CD pipeline (lint, test×3, build×3, coverage, benchmark, audit, MSRV, gate)
+- 138+ commits across 275+ Rust source files
+- 71,987 total lines (46,750 code + 12,035 comments + 12,814 blank)
 
 **Quality Metrics (Phase 1+2+3 COMPLETE):**
 
@@ -179,7 +180,7 @@ This project aims to:
   - ✅ Sprint 14: File Upload (processor, ClamAV scanning, validation, quarantine)
   - ✅ Sprint 15: User Profiles & Statistics (profile display, settings, achievements, privacy)
   - ✅ Sprint 16: Integration & Testing (cross-crate workflows, 68 integration tests, 32 benchmarks)
-- **Phase 3**: Feature Completion (Sprints 17-24, COMPLETE ✅)
+- **Phase 3**: Feature Completion (Sprints 17-24, 8/8 complete - 100% ✅)
   - ✅ Sprint 17: Zmodem Protocol (complete implementation with crash recovery, 236 tests)
   - ✅ Sprint 18: Xmodem & Ymodem Protocols (checksum/CRC/1K, batch mode, 112 tests)
   - ✅ Sprint 19: Protocol Completion (Ymodem-G, auto-detection, preferences, 108 tests)
@@ -188,17 +189,21 @@ This project aims to:
   - ✅ Sprint 22: Advanced Messaging (QWK packets, import/export, FidoNet addressing, 79 tests)
   - ✅ Sprint 23: Administration Interface (SysOp admin, user/file/system management, 149 tests)
   - ✅ Sprint 24: Integration Testing (fixtures, journeys, security audit, load testing, 83 tests)
-- **Phase 4**: Polish & Launch (Sprints 25-32, STARTING)
-  - 📋 Sprint 25: Performance Optimization
-  - 📋 Sprint 26-27: Documentation & API Reference
-  - 📋 Sprint 28-29: Web Admin Panel
-  - 📋 Sprint 30-32: Beta Testing & Release
-- **Goal**: Feature-complete BBS ready for Phase 4 polish! All Phase 3 sprints complete (100%).
-- **Timeline**: 24 months total, currently 75% complete (3+ months ahead of schedule)
+- **Phase 4**: Polish & Launch (Sprints 25-32, 0/8 complete - 0%)
+  - 📋 Sprint 25: Performance Optimization (profiling, caching, benchmarking)
+  - 📋 Sprint 26: Security Hardening (OWASP audit, penetration testing)
+  - 📋 Sprint 27: Web Admin Panel (React/Vue dashboard, real-time monitoring)
+  - 📋 Sprint 28: API Refinement (OpenAPI docs, versioning, OAuth2/JWT)
+  - 📋 Sprint 29: Migration Tools (Mystic, Synchronet, EleBBS importers)
+  - 📋 Sprint 30: Deployment Automation (Docker, Kubernetes, CI/CD release)
+  - 📋 Sprint 31: Documentation Polish (user manual, admin guide, tutorials)
+  - 📋 Sprint 32: Final QA & Release (regression testing, v1.0.0 release)
+- **Goal**: Production-ready v1.0.0 release with comprehensive polish and documentation
+- **Timeline**: 24 months total, currently 75% complete (24/32 sprints, ahead of schedule)
 
 ## Features
 
-### Current Implementation (v0.2.0 - Phase 1 Complete + Phase 2 Complete)
+### Current Implementation (v0.9.0 - Phases 1, 2, and 3 Complete)
 
 **Phase 1 Foundation (Sprints 1-8, November 2025):**
 
@@ -429,21 +434,27 @@ All 8 sprints completed including:
 
 ### Planned Features
 
-**Phase 3 (Sprints 17-24, ~6-8 weeks) - Feature Completion (87.5% COMPLETE)**
+**Phase 3 (Sprints 17-24, November 2025) - Feature Completion (100% COMPLETE ✅)**
 
-- ✅ Sprint 17: Zmodem file transfer protocol (complete with crash recovery, 236 tests)
-- ✅ Sprint 18: Xmodem and Ymodem protocols (checksum/CRC/1K, batch mode, 112 tests)
-- ✅ Sprint 19: Protocol completion (Ymodem-G, auto-detection, preferences, 108 tests)
-- ✅ Sprint 20: Theme system (architecture, 3 default themes, color schemes, 62 tests)
-- 📋 Sprint 21: Door game interface (DOSBox integration)
-- 📋 Sprints 22-24: QWK offline reader support, advanced features
+- ✅ Sprint 17: Zmodem Protocol (frame structure, CRC-16/32, handshake, crash recovery, batch mode, 236 tests)
+- ✅ Sprint 18: Xmodem/Ymodem Protocols (checksum/CRC/1K variants, batch mode, metadata, 112 tests)
+- ✅ Sprint 19: Protocol Completion (Ymodem-G streaming, auto-detection, user preferences, 108 tests)
+- ✅ Sprint 20: Theme System (architecture, 3 default themes, color schemes, user preferences, 62 tests)
+- ✅ Sprint 21: Door Game Interface (DOOR.SYS/DORINFO1.DEF, manager, executor, DOSBox support, 126 tests)
+- ✅ Sprint 22: Advanced Messaging (QWK packets, import/export, FidoNet addressing, routing, 79 tests)
+- ✅ Sprint 23: Administration Interface (access control, user/file/system management, audit logging, 149 tests)
+- ✅ Sprint 24: Integration Testing (fixtures, journeys, security audit, load testing, cross-crate, 83 tests)
 
-**Phase 4 (Sprints 25-32, ~6-8 weeks) - Polish & Launch**
+**Phase 4 (Sprints 25-32, January-March 2026) - Polish & Launch (0% COMPLETE)**
 
-- Performance optimization
-- Web-based administration
-- Legacy data migration tools
-- Production deployment support
+- 📋 Sprint 25: Performance Optimization (profiling, caching, benchmarking, <100ms response time)
+- 📋 Sprint 26: Security Hardening (OWASP audit, penetration testing, zero critical vulnerabilities)
+- 📋 Sprint 27: Web Admin Panel (React/Vue dashboard, real-time monitoring, management interfaces)
+- 📋 Sprint 28: API Refinement (OpenAPI docs, versioning, OAuth2/JWT, stable v1 API)
+- 📋 Sprint 29: Migration Tools (Mystic, Synchronet, EleBBS importers, legacy data migration)
+- 📋 Sprint 30: Deployment Automation (Docker, Kubernetes, CI/CD release, one-command deployment)
+- 📋 Sprint 31: Documentation Polish (user manual, admin guide, developer docs, video tutorials)
+- 📋 Sprint 32: Final QA & Release (regression testing, performance testing, v1.0.0 release)
 
 ### Modern Enhancements
 
@@ -491,42 +502,43 @@ All 8 sprints completed including:
 └──────────────────────────────────────────────────────────┘
 ```
 
-### 20-Crate Workspace Structure
+### 21-Crate Workspace Structure
 
-**Core Crates:**
+**Core Crates (4):**
 
 - `impulse-core` - Core BBS logic and state management
 - `impulse-types` - Shared data types and error handling
-- `impulse-config` - Configuration management
+- `impulse-config` - Configuration management (TOML + ENV loading, hot-reload)
 - `impulse-logging` - Structured logging, file rotation, audit trails
 
-**Protocol Crates:**
+**Protocol Crates (3):**
 
-- `impulse-protocol` - Protocol trait definitions
-- `impulse-telnet` - Telnet protocol implementation (RFC 854)
-- `impulse-ssh` - SSH protocol implementation
+- `impulse-protocol` - Protocol implementations (Zmodem, Xmodem, Ymodem, Ymodem-G)
+- `impulse-telnet` - Telnet protocol implementation (RFC 854, IAC negotiation)
+- `impulse-ssh` - SSH protocol implementation (RFC 4253, 4254)
 
-**Feature Crates:**
+**Feature Crates (8):**
 
-- `impulse-session` - Session management and state tracking
-- `impulse-terminal` - Terminal I/O and ANSI rendering
-- `impulse-auth` - Authentication (Argon2id, rate limiting, lockout)
-- `impulse-message` - Message bases (JAM/Hudson)
-- `impulse-file` - File areas and transfers
-- `impulse-user` - User management
-- `impulse-door` - Door game support
-- `impulse-menu` - Menu system (TOML parser, renderer, navigation)
+- `impulse-session` - Session management (concurrent sessions, timeouts, WebSocket)
+- `impulse-terminal` - Terminal I/O and ANSI rendering (ANSI, Avatar, RIP, themes)
+- `impulse-auth` - Authentication (Argon2id, rate limiting, lockout, session tokens)
+- `impulse-message` - Message bases (JAM/Hudson formats, QWK packets, FidoNet)
+- `impulse-file` - File areas and transfers (upload/download, ClamAV scanning, FILE_ID.DIZ)
+- `impulse-user` - User management (profiles, statistics, achievements, privacy)
+- `impulse-door` - Door game support (DOOR.SYS/DORINFO1.DEF, DOSBox integration)
+- `impulse-menu` - Menu system (TOML parser, renderer, navigation state machine)
+- `impulse-admin` - Administration interface (access control, user/file/system management)
 
-**Application Crates:**
+**Application Crates (3 binaries):**
 
-- `impulse-web` - Web admin panel (Axum)
-- `impulse-server` - Main BBS server binary
+- `impulse-server` - Main BBS server binary (Telnet on port 2323, integrated features)
 - `impulse-cli` - CLI management tool (binary)
 - `impconfig` - Configuration management CLI tool (binary)
 
-**Testing Crates:**
+**Web & Testing Crates (3):**
 
-- `integration-tests` - Workspace-level integration tests
+- `impulse-web` - Web admin panel (Axum, planned for Sprint 27)
+- `impulse-integration-tests` - Workspace-level integration tests (fixtures, journeys, security, load)
 
 See [docs/architecture/system-architecture.md](docs/architecture/system-architecture.md) for complete architecture documentation.
 
@@ -632,64 +644,70 @@ We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for:
 
 ```
 Impulse-Next_BBS/
-├── Cargo.toml              # Workspace root
+├── Cargo.toml              # Workspace root (21 crates)
 ├── crates/                 # All crates
 │   ├── impulse-core/       # Core BBS logic
 │   ├── impulse-types/      # Shared types and errors
-│   ├── impulse-config/     # Configuration
-│   ├── impulse-protocol/   # Protocol traits
-│   ├── impulse-telnet/     # Telnet server
-│   ├── impulse-ssh/        # SSH server
-│   ├── impulse-session/    # Session management
-│   ├── impulse-terminal/   # Terminal I/O
-│   ├── impulse-auth/       # Authentication
-│   ├── impulse-message/    # Message bases
-│   ├── impulse-file/       # File areas
-│   ├── impulse-user/       # User management
-│   ├── impulse-door/       # Door games
-│   ├── impulse-menu/       # Menu system (NEW)
-│   ├── impulse-web/        # Web admin panel
-│   ├── impulse-logging/    # Logging infrastructure
-│   ├── impulse-server/     # Main server binary
-│   └── impconfig/          # CLI configuration tool (binary)
+│   ├── impulse-config/     # Configuration (TOML + ENV, hot-reload)
+│   ├── impulse-protocol/   # Protocol implementations (Zmodem, Xmodem, Ymodem)
+│   ├── impulse-telnet/     # Telnet server (RFC 854)
+│   ├── impulse-ssh/        # SSH server (RFC 4253, 4254)
+│   ├── impulse-session/    # Session management (concurrent, timeouts)
+│   ├── impulse-terminal/   # Terminal I/O (ANSI, Avatar, RIP, themes)
+│   ├── impulse-auth/       # Authentication (Argon2id, rate limiting)
+│   ├── impulse-message/    # Message bases (JAM/Hudson, QWK, FidoNet)
+│   ├── impulse-file/       # File areas (upload/download, ClamAV)
+│   ├── impulse-user/       # User management (profiles, stats, achievements)
+│   ├── impulse-door/       # Door games (DOOR.SYS, DORINFO1.DEF, DOSBox)
+│   ├── impulse-menu/       # Menu system (TOML parser, navigation)
+│   ├── impulse-admin/      # Administration (access control, audit logging)
+│   ├── impulse-web/        # Web admin panel (Axum, planned Sprint 27)
+│   ├── impulse-logging/    # Logging (rotation, archival, audit trails)
+│   ├── impulse-server/     # Main BBS server binary
+│   ├── impulse-cli/        # CLI management tool (binary)
+│   ├── impconfig/          # Configuration CLI tool (binary)
+│   └── impulse-integration-tests/ # Integration test suite
 ├── config/                 # Configuration files
-│   └── menus/              # Menu definitions (NEW)
+│   └── menus/              # Menu definitions (TOML)
 │       ├── main.toml       # Main menu
 │       ├── files.toml      # File areas menu
 │       ├── messages.toml   # Message areas menu
 │       └── settings.toml   # User settings menu
-├── docs/                   # Comprehensive documentation (43 files)
+├── docs/                   # Comprehensive documentation (67+ files)
 │   ├── INDEX.md            # Documentation hub
-│   ├── getting-started/    # Project overview (1 file)
+│   ├── getting-started/    # Project overview
 │   ├── architecture/       # System design (3 files)
-│   ├── planning/           # Phase and sprint plans (2 files)
+│   ├── planning/           # Phase and sprint plans (5 files)
 │   ├── implementation/     # Development guides (2 files)
-│   ├── testing/            # Testing strategy (1 file)
+│   ├── testing/            # Testing strategy
 │   ├── deployment/         # Deployment guides (2 files)
 │   ├── pascal-reference/   # Pascal analysis (21 files)
 │   │   ├── analysis/       # Source analysis (7 docs + 5 data)
 │   │   ├── conversion/     # Conversion guides (6 docs)
 │   │   └── risk-assessment/ # Risk analysis (3 docs)
-│   ├── reports/            # Analysis reports (9 files)
-│   │   ├── ci-cd/          # CI/CD reports (2 docs)
-│   │   ├── documentation/  # Doc verification (3 docs)
-│   │   ├── edition2024/    # Rust 2024 migration (2 docs)
-│   │   └── sprints/        # Sprint completions (3 docs)
-│   └── reference/          # Historical context (2 files)
+│   ├── reports/            # Analysis reports (9+ files)
+│   │   ├── ci-cd/          # CI/CD reports
+│   │   ├── documentation/  # Doc verification
+│   │   ├── edition2024/    # Rust 2024 migration
+│   │   └── sprints/        # Sprint completions
+│   ├── reference/          # Historical context (2 files)
+│   ├── retrospectives/     # Phase retrospectives
+│   ├── beta-testing-*.md   # Beta testing documentation
+│   ├── ci-cd-workflows.md  # CI/CD workflows documentation
+│   └── PHASE-3-AUDIT-REPORT.md # Phase 3 audit report
 ├── to-dos/                 # Sprint TODO files (32 sprints)
-│   ├── phase-1-foundation/
-│   ├── phase-2-core-features/
-│   ├── phase-3-feature-completion/
-│   └── phase-4-polish-launch/
-├── ref-docs/               # Reference documentation
-│   ├── impulse-history.md
-│   └── rust-conversion-technical.md
+│   ├── phase-1-foundation/        # Sprints 1-8 (COMPLETE)
+│   ├── phase-2-core-features/     # Sprints 9-16 (COMPLETE)
+│   ├── phase-3-feature-completion/ # Sprints 17-24 (COMPLETE)
+│   └── phase-4-polish-launch/     # Sprints 25-32 (PLANNED)
 ├── .github/workflows/      # CI/CD configuration
-│   └── ci.yml
-├── CONTRIBUTING.md         # Contribution guidelines
-├── CHANGELOG.md            # Version history
+│   └── ci.yml              # 12-job pipeline
+├── CONTRIBUTING.md         # Contribution guidelines (336 lines)
+├── CHANGELOG.md            # Version history (Keep a Changelog format)
 ├── README.md               # This file
-└── LICENSE-*               # Dual licensing
+├── CLAUDE.md               # Project memory bank
+├── CLAUDE.local.md         # Current session state
+└── LICENSE-*               # Dual MIT/Apache-2.0 licensing
 ```
 
 ## Technology Stack
@@ -866,41 +884,44 @@ cargo doc --workspace --no-deps --open
 | ----------------- | -------- | ------------------- | ----------------------- |
 | Phase 1 Complete  | Month 6  | ✅ **COMPLETE**     | November 2025 (6 weeks) |
 | Phase 2 Complete  | Month 12 | ✅ **COMPLETE**     | November 2025 (2 weeks) |
-| Phase 3 Complete  | Month 18 | 🔄 In Progress      | Target: January 2026    |
-| Phase 4 Complete  | Month 24 | Pending             | Target: February 2026   |
-| Production Launch | Month 24 | Pending             | Target: February 2026   |
+| Phase 3 Complete  | Month 18 | ✅ **COMPLETE**     | November 2025 (4 days)  |
+| Phase 4 Complete  | Month 24 | 🔄 In Progress      | Target: March 2026      |
+| Production Launch | Month 24 | Pending             | Target: March 2026      |
 
-**Progress:** 50% complete (16/32 sprints), ~2 months ahead of schedule
+**Progress:** 75% complete (24/32 sprints), ~3-4 months ahead of schedule
 
 ## Testing
 
-### Current Test Suite (Phase 1 + Phase 2 + Server Infrastructure + Sprints 17-20)
+### Current Test Suite (Phases 1, 2, and 3 Complete)
 
-**Total Tests**: 1,727 (100% passing rate)
+**Total Tests**: 2,165 (100% passing rate)
 **Code Coverage**: 75.43% achieved (target: 75%+ - GOAL MET!)
 
 **Test Types:**
 
-- **Unit Tests**: 720+ tests (validation logic, CRUD, authentication, logging, message I/O, menu parsing, file management)
-- **Integration Tests**: 190+ tests (serialization, file I/O, sessions, cross-crate workflows, message threading, file searching)
-- **Doc Tests**: 50+ tests (documentation examples)
-- **Benchmarks**: 7 performance benchmarks (authentication critical paths)
+- **Unit Tests**: 1,900+ tests (validation logic, CRUD, authentication, logging, message I/O, menu parsing, file management, protocols, themes, doors, admin, messaging)
+- **Integration Tests**: 240+ tests (serialization, file I/O, sessions, cross-crate workflows, message threading, file searching, user journeys, security audit, load testing)
+- **Doc Tests**: 90+ tests (documentation examples)
+- **Benchmarks**: 10+ performance benchmarks (authentication, protocol transfers, message operations)
 
 **Test Breakdown by Crate:**
 
 - impulse-types: 241 tests (Pascal compatibility, core types, serialization)
-- impulse-auth: 146+ tests (hashing, sessions, rate limiting, lockout, validation, flows)
-- impulse-message: 99+ tests (42 JAM format, 18 Hudson, 8 list screen, 4 read screen, 15 posting, 8 reply, 4 quoting)
-- impulse-file: 256+ tests (18 area, 22 list, 16 details, 20 search, 45 upload, 35 validation, 28 scanning, 32 DIZ, 20 UI)
-- impulse-user: 161+ tests (33 CRUD/file I/O, 128 new profile/stats/settings/achievements tests)
-- impulse-menu: 84+ tests (parser, renderer, router, navigation state machine)
-- impulse-logging: 80 tests (52 unit, 18 integration, 10 benchmarks)
+- impulse-auth: 146 tests (hashing, sessions, rate limiting, lockout, validation, flows)
+- impulse-message: 178 tests (JAM/Hudson formats, posting, threading, QWK packets, import/export, FidoNet)
+- impulse-file: 256 tests (areas, list/details, search, upload, validation, ClamAV scanning, FILE_ID.DIZ)
+- impulse-user: 161 tests (CRUD, profiles, statistics, settings, achievements, privacy, directory)
+- impulse-menu: 84 tests (parser, renderer, router, navigation state machine)
+- impulse-logging: 80 tests (rotation, archival, audit trails, benchmarks)
 - impulse-telnet: 40 tests (IAC parsing, connection handling, server operations)
 - impulse-config: 37 tests (configuration, validation, hot-reload)
-- impulse-session: 31 tests (session CRUD, state management, expiry, concurrent handling, timeouts, conflict resolution, WebSocket)
-- impulse-terminal: 110+ tests (color conversion, ANSI sequences, rendering, Sprint 17 TransferProgressScreen, Sprint 20 Theme: 62)
-- impulse-protocol: 456+ tests (Sprint 17 Zmodem: 236, Sprint 18 Xmodem/Ymodem: 112, Sprint 19 completion: 108)
-- Other crates: 137+ tests (door, web, core)
+- impulse-session: 31 tests (concurrent sessions, timeouts, conflict resolution, WebSocket)
+- impulse-terminal: 172 tests (ANSI sequences, rendering, themes, transfer progress screens)
+- impulse-protocol: 456 tests (Zmodem 236, Xmodem/Ymodem 112, completion 108)
+- impulse-door: 126 tests (DOOR.SYS, DORINFO1.DEF, manager, executor, DOSBox integration)
+- impulse-admin: 149 tests (access control, user/file/system management, audit logging)
+- impulse-integration-tests: 83 tests (fixtures, journeys, security audit, load testing)
+- Other crates: 125+ tests (core, web, CLI)
 
 **Coverage by Crate:**
 

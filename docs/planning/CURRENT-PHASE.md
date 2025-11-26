@@ -20,8 +20,8 @@
 - **Tests:** 2,165 passing (100% pass rate)
 - **Coverage:** 75.43% (exceeds 75% target)
 - **Clippy Warnings:** 0
-- **Crates:** 22 total (19 libraries + 3 binaries)
-- **Total Code:** ~71,000 lines (production + tests)
+- **Crates:** 21 total (18 libraries + 3 binaries)
+- **Total Code:** ~71,987 lines (46,750 code + 12,035 comments + 12,814 blank)
 - **CI/CD Status:** 12 jobs, 100% passing on main
 - **MSRV:** Rust 1.88+ (2024 edition)
 

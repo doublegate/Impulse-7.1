@@ -9,7 +9,7 @@ Project-specific guidance for Impulse-Next_BBS modernization (classic Impulse 7.
 ## Project Overview
 
 **Repository:** https://github.com/doublegate/Impulse-Next_BBS
-**Type:** Rust 2024 edition workspace (22 crates: 19 libraries + 3 binaries)
+**Type:** Rust 2024 edition workspace (21 crates: 18 libraries + 3 binaries)
 **Goal:** Next-generation BBS software - modernizing the classic Impulse 7.1 BBS from Borland Pascal to Rust for cross-platform operation
 **License:** MIT OR Apache-2.0
 
@@ -17,10 +17,10 @@ Project-specific guidance for Impulse-Next_BBS modernization (classic Impulse 7.
 
 ## Current Status
 
-**Phase:** 3 - Feature Completion (Sprints 17-24 COMPLETE - PHASE 3 100%)
-**Sprints Complete:** 24 of 32 (75%)
-**Version:** 0.9.0 (Phase 2: 100% + Phase 3: 100% - File Transfer, Themes, Doors, QWK, Admin & Integration Complete)
-**Last Commit:** ca8c1a7 (2025-11-26 - Sprint 24: Phase 3 Integration Testing)
+**Phase:** 4 - Polish & Launch (Sprint 25 Starting - Performance Optimization)
+**Sprints Complete:** 24 of 32 (75.0%)
+**Version:** 0.9.0 (Phases 1, 2, 3: 100% COMPLETE - All Advanced Features Implemented)
+**Last Commit:** 87ecdc3 (2025-11-26 - Phase 3 Server Integration Complete)
 
 ### Sprint Progress
 - ✅ **Phase 1:** Foundation (Sprints 1-8, 100%)
@@ -52,9 +52,9 @@ Project-specific guidance for Impulse-Next_BBS modernization (classic Impulse 7.
 - **Coverage:** 75.43% achieved (target: 75%+ - GOAL MET!)
 - **Clippy:** 0 warnings
 - **CI/CD:** 12 jobs, 100% passing on main branch
-- **Crates:** 22 (19 libraries + 3 binaries)
-- **Code:** ~71,000 lines total (production + tests)
-- **Commits:** 145 total
+- **Crates:** 21 (18 libraries + 3 binaries)
+- **Code:** ~71,987 lines total (46,750 code + 12,035 comments + 12,814 blank)
+- **Commits:** 138 total
 - **Build Time:** <2s dev, <10s release
 - **Test Execution:** <12s all tests
 
@@ -65,42 +65,48 @@ Project-specific guidance for Impulse-Next_BBS modernization (classic Impulse 7.
 ### Workspace Layout
 ```
 Impulse-Next_BBS/
-├── crates/              # 22 crates
+├── crates/              # 21 crates (18 libraries + 3 binaries)
 │   ├── impulse-core/    # Core BBS functionality
 │   ├── impulse-types/   # Type definitions (User, FileEntry, Message, BbsConfig)
-│   ├── impulse-config/  # Configuration management
-│   ├── impulse-protocol/# Protocol implementations
-│   ├── impulse-telnet/  # Telnet server
-│   ├── impulse-ssh/     # SSH server
-│   ├── impulse-session/ # Session management
-│   ├── impulse-terminal/# Terminal handling (ANSI/Avatar/RIP)
-│   ├── impulse-auth/    # Authentication
-│   ├── impulse-message/ # Message system
-│   ├── impulse-file/    # File management
-│   ├── impulse-user/    # User management
-│   ├── impulse-door/    # Door game interface
-│   ├── impulse-admin/   # Administration interface
-│   ├── impulse-web/     # Web admin panel
-│   ├── impulse-integration-tests/ # Phase 3 integration testing
-│   ├── impulse-cli/     # CLI tool (binary)
-│   └── impulse-server/  # Main server (binary)
-├── docs/                # 48+ documentation files
+│   ├── impulse-config/  # Configuration management (TOML + ENV, hot-reload)
+│   ├── impulse-protocol/# Protocol implementations (Zmodem, Xmodem, Ymodem)
+│   ├── impulse-telnet/  # Telnet server (RFC 854)
+│   ├── impulse-ssh/     # SSH server (RFC 4253, 4254)
+│   ├── impulse-session/ # Session management (concurrent, timeouts, WebSocket)
+│   ├── impulse-terminal/# Terminal handling (ANSI/Avatar/RIP, themes)
+│   ├── impulse-auth/    # Authentication (Argon2id, rate limiting, lockout)
+│   ├── impulse-message/ # Message system (JAM/Hudson, QWK, FidoNet)
+│   ├── impulse-file/    # File management (upload/download, ClamAV, FILE_ID.DIZ)
+│   ├── impulse-user/    # User management (profiles, stats, achievements)
+│   ├── impulse-door/    # Door game interface (DOOR.SYS, DORINFO1.DEF, DOSBox)
+│   ├── impulse-menu/    # Menu system (TOML parser, navigation)
+│   ├── impulse-admin/   # Administration (access control, audit logging)
+│   ├── impulse-web/     # Web admin panel (planned Sprint 27)
+│   ├── impulse-logging/ # Logging (rotation, archival, audit trails)
+│   ├── impulse-integration-tests/ # Integration test suite
+│   ├── impulse-server/  # Main BBS server (binary)
+│   ├── impulse-cli/     # CLI management tool (binary)
+│   └── impconfig/       # Configuration CLI (binary)
+├── docs/                # 67+ documentation files
 │   ├── architecture/    # System design docs
 │   ├── implementation/  # Implementation guides
-│   └── planning/        # Phase/sprint planning
-├── ref-docs/            # Reference documentation
-│   └── original-pascal/ # Pascal source analysis
+│   ├── planning/        # Phase/sprint planning (5 files)
+│   ├── reports/         # Analysis reports (CI/CD, sprints, docs)
+│   ├── pascal-reference/# Pascal analysis (21 files)
+│   ├── retrospectives/  # Phase retrospectives
+│   └── reference/       # Historical context
 ├── to-dos/              # Sprint TODO files (32 sprints)
-│   ├── phase-1-foundation/
-│   ├── phase-2-core-services/
-│   ├── phase-3-advanced-features/
-│   └── phase-4-polish-deployment/
-├── logs/                # Development logs
-├── .github/workflows/   # CI/CD configuration
-├── Cargo.toml           # Workspace manifest
+│   ├── phase-1-foundation/        # Sprints 1-8 (COMPLETE)
+│   ├── phase-2-core-features/     # Sprints 9-16 (COMPLETE)
+│   ├── phase-3-feature-completion/# Sprints 17-24 (COMPLETE)
+│   └── phase-4-polish-launch/     # Sprints 25-32 (PLANNED)
+├── .github/workflows/   # CI/CD configuration (12-job pipeline)
+├── Cargo.toml           # Workspace manifest (21 crates)
 ├── README.md            # Project documentation
-├── CHANGELOG.md         # Version history
-└── CONTRIBUTING.md      # Contribution guidelines
+├── CHANGELOG.md         # Version history (Keep a Changelog format)
+├── CONTRIBUTING.md      # Contribution guidelines (336 lines)
+├── CLAUDE.md            # This file - Project memory bank
+└── CLAUDE.local.md      # Current session state
 ```
 
 ### Key Crates
