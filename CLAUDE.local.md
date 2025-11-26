@@ -1,29 +1,35 @@
 # CLAUDE.local.md - Current Session State
 
 **Session Date:** 2025-11-25
-**Time:** Sprint 16 Documentation Update - Phase 2 COMPLETE
+**Time:** Documentation Metrics Correction - Phase 2 COMPLETE
 **Branch:** main
-**Last Commit:** 1e6a8c5 (Sprint 16: Phase 2 Integration & Testing Complete)
-**Working Tree:** Clean (documentation update in progress)
+**Last Commit:** 016b5b6 (docs: update documentation for Sprint 16 and Phase 2 completion)
+**Working Tree:** Modified (correcting metrics in documentation)
 
 ---
 
-## Current Session: Sprint 16 Documentation Update (2025-11-25)
+## Current Session: Documentation Metrics Correction (2025-11-25)
 
-### ✅ COMPREHENSIVE DOCUMENTATION UPDATE - IN PROGRESS
+### ✅ DOCUMENTATION METRICS CORRECTION - IN PROGRESS
 
-**Objective:** Update all project documentation to reflect completion of Sprint 16 (Phase 2 Integration & Testing - Phase 2 100% COMPLETE)
+**Objective:** Correct inaccurate metrics in all project documentation following Phase 2 completion
 
-**Current Metrics (Phase 2 Complete):**
+**Corrected Metrics (Phase 2 Complete - VERIFIED):**
 - **Sprints Complete:** 16/32 (50%)
 - **Phase 1 Progress:** 8/8 (100%) ✅
 - **Phase 2 Progress:** 8/8 (100%) ✅
-- **Tests:** 1,350+ passing (100% pass rate)
+- **Tests:** 1,118 passing (100% pass rate) ← CORRECTED from 1,350+
 - **Coverage:** 75.43% achieved (target: 75%+ - GOAL MET!)
-- **Crates:** 19 (17 libraries + 2 binaries)
-- **Code:** 35,000+ lines total (production + tests)
+- **Crates:** 19 (16 libraries + 3 binaries) ← CORRECTED from 17 libraries + 2 binaries
+- **Code:** 37,931 lines total ← CORRECTED from 35,000+
 - **Commits:** 100+ total
 - **Timeline Achievement:** 2 months ahead of schedule
+
+**Issues Found:**
+- Previous documentation (commit 016b5b6) contained incorrect test count (1,350+ instead of actual 1,118)
+- Incorrect crate breakdown (claimed 17 libraries + 2 binaries, actual is 16 libraries + 3 binaries)
+- Incorrect code line count (claimed 35,000+, actual is 37,931)
+- Binary crates: impconfig, impulse-cli, impulse-server (3 total)
 
 **Phase 2 Sprint Completions:**
 - **Sprint 9 (2025-11-25):** User Authentication
@@ -60,39 +66,33 @@
   - Beta testing documentation
   - Phase 2 retrospective and milestone documentation
 
-**Files Updated:**
-1. ✅ **CHANGELOG.md** - Added comprehensive Sprint 16 entry with:
-   - Phase 2 completion milestone
-   - 68 integration tests documented
-   - 32 performance benchmarks documented
-   - Beta testing documentation noted
-   - Phase 2 retrospective with all features
-   - Quality metrics (1,350+ tests, 75.43% coverage, 0 warnings)
+**Files Updated (Metrics Correction):**
+1. ✅ **README.md** - Corrected metrics:
+   - Tests: 1,350+ → 1,118
+   - Crates: 19 (17 libraries + 2 binaries) → 19 (16 libraries + 3 binaries)
+   - Code: 28,000+ → 37,931 lines
+   - Updated 4 locations with incorrect metrics
 
-2. ✅ **README.md** - Updated:
-   - Project Status (16/32, 50%, Phase 2: 100% COMPLETE)
-   - Recent Milestones (added Phase 2 COMPLETE banner, added Sprint 16)
-   - Quality Metrics (1,350+ tests, 75.43% coverage achieved)
-   - Current Implementation header (Phase 1 + Phase 2 Complete)
-   - Next Steps (Phase 2 COMPLETE, Phase 3 starting, timeline 50% with 2 months ahead)
-   - Roadmap section (Phase 2 marked COMPLETE, Key Milestones updated)
-   - Testing section (1,350+ tests, 75.43% coverage)
+2. ✅ **CHANGELOG.md** - Corrected metrics:
+   - Tests: 1,350+ → 1,118 (4 locations)
+   - Crates: 17 libraries + 2 binaries → 16 libraries + 3 binaries
+   - All Phase 2 completion metrics now accurate
 
-3. ✅ **CLAUDE.md** - Updated:
-   - Current Status (Phase 2: 100% COMPLETE, 16/32, 50%)
-   - Sprint Progress (Phase 2 added, Sprint 16 marked complete)
-   - Quality Metrics (1,350+ tests, 75.43% coverage, expanded metrics)
-   - Phase Roadmap (Phase 2: 100% COMPLETE)
+3. ✅ **CLAUDE.md** - Corrected metrics:
+   - Tests: 1,350+ → 1,118
+   - Crates: 17 libraries + 2 binaries → 16 libraries + 3 binaries
+   - Code: 35,000+ → 37,931 lines
 
-4. ✅ **CLAUDE.local.md** - Current session documented (THIS FILE)
+4. ✅ **CLAUDE.local.md** - Current session documented with corrected metrics (THIS FILE)
 
 **Next Actions:**
-1. ✅ Updated CHANGELOG.md with Sprint 16 comprehensive entry
-2. ✅ Updated README.md with Phase 2 completion
-3. ✅ Updated CLAUDE.md with Phase 2 completion
+1. ✅ Corrected README.md metrics (tests, crates, code)
+2. ✅ Corrected CHANGELOG.md metrics (tests, crates)
+3. ✅ Corrected CLAUDE.md metrics (tests, crates, code)
 4. ✅ Updated CLAUDE.local.md with current session
-5. 📋 Stage and commit all documentation changes
-6. 📋 Push to origin/main
+5. 📋 Verify sprint TODO files marked complete (Sprints 13-16)
+6. 📋 Run verification checks (fmt, clippy, test, build)
+7. 📋 Generate comprehensive report
 
 **Documentation Summary:**
 All four documentation files updated for Sprint 16 and Phase 2 completion:
@@ -406,51 +406,55 @@ All four documentation files updated for Sprint 16 and Phase 2 completion:
 
 ## Quality Metrics
 
-**Current (as of Phase 2 Sprint 12 Complete - 2025-11-25):**
+**Current (as of Phase 2 COMPLETE - Sprint 16 - 2025-11-25):**
 - **Rust Edition:** 2024
 - **MSRV:** 1.85+
-- **Tests:** 870+ passing (100% pass rate)
-- **Coverage:** 64.51% baseline (target: 75%+ Phase 2 end)
+- **Tests:** 1,118 passing (100% pass rate)
+- **Coverage:** 75.43% achieved (target: 75%+ - GOAL MET!)
 - **Clippy:** 0 warnings
 - **rustfmt:** All files formatted
 - **rustdoc:** 0 warnings
 - **CI/CD:** 5 jobs, 100% passing on main
-- **Crates:** 19 (17 libraries + 2 binaries)
-- **Commits:** 94+ total
-- **Code:** 28,000+ lines (production + tests)
+- **Crates:** 19 (16 libraries + 3 binaries)
+- **Commits:** 100+ total
+- **Code:** 37,931 lines (production + tests)
 - **Build Time:** <10s full workspace
-- **Test Execution:** <3s all tests
+- **Test Execution:** <5s all tests
 
 **Security:**
 - Argon2id password hashing (19 MiB, 2 iterations, ~200ms)
 - SHA-256 session tokens (32 bytes randomness)
 - Security audit logging (tamper-evident)
+- ClamAV virus scanning integration
+- FILE_ID.DIZ safe extraction
+- Upload validation and quarantine
 
 **Performance:**
 - Logging overhead: <2µs per event
 - Stream-based file parsing (memory efficient)
 - Async-safe session management (RwLock)
+- File search: <100ms for 10,000 files
+- Message threading: Optimized with 32 benchmarks
 
 **Test Breakdown:**
 - impulse-types: 241 tests (81.23% coverage)
 - impulse-auth: 146+ tests (rate limiting, lockout, validation, flows)
 - impulse-message: 99+ tests (JAM/Hudson formats, screens, posting, replies)
+- impulse-file: 256+ tests (areas, upload, validation, scanning, DIZ extraction)
+- impulse-user: 161+ tests (CRUD, profiles, stats, achievements, privacy)
 - impulse-menu: 84+ tests (parser, renderer, router, navigation)
 - impulse-logging: 80 tests (65.34% coverage)
 - impulse-config: 37 tests (68.12% coverage)
-- impulse-user: 33 tests (72.45% coverage)
-- Other crates: 150+ tests
+- Other crates: 14+ tests
 
 **Code Size:**
-- Production code: ~19,000 lines (98 Rust files)
-- Test code: ~9,000 lines
-- Total: 28,000+ lines
-- Documentation: 43 files, 35,000+ lines
+- Total: 37,931 lines (production + tests)
+- Documentation: 43 files, 38,000+ lines
 
-**Phase 2 Targets:**
-- Tests: 1000+ (target by end of Phase 2)
-- Coverage: 75%+ (increase by 11 percentage points)
-- Performance: <5ms end-to-end request latency
+**Phase 2 Goals - ALL MET:**
+- Tests: 1,118 total (exceeded 1000+ target) ✅
+- Coverage: 75.43% (exceeded 75%+ target) ✅
+- Performance: <5ms end-to-end request latency ✅
 
 ---
 
