@@ -1545,6 +1545,7 @@ dependencies = [
  "impulse-session",
  "impulse-ssh",
  "impulse-telnet",
+ "impulse-terminal",
  "impulse-types",
  "tokio",
  "tracing",
@@ -1562,6 +1563,7 @@ dependencies = [
  "thiserror 2.0.17",
  "tokio",
  "tracing",
+ "uuid",
 ]
 
 [[package]]
