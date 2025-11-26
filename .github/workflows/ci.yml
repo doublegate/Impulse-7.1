@@ -5,6 +5,7 @@ on:
     branches: [main, develop]
   pull_request:
     branches: [main, develop]
+  workflow_dispatch:  # Allow manual triggering of full CI including benchmarks
 
 # Cancel previous runs on new push
 concurrency:
@@ -145,10 +146,14 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
 
   # Performance benchmarks (parallel with build)
+  # Only runs on main branch pushes or manual workflow dispatch to save CI time
   benchmark:
     name: Performance Benchmarks
     needs: test
     runs-on: ubuntu-latest
+    # Only run benchmarks on main branch or manual trigger, skip on PRs
+    if: github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch'
+    timeout-minutes: 15  # Prevent runaway benchmarks
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
@@ -162,8 +167,12 @@ jobs:
           shared-key: "benchmark"
           cache-on-failure: true
 
-      - name: Run benchmarks
-        run: cargo bench --workspace --no-fail-fast | tee benchmark_results.txt
+      # Run only lightweight benchmarks, exclude expensive integration test benchmarks
+      - name: Run core benchmarks
+        run: |
+          cargo bench --workspace --no-fail-fast \
+            --exclude impulse-integration-tests \
+            -- --output-format bencher | tee benchmark_results.txt
 
       - name: Store benchmark results
         uses: actions/upload-artifact@v4
@@ -175,22 +184,6 @@ jobs:
             target/criterion/**/*.html
             target/criterion/**/*.svg
           retention-days: 30
-
-      - name: Comment benchmark results on PR
-        if: github.event_name == 'pull_request'
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const fs = require('fs');
-            if (fs.existsSync('benchmark_results.txt')) {
-              const results = fs.readFileSync('benchmark_results.txt', 'utf8');
-              github.rest.issues.createComment({
-                issue_number: context.issue.number,
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                body: `## Benchmark Results\n\`\`\`\n${results}\n\`\`\``
-              });
-            }
 
   # Security audit (parallel with build)
   security:
@@ -253,14 +246,22 @@ jobs:
     steps:
       - name: Check all jobs succeeded
         run: |
+          # Check required jobs (benchmark is optional on PRs)
           if [[ "${{ needs.lint.result }}" != "success" ]] || \
              [[ "${{ needs.test.result }}" != "success" ]] || \
              [[ "${{ needs.build.result }}" != "success" ]] || \
              [[ "${{ needs.coverage.result }}" != "success" ]] || \
-             [[ "${{ needs.benchmark.result }}" != "success" ]] || \
              [[ "${{ needs.security.result }}" != "success" ]] || \
              [[ "${{ needs.msrv.result }}" != "success" ]]; then
-            echo "One or more CI jobs failed"
+            echo "One or more required CI jobs failed"
             exit 1
           fi
+
+          # Check benchmark only if it ran (main branch or manual trigger)
+          if [[ "${{ needs.benchmark.result }}" != "success" ]] && \
+             [[ "${{ needs.benchmark.result }}" != "skipped" ]]; then
+            echo "Benchmark job failed"
+            exit 1
+          fi
+
           echo "All CI jobs passed successfully!"
