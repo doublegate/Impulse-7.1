@@ -110,7 +110,9 @@ pub use types::{FileArea, FileStatus, SearchCriteria, SortBy};
 pub use upload::{PendingUpload, UploadConfig, UploadProcessor, UploadRollback, UploadStats};
 
 // Re-export scanning types
-pub use scanning::{ClamAvScanner, MockScanner, QuarantineManager, ScanResult, VirusScanner};
+#[cfg(unix)]
+pub use scanning::ClamAvScanner;
+pub use scanning::{MockScanner, QuarantineManager, ScanResult, VirusScanner};
 
 // Re-export validation functions
 pub use validation::{
