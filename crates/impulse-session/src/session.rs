@@ -97,6 +97,10 @@ pub struct Session {
     terminal_height: u16,
     /// Terminal type (e.g., "ANSI", "VT100")
     terminal_type: String,
+    /// Whether idle timeout warning has been sent
+    idle_warning_sent: bool,
+    /// Whether absolute timeout warning has been sent
+    absolute_warning_sent: bool,
 }
 
 impl Session {
@@ -114,6 +118,8 @@ impl Session {
             terminal_width: 80,
             terminal_height: 24,
             terminal_type: "ANSI".to_string(),
+            idle_warning_sent: false,
+            absolute_warning_sent: false,
         }
     }
 
@@ -193,6 +199,8 @@ impl Session {
     /// Update last activity time
     pub fn update_activity(&mut self) {
         self.last_activity = Instant::now();
+        // Reset warning flags on activity
+        self.idle_warning_sent = false;
     }
 
     /// Set terminal dimensions
@@ -204,6 +212,58 @@ impl Session {
     /// Set terminal type
     pub fn set_terminal_type(&mut self, terminal_type: String) {
         self.terminal_type = terminal_type;
+    }
+
+    /// Check if idle warning should be sent
+    pub fn should_send_idle_warning(
+        &self,
+        idle_timeout: Duration,
+        warning_before: Duration,
+    ) -> bool {
+        let idle = self.idle_time();
+        let warning_threshold = idle_timeout.saturating_sub(warning_before);
+        !self.idle_warning_sent && idle >= warning_threshold && idle < idle_timeout
+    }
+
+    /// Check if absolute timeout warning should be sent
+    pub fn should_send_absolute_warning(
+        &self,
+        absolute_timeout: Duration,
+        warning_before: Duration,
+    ) -> bool {
+        let age = self.age();
+        let warning_threshold = absolute_timeout.saturating_sub(warning_before);
+        !self.absolute_warning_sent && age >= warning_threshold && age < absolute_timeout
+    }
+
+    /// Check if session has exceeded absolute timeout
+    pub fn is_absolute_timeout(&self, absolute_timeout: Duration) -> bool {
+        self.age() >= absolute_timeout
+    }
+
+    /// Mark idle warning as sent
+    pub fn mark_idle_warning_sent(&mut self) {
+        self.idle_warning_sent = true;
+    }
+
+    /// Mark absolute timeout warning as sent
+    pub fn mark_absolute_warning_sent(&mut self) {
+        self.absolute_warning_sent = true;
+    }
+
+    /// Check if any warning has been sent
+    pub fn has_warning_sent(&self) -> bool {
+        self.idle_warning_sent || self.absolute_warning_sent
+    }
+
+    /// Check if idle warning has been sent
+    pub fn is_idle_warning_sent(&self) -> bool {
+        self.idle_warning_sent
+    }
+
+    /// Check if absolute warning has been sent
+    pub fn is_absolute_warning_sent(&self) -> bool {
+        self.absolute_warning_sent
     }
 
     /// Terminate the session
@@ -252,5 +312,54 @@ mod tests {
     fn test_idle_detection() {
         let session = Session::new("192.168.1.1:1234".to_string());
         assert!(!session.is_idle(Duration::from_secs(1)));
+    }
+
+    #[test]
+    fn test_warning_flags_initialization() {
+        let session = Session::new("192.168.1.1:1234".to_string());
+        assert!(!session.has_warning_sent());
+        assert!(!session.is_idle_warning_sent());
+        assert!(!session.is_absolute_warning_sent());
+    }
+
+    #[test]
+    fn test_mark_warnings() {
+        let mut session = Session::new("192.168.1.1:1234".to_string());
+
+        session.mark_idle_warning_sent();
+        assert!(session.is_idle_warning_sent());
+        assert!(session.has_warning_sent());
+
+        session.mark_absolute_warning_sent();
+        assert!(session.is_absolute_warning_sent());
+        assert!(session.has_warning_sent());
+    }
+
+    #[test]
+    fn test_activity_resets_idle_warning() {
+        let mut session = Session::new("192.168.1.1:1234".to_string());
+        session.mark_idle_warning_sent();
+        assert!(session.is_idle_warning_sent());
+
+        session.update_activity();
+        assert!(!session.is_idle_warning_sent());
+    }
+
+    #[test]
+    fn test_idle_warning_threshold() {
+        let session = Session::new("192.168.1.1:1234".to_string());
+        let idle_timeout = Duration::from_secs(900);
+        let warning_before = Duration::from_secs(60);
+
+        // Session is brand new, no warning should be sent
+        assert!(!session.should_send_idle_warning(idle_timeout, warning_before));
+    }
+
+    #[test]
+    fn test_absolute_timeout_check() {
+        let session = Session::new("192.168.1.1:1234".to_string());
+
+        // Brand new session should not be timed out
+        assert!(!session.is_absolute_timeout(Duration::from_secs(3600)));
     }
 }

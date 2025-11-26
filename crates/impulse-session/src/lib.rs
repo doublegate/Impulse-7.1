@@ -35,11 +35,19 @@
 //! ```
 
 mod config;
+mod connection;
 mod error;
 mod manager;
 mod session;
 
-pub use config::SessionConfig;
+#[cfg(feature = "websocket")]
+mod websocket;
+
+pub use config::{ConflictPolicy, SessionConfig};
+pub use connection::{Connection, ConnectionError, ConnectionType};
 pub use error::{Result, SessionError};
 pub use manager::SessionManager;
 pub use session::{Session, SessionId, SessionState};
+
+#[cfg(feature = "websocket")]
+pub use websocket::{BbsMessage, NotificationLevel, SessionEvent, WebSocketConnection};
