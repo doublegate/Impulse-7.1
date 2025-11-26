@@ -241,16 +241,16 @@ impl RegistrationFlow {
         }
 
         // Validate email if provided
-        if let Some(ref email) = request.email {
-            if let Err(e) = Validator::validate_email(email) {
-                let e = e.to_string();
-                tracing::warn!(
-                    email = %email,
-                    error = %e,
-                    "Registration failed: invalid email"
-                );
-                return RegistrationResult::EmailInvalid;
-            }
+        if let Some(ref email) = request.email
+            && let Err(e) = Validator::validate_email(email)
+        {
+            let e = e.to_string();
+            tracing::warn!(
+                email = %email,
+                error = %e,
+                "Registration failed: invalid email"
+            );
+            return RegistrationResult::EmailInvalid;
         }
 
         // Create user

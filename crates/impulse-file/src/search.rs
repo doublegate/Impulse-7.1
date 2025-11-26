@@ -30,10 +30,10 @@ impl<'a> FileSearcher<'a> {
     /// Check if a file matches the search criteria
     pub fn matches(&self, file: &FileEntry) -> bool {
         // Check filename pattern
-        if let Some(ref matcher) = self.filename_matcher {
-            if !matcher.matches(&file.filename) {
-                return false;
-            }
+        if let Some(ref matcher) = self.filename_matcher
+            && !matcher.matches(&file.filename)
+        {
+            return false;
         }
 
         // Check description
@@ -55,34 +55,34 @@ impl<'a> FileSearcher<'a> {
         }
 
         // Check size range
-        if let Some(min_size) = self.criteria.min_size {
-            if file.size_bytes < min_size {
-                return false;
-            }
+        if let Some(min_size) = self.criteria.min_size
+            && file.size_bytes < min_size
+        {
+            return false;
         }
-        if let Some(max_size) = self.criteria.max_size {
-            if file.size_bytes > max_size {
-                return false;
-            }
+        if let Some(max_size) = self.criteria.max_size
+            && file.size_bytes > max_size
+        {
+            return false;
         }
 
         // Check date range
-        if let Some(date_from) = self.criteria.date_from {
-            if file.upload_date < date_from {
-                return false;
-            }
+        if let Some(date_from) = self.criteria.date_from
+            && file.upload_date < date_from
+        {
+            return false;
         }
-        if let Some(date_to) = self.criteria.date_to {
-            if file.upload_date > date_to {
-                return false;
-            }
+        if let Some(date_to) = self.criteria.date_to
+            && file.upload_date > date_to
+        {
+            return false;
         }
 
         // Check area filter
-        if let Some(area_id) = self.criteria.area_id {
-            if file.area_id != area_id {
-                return false;
-            }
+        if let Some(area_id) = self.criteria.area_id
+            && file.area_id != area_id
+        {
+            return false;
         }
 
         // Check new files filter (last 7 days)

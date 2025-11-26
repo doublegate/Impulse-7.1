@@ -162,15 +162,14 @@ impl RotationManager {
             let entry = entry?;
             let path = entry.path();
 
-            if path.is_file() {
-                if let Some(name) = path.file_name().and_then(|n| n.to_str()) {
-                    // Look for rotated log files (typically have date suffixes)
-                    if name.ends_with(".log") || name.contains(".log.") {
-                        let metadata = entry.metadata()?;
-                        let modified = metadata.modified()?;
-                        log_files.push((path, modified));
-                    }
-                }
+            if path.is_file()
+                && let Some(name) = path.file_name().and_then(|n| n.to_str())
+                && (name.ends_with(".log") || name.contains(".log."))
+            {
+                // Look for rotated log files (typically have date suffixes)
+                let metadata = entry.metadata()?;
+                let modified = metadata.modified()?;
+                log_files.push((path, modified));
             }
         }
 

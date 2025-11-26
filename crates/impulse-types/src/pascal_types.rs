@@ -158,10 +158,10 @@ impl ArFlags {
     pub fn to_ar_string(&self) -> String {
         let mut result = String::new();
         for c in b'@'..=b'Z' {
-            if let Some(flag) = Self::flag_from_char(c as char) {
-                if self.contains(flag) {
-                    result.push(c as char);
-                }
+            if let Some(flag) = Self::flag_from_char(c as char)
+                && self.contains(flag)
+            {
+                result.push(c as char);
             }
         }
         result

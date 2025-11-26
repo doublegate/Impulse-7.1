@@ -349,20 +349,20 @@ impl AccountLockout {
     /// # }
     /// ```
     pub async fn check(&self, username: &str) -> Result<(), LockoutError> {
-        if let Some(info) = self.get_lockout_info(username).await {
-            if !info.is_expired() {
-                tracing::warn!(
-                    username = %username,
-                    unlock_time = ?info.unlock_time(),
-                    failures = info.failure_count(),
-                    "Account locked: login attempt denied"
-                );
+        if let Some(info) = self.get_lockout_info(username).await
+            && !info.is_expired()
+        {
+            tracing::warn!(
+                username = %username,
+                unlock_time = ?info.unlock_time(),
+                failures = info.failure_count(),
+                "Account locked: login attempt denied"
+            );
 
-                return Err(LockoutError::AccountLocked {
-                    unlock_time: info.unlock_time(),
-                    reason: info.reason().to_string(),
-                });
-            }
+            return Err(LockoutError::AccountLocked {
+                unlock_time: info.unlock_time(),
+                reason: info.reason().to_string(),
+            });
         }
 
         Ok(())

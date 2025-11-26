@@ -133,13 +133,13 @@ impl MenuParser {
             }
 
             // Validate security level range
-            if let Some(max) = option.max_security {
-                if option.min_security > max {
-                    errors.push(ValidationError::InvalidSecurityRange {
-                        min: option.min_security,
-                        max,
-                    });
-                }
+            if let Some(max) = option.max_security
+                && option.min_security > max
+            {
+                errors.push(ValidationError::InvalidSecurityRange {
+                    min: option.min_security,
+                    max,
+                });
             }
         }
 

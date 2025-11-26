@@ -117,12 +117,12 @@ impl VirusScanner for ClamAvScanner {
 
     async fn is_available(&self) -> bool {
         // Try to connect and send PING
-        if let Ok(mut stream) = self.connect().await {
-            if stream.write_all(b"zPING\0").await.is_ok() {
-                let mut response = String::new();
-                if stream.read_to_string(&mut response).await.is_ok() {
-                    return response.trim() == "PONG";
-                }
+        if let Ok(mut stream) = self.connect().await
+            && stream.write_all(b"zPING\0").await.is_ok()
+        {
+            let mut response = String::new();
+            if stream.read_to_string(&mut response).await.is_ok() {
+                return response.trim() == "PONG";
             }
         }
         false

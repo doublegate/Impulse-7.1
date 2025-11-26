@@ -90,10 +90,10 @@ pub async fn format_profile<M: UserManager>(
     }
 
     // Signature
-    if options.show_signature {
-        if let Some(signature) = &user.sysop_note {
-            output.push_str(&format!("Signature:\n  {}\n\n", signature));
-        }
+    if options.show_signature
+        && let Some(signature) = &user.sysop_note
+    {
+        output.push_str(&format!("Signature:\n  {}\n\n", signature));
     }
 
     output.push_str("══════════════════════════════════════════════════════════════\n");

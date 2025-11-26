@@ -15,14 +15,14 @@ pub fn quote_message(original_text: &str, from: Option<&str>, include_attributio
     let mut result = String::new();
 
     // Add attribution header if requested
-    if include_attribution {
-        if let Some(sender) = from {
-            result.push_str(&format!(
-                "On {}, {} wrote:\n",
-                chrono::Utc::now().format("%Y-%m-%d"),
-                sender
-            ));
-        }
+    if include_attribution
+        && let Some(sender) = from
+    {
+        result.push_str(&format!(
+            "On {}, {} wrote:\n",
+            chrono::Utc::now().format("%Y-%m-%d"),
+            sender
+        ));
     }
 
     // Quote each line

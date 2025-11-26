@@ -30,14 +30,14 @@ pub async fn extract_from_rar(path: &Path) -> Result<Option<String>> {
             .arg(diz_name)
             .output();
 
-        if let Ok(output) = output {
-            if output.status.success() {
-                let content = String::from_utf8_lossy(&output.stdout);
-                if content.len() <= MAX_DIZ_SIZE as usize && !content.is_empty() {
-                    let cleaned = clean_diz_content(&content);
-                    if !cleaned.is_empty() {
-                        return Ok(Some(cleaned));
-                    }
+        if let Ok(output) = output
+            && output.status.success()
+        {
+            let content = String::from_utf8_lossy(&output.stdout);
+            if content.len() <= MAX_DIZ_SIZE as usize && !content.is_empty() {
+                let cleaned = clean_diz_content(&content);
+                if !cleaned.is_empty() {
+                    return Ok(Some(cleaned));
                 }
             }
         }

@@ -173,15 +173,15 @@ impl ConfigWatcher {
 
                 // Check debounce timeout
                 _ = time::sleep(Duration::from_millis(100)) => {
-                    if let Some(last) = last_event {
-                        if last.elapsed() >= debounce_duration {
-                            // Send notification
-                            if tx.send(()).await.is_err() {
-                                // Receiver dropped, stop watching
-                                break;
-                            }
-                            last_event = None;
+                    if let Some(last) = last_event
+                        && last.elapsed() >= debounce_duration
+                    {
+                        // Send notification
+                        if tx.send(()).await.is_err() {
+                            // Receiver dropped, stop watching
+                            break;
                         }
+                        last_event = None;
                     }
                 }
             }

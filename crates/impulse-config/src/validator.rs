@@ -131,10 +131,10 @@ fn check_path(path: &Path, name: &str, allow_empty: bool) -> Result<()> {
         Ok(())
     } else if allow_empty {
         // Check if parent directory exists so we can create this directory
-        if let Some(parent) = path_obj.parent() {
-            if !parent.exists() {
-                return Err(ConfigError::PathNotFound(parent.to_path_buf()));
-            }
+        if let Some(parent) = path_obj.parent()
+            && !parent.exists()
+        {
+            return Err(ConfigError::PathNotFound(parent.to_path_buf()));
         }
         Ok(())
     } else {

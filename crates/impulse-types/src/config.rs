@@ -286,10 +286,11 @@ impl BbsConfig {
         }
 
         // Validate email if provided
-        if let Some(email) = &self.sysop_email {
-            if !email.is_empty() && !email.contains('@') {
-                return Err(Error::Config("Invalid SysOp email format".to_string()));
-            }
+        if let Some(email) = &self.sysop_email
+            && !email.is_empty()
+            && !email.contains('@')
+        {
+            return Err(Error::Config("Invalid SysOp email format".to_string()));
         }
 
         // Validate servers

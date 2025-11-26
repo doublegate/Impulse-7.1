@@ -572,27 +572,27 @@ impl AuthService {
         let username = user.username();
 
         // Check account lockout first
-        if let Some(ref lockout) = self.lockout {
-            if let Err(e) = lockout.check(username).await {
-                tracing::warn!(
-                    username = %username,
-                    error = %e,
-                    "Login blocked: account locked"
-                );
-                return Err(AuthError::Generic(e.to_string()));
-            }
+        if let Some(ref lockout) = self.lockout
+            && let Err(e) = lockout.check(username).await
+        {
+            tracing::warn!(
+                username = %username,
+                error = %e,
+                "Login blocked: account locked"
+            );
+            return Err(AuthError::Generic(e.to_string()));
         }
 
         // Check rate limiting
-        if let Some(ref rate_limiter) = self.rate_limiter {
-            if let Err(e) = rate_limiter.check(username).await {
-                tracing::warn!(
-                    username = %username,
-                    error = %e,
-                    "Login blocked: rate limit exceeded"
-                );
-                return Err(AuthError::Generic(e.to_string()));
-            }
+        if let Some(ref rate_limiter) = self.rate_limiter
+            && let Err(e) = rate_limiter.check(username).await
+        {
+            tracing::warn!(
+                username = %username,
+                error = %e,
+                "Login blocked: rate limit exceeded"
+            );
+            return Err(AuthError::Generic(e.to_string()));
         }
 
         // Verify password

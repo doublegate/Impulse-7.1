@@ -104,32 +104,32 @@ impl SessionManager {
         // Check sessions per user limit and handle conflicts
         {
             let user_sessions = self.user_sessions.read().await;
-            if let Some(sessions) = user_sessions.get(&username) {
-                if sessions.len() >= self.config.max_sessions_per_user {
-                    match self.config.conflict_policy {
-                        ConflictPolicy::Allow => {
-                            // Should not reach here, but handle gracefully
-                            return Err(SessionError::TooManySessions {
-                                limit: self.config.max_sessions_per_user,
-                            });
-                        }
-                        ConflictPolicy::KickOldest => {
-                            // Find oldest session
-                            drop(user_sessions);
-                            let oldest_id = self.find_oldest_user_session(&username).await?;
-                            warn!(
-                                username = %username,
-                                old_session = %oldest_id,
-                                new_session = %session_id,
-                                "Kicking oldest session due to limit"
-                            );
-                            self.terminate_session(oldest_id).await?;
-                        }
-                        ConflictPolicy::DenyNew => {
-                            return Err(SessionError::TooManySessions {
-                                limit: self.config.max_sessions_per_user,
-                            });
-                        }
+            if let Some(sessions) = user_sessions.get(&username)
+                && sessions.len() >= self.config.max_sessions_per_user
+            {
+                match self.config.conflict_policy {
+                    ConflictPolicy::Allow => {
+                        // Should not reach here, but handle gracefully
+                        return Err(SessionError::TooManySessions {
+                            limit: self.config.max_sessions_per_user,
+                        });
+                    }
+                    ConflictPolicy::KickOldest => {
+                        // Find oldest session
+                        drop(user_sessions);
+                        let oldest_id = self.find_oldest_user_session(&username).await?;
+                        warn!(
+                            username = %username,
+                            old_session = %oldest_id,
+                            new_session = %session_id,
+                            "Kicking oldest session due to limit"
+                        );
+                        self.terminate_session(oldest_id).await?;
+                    }
+                    ConflictPolicy::DenyNew => {
+                        return Err(SessionError::TooManySessions {
+                            limit: self.config.max_sessions_per_user,
+                        });
                     }
                 }
             }
@@ -287,10 +287,10 @@ impl SessionManager {
 
         for (id, session) in sessions.iter() {
             // Skip unlimited users
-            if let Some(username) = session.username() {
-                if self.config.is_unlimited_user(username) {
-                    continue;
-                }
+            if let Some(username) = session.username()
+                && self.config.is_unlimited_user(username)
+            {
+                continue;
             }
 
             // Check idle warning
@@ -302,13 +302,13 @@ impl SessionManager {
             }
 
             // Check absolute warning (if configured)
-            if let Some(absolute_timeout) = self.config.absolute_timeout {
-                if session.should_send_absolute_warning(
+            if let Some(absolute_timeout) = self.config.absolute_timeout
+                && session.should_send_absolute_warning(
                     absolute_timeout,
                     self.config.warning_before_timeout,
-                ) {
-                    absolute_warnings.push(*id);
-                }
+                )
+            {
+                absolute_warnings.push(*id);
             }
         }
 
@@ -365,13 +365,12 @@ impl SessionManager {
                 }
 
                 // Check absolute timeout (only for non-unlimited users)
-                if !is_unlimited {
-                    if let Some(absolute_timeout) = self.config.absolute_timeout {
-                        if session.is_absolute_timeout(absolute_timeout) {
-                            expired.push(*id);
-                            continue;
-                        }
-                    }
+                if !is_unlimited
+                    && let Some(absolute_timeout) = self.config.absolute_timeout
+                    && session.is_absolute_timeout(absolute_timeout)
+                {
+                    expired.push(*id);
+                    continue;
                 }
             }
         }

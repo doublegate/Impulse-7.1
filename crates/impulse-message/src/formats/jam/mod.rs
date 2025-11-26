@@ -269,42 +269,39 @@ impl MessageBase for JamMessageBase {
                 Ok(msg) => {
                     let mut matches = true;
 
-                    if let Some(ref subject) = criteria.subject {
-                        if !msg
+                    if let Some(ref subject) = criteria.subject
+                        && !msg
                             .header
                             .subject
                             .to_lowercase()
                             .contains(&subject.to_lowercase())
-                        {
-                            matches = false;
-                        }
+                    {
+                        matches = false;
                     }
 
-                    if let Some(ref from) = criteria.from {
-                        if !msg
+                    if let Some(ref from) = criteria.from
+                        && !msg
                             .header
                             .from
                             .to_lowercase()
                             .contains(&from.to_lowercase())
-                        {
-                            matches = false;
-                        }
+                    {
+                        matches = false;
                     }
 
-                    if let Some(ref to) = criteria.to {
-                        if !msg.header.to.to_lowercase().contains(&to.to_lowercase()) {
-                            matches = false;
-                        }
+                    if let Some(ref to) = criteria.to
+                        && !msg.header.to.to_lowercase().contains(&to.to_lowercase())
+                    {
+                        matches = false;
                     }
 
-                    if let Some(ref body_search) = criteria.body {
-                        if !msg
+                    if let Some(ref body_search) = criteria.body
+                        && !msg
                             .body
                             .to_lowercase()
                             .contains(&body_search.to_lowercase())
-                        {
-                            matches = false;
-                        }
+                    {
+                        matches = false;
                     }
 
                     if criteria.unread_only && msg.header.is_read {

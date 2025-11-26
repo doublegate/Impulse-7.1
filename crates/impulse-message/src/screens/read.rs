@@ -131,13 +131,13 @@ impl MessageReadScreen {
             ));
 
             // Thread info
-            if let Some(thread) = &self.thread {
-                if thread.reply_count > 0 || thread.parent_id.is_some() {
-                    output.push_str(&format!(
-                        "║ Thread: {} replies, depth {}                                          ║\n",
-                        thread.reply_count, thread.depth
-                    ));
-                }
+            if let Some(thread) = &self.thread
+                && (thread.reply_count > 0 || thread.parent_id.is_some())
+            {
+                output.push_str(&format!(
+                    "║ Thread: {} replies, depth {}                                          ║\n",
+                    thread.reply_count, thread.depth
+                ));
             }
 
             output.push_str(
