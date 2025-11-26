@@ -1,0 +1,23 @@
+[package]
+name = "impulse-admin"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+rust-version.workspace = true
+description = "Administration interface for Impulse BBS"
+
+[dependencies]
+impulse-types = { path = "../impulse-types" }
+tokio = { workspace = true, features = ["sync", "time"] }
+serde = { workspace = true }
+serde_json = { workspace = true }
+chrono = { workspace = true }
+uuid = { workspace = true }
+tracing = { workspace = true }
+thiserror = { workspace = true }
+
+[dev-dependencies]
+tokio = { workspace = true, features = ["test-util"] }
+tokio-test = "0.4"

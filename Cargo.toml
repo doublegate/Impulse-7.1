@@ -20,6 +20,7 @@ members = [
     "crates/impconfig",
     "crates/impulse-logging",
     "crates/impulse-menu",
+    "crates/impulse-admin",
 ]
 
 [workspace.package]
