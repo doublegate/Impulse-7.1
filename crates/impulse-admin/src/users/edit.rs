@@ -32,7 +32,9 @@ impl UserManager {
         // Validate changes
         if let Some(ref email) = changes.email {
             if email.is_empty() {
-                return Err(AdminError::InvalidInput("Email cannot be empty".to_string()));
+                return Err(AdminError::InvalidInput(
+                    "Email cannot be empty".to_string(),
+                ));
             }
             if !email.contains('@') {
                 return Err(AdminError::InvalidInput("Invalid email format".to_string()));
@@ -44,7 +46,9 @@ impl UserManager {
             // All u8 values are valid, no need to check
         }
 
-        if let Some(limit) = changes.time_limit_minutes && limit < 0 {
+        if let Some(limit) = changes.time_limit_minutes
+            && limit < 0
+        {
             return Err(AdminError::InvalidInput(
                 "Time limit cannot be negative".to_string(),
             ));

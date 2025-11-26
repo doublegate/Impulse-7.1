@@ -210,7 +210,10 @@ mod tests {
             .kick_user(1, uuid::Uuid::new_v4(), "reason".to_string())
             .await;
         assert!(result.is_err());
-        assert!(matches!(result.unwrap_err(), AdminError::SessionNotFound(_)));
+        assert!(matches!(
+            result.unwrap_err(),
+            AdminError::SessionNotFound(_)
+        ));
     }
 
     #[tokio::test]

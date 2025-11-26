@@ -156,9 +156,15 @@ mod tests {
     #[tokio::test]
     async fn test_get_entries_by_admin() {
         let logger = AuditLogger::new();
-        logger.log_action(1, "action1", None::<String>, None::<String>).await;
-        logger.log_action(2, "action2", None::<String>, None::<String>).await;
-        logger.log_action(1, "action3", None::<String>, None::<String>).await;
+        logger
+            .log_action(1, "action1", None::<String>, None::<String>)
+            .await;
+        logger
+            .log_action(2, "action2", None::<String>, None::<String>)
+            .await;
+        logger
+            .log_action(1, "action3", None::<String>, None::<String>)
+            .await;
 
         let admin1_entries = logger.get_entries_by_admin(1).await;
         assert_eq!(admin1_entries.len(), 2);
@@ -172,9 +178,15 @@ mod tests {
     #[tokio::test]
     async fn test_get_entries_by_action() {
         let logger = AuditLogger::new();
-        logger.log_action(1, "edit_user", None::<String>, None::<String>).await;
-        logger.log_action(1, "delete_user", None::<String>, None::<String>).await;
-        logger.log_action(2, "edit_user", None::<String>, None::<String>).await;
+        logger
+            .log_action(1, "edit_user", None::<String>, None::<String>)
+            .await;
+        logger
+            .log_action(1, "delete_user", None::<String>, None::<String>)
+            .await;
+        logger
+            .log_action(2, "edit_user", None::<String>, None::<String>)
+            .await;
 
         let edit_entries = logger.get_entries_by_action("edit_user").await;
         assert_eq!(edit_entries.len(), 2);
@@ -203,17 +215,23 @@ mod tests {
         let logger = AuditLogger::new();
         assert_eq!(logger.count().await, 0);
 
-        logger.log_action(1, "action1", None::<String>, None::<String>).await;
+        logger
+            .log_action(1, "action1", None::<String>, None::<String>)
+            .await;
         assert_eq!(logger.count().await, 1);
 
-        logger.log_action(1, "action2", None::<String>, None::<String>).await;
+        logger
+            .log_action(1, "action2", None::<String>, None::<String>)
+            .await;
         assert_eq!(logger.count().await, 2);
     }
 
     #[tokio::test]
     async fn test_clear() {
         let logger = AuditLogger::new();
-        logger.log_action(1, "action1", None::<String>, None::<String>).await;
+        logger
+            .log_action(1, "action1", None::<String>, None::<String>)
+            .await;
         assert_eq!(logger.count().await, 1);
 
         logger.clear().await;
@@ -223,9 +241,13 @@ mod tests {
     #[tokio::test]
     async fn test_timestamp_ordering() {
         let logger = AuditLogger::new();
-        logger.log_action(1, "first", None::<String>, None::<String>).await;
+        logger
+            .log_action(1, "first", None::<String>, None::<String>)
+            .await;
         tokio::time::sleep(tokio::time::Duration::from_millis(10)).await;
-        logger.log_action(1, "second", None::<String>, None::<String>).await;
+        logger
+            .log_action(1, "second", None::<String>, None::<String>)
+            .await;
 
         let entries = logger.get_all_entries().await;
         assert!(entries[0].timestamp < entries[1].timestamp);

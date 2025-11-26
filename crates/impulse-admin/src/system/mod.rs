@@ -129,9 +129,11 @@ mod tests {
         let audit = AuditLogger::new();
         let maint = SystemMaintenance::new(access, audit);
 
-        assert!(maint
-            .access_control()
-            .has_permission(AdminPermission::ViewSessions));
+        assert!(
+            maint
+                .access_control()
+                .has_permission(AdminPermission::ViewSessions)
+        );
     }
 
     #[tokio::test]

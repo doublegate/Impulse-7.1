@@ -146,7 +146,9 @@ mod tests {
         let user = create_test_user(1, "testuser", 100);
         let manager = UserManager::with_users(access, audit, vec![user]);
 
-        let result = manager.ban_user(1, 1, "Violation of terms".to_string()).await;
+        let result = manager
+            .ban_user(1, 1, "Violation of terms".to_string())
+            .await;
         assert!(result.is_ok());
 
         let banned = manager.get_user(1).await.unwrap();

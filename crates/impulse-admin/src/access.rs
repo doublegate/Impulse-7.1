@@ -150,7 +150,11 @@ mod tests {
     #[test]
     fn test_require_permission_ok() {
         let access = AdminAccessControl::new(200, 200);
-        assert!(access.require_permission(AdminPermission::ViewUsers).is_ok());
+        assert!(
+            access
+                .require_permission(AdminPermission::ViewUsers)
+                .is_ok()
+        );
     }
 
     #[test]

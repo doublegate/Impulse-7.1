@@ -107,7 +107,11 @@ impl SystemMaintenance {
                 admin_user_id,
                 "broadcast_to_users",
                 Some(format!("{:?}", target_user_ids)),
-                Some(format!("receivers={}, message_len={}", target_count, message.len())),
+                Some(format!(
+                    "receivers={}, message_len={}",
+                    target_count,
+                    message.len()
+                )),
             )
             .await;
 
@@ -188,9 +192,7 @@ mod tests {
         ];
         let maint = SystemMaintenance::with_sessions(access, audit, sessions);
 
-        let result = maint
-            .broadcast_message(1, "Test message".to_string())
-            .await;
+        let result = maint.broadcast_message(1, "Test message".to_string()).await;
         assert!(result.is_ok());
         assert_eq!(result.unwrap(), 3);
     }
@@ -223,9 +225,7 @@ mod tests {
         let audit = AuditLogger::new();
         let maint = SystemMaintenance::new(access, audit);
 
-        let result = maint
-            .broadcast_message(1, "Test message".to_string())
-            .await;
+        let result = maint.broadcast_message(1, "Test message".to_string()).await;
         assert!(result.is_ok());
         assert_eq!(result.unwrap(), 0);
     }
@@ -236,9 +236,7 @@ mod tests {
         let audit = AuditLogger::new();
         let maint = SystemMaintenance::new(access, audit);
 
-        let result = maint
-            .broadcast_message(1, "Test message".to_string())
-            .await;
+        let result = maint.broadcast_message(1, "Test message".to_string()).await;
         assert!(result.is_err());
     }
 
@@ -293,9 +291,7 @@ mod tests {
         let audit = AuditLogger::new();
         let maint = SystemMaintenance::new(access, audit);
 
-        let result = maint
-            .broadcast_to_users(1, vec![1], "".to_string())
-            .await;
+        let result = maint.broadcast_to_users(1, vec![1], "".to_string()).await;
         assert!(result.is_err());
     }
 
@@ -365,7 +361,9 @@ mod tests {
 
         maint.broadcast_shutdown_notice(42, 5).await.unwrap();
 
-        let entries = audit.get_entries_by_action("broadcast_shutdown_notice").await;
+        let entries = audit
+            .get_entries_by_action("broadcast_shutdown_notice")
+            .await;
         assert_eq!(entries.len(), 1);
         assert_eq!(entries[0].admin_user_id, 42);
     }

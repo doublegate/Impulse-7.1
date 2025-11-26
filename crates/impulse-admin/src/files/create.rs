@@ -23,21 +23,21 @@ impl FileAreaManager {
     /// # Arguments
     /// * `admin_user_id` - ID of the administrator creating the area
     /// * `area` - New file area details
-    pub async fn create_area(
-        &self,
-        admin_user_id: i32,
-        area: NewFileArea,
-    ) -> AdminResult<i32> {
+    pub async fn create_area(&self, admin_user_id: i32, area: NewFileArea) -> AdminResult<i32> {
         self.access_control
             .require_permission(AdminPermission::ManageFileAreas)?;
 
         // Validate input
         if area.name.is_empty() {
-            return Err(AdminError::InvalidInput("Area name cannot be empty".to_string()));
+            return Err(AdminError::InvalidInput(
+                "Area name cannot be empty".to_string(),
+            ));
         }
 
         if area.description.is_empty() {
-            return Err(AdminError::InvalidInput("Area description cannot be empty".to_string()));
+            return Err(AdminError::InvalidInput(
+                "Area description cannot be empty".to_string(),
+            ));
         }
 
         if area.max_file_size_mb <= 0 {

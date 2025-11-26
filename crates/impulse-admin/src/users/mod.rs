@@ -127,7 +127,11 @@ mod tests {
         let audit = AuditLogger::new();
         let manager = UserManager::new(access, audit);
 
-        assert!(manager.access_control().has_permission(AdminPermission::ViewUsers));
+        assert!(
+            manager
+                .access_control()
+                .has_permission(AdminPermission::ViewUsers)
+        );
     }
 
     #[tokio::test]

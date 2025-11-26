@@ -136,9 +136,11 @@ mod tests {
         let audit = AuditLogger::new();
         let manager = FileAreaManager::new(access, audit);
 
-        assert!(manager
-            .access_control()
-            .has_permission(AdminPermission::ManageFileAreas));
+        assert!(
+            manager
+                .access_control()
+                .has_permission(AdminPermission::ManageFileAreas)
+        );
     }
 
     #[tokio::test]

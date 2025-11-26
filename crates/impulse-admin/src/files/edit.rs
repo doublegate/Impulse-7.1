@@ -32,17 +32,25 @@ impl FileAreaManager {
             .require_permission(AdminPermission::ManageFileAreas)?;
 
         // Validate changes
-        if let Some(ref name) = changes.name && name.is_empty() {
-            return Err(AdminError::InvalidInput("Area name cannot be empty".to_string()));
+        if let Some(ref name) = changes.name
+            && name.is_empty()
+        {
+            return Err(AdminError::InvalidInput(
+                "Area name cannot be empty".to_string(),
+            ));
         }
 
-        if let Some(ref description) = changes.description && description.is_empty() {
+        if let Some(ref description) = changes.description
+            && description.is_empty()
+        {
             return Err(AdminError::InvalidInput(
                 "Area description cannot be empty".to_string(),
             ));
         }
 
-        if let Some(max_size) = changes.max_file_size_mb && max_size <= 0 {
+        if let Some(max_size) = changes.max_file_size_mb
+            && max_size <= 0
+        {
             return Err(AdminError::InvalidInput(
                 "Max file size must be positive".to_string(),
             ));
@@ -53,7 +61,8 @@ impl FileAreaManager {
 
         // Check for duplicate name if renaming
         if let Some(ref new_name) = changes.name
-            && areas.iter().any(|a| a.id != area_id && a.name == *new_name) {
+            && areas.iter().any(|a| a.id != area_id && a.name == *new_name)
+        {
             return Err(AdminError::InvalidInput(format!(
                 "File area '{}' already exists",
                 new_name
@@ -259,10 +268,7 @@ mod tests {
     async fn test_edit_area_duplicate_name() {
         let access = AdminAccessControl::new(200, 200);
         let audit = AuditLogger::new();
-        let areas = vec![
-            create_test_area(1, "area1"),
-            create_test_area(2, "area2"),
-        ];
+        let areas = vec![create_test_area(1, "area1"), create_test_area(2, "area2")];
         let manager = FileAreaManager::with_areas(access, audit, areas);
 
         let changes = FileAreaEditRequest {
