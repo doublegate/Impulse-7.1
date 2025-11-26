@@ -21,6 +21,7 @@ members = [
     "crates/impulse-logging",
     "crates/impulse-menu",
     "crates/impulse-admin",
+    "crates/impulse-integration-tests",
 ]
 
 [workspace.package]
