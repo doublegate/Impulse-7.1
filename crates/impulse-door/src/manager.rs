@@ -202,6 +202,23 @@ impl DoorManager {
 mod tests {
     use super::*;
 
+    // Helper function to get a platform-specific test executable path
+    fn test_executable() -> PathBuf {
+        #[cfg(unix)]
+        {
+            PathBuf::from("/bin/ls")
+        }
+        #[cfg(windows)]
+        {
+            PathBuf::from("C:\\Windows\\System32\\cmd.exe")
+        }
+    }
+
+    // Helper function to get a platform-specific test directory path
+    fn test_directory() -> PathBuf {
+        std::env::temp_dir()
+    }
+
     async fn create_test_manager() -> DoorManager {
         let temp_dir = tempfile::tempdir().unwrap();
         let door_dir = temp_dir.path().join("doors");
@@ -211,11 +228,7 @@ mod tests {
     }
 
     fn create_test_config(name: &str, security_level: u8) -> DoorConfig {
-        let mut config = DoorConfig::new(
-            name.to_string(),
-            PathBuf::from("/bin/ls"),
-            PathBuf::from("/tmp"),
-        );
+        let mut config = DoorConfig::new(name.to_string(), test_executable(), test_directory());
         config.min_security_level = security_level;
         config
     }

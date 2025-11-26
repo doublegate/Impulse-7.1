@@ -314,6 +314,23 @@ mod tests {
     use super::*;
     use chrono::Utc;
 
+    // Helper function to get a platform-specific test executable path
+    fn test_executable() -> PathBuf {
+        #[cfg(unix)]
+        {
+            PathBuf::from("/bin/ls")
+        }
+        #[cfg(windows)]
+        {
+            PathBuf::from("C:\\Windows\\System32\\cmd.exe")
+        }
+    }
+
+    // Helper function to get a platform-specific test directory path
+    fn test_directory() -> PathBuf {
+        std::env::temp_dir()
+    }
+
     async fn create_test_executor() -> DoorExecutor {
         let temp_dir = tempfile::tempdir().unwrap();
         let door_dir = temp_dir.path().join("doors");
@@ -370,8 +387,8 @@ mod tests {
         // Add a door with high security requirement
         let mut config = DoorConfig::new(
             "secure-door".to_string(),
-            PathBuf::from("/bin/ls"),
-            PathBuf::from("/tmp"),
+            test_executable(),
+            test_directory(),
         );
         config.min_security_level = 200;
 
@@ -399,11 +416,7 @@ mod tests {
 
         let mut manager = DoorManager::new(door_dir, node_dir).await.unwrap();
 
-        let config = DoorConfig::new(
-            "test-door".to_string(),
-            PathBuf::from("/bin/ls"),
-            PathBuf::from("/tmp"),
-        );
+        let config = DoorConfig::new("test-door".to_string(), test_executable(), test_directory());
 
         manager.add_door(config).unwrap();
 

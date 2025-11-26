@@ -193,17 +193,30 @@ impl<'de> Deserialize<'de> for DropfileType {
 mod tests {
     use super::*;
 
+    // Helper function to get a platform-specific test executable path
+    fn test_executable() -> PathBuf {
+        #[cfg(unix)]
+        {
+            PathBuf::from("/bin/ls")
+        }
+        #[cfg(windows)]
+        {
+            PathBuf::from("C:\\Windows\\System32\\cmd.exe")
+        }
+    }
+
+    // Helper function to get a platform-specific test directory path
+    fn test_directory() -> PathBuf {
+        std::env::temp_dir()
+    }
+
     #[test]
     fn test_door_config_new() {
-        let config = DoorConfig::new(
-            "test-door".to_string(),
-            PathBuf::from("/bin/ls"),
-            PathBuf::from("/tmp"),
-        );
+        let config = DoorConfig::new("test-door".to_string(), test_executable(), test_directory());
 
         assert_eq!(config.name, "test-door");
-        assert_eq!(config.executable, PathBuf::from("/bin/ls"));
-        assert_eq!(config.directory, PathBuf::from("/tmp"));
+        assert_eq!(config.executable, test_executable());
+        assert_eq!(config.directory, test_directory());
         assert_eq!(config.min_security_level, 0);
         assert_eq!(config.max_time_minutes, 60);
         assert!(!config.use_dosbox);
@@ -215,8 +228,8 @@ mod tests {
         let config = DoorConfig {
             name: String::new(),
             description: String::new(),
-            executable: PathBuf::from("/bin/ls"),
-            directory: PathBuf::from("/tmp"),
+            executable: test_executable(),
+            directory: test_directory(),
             dropfile_type: DropfileType::DoorSys,
             min_security_level: 0,
             max_time_minutes: 60,
@@ -232,7 +245,7 @@ mod tests {
         let config = DoorConfig::new(
             "test".to_string(),
             PathBuf::from("/nonexistent/executable"),
-            PathBuf::from("/tmp"),
+            test_directory(),
         );
 
         let result = config.validate();
@@ -244,7 +257,7 @@ mod tests {
     fn test_door_config_validate_missing_directory() {
         let config = DoorConfig::new(
             "test".to_string(),
-            PathBuf::from("/bin/ls"),
+            test_executable(),
             PathBuf::from("/nonexistent/directory"),
         );
 
@@ -255,11 +268,7 @@ mod tests {
 
     #[test]
     fn test_door_config_validate_dosbox_no_config() {
-        let mut config = DoorConfig::new(
-            "test".to_string(),
-            PathBuf::from("/bin/ls"),
-            PathBuf::from("/tmp"),
-        );
+        let mut config = DoorConfig::new("test".to_string(), test_executable(), test_directory());
         config.use_dosbox = true;
 
         let result = config.validate();
@@ -353,11 +362,7 @@ mod tests {
 
     #[test]
     fn test_door_config_serialize() {
-        let config = DoorConfig::new(
-            "test-door".to_string(),
-            PathBuf::from("/bin/ls"),
-            PathBuf::from("/tmp"),
-        );
+        let config = DoorConfig::new("test-door".to_string(), test_executable(), test_directory());
 
         let serialized = toml::to_string(&config).unwrap();
         assert!(serialized.contains("name = \"test-door\""));
@@ -366,11 +371,7 @@ mod tests {
 
     #[test]
     fn test_door_config_roundtrip() {
-        let config = DoorConfig::new(
-            "test-door".to_string(),
-            PathBuf::from("/bin/ls"),
-            PathBuf::from("/tmp"),
-        );
+        let config = DoorConfig::new("test-door".to_string(), test_executable(), test_directory());
 
         let serialized = toml::to_string(&config).unwrap();
         let deserialized: DoorConfig = toml::from_str(&serialized).unwrap();
@@ -385,11 +386,8 @@ mod tests {
         let temp_dir = tempfile::tempdir().unwrap();
         let config_path = temp_dir.path().join("door.toml");
 
-        let mut config = DoorConfig::new(
-            "test-door".to_string(),
-            PathBuf::from("/bin/ls"),
-            PathBuf::from("/tmp"),
-        );
+        let mut config =
+            DoorConfig::new("test-door".to_string(), test_executable(), test_directory());
         config.description = "Test door game".to_string();
         config.min_security_level = 50;
 
@@ -416,11 +414,8 @@ mod tests {
 
     #[test]
     fn test_door_config_with_dosbox() {
-        let mut config = DoorConfig::new(
-            "dos-door".to_string(),
-            PathBuf::from("/bin/ls"),
-            PathBuf::from("/tmp"),
-        );
+        let mut config =
+            DoorConfig::new("dos-door".to_string(), test_executable(), test_directory());
         config.use_dosbox = true;
         config.dosbox_config = Some(DosBoxConfig::new());
 
