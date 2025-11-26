@@ -107,6 +107,14 @@ pub enum MessageError {
     /// Index update failed
     #[error("Index update failed: {0}")]
     IndexUpdateFailed(String),
+
+    /// Serialization error
+    #[error("Serialization error: {0}")]
+    Serialization(String),
+
+    /// Deserialization error
+    #[error("Deserialization error: {0}")]
+    Deserialization(String),
 }
 
 impl From<binrw::Error> for MessageError {

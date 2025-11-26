@@ -2,7 +2,9 @@
 //!
 //! This crate provides complete message base functionality,
 //! supporting multiple formats (JAM, Hudson) with threaded conversations,
-//! message posting, reply functionality, search capabilities, and UI screens.
+//! message posting, reply functionality, search capabilities, UI screens,
+//! and advanced features including QWK offline mail, FidoNet addressing,
+//! and message routing.
 //!
 //! # Features
 //!
@@ -14,6 +16,10 @@
 //! - **Atomic Writes**: Safe, atomic file operations to prevent corruption
 //! - **Search**: Search messages by from, to, subject, body, and date
 //! - **UI Screens**: Message list and read screens for display
+//! - **QWK Support**: Generate QWK offline mail packets and parse reply packets
+//! - **FidoNet Addressing**: Full FidoNet address parsing (zone:net/node.point)
+//! - **Message Routing**: Intelligent routing decisions for networked messages
+//! - **Import/Export**: Export messages to text/JSON/CSV, import from text/JSON
 //! - **Async**: Fully async API using tokio
 //!
 //! # Examples
@@ -146,6 +152,21 @@ pub mod quote;
 
 /// Reply functionality
 pub mod reply;
+
+/// QWK offline mail packet support
+pub mod qwk;
+
+/// Message addressing (FidoNet)
+pub mod addressing;
+
+/// Message routing
+pub mod routing;
+
+/// Message export
+pub mod export;
+
+/// Message import
+pub mod import;
 
 // Re-export commonly used types
 pub use error::{MessageError, Result};
