@@ -12,3 +12,12 @@ impulse-types = { path = "../impulse-types" }
 tokio = { workspace = true }
 async-trait = { workspace = true }
 thiserror = { workspace = true }
+serde = { workspace = true }
+chrono = { workspace = true }
+
+# File handling
+zip = "2.2"
+wildmatch = "2.3"
+
+# Data structures
+indexmap = "2.8"
