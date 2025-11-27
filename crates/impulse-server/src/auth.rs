@@ -169,8 +169,9 @@ async fn handle_login(
         return Ok(None);
     }
 
-    // Prompt for password
+    // Prompt for password (add newline after username input)
     renderer.clear();
+    renderer.write_line(""); // Add newline to move to next line
     renderer.set_foreground(Color::BrightGreen);
     renderer.write_text("Password: ");
     renderer.reset();
@@ -178,9 +179,8 @@ async fn handle_login(
         .send_raw(renderer.take_output().as_bytes())
         .await?;
 
-    // For this demo, we'll skip actual password validation
-    // In production, this would read the password securely
-    let _password = match connection.read_line().await {
+    // Read password securely (without echoing)
+    let _password = match connection.read_password(true).await {
         Ok(line) => line.trim().to_string(),
         Err(_) => return Ok(Some(AuthResult::Quit)),
     };

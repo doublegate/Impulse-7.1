@@ -161,6 +161,93 @@ impl TelnetConnection {
         String::from_utf8(line).map_err(TelnetError::InvalidUtf8)
     }
 
+    /// Read a password from the client without echoing
+    ///
+    /// This method temporarily disables echo to prevent the password from being
+    /// displayed on the client's terminal. Optionally displays asterisks (*) for
+    /// visual feedback.
+    ///
+    /// # Arguments
+    ///
+    /// * `show_asterisks` - If true, displays '*' for each character typed
+    pub async fn read_password(&mut self, show_asterisks: bool) -> Result<String> {
+        let mut password = Vec::new();
+        let mut buf = [0u8; 1];
+        let mut started = false;
+
+        // Save current echo state
+        let original_echo = self.echo_enabled;
+
+        // Disable echo on the server side
+        // (client may still echo locally, but we won't echo back)
+        self.echo_enabled = false;
+
+        loop {
+            let n = self.stream.read(&mut buf).await?;
+            if n == 0 {
+                self.echo_enabled = original_echo;
+                return Err(TelnetError::ConnectionClosed);
+            }
+
+            let byte = buf[0];
+
+            // Handle IAC sequences
+            if byte == IAC {
+                self.handle_iac_sequence().await?;
+                continue;
+            }
+
+            // Skip leading CR/LF characters
+            if !started && (byte == b'\n' || byte == b'\r') {
+                continue;
+            }
+
+            // Handle line endings
+            if byte == b'\n' || byte == b'\r' {
+                // Send CRLF to move to next line
+                self.stream.write_all(b"\r\n").await?;
+                self.stream.flush().await?;
+                break;
+            }
+
+            // Mark that we've started receiving actual content
+            started = true;
+
+            // Accumulate printable characters
+            if byte >= 32 || byte == b'\t' {
+                password.push(byte);
+
+                // Optionally display asterisk for visual feedback
+                if show_asterisks {
+                    self.stream.write_all(b"*").await?;
+                    self.stream.flush().await?;
+                }
+            }
+            // Handle backspace/delete
+            else if (byte == 8 || byte == 127) && !password.is_empty() {
+                password.pop();
+                if show_asterisks {
+                    // Send backspace sequence: BS + space + BS
+                    self.stream.write_all(b"\x08 \x08").await?;
+                    self.stream.flush().await?;
+                }
+            }
+
+            // Check buffer size
+            if password.len() > MAX_BUFFER_SIZE {
+                self.echo_enabled = original_echo;
+                return Err(TelnetError::BufferOverflow {
+                    max: MAX_BUFFER_SIZE,
+                });
+            }
+        }
+
+        // Restore original echo state
+        self.echo_enabled = original_echo;
+
+        String::from_utf8(password).map_err(TelnetError::InvalidUtf8)
+    }
+
     /// Read a single character from the client
     pub async fn read_char(&mut self) -> Result<char> {
         let mut buf = [0u8; 1];
