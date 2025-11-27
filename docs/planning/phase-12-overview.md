@@ -445,4 +445,4 @@ Phase 12 represents not an ending, but a transition: from project to institution
 - [Phase 10 Overview](phase-10-overview.md)
 - [Phase 11 Overview](phase-11-overview.md)
 
-**Research Foundation**: [POST-V2-ROADMAP-RESEARCH.md](../../POST-V2-ROADMAP-RESEARCH.md)
+**Research Foundation**: [POST-V2-ROADMAP-RESEARCH.md](POST-V2-ROADMAP-RESEARCH.md)

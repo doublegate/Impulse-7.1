@@ -627,4 +627,4 @@ pub struct VerificationMethod {
 **Related Documentation**:
 - [Post-v2.0.0 Roadmap](post-v2-roadmap.md)
 - [Phase 10 Overview](phase-10-overview.md)
-- [Research Summary](../../POST-V2-ROADMAP-RESEARCH.md)
+- [Research Summary](POST-V2-ROADMAP-RESEARCH.md)
