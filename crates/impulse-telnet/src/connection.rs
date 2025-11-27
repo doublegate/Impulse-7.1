@@ -130,8 +130,8 @@ impl TelnetConnection {
             // Mark that we've started receiving actual content
             started = true;
 
-            // Accumulate printable characters
-            if byte >= 32 || byte == b'\t' {
+            // Accumulate printable characters (ASCII 32-126 plus tab)
+            if (32..127).contains(&byte) || byte == b'\t' {
                 line.push(byte);
 
                 // Echo back if enabled
@@ -213,8 +213,8 @@ impl TelnetConnection {
             // Mark that we've started receiving actual content
             started = true;
 
-            // Accumulate printable characters
-            if byte >= 32 || byte == b'\t' {
+            // Accumulate printable characters (ASCII 32-126 plus tab)
+            if (32..127).contains(&byte) || byte == b'\t' {
                 password.push(byte);
 
                 // Optionally display asterisk for visual feedback

@@ -2,7 +2,7 @@
 
 Project-specific guidance for Impulse-Next_BBS modernization (classic Impulse 7.1 BBS: Borland Pascal 7.0 → Rust 2024).
 
-**Version:** 0.3.0 | **Updated:** 2025-11-26 (Menu Integration Complete)
+**Version:** 0.3.0 | **Updated:** 2025-11-26 (Menu Handler Integration & Documentation Update)
 
 ---
 
@@ -20,7 +20,7 @@ Project-specific guidance for Impulse-Next_BBS modernization (classic Impulse 7.
 **Phase:** 4 - Polish & Launch (Sprint 25 Starting - Performance Optimization)
 **Sprints Complete:** 24 of 32 (75.0%)
 **Version:** 0.3.0 (Phases 1, 2, 3: 100% COMPLETE - All Advanced Features Implemented)
-**Last Commit:** 07e9882 (2025-11-26 - Telnet Fixes: Enter key handling, password masking)
+**Last Commit:** 4430d50 (2025-11-26 - Menu Handler Integration)
 
 ### Sprint Progress
 - ✅ **Phase 1:** Foundation (Sprints 1-8, 100%)
@@ -45,13 +45,13 @@ Project-specific guidance for Impulse-Next_BBS modernization (classic Impulse 7.
 - ✅ **Sprint 23 (Administration):** SysOp admin interface, user/file/system management, access control, audit logging (149 tests)
 - ✅ **Sprint 24 (Integration Testing):** End-to-end journeys, security audits, load testing, cross-crate tests (83 tests)
 - ✅ **Phase 3 COMPLETE:** All 8 sprints (17-24) finished, 100%
-- ✅ **Menu Integration (Post Phase 3):** 9 handler modules connecting menu system with all features (1,590 lines)
-  - messages.rs (374 lines) - Message area integration (read, post, reply)
-  - files.rs (297 lines) - File area integration (details, protocols, uploads)
-  - doors.rs (113 lines) - Door game presentation and launch
-  - theme.rs (173 lines) - Theme selection (3 themes: Classic, Matrix, Cyberpunk)
-  - admin.rs (377 lines) - SysOp administration with access control
-  - user_profile.rs (74 lines) - User profile display with statistics
+- ✅ **Menu Integration (Post Phase 3):** 9 handler modules connecting menu system with all features (3,652 lines)
+  - admin.rs (1,416 lines) - SysOp administration with access control
+  - user_profile.rs (542 lines) - User profile display with statistics
+  - files.rs (590 lines) - File area integration (details, protocols, uploads)
+  - messages.rs (459 lines) - Message area integration (read, post, reply)
+  - doors.rs (281 lines) - Door game presentation and launch
+  - theme.rs (182 lines) - Theme selection (3 themes: Classic, Matrix, Cyberpunk)
   - whos_online.rs (83 lines) - Real-time session list
   - stats.rs (80 lines) - System statistics display
   - mod.rs (19 lines) - Module exports
@@ -64,8 +64,8 @@ Project-specific guidance for Impulse-Next_BBS modernization (classic Impulse 7.
 - **Clippy:** 0 warnings
 - **CI/CD:** 12 jobs, 100% passing on main branch
 - **Crates:** 21 (18 libraries + 3 binaries)
-- **Code:** ~73,577 lines total (47,915 code + 12,320 comments + 13,342 blank)
-- **Commits:** 141 total
+- **Code:** 75,547 lines total (50,144 code + 12,220 comments + 13,183 blank)
+- **Commits:** 159 total
 - **Build Time:** <2s dev, <10s release
 - **Test Execution:** <12s all tests
 
@@ -620,5 +620,5 @@ Original Pascal source in `ref-docs/original-pascal/` for reference during conve
 ---
 
 **Last Updated:** 2025-11-26
-**Session:** Sprint 24 - Phase 3 Integration Testing Complete
-**Next Milestone:** Phase 4 - Sprint 25 (Polish & Deployment)
+**Session:** Menu Handler Integration Complete, Documentation Updated
+**Next Milestone:** Phase 4 - Sprint 25 (Performance Optimization)

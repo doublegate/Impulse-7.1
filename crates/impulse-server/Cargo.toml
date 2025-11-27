@@ -23,6 +23,7 @@ impulse-door = { path = "../impulse-door" }
 impulse-admin = { path = "../impulse-admin" }
 impulse-protocol = { path = "../impulse-protocol" }
 tokio = { workspace = true }
+chrono = { workspace = true }
 anyhow = { workspace = true }
 tracing = { workspace = true }
 tracing-subscriber = { workspace = true }

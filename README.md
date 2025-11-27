@@ -16,7 +16,7 @@
 
 <!-- Row 3: Project Metrics -->
 [![Crates](https://img.shields.io/badge/crates-21-informational)](#architecture)
-[![LoC](https://img.shields.io/badge/lines_of_code-73,577-informational)](#project-status)
+[![LoC](https://img.shields.io/badge/lines_of_code-75,547-informational)](#project-status)
 [![Last Commit](https://img.shields.io/github/last-commit/doublegate/Impulse-Next_BBS)](https://github.com/doublegate/Impulse-Next_BBS/commits/main)
 
 <!-- Row 4: Community -->
@@ -67,7 +67,7 @@ All documentation is centralized in the `docs/` directory. Start with **[docs/IN
 | [Reports](docs/reports/)                   | Analysis reports, sprint completions     | 9     | CI/CD analysis, sprint reports                   |
 | [Reference](docs/reference/)               | Historical context, technical notes      | 2     | impulse-history.md                               |
 
-**Total Documentation**: 43 files (38 markdown + 5 data files) covering all aspects of the project.
+**Total Documentation**: 78 markdown files covering all aspects of the project from planning to deployment.
 
 ### Benefits of New Structure
 
@@ -142,7 +142,7 @@ This project aims to:
 - ✅ **Sprint 24** (Integration Testing): Comprehensive Phase 3 integration testing - BbsTestFixture, user journey tests, security audit suite (injection, auth, uploads), load generator (50+ users), cross-crate integration, 83 tests
 - ✅ **Phase 3 Feature Completion COMPLETE** (November 2025 - 8 sprints in ~4 days!)
 - ✅ **Server Integration** (Post Phase 3): Integrated all features into impulse-server with complete BBS functionality
-- ✅ **Menu Integration** (Post Phase 3): 9 menu handler modules connecting menu system with all implemented features (messages, files, doors, profiles, admin, themes, sessions, stats - 1,590 lines)
+- ✅ **Menu Integration** (Post Phase 3): 9 menu handler modules connecting menu system with all implemented features (messages, files, doors, profiles, admin, themes, sessions, stats - 3,652 lines)
 - ✅ **Telnet Improvements** (Post Phase 3): Fixed Enter key handling (CR/LF/CRLF), password masking with asterisks, proper newlines
 
 ### Phase 1 Achievements
@@ -151,8 +151,8 @@ This project aims to:
 
 - 21 crates (18 libraries + 3 binaries)
 - 12-job CI/CD pipeline (lint, test×3, build×3, coverage, benchmark, audit, MSRV, gate)
-- 141+ commits across 284+ Rust source files
-- 73,577 total lines (47,915 code + 12,320 comments + 13,342 blank)
+- 159 commits across 284+ Rust source files
+- 75,547 total lines (50,144 code + 12,220 comments + 13,183 blank)
 
 **Quality Metrics (Phase 1+2+3 COMPLETE):**
 

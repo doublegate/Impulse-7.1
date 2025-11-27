@@ -9,15 +9,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Menu system integration with implemented features
-- 9 menu handler modules for complete BBS functionality (1,162 lines)
-  - Message Areas - Integrated MessageListScreen from impulse-message
-  - File Areas - Integrated AreaSelectionScreen and FileListScreen from impulse-file
-  - Door Games - Enhanced door presentation with available games
-  - User Profile - Real user data display with statistics
-  - Who's Online - Live session data from impulse-session
-  - Theme Selection - Access to 3 available themes (Classic, Matrix, Cyberpunk)
-  - Administration - SysOp admin menu with access control
-  - System Statistics - Real-time session and system data
+- 9 menu handler modules for complete BBS functionality (3,652 lines)
+  - Message Areas (459 lines) - Integrated MessageListScreen from impulse-message
+  - File Areas (590 lines) - Integrated AreaSelectionScreen and FileListScreen from impulse-file
+  - Door Games (281 lines) - Enhanced door presentation with available games
+  - User Profile (542 lines) - Real user data display with statistics
+  - Who's Online (83 lines) - Live session data from impulse-session
+  - Theme Selection (182 lines) - Access to 3 available themes (Classic, Matrix, Cyberpunk)
+  - Administration (1,416 lines) - SysOp admin menu with access control
+  - System Statistics (80 lines) - Real-time session and system data
 
 ### Fixed
 - Telnet login Enter key handling - Now properly handles CR, LF, and CRLF
@@ -27,9 +27,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Technical Details
 - **New Files**: 9 handler modules in crates/impulse-server/src/menus/handlers/
-- **Modified**: main_menu.rs, mod.rs for handler integration
-- **Code Added**: ~1,162 lines of handler implementations
+- **Modified**: main_menu.rs, mod.rs, ServerState for handler integration
+- **Code Added**: 3,652 lines of handler implementations
 - **Integration**: Full connection between menu system and all Phase 3 features
+- **Tests**: 2,165 total passing (100% pass rate)
+- **Commits**: 159 total (4430d50 - menu handler integration)
 
 ---
 
@@ -79,10 +81,11 @@ Complete Zmodem file transfer with frame structure, CRC-16/32, handshake protoco
 
 - **Total Tests**: 2,165 passing (100% pass rate)
 - **Code Coverage**: 75.43% achieved (target: 75%+ - GOAL MET!)
-- **New Crates**: 3 (impulse-protocol, impulse-door, impulse-admin, impulse-integration-tests)
-- **Enhanced Crates**: impulse-terminal, impulse-message
-- **Total Code**: ~71,987 lines (46,750 code + 12,035 comments + 12,814 blank)
+- **New Crates**: 4 (impulse-protocol, impulse-door, impulse-admin, impulse-integration-tests)
+- **Enhanced Crates**: impulse-terminal, impulse-message, impulse-server
+- **Total Code**: 75,547 lines (50,144 code + 12,220 comments + 13,183 blank)
 - **Crates**: 21 total (18 libraries + 3 binaries)
+- **Commits**: 159 total
 
 ### Breaking Changes
 

@@ -8,6 +8,7 @@ use impulse_auth::AuthService;
 use impulse_door::DoorManager;
 use impulse_file::InMemoryFileAreaManager;
 use impulse_message::formats::JamMessageBase;
+use impulse_session::{SessionConfig, SessionManager};
 use impulse_terminal::theme::ThemeManager;
 use impulse_user::{InMemoryUserManager, UserManager};
 use std::path::PathBuf;
@@ -45,6 +46,9 @@ pub struct ServerState {
 
     /// Theme manager
     pub theme_manager: Arc<RwLock<ThemeManager>>,
+
+    /// Session manager
+    pub session_manager: Arc<SessionManager>,
 
     /// Base paths
     pub paths: ServerPaths,
@@ -148,6 +152,13 @@ impl ServerState {
             ThemeManager::new(paths.theme_dir.clone()).await?,
         ));
 
+        // Initialize session manager
+        let session_config = SessionConfig::default()
+            .with_idle_timeout(Duration::from_secs(900)) // 15 min idle timeout
+            .with_max_sessions_per_user(3)
+            .with_max_total_sessions(100);
+        let session_manager = Arc::new(SessionManager::new(session_config));
+
         // Log loaded themes
         let theme_list = theme_manager.read().await.list_themes().await;
         let theme_names: Vec<String> = theme_list.iter().map(|t| t.name.clone()).collect();
@@ -167,6 +178,7 @@ impl ServerState {
             audit_logger,
             door_manager,
             theme_manager,
+            session_manager,
             paths,
         })
     }
