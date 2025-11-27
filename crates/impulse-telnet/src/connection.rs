@@ -100,6 +100,7 @@ impl TelnetConnection {
     pub async fn read_line(&mut self) -> Result<String> {
         let mut line = Vec::new();
         let mut buf = [0u8; 1];
+        let mut started = false; // Track if we've received any non-line-ending characters
 
         loop {
             let n = self.stream.read(&mut buf).await?;
@@ -115,14 +116,19 @@ impl TelnetConnection {
                 continue;
             }
 
-            // Handle line endings
-            if byte == b'\n' {
-                break;
-            }
-            if byte == b'\r' {
-                // Peek at next byte to see if it's \n
+            // Skip leading CR/LF characters (handles leftover LF from previous CRLF)
+            if !started && (byte == b'\n' || byte == b'\r') {
                 continue;
             }
+
+            // Handle line endings - both CR and LF terminate the line
+            // This handles: LF only (\n), CR only (\r), and CRLF (\r\n)
+            if byte == b'\n' || byte == b'\r' {
+                break;
+            }
+
+            // Mark that we've started receiving actual content
+            started = true;
 
             // Accumulate printable characters
             if byte >= 32 || byte == b'\t' {
