@@ -134,7 +134,7 @@ impl QwkPacketGenerator {
     /// Generate DOOR.ID file content
     fn generate_door_id(&self) -> String {
         format!(
-            "DOOR = Impulse BBS\nVERSION = 0.3.0\nSYSTEM = {}\nCONTROLNAME = IMPULSE\nCONTROLTYPE = ADD\n",
+            "DOOR = Impulse BBS\nVERSION = 0.3.1\nSYSTEM = {}\nCONTROLNAME = IMPULSE\nCONTROLTYPE = ADD\n",
             self.config.bbs_name
         )
     }
@@ -283,7 +283,7 @@ mod tests {
         let door_id = generator.generate_door_id();
 
         assert!(door_id.contains("DOOR = Impulse BBS"));
-        assert!(door_id.contains("VERSION = 0.3.0"));
+        assert!(door_id.contains("VERSION = 0.3.1"));
         assert!(door_id.contains("CONTROLNAME = IMPULSE"));
     }
 

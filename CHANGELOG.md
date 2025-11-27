@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+Nothing yet.
+
+---
+
+## [0.3.1] - 2025-11-26
+
 ### Added
 - Menu system integration with implemented features
 - 9 menu handler modules for complete BBS functionality (3,652 lines)
@@ -20,18 +26,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - System Statistics (80 lines) - Real-time session and system data
 
 ### Fixed
+- **Telnet Backspace/Delete Handling** - DEL (byte 127) was incorrectly treated as printable character; now properly excluded from printable range (32-126)
 - Telnet login Enter key handling - Now properly handles CR, LF, and CRLF
 - Password masking with asterisks during login
 - Proper newline after username prompt
 - Flaky test in impulse-config validator
+- All Clippy warnings (collapsible_if with Rust 2024 let-chains, manual_ignore_case_cmp)
+
+### Changed
+- Reorganized root-level markdown files to appropriate docs/ subdirectories
+  - Roadmap files moved to docs/planning/
+  - Analysis files moved to docs/reports/
 
 ### Technical Details
 - **New Files**: 9 handler modules in crates/impulse-server/src/menus/handlers/
 - **Modified**: main_menu.rs, mod.rs, ServerState for handler integration
+- **Telnet Fix**: Changed printable character check from `byte >= 32` to `(32..127).contains(&byte)`
 - **Code Added**: 3,652 lines of handler implementations
 - **Integration**: Full connection between menu system and all Phase 3 features
 - **Tests**: 2,165 total passing (100% pass rate)
-- **Commits**: 159 total (4430d50 - menu handler integration)
 
 ---
 

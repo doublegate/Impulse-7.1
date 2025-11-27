@@ -43,7 +43,7 @@ async fn main() -> Result<()> {
         )
         .init();
 
-    info!("Impulse 7.1 BBS Server v0.3.0");
+    info!("Impulse 7.1 BBS Server v0.3.1");
     info!("=================================");
 
     // Load configuration
