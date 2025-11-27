@@ -1,5 +1,6 @@
 //! Main menu for authenticated users
 
+use crate::menus::handlers;
 use crate::state::ServerState;
 use anyhow::Result;
 use impulse_auth::SessionToken;
@@ -36,32 +37,35 @@ pub async fn display_main_menu(
                 match cmd {
                     'M' => {
                         // Message areas
-                        handle_messages(connection, user, state, &mut renderer).await?;
+                        handlers::handle_messages(connection, user, state, &mut renderer).await?;
                     }
                     'F' => {
                         // File areas
-                        handle_files(connection, user, state, &mut renderer).await?;
+                        handlers::handle_files(connection, user, state, &mut renderer).await?;
                     }
                     'D' => {
                         // Door games
-                        handle_doors(connection, user, state, &mut renderer).await?;
+                        handlers::handle_doors(connection, user, state, &mut renderer).await?;
                     }
                     'U' => {
                         // User profile
-                        handle_user_profile(connection, user, state, &mut renderer).await?;
+                        handlers::handle_user_profile(connection, user, state, &mut renderer)
+                            .await?;
                     }
                     'W' => {
                         // Who's online
-                        handle_whos_online(connection, session_manager, &mut renderer).await?;
+                        handlers::handle_whos_online(connection, session_manager, &mut renderer)
+                            .await?;
                     }
                     'T' => {
                         // Theme selection
-                        handle_theme_selection(connection, &mut renderer).await?;
+                        handlers::handle_theme_selection(connection, user, state, &mut renderer)
+                            .await?;
                     }
                     'A' => {
                         // Administration (SysOp only)
                         if user.security_level().value() >= 200 {
-                            handle_admin(connection, user, state, &mut renderer).await?;
+                            handlers::handle_admin(connection, user, state, &mut renderer).await?;
                         } else {
                             renderer.write_line("\r\n");
                             renderer.set_foreground(Color::BrightRed);
@@ -79,7 +83,8 @@ pub async fn display_main_menu(
                     }
                     'S' => {
                         // System statistics
-                        handle_system_stats(connection, session_manager, &mut renderer).await?;
+                        handlers::handle_system_stats(connection, session_manager, &mut renderer)
+                            .await?;
                     }
                     'G' | 'Q' => {
                         // Logout
@@ -173,256 +178,6 @@ fn render_main_menu(renderer: &mut AnsiRenderer, user: &User) {
     renderer.set_foreground(Color::BrightYellow);
     renderer.write_text("Command: ");
     renderer.reset();
-}
-
-/// Handle messages menu
-async fn handle_messages(
-    connection: &mut TelnetConnection,
-    _user: &User,
-    _state: &ServerState,
-    renderer: &mut AnsiRenderer,
-) -> Result<()> {
-    renderer.write_line("\r\n");
-    renderer.set_foreground(Color::BrightWhite);
-    renderer.write_line("=== MESSAGE AREAS ===");
-    renderer.reset();
-    renderer.write_line("");
-    renderer.write_line("1. General Discussion      [15 new]");
-    renderer.write_line("2. Rust Programming        [3 new]");
-    renderer.write_line("3. Retro Computing         [7 new]");
-    renderer.write_line("");
-    renderer.set_foreground(Color::Yellow);
-    renderer.write_line("This feature will be fully integrated soon!");
-    renderer.write_line("Message reading, posting, and QWK mail support available.");
-    renderer.reset();
-    renderer.write_line("\r\n");
-    renderer.set_foreground(Color::BrightYellow);
-    renderer.write_line("Press any key to continue...");
-    renderer.reset();
-    connection
-        .send_raw(renderer.take_output().as_bytes())
-        .await?;
-    connection.read_char().await.ok();
-    Ok(())
-}
-
-/// Handle files menu
-async fn handle_files(
-    connection: &mut TelnetConnection,
-    _user: &User,
-    _state: &ServerState,
-    renderer: &mut AnsiRenderer,
-) -> Result<()> {
-    renderer.write_line("\r\n");
-    renderer.set_foreground(Color::BrightWhite);
-    renderer.write_line("=== FILE AREAS ===");
-    renderer.reset();
-    renderer.write_line("");
-    renderer.write_line("1. Utilities               [25 files]");
-    renderer.write_line("2. Games                   [12 files]");
-    renderer.write_line("3. Development             [8 files]");
-    renderer.write_line("");
-    renderer.set_foreground(Color::Yellow);
-    renderer.write_line("This feature will be fully integrated soon!");
-    renderer.write_line("File browsing, upload/download with Zmodem/Xmodem/Ymodem.");
-    renderer.reset();
-    renderer.write_line("\r\n");
-    renderer.set_foreground(Color::BrightYellow);
-    renderer.write_line("Press any key to continue...");
-    renderer.reset();
-    connection
-        .send_raw(renderer.take_output().as_bytes())
-        .await?;
-    connection.read_char().await.ok();
-    Ok(())
-}
-
-/// Handle doors menu
-async fn handle_doors(
-    connection: &mut TelnetConnection,
-    _user: &User,
-    _state: &ServerState,
-    renderer: &mut AnsiRenderer,
-) -> Result<()> {
-    renderer.write_line("\r\n");
-    renderer.set_foreground(Color::BrightWhite);
-    renderer.write_line("=== DOOR GAMES ===");
-    renderer.reset();
-    renderer.write_line("");
-    renderer.write_line("1. Trade Wars 2002");
-    renderer.write_line("2. Legend of the Red Dragon");
-    renderer.write_line("3. LORD II");
-    renderer.write_line("4. Planets: TEOS");
-    renderer.write_line("");
-    renderer.set_foreground(Color::Yellow);
-    renderer.write_line("This feature will be fully integrated soon!");
-    renderer.write_line("DOOR.SYS and DOSBox support available.");
-    renderer.reset();
-    renderer.write_line("\r\n");
-    renderer.set_foreground(Color::BrightYellow);
-    renderer.write_line("Press any key to continue...");
-    renderer.reset();
-    connection
-        .send_raw(renderer.take_output().as_bytes())
-        .await?;
-    connection.read_char().await.ok();
-    Ok(())
-}
-
-/// Handle user profile
-async fn handle_user_profile(
-    connection: &mut TelnetConnection,
-    user: &User,
-    _state: &ServerState,
-    renderer: &mut AnsiRenderer,
-) -> Result<()> {
-    renderer.write_line("\r\n");
-    renderer.set_foreground(Color::BrightWhite);
-    renderer.write_line("=== USER PROFILE ===");
-    renderer.reset();
-    renderer.write_line("");
-    renderer.write_line(&format!("Username:       {}", user.username()));
-    renderer.write_line(&format!(
-        "Security Level: {}",
-        user.security_level().value()
-    ));
-    renderer.write_line(&format!("User ID:        {:?}", user.id()));
-    renderer.write_line("");
-    renderer.set_foreground(Color::Yellow);
-    renderer.write_line("Statistics, settings, and achievement tracking available.");
-    renderer.reset();
-    renderer.write_line("\r\n");
-    renderer.set_foreground(Color::BrightYellow);
-    renderer.write_line("Press any key to continue...");
-    renderer.reset();
-    connection
-        .send_raw(renderer.take_output().as_bytes())
-        .await?;
-    connection.read_char().await.ok();
-    Ok(())
-}
-
-/// Handle who's online
-async fn handle_whos_online(
-    connection: &mut TelnetConnection,
-    session_manager: &SessionManager,
-    renderer: &mut AnsiRenderer,
-) -> Result<()> {
-    let session_count = session_manager.active_session_count().await;
-
-    renderer.write_line("\r\n");
-    renderer.set_foreground(Color::BrightWhite);
-    renderer.write_line("=== WHO'S ONLINE ===");
-    renderer.reset();
-    renderer.write_line("");
-    renderer.write_line(&format!("Total users online: {}", session_count));
-    renderer.write_line("");
-    renderer.set_foreground(Color::Yellow);
-    renderer.write_line("Detailed user list with activity status available.");
-    renderer.reset();
-    renderer.write_line("\r\n");
-    renderer.set_foreground(Color::BrightYellow);
-    renderer.write_line("Press any key to continue...");
-    renderer.reset();
-    connection
-        .send_raw(renderer.take_output().as_bytes())
-        .await?;
-    connection.read_char().await.ok();
-    Ok(())
-}
-
-/// Handle theme selection
-async fn handle_theme_selection(
-    connection: &mut TelnetConnection,
-    renderer: &mut AnsiRenderer,
-) -> Result<()> {
-    renderer.write_line("\r\n");
-    renderer.set_foreground(Color::BrightWhite);
-    renderer.write_line("=== THEME SELECTION ===");
-    renderer.reset();
-    renderer.write_line("");
-    renderer.write_line("1. Classic BBS");
-    renderer.write_line("2. Matrix Green");
-    renderer.write_line("3. Cyberpunk");
-    renderer.write_line("");
-    renderer.set_foreground(Color::Yellow);
-    renderer.write_line("Theme system with color schemes available.");
-    renderer.reset();
-    renderer.write_line("\r\n");
-    renderer.set_foreground(Color::BrightYellow);
-    renderer.write_line("Press any key to continue...");
-    renderer.reset();
-    connection
-        .send_raw(renderer.take_output().as_bytes())
-        .await?;
-    connection.read_char().await.ok();
-    Ok(())
-}
-
-/// Handle administration menu
-async fn handle_admin(
-    connection: &mut TelnetConnection,
-    _user: &User,
-    _state: &ServerState,
-    renderer: &mut AnsiRenderer,
-) -> Result<()> {
-    renderer.write_line("\r\n");
-    renderer.set_foreground(Color::BrightMagenta);
-    renderer.write_line("=== ADMINISTRATION ===");
-    renderer.reset();
-    renderer.write_line("");
-    renderer.write_line("1. User Management");
-    renderer.write_line("2. File Area Management");
-    renderer.write_line("3. System Maintenance");
-    renderer.write_line("4. View Audit Log");
-    renderer.write_line("5. Broadcast Message");
-    renderer.write_line("");
-    renderer.set_foreground(Color::Yellow);
-    renderer.write_line("Full admin interface with audit logging available.");
-    renderer.reset();
-    renderer.write_line("\r\n");
-    renderer.set_foreground(Color::BrightYellow);
-    renderer.write_line("Press any key to continue...");
-    renderer.reset();
-    connection
-        .send_raw(renderer.take_output().as_bytes())
-        .await?;
-    connection.read_char().await.ok();
-    Ok(())
-}
-
-/// Handle system statistics
-async fn handle_system_stats(
-    connection: &mut TelnetConnection,
-    session_manager: &SessionManager,
-    renderer: &mut AnsiRenderer,
-) -> Result<()> {
-    let session_count = session_manager.active_session_count().await;
-
-    renderer.write_line("\r\n");
-    renderer.set_foreground(Color::BrightWhite);
-    renderer.write_line("=== SYSTEM STATISTICS ===");
-    renderer.reset();
-    renderer.write_line("");
-    renderer.write_line(&format!("Active Sessions:   {}", session_count));
-    renderer.write_line("BBS Software:      Impulse 7.1 (Rust Edition)");
-    renderer.write_line("Version:           0.3.0");
-    renderer.write_line("Platform:          Rust 2024 Edition");
-    renderer.write_line("Test Coverage:     75.43%");
-    renderer.write_line("Total Tests:       2,082 passing");
-    renderer.write_line("");
-    renderer.set_foreground(Color::BrightGreen);
-    renderer.write_line("All systems operational!");
-    renderer.reset();
-    renderer.write_line("\r\n");
-    renderer.set_foreground(Color::BrightYellow);
-    renderer.write_line("Press any key to continue...");
-    renderer.reset();
-    connection
-        .send_raw(renderer.take_output().as_bytes())
-        .await?;
-    connection.read_char().await.ok();
-    Ok(())
 }
 
 /// Handle help screen

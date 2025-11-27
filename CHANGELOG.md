@@ -7,6 +7,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Menu system integration with implemented features
+- 9 menu handler modules for complete BBS functionality (1,162 lines)
+  - Message Areas - Integrated MessageListScreen from impulse-message
+  - File Areas - Integrated AreaSelectionScreen and FileListScreen from impulse-file
+  - Door Games - Enhanced door presentation with available games
+  - User Profile - Real user data display with statistics
+  - Who's Online - Live session data from impulse-session
+  - Theme Selection - Access to 3 available themes (Classic, Matrix, Cyberpunk)
+  - Administration - SysOp admin menu with access control
+  - System Statistics - Real-time session and system data
+
+### Fixed
+- Telnet login Enter key handling - Now properly handles CR, LF, and CRLF
+- Password masking with asterisks during login
+- Proper newline after username prompt
+- Flaky test in impulse-config validator
+
+### Technical Details
+- **New Files**: 9 handler modules in crates/impulse-server/src/menus/handlers/
+- **Modified**: main_menu.rs, mod.rs for handler integration
+- **Code Added**: ~1,162 lines of handler implementations
+- **Integration**: Full connection between menu system and all Phase 3 features
+
 ---
 
 ## [0.3.0] - 2025-11-26

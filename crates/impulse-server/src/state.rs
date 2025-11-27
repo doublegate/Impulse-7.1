@@ -5,8 +5,10 @@
 use anyhow::Result;
 use impulse_admin::{AdminAccessControl, AuditLogger};
 use impulse_auth::AuthService;
+use impulse_door::DoorManager;
 use impulse_file::InMemoryFileAreaManager;
 use impulse_message::formats::JamMessageBase;
+use impulse_terminal::theme::ThemeManager;
 use impulse_user::{InMemoryUserManager, UserManager};
 use std::path::PathBuf;
 use std::sync::Arc;
@@ -38,6 +40,12 @@ pub struct ServerState {
     /// Audit logger
     pub audit_logger: Arc<AuditLogger>,
 
+    /// Door manager
+    pub door_manager: Arc<DoorManager>,
+
+    /// Theme manager
+    pub theme_manager: Arc<RwLock<ThemeManager>>,
+
     /// Base paths
     pub paths: ServerPaths,
 }
@@ -59,17 +67,30 @@ pub struct ServerPaths {
 
     /// Node directories
     pub nodes_dir: PathBuf,
+
+    /// Theme directory
+    pub theme_dir: PathBuf,
 }
 
 impl Default for ServerPaths {
     fn default() -> Self {
         let data_dir = PathBuf::from("/tmp/impulse-next-bbs/data");
+
+        // Use project themes directory for built-in themes
+        // In production, this would be configurable
+        let project_themes = PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+            .parent()
+            .and_then(|p| p.parent())
+            .map(|p| p.join("themes"))
+            .unwrap_or_else(|| data_dir.join("themes"));
+
         Self {
             data_dir: data_dir.clone(),
             message_dir: data_dir.join("messages"),
             files_dir: data_dir.join("files"),
             doors_dir: data_dir.join("doors"),
             nodes_dir: data_dir.join("nodes"),
+            theme_dir: project_themes,
         }
     }
 }
@@ -85,6 +106,7 @@ impl ServerState {
         std::fs::create_dir_all(&paths.files_dir)?;
         std::fs::create_dir_all(&paths.doors_dir)?;
         std::fs::create_dir_all(&paths.nodes_dir)?;
+        std::fs::create_dir_all(&paths.theme_dir)?;
 
         // Initialize auth service
         let auth_service = Arc::new(AuthService::new(Duration::from_secs(1800))); // 30 min sessions
@@ -117,8 +139,23 @@ impl ServerState {
         let admin_access = Arc::new(AdminAccessControl::new(200, 200)); // SysOp level: 200
         let audit_logger = Arc::new(AuditLogger::new());
 
+        // Initialize door manager
+        let door_manager =
+            Arc::new(DoorManager::new(paths.doors_dir.clone(), paths.nodes_dir.clone()).await?);
+
+        // Initialize theme manager
+        let theme_manager = Arc::new(RwLock::new(
+            ThemeManager::new(paths.theme_dir.clone()).await?,
+        ));
+
+        // Log loaded themes
+        let theme_list = theme_manager.read().await.list_themes().await;
+        let theme_names: Vec<String> = theme_list.iter().map(|t| t.name.clone()).collect();
+
         tracing::info!("Server state initialized successfully");
         tracing::info!("  Data directory: {:?}", paths.data_dir);
+        tracing::info!("  Theme directory: {:?}", paths.theme_dir);
+        tracing::info!("  Themes loaded: {:?}", theme_names);
         tracing::info!("  Default users created: sysop (255), testuser (10)");
 
         Ok(Self {
@@ -128,6 +165,8 @@ impl ServerState {
             file_manager,
             admin_access,
             audit_logger,
+            door_manager,
+            theme_manager,
             paths,
         })
     }

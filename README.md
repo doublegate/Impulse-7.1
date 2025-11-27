@@ -16,7 +16,7 @@
 
 <!-- Row 3: Project Metrics -->
 [![Crates](https://img.shields.io/badge/crates-21-informational)](#architecture)
-[![LoC](https://img.shields.io/badge/lines_of_code-71,987-informational)](#project-status)
+[![LoC](https://img.shields.io/badge/lines_of_code-73,577-informational)](#project-status)
 [![Last Commit](https://img.shields.io/github/last-commit/doublegate/Impulse-Next_BBS)](https://github.com/doublegate/Impulse-Next_BBS/commits/main)
 
 <!-- Row 4: Community -->
@@ -142,6 +142,8 @@ This project aims to:
 - ✅ **Sprint 24** (Integration Testing): Comprehensive Phase 3 integration testing - BbsTestFixture, user journey tests, security audit suite (injection, auth, uploads), load generator (50+ users), cross-crate integration, 83 tests
 - ✅ **Phase 3 Feature Completion COMPLETE** (November 2025 - 8 sprints in ~4 days!)
 - ✅ **Server Integration** (Post Phase 3): Integrated all features into impulse-server with complete BBS functionality
+- ✅ **Menu Integration** (Post Phase 3): 9 menu handler modules connecting menu system with all implemented features (messages, files, doors, profiles, admin, themes, sessions, stats - 1,590 lines)
+- ✅ **Telnet Improvements** (Post Phase 3): Fixed Enter key handling (CR/LF/CRLF), password masking with asterisks, proper newlines
 
 ### Phase 1 Achievements
 
@@ -149,8 +151,8 @@ This project aims to:
 
 - 21 crates (18 libraries + 3 binaries)
 - 12-job CI/CD pipeline (lint, test×3, build×3, coverage, benchmark, audit, MSRV, gate)
-- 138+ commits across 275+ Rust source files
-- 71,987 total lines (46,750 code + 12,035 comments + 12,814 blank)
+- 141+ commits across 284+ Rust source files
+- 73,577 total lines (47,915 code + 12,320 comments + 13,342 blank)
 
 **Quality Metrics (Phase 1+2+3 COMPLETE):**
 
@@ -899,7 +901,7 @@ cargo doc --workspace --no-deps --open
 
 **Test Types:**
 
-- **Unit Tests**: 1,900+ tests (validation logic, CRUD, authentication, logging, message I/O, menu parsing, file management, protocols, themes, doors, admin, messaging)
+- **Unit Tests**: 1,980+ tests (validation logic, CRUD, authentication, logging, message I/O, menu parsing, file management, protocols, themes, doors, admin, messaging)
 - **Integration Tests**: 240+ tests (serialization, file I/O, sessions, cross-crate workflows, message threading, file searching, user journeys, security audit, load testing)
 - **Doc Tests**: 90+ tests (documentation examples)
 - **Benchmarks**: 10+ performance benchmarks (authentication, protocol transfers, message operations)

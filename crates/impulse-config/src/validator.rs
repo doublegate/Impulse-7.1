@@ -238,6 +238,14 @@ mod tests {
         config.paths.temp_dir = temp_path.join("temp");
         config.paths.doors_dir = temp_path.join("doors");
 
+        // Set ports to high values unlikely to be in use so port validation
+        // doesn't interfere with path validation testing
+        // Note: Port 0 is rejected by BbsConfig::validate()
+        for (i, server) in config.servers.iter_mut().enumerate() {
+            server.port = 60000 + i as u16;
+        }
+        config.web_admin_port = 60100;
+
         // Should fail with strict (paths don't exist)
         let strict = ValidationOptions::strict();
         assert!(validate_config(&config, &strict).is_err());

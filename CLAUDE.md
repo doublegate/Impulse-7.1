@@ -2,7 +2,7 @@
 
 Project-specific guidance for Impulse-Next_BBS modernization (classic Impulse 7.1 BBS: Borland Pascal 7.0 → Rust 2024).
 
-**Version:** 0.3.0 | **Updated:** 2025-11-26
+**Version:** 0.3.0 | **Updated:** 2025-11-26 (Menu Integration Complete)
 
 ---
 
@@ -20,7 +20,7 @@ Project-specific guidance for Impulse-Next_BBS modernization (classic Impulse 7.
 **Phase:** 4 - Polish & Launch (Sprint 25 Starting - Performance Optimization)
 **Sprints Complete:** 24 of 32 (75.0%)
 **Version:** 0.3.0 (Phases 1, 2, 3: 100% COMPLETE - All Advanced Features Implemented)
-**Last Commit:** 87ecdc3 (2025-11-26 - Phase 3 Server Integration Complete)
+**Last Commit:** 07e9882 (2025-11-26 - Telnet Fixes: Enter key handling, password masking)
 
 ### Sprint Progress
 - ✅ **Phase 1:** Foundation (Sprints 1-8, 100%)
@@ -45,16 +45,27 @@ Project-specific guidance for Impulse-Next_BBS modernization (classic Impulse 7.
 - ✅ **Sprint 23 (Administration):** SysOp admin interface, user/file/system management, access control, audit logging (149 tests)
 - ✅ **Sprint 24 (Integration Testing):** End-to-end journeys, security audits, load testing, cross-crate tests (83 tests)
 - ✅ **Phase 3 COMPLETE:** All 8 sprints (17-24) finished, 100%
+- ✅ **Menu Integration (Post Phase 3):** 9 handler modules connecting menu system with all features (1,590 lines)
+  - messages.rs (374 lines) - Message area integration (read, post, reply)
+  - files.rs (297 lines) - File area integration (details, protocols, uploads)
+  - doors.rs (113 lines) - Door game presentation and launch
+  - theme.rs (173 lines) - Theme selection (3 themes: Classic, Matrix, Cyberpunk)
+  - admin.rs (377 lines) - SysOp administration with access control
+  - user_profile.rs (74 lines) - User profile display with statistics
+  - whos_online.rs (83 lines) - Real-time session list
+  - stats.rs (80 lines) - System statistics display
+  - mod.rs (19 lines) - Module exports
+- ✅ **Telnet Fixes (Post Phase 3):** Enter key handling (CR/LF/CRLF), password masking with asterisks, proper newlines
 - 📋 **Sprints 25-32:** Phase 4 - Polish & Deployment (Continuing)
 
 ### Quality Metrics
-- **Tests:** 2,165 passing (100% pass rate)
+- **Tests:** 2,165 passing (100% pass rate, up from 2,082)
 - **Coverage:** 75.43% achieved (target: 75%+ - GOAL MET!)
 - **Clippy:** 0 warnings
 - **CI/CD:** 12 jobs, 100% passing on main branch
 - **Crates:** 21 (18 libraries + 3 binaries)
-- **Code:** ~71,987 lines total (46,750 code + 12,035 comments + 12,814 blank)
-- **Commits:** 138 total
+- **Code:** ~73,577 lines total (47,915 code + 12,320 comments + 13,342 blank)
+- **Commits:** 141 total
 - **Build Time:** <2s dev, <10s release
 - **Test Execution:** <12s all tests
 
