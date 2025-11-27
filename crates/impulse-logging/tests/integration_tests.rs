@@ -27,9 +27,9 @@ fn test_console_logging_initialization() {
     }
 }
 
-#[test]
+#[tokio::test]
 #[serial]
-fn test_file_logging_initialization() {
+async fn test_file_logging_initialization() {
     let temp_dir = TempDir::new().unwrap();
     let log_path = temp_dir.path().join("test.log");
 
@@ -44,7 +44,25 @@ fn test_file_logging_initialization() {
         );
     } else {
         // Only check file existence if initialization succeeded
-        assert!(log_path.exists());
+        // Log something to ensure file is created
+        tracing::info!("Test log message");
+        // Allow time for the log to be flushed to disk
+        sleep(Duration::from_millis(100)).await;
+
+        // With daily rotation, the file might have a date suffix
+        // Check if any log files were created in the directory
+        let log_files: Vec<_> = std::fs::read_dir(temp_dir.path())
+            .unwrap()
+            .filter_map(|entry| entry.ok())
+            .filter(|entry| entry.file_name().to_str().unwrap_or("").starts_with("test"))
+            .collect();
+
+        assert!(
+            !log_files.is_empty(),
+            "No log files created in {:?}. Expected file at {:?}",
+            temp_dir.path(),
+            log_path
+        );
     }
 }
 
